@@ -1,0 +1,4 @@
+<mat-card class="custom-mat custom-mat-{{type}}" *ngIf="schema !== undefined">
+  <json-schema-form loadExternalAssets="true" [form]="schema" (onSubmit)="saveConfiguration($event)">
+  </json-schema-form>
+</mat-card>
