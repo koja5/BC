@@ -1,0 +1,105 @@
+{
+  "schema": {
+    "type": "object",
+    "properties": {
+      "welcomeBack": { "type": "string" },
+      "welcomeMessage": { "type": "string" },
+      "email": { "type": "string" },
+      "password": { "type": "string" },
+      "rememberPassword": { "type": "string" },
+      "orLoginWith": { "type": "string" },
+      "forgotPassword": { "type": "string" },
+      "noHaveAccount": { "type": "string" },
+      "signUp": { "type": "string" },
+      "firstName": { "type": "string" },
+      "lastName": { "type": "string" },
+      "userAgreement": { "type": "string" },
+      "privacyPolicy": { "type": "string" },
+      "and": { "type": "string" },
+      "cookiePolicy": { "type": "string" },
+      "joinTo": { "type": "string" },
+      "signUpMessage": { "type": "string" },
+      "agreeJoin": { "type": "string" },
+      "alreadyOn": { "type": "string" },
+      "signIn": { "type": "string" },
+      "recoveryPassword": { "type": "string" },
+      "enterMail": { "type": "string" },
+      "login": { "type": "string" }
+    }
+  },
+  "layout": [
+    {
+      "type": "section",
+      "title": "Login",
+      "expandable": true,
+      "expanded": true,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "welcomeBack" },
+            { "key": "welcomeMessage" },
+            { "key": "email" },
+            { "key": "password" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "rememberPassword" },
+            { "key": "orLoginWith" },
+            { "key": "forgotPassword" },
+            { "key": "noHaveAccount" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "signUp" },
+            { "key": "firstName" },
+            { "key": "lastName" },
+            { "key": "userAgreement" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "privacyPolicy" },
+            { "key": "and" },
+            { "key": "agreeJoin" },
+            { "key": "alreadyOn" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "signIn" },
+            { "key": "recoveryPassword" },
+            { "key": "enterMail" },
+            { "key": "login" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "cookiePolicy" },
+            { "key": "signUpMessage" },
+            { "key": "joinTo" }
+          ]
+        }
+      ]
+    }
+  ]
+}

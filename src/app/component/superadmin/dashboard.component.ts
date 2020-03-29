@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Modal } from 'ngx-modal';
+declare var document: any;
 
 @Component({
   selector: 'app-dashboard',
@@ -44,12 +45,35 @@ export class DashboardComponent implements OnInit {
   }
 
   returnActiveNode(node) {
-    /*this.selectedNodeModel[this.selectedNode] = "";
-    this.selectedNode = node;
-    this.selectedNodeModel[this.selectedNode] = "active";
-    setTimeout(() => {
-      this.pathFromUrl = window.location.pathname.split("/");
-      console.log(this.pathFromUrl);
-    }, 10);*/
+  }
+
+  toggleFullscreen(): void {
+    const isInFullScreen = (document.fullscreenElement && document.fullscreenElement !== null) ||
+      (document.webkitFullscreenElement && document.webkitFullscreenElement !== null) ||
+      (document.mozFullScreenElement && document.mozFullScreenElement !== null) ||
+      (document.msFullscreenElement && document.msFullscreenElement !== null);
+
+    const docElm = document.documentElement;
+    if (!isInFullScreen) {
+      if (docElm.requestFullscreen) {
+        docElm.requestFullscreen();
+      } else if (docElm.mozRequestFullScreen) {
+        docElm.mozRequestFullScreen();
+      } else if (docElm.webkitRequestFullScreen) {
+        docElm.webkitRequestFullScreen();
+      } else if (docElm.msRequestFullscreen) {
+        docElm.msRequestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      } else if (document.webkitExitFullscreen) {
+        document.webkitExitFullscreen();
+      } else if (document.mozCancelFullScreen) {
+        document.mozCancelFullScreen();
+      } else if (document.msExitFullscreen) {
+        document.msExitFullscreen();
+      }
+    }
   }
 }

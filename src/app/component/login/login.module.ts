@@ -5,12 +5,20 @@ import { LoginComponent } from './login.component';
 import { SignupComponent } from './signup/signup.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
+import { FormsModule } from '@angular/forms';
+import { ChooseDirectorComponent } from './signup/choose-director/choose-director.component';
+
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { InputsModule } from '@progress/kendo-angular-inputs';
 
 @NgModule({
-  declarations: [LoginComponent, SignupComponent, ForgotPasswordComponent, ChangePasswordComponent],
+  declarations: [LoginComponent, SignupComponent, ForgotPasswordComponent, ChangePasswordComponent, ChooseDirectorComponent],
   imports: [
     CommonModule,
-    LoginRouting
+    LoginRouting,
+    FormsModule,
+    InputsModule,
+    DropDownsModule
   ]
 })
 export class LoginModule { }

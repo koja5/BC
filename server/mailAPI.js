@@ -12,7 +12,7 @@ var connection = mysql.createPool({
   host: "185.178.193.141",
   user: "appproduction.",
   password: "jBa9$6v7",
-  database: "management_prod"
+  database: "business_circle"
 });
 
 var smtpTransport = nodemailer.createTransport({
@@ -32,7 +32,7 @@ var smtpTransport = nodemailer.createTransport({
 
 router.post("/send", function(req, res) {
   var confirmTemplate = fs.readFileSync(
-    "./server/routes/templates/confirmMail.hjs",
+    "./server/templates/confirmMail.hjs",
     "utf-8"
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
@@ -44,7 +44,7 @@ router.post("/send", function(req, res) {
     to: req.body.email,
     subject: "Confirm registration",
     html: compiledTemplate.render({
-      firstName: req.body.shortname,
+      firstName: req.body.firstname,
       verificationLink: verificationLinkButton
     })
   };
@@ -65,7 +65,7 @@ router.post("/send", function(req, res) {
 
 router.post("/forgotmail", function(req, res) {
   var confirmTemplate = fs.readFileSync(
-    "./server/routes/templates/forgotMail.hjs",
+    "./server/templates/forgotMail.hjs",
     "utf-8"
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
@@ -77,7 +77,7 @@ router.post("/forgotmail", function(req, res) {
     to: req.body.email,
     subject: "Reset password",
     html: compiledTemplate.render({
-      firstName: req.body.shortname,
+      firstName: req.body.firstname,
       verificationLink: verificationLinkButton
     })
   };
@@ -85,10 +85,10 @@ router.post("/forgotmail", function(req, res) {
   smtpTransport.sendMail(mailOptions, function(error, response) {
     if (error) {
       console.log(error);
-      res.end(error);
+      res.json(error);
     } else {
       console.log("Message sent: " + response);
-      res.end("sent");
+      res.json("sent");
     }
   });
 });
@@ -121,7 +121,7 @@ router.post("/askQuestion", function(req, res) {
 router.post("/sendConfirmArrivalAgain", function(req, res) {
   connection.getConnection(function(err, conn) {
     var confirmTemplate = fs.readFileSync(
-      "./server/routes/templates/confirmArrival.hjs",
+      "./server/templates/confirmArrival.hjs",
       "utf-8"
     );
     var compiledTemplate = hogan.compile(confirmTemplate);

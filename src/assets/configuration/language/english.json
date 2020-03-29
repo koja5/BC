@@ -1,0 +1,28 @@
+{
+  "_id": "5e7b1d92811e3c2e2c82319e",
+  "language": "english",
+  "active": true,
+  "config": {
+    "welcomeBack": "Welcome back",
+    "welcomeMessage": "Welcome message",
+    "email": "Email",
+    "password": "Password",
+    "rememberPassword": "Remember Password",
+    "orLoginWith": "Or login With",
+    "forgotPassword": "Forgot Password",
+    "noHaveAccount": "No Have Account",
+    "signUp": "Sign Up",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "userAgreement": "User Agreement",
+    "privacyPolicy": "Privacy Policy",
+    "and": "And",
+    "agreeJoin": "Agree Join",
+    "alreadyOn": "Already On",
+    "signIn": "Sign In",
+    "recoveryPassword": "Recovery Password",
+    "enterMail": "Enter Mail",
+    "login": "Login"
+  },
+  "countryCode": "US"
+}

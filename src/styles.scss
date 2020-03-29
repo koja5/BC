@@ -1,9 +1,11 @@
 @import url("./assets/css/bootstrap.min.css");
-@import url("./assets//icons/feather.css");
+@import url("./assets/icons/feather.css");
 
 @import url('./assets/icons/fonts/ubuntu.css');
 @import url("../node_modules/font-awesome/css/font-awesome.min.css");
-@import "@angular/material/prebuilt-themes/indigo-pink.css";
+@import url("../node_modules/@progress/kendo-theme-material/dist/all.css");
+@import "@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import '~ngx-toastr/toastr';
 
 /* body */
  body {
@@ -386,7 +388,7 @@ a {
      background-color: #b7b9cc;
 }
  .bg-dark {
-     background: #1d2f38 !important;
+     background: #0b6794 !important;
 }
  .form-control, .btn {
      font-size: 13px;
@@ -767,6 +769,48 @@ a {
   transform: rotate3D(.5, 1, 2, 90deg)
 }
 
-
-
 /* LOADING END */
+
+.mat-form-field-wrapper {
+  width: 90% !important;
+}
+
+.mat-raised-button {
+  font-family: monospace !important;
+}
+
+.k-button.k-primary {
+  border-color: #3f51b5;
+  color: #fff;
+  background-color: #3f51b5;
+}
+
+.spinner.loading {
+  padding: 15px;
+  position: relative;
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+
+.spinner.loading {
+  content: "";
+  position: absolute;
+  border-width: 8px;
+  border-style: solid;
+  border-color: #2180c0 #ccc #ccc;
+  border-radius: 100%;
+  animation: rotation .7s infinite linear;
+}
+
+@keyframes rotation {
+  from {
+      transform: rotate(0deg);
+  }
+
+  to {
+      transform: rotate(359deg);
+  }
+}
+

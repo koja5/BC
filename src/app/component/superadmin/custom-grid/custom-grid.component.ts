@@ -1,6 +1,17 @@
-import { Component, OnInit, ViewChild, HostListener, Input } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  HostListener,
+  Input
+} from "@angular/core";
 import { Modal } from "ngx-modal";
-import { process, State, GroupDescriptor, SortDescriptor } from "@progress/kendo-data-query";
+import {
+  process,
+  State,
+  GroupDescriptor,
+  SortDescriptor
+} from "@progress/kendo-data-query";
 import { UploadEvent, SelectEvent } from "@progress/kendo-angular-upload";
 import {
   DataStateChangeEvent,
@@ -10,15 +21,19 @@ import {
 } from "@progress/kendo-angular-grid";
 import { WindowModule } from "@progress/kendo-angular-dialog";
 import * as XLSX from "ts-xlsx";
+import { Router } from "@angular/router";
+import { CustomGridService } from "src/app/services/custom-grid.service";
+import { ToastrService } from "ngx-toastr";
+import { LoadingBarService } from '@ngx-loading-bar/core';
 
 @Component({
-  selector: 'app-custom-grid',
-  templateUrl: './custom-grid.component.html',
-  styleUrls: ['./custom-grid.component.scss']
+  selector: "app-custom-grid",
+  templateUrl: "./custom-grid.component.html",
+  styleUrls: ["./custom-grid.component.scss"]
 })
 export class CustomGridComponent implements OnInit {
-
   @Input() data: any;
+  @Input() gridConfiguration: any;
 
   @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   public customer = false;
@@ -58,16 +73,22 @@ export class CustomGridComponent implements OnInit {
     pageSizes: true,
     previousNext: true
   };
+  public dialogDelete = false;
+  public id: any;
+  public method: any;
+  public index: number;
 
   constructor(
-  ) {
-    // this.excelIO = new Excel.IO();
-  }
+    private router: Router,
+    private service: CustomGridService,
+    private toastr: ToastrService
+  ) {}
 
   ngOnInit() {
+    console.log(this.data);
+    this.currentLoadData = this.data;
     this.height = window.innerHeight - 81;
     this.height += "px";
-    this.data.gender = 'male';
 
     if (localStorage.getItem("language") !== null) {
       this.language = JSON.parse(localStorage.getItem("language")).grid;
@@ -76,10 +97,12 @@ export class CustomGridComponent implements OnInit {
     if (localStorage.getItem("theme") !== null) {
       this.theme = localStorage.getItem("theme");
     }
+
+    this.initialize();
   }
 
-  onChange(event) {
-    this.data.birthday = event;
+  initialize() {
+    this.gridView = process(this.currentLoadData, this.state);
   }
 
   selectionChange(event) {
@@ -107,7 +130,7 @@ export class CustomGridComponent implements OnInit {
   }
 
   loadProducts(): void {
-    this.gridView = process(this.gridData.data, this.state);
+    this.gridView = process(this.data, this.state);
   }
 
   previewUser(selectedUser) {
@@ -119,9 +142,7 @@ export class CustomGridComponent implements OnInit {
     console.log(e);
   }
 
-  action(event) {
-
-  }
+  action(event) {}
 
   onFileChange(args) {
     this.customerDialogOpened = true;
@@ -312,17 +333,41 @@ export class CustomGridComponent implements OnInit {
         ]
       }
     });
-    this.gridView = process(this.gridData.data, this.state);
+    this.gridView = process(this.data, this.state);
   }
 
   public groupChange(groups: GroupDescriptor[]): void {
     this.state.group = groups;
-    this.gridView = process(this.gridData.data, this.state);
+    this.gridView = process(this.data, this.state);
   }
 
   public sortChange(sort: SortDescriptor[]): void {
     this.state.sort = sort;
-    this.gridView = process(this.gridData.data, this.state);
+    this.gridView = process(this.data, this.state);
   }
 
+  public generateLink(link, param) {
+    this.router.navigate([link, param]);
+  }
+
+  public openDialogDelete(id, method, index) {
+    this.id = id;
+    this.method = method;
+    this.index = index;
+    this.dialogDelete = true;
+  }
+
+  public dialogDeleteAction(answer) {
+    if (answer === "yes") {
+      this.service[this.method](this.id).subscribe(data => {
+        console.log(data);
+        if (data) {
+          console.log(this.index);
+          this.gridView.data.splice(this.index, 1);
+          this.gridView.total -= 1;
+        }
+      });
+    }
+    this.dialogDelete = false;
+  }
 }

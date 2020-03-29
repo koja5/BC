@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DashboardService } from '../../../services/dashboard.service';
 
 @Component({
   selector: 'app-translation',
@@ -6,13 +7,24 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./translation.component.scss']
 })
 export class TranslationComponent implements OnInit {
+  public gridConfiguration: any;
+  public data: any;
 
-    
-
-  constructor() { }
+  constructor(private service: DashboardService) {}
 
   ngOnInit() {
+    this.initialization();
   }
 
+  initialization() {
+    this.service.getGridConfiguration('translation').subscribe(data => {
+      this.gridConfiguration = data;
+    });
 
+    this.service.getTranslation().subscribe(
+      data => {
+        this.data = data;
+      }
+    );
+  }
 }

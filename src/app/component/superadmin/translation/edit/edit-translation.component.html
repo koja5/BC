@@ -1,4 +1,24 @@
-<mat-card class="custom-mat custom-mat-{{type}}" *ngIf="schema !== undefined">
-  <json-schema-form loadExternalAssets="true" [form]="schema" (onSubmit)="saveConfiguration($event)">
-  </json-schema-form>
-</mat-card>
+<!-- <div *ngIf="(schema === undefined && data === undefined) || !loading">
+  <div class="spinner loading"></div>
+</div> -->
+
+<div *ngIf="data !== undefined">
+  <button kendobutton style="margin: 1vh;" class="k-button k-primary inputTheme-Theme1" (click)="back()"><i
+      class="fa fa-arrow-left"></i> &nbsp; Back to grid</button>
+
+  <div>
+    <kendo-textbox-container floatingLabel="Language">
+      <input kendoTextBox [(ngModel)]="data.language" name="language" />
+    </kendo-textbox-container>
+    <kendo-textbox-container floatingLabel="Country code">
+      <input kendoTextBox [(ngModel)]="data.countryCode" name="countryCode" />
+    </kendo-textbox-container>
+    <kendo-switch [(ngModel)]="data.active" name="active"></kendo-switch>
+  </div>
+
+  <mat-card class="custom-mat custom-mat-{{type}}" *ngIf="schema !== undefined">
+    <json-schema-form loadExternalAssets="true" [form]="schema" [data]="data.config"
+      (onSubmit)="saveConfiguration($event)">
+    </json-schema-form>
+  </mat-card>
+</div>

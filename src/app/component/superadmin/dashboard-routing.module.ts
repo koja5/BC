@@ -24,7 +24,7 @@ const routes: Routes = [
         path: 'members',
         component: MembersComponent
       },
-      { path: 'translation/edit', component: EditTranslationComponent }
+      { path: 'translation/edit/:id', component: EditTranslationComponent }
     ]
   }
 ];

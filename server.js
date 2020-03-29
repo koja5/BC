@@ -6,7 +6,8 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const api = require('./server/api');
-const mongo = require('./server/mongodb')
+const mongo = require('./server/mongodb');
+const morgan = require('morgan');
 const mail = require('./server/mailAPI');
 const app = express();
 const socketIO = require('socket.io');
@@ -111,6 +112,9 @@ app.use(session({
     maxAge: 1000 * 300 * 30
   }
 }));
+
+// loguje svaki zahtev u konzolurs
+app.use(morgan('dev'));
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));
