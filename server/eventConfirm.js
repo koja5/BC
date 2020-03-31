@@ -176,7 +176,7 @@ function confirm1() {
         console.log(rows);
         rows.forEach(function(to, i, array) {
           var verificationLinkButton =
-            link + "/korisnik/verifikacija/" + sha1(to.email);
+            link + "/user/verification/" + sha1(to.email);
           console.log(verificationLinkButton);
           var mailOptions = {
             from: "info@app-production.eu",

@@ -1,18 +1,21 @@
-import { Component, OnInit, Input } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { LoginService } from "src/app/services/login.service";
-import { MailService } from "../../../../services/mail.service";
+import { Component, OnInit, Input } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { LoginService } from 'src/app/services/login.service';
+import { MailService } from '../../../../services/mail.service';
 
 @Component({
-  selector: "app-choose-director",
-  templateUrl: "./choose-director.component.html",
-  styleUrls: ["./choose-director.component.scss"]
+  selector: 'app-choose-director',
+  templateUrl: './choose-director.component.html',
+  styleUrls: ['./choose-director.component.scss']
 })
 export class ChooseDirectorComponent implements OnInit {
   public id: number;
-  public step = "welcome";
-  public line = "one";
+  public step = 'welcome';
+  public line = 'one';
   public user: any;
+  public directorLoading = false;
+  public directorList = null;
+  public selectedDirector = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,22 +46,64 @@ export class ChooseDirectorComponent implements OnInit {
 
   doNotHave() {
     const data = {
-      sid: 0 + "-" + this.id,
+      sid: 0 + '-' + this.id,
       id: this.id
     };
 
     this.service.updateUserSID(data).subscribe(data => {
       console.log(data);
       if (data) {
-        this.step = "done";
-        this.line = "three";
+        this.step = 'done';
+        this.line = 'three';
+      }
+    });
+  }
+
+  updateUserSID() {
+    const data = {
+      sid: this.selectedDirector.sid + '-' + this.id,
+      id: this.id
+    };
+
+    this.service.updateUserSID(data).subscribe(data => {
+      console.log(data);
+      if (data) {
+        this.step = 'done';
+        this.line = 'three';
       }
     });
   }
 
   doneSignUp() {
     this.mailService.sendMail(this.user, function() {
-      this.router.navigate(["/login"]);
+      this.router.navigate(['/login']);
     });
+  }
+
+  onValueChange(event) {
+    console.log(event);
+    if (event === undefined) {
+      this.selectedDirector = null;
+    } else {
+      this.selectedDirector = event;
+    }
+  }
+
+  searchDirector(event) {
+    console.log(event);
+    if (event !== '' && event.length > 2) {
+      this.directorLoading = true;
+      const searchFilter = {
+        filter: event
+      };
+      this.service.searchDirector(searchFilter).subscribe((val: []) => {
+        this.directorList = val.sort((a, b) =>
+          String(a['fullname']).localeCompare(String(b['fullname']))
+        );
+        this.directorLoading = false;
+      });
+    } else {
+      this.directorList = [];
+    }
   }
 }

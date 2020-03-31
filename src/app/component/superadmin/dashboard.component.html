@@ -54,7 +54,7 @@
                 </li>
                 <li>
                   <a (click)="settings.open()" (click)="showHideProfile()">
-                    <i class="fa fa-cog"></i> {{language['dashboard']['settings']}}
+                    <i class="fa fa-cog"></i> 
                   </a>
                 </li>
                 <li>
@@ -228,7 +228,7 @@
 
 <modal #settings modalClass="modal-md top-margin loggerModal adminModal">
   <modal-header>
-    <h2 *ngIf="language !== undefined">{{language['dashboard']['settings']}}</h2>
+    <h2 *ngIf="language !== undefined"></h2>
   </modal-header>
   <modal-content>
     <kendo-tabstrip>

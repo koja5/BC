@@ -23,6 +23,7 @@ export class TranslationComponent implements OnInit {
 
     this.service.getTranslation().subscribe(
       data => {
+        console.log(data);
         this.data = data;
       }
     );

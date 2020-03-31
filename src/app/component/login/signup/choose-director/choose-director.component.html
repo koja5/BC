@@ -46,22 +46,23 @@
         <i class="fa fa-users"></i>
       </div>
 
-      <h1>Choose your directory!</h1>
+      <h1>Choose your director!</h1>
 
       <div class="choose-options">
-        <kendo-textbox-container floatingLabel="Choose director">
-          <kendo-combobox [data]="listItems" [textField]="'text'" [valueField]="'value'" [value]="selectedValue"
-            [valuePrimitive]="true" [(ngModel)]="listItems" name="choose-director">
-            <ng-template kendoComboBoxItemTemplate let-dataItem>
-              <span class="template">{{ dataItem.value }}</span> {{ dataItem.text }}
-            </ng-template>
-          </kendo-combobox>
-        </kendo-textbox-container>
+        <kendo-combobox [data]="directorList" [textField]="'fullname'" [valueField]="'id'"
+          (valueChange)="onValueChange($event)" [(ngModel)]="selectedDirector" [filterable]="true"
+          (filterChange)="searchDirector($event)" [loading]="directorLoading">
+          <ng-template kendoComboBoxItemTemplate let-dataItem>
+            <p style="height: 50px !important;">
+              <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+            </p>
+          </ng-template>
+        </kendo-combobox>
       </div>
 
       <div class="next-previous-button">
-        <button class="do-not-have" (click)="doNotHave()">I don't have directory</button>
-        <button class="fxt-btn-fill" (click)="next('done', 'three')">Next <i class="fa fa-arrow-right"></i></button>
+        <button class="do-not-have" (click)="doNotHave()">I don't have director</button>
+        <button class="fxt-btn-fill" (click)="updateUserSID()" [disabled]="selectedDirector === null">Next <i class="fa fa-arrow-right"></i></button>
       </div>
     </div>
     <div id="third" *ngIf="step === 'done'">

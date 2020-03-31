@@ -31,16 +31,20 @@ export class LoginService {
     console.log(data);
     return this.http.post("/api/login", data).map(res => res);
   }
-  
+
   signUp(data) {
-    return this.http.post('/api/signup', data).map(res => res);
+    return this.http.post("/api/signup", data).map(res => res);
   }
 
   getUserInfo(id) {
-    return this.http.get('/api/getUserInfo/' + id).map(res => res);
+    return this.http.get("/api/getUserInfo/" + id).map(res => res);
   }
 
   updateUserSID(data) {
-    return this.http.post('/api/updateUserSID', data).map(res => res);
+    return this.http.post("/api/updateUserSID", data).map(res => res);
+  }
+
+  searchDirector(filter) {
+    return this.http.post("/api/searchDirector", filter).map(res => res);
   }
 }

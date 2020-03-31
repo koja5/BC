@@ -53,6 +53,8 @@ export class LoginComponent implements OnInit {
     this.service.login(this.data).subscribe(data => {
       console.log(data);
       if (data['login']) {
+        // localStorage.setItem('id', sha1(1));
+        localStorage.setItem('id', data['user']['id']);
         this.cookie.set('user', data['user']['type'], 24, '/');
         this.router.navigate(['home']);
       }

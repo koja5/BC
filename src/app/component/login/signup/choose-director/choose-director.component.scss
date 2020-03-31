@@ -364,3 +364,8 @@ li {
     margin-right: 10px;
     transition: all 0.3s ease-in-out;
 }
+
+.fxt-btn-fill:disabled {
+	cursor: not-allowed !important;
+	opacity: 0.7;
+}

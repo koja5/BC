@@ -19,6 +19,7 @@ import { MatCardModule, MatToolbarModule } from '@angular/material';
 import { EditTranslationComponent } from './translation/edit/edit-translation.component';
 import { CustomGridComponent } from './custom-grid/custom-grid.component';
 import { GridModule, ExcelModule, PDFModule } from '@progress/kendo-angular-grid';
+import { FormsModule } from '@angular/forms';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
@@ -44,6 +45,7 @@ import { CustomGridService } from '../../services/custom-grid.service';
     MatCardModule, 
     MatToolbarModule,
     GridModule,
+    FormsModule,
     InputsModule,
     IntlModule,
     DropDownsModule,

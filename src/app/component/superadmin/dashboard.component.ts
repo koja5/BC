@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Modal } from 'ngx-modal';
+import { DashboardService } from 'src/app/services/dashboard.service';
 declare var document: any;
 
 @Component({
@@ -8,39 +9,53 @@ declare var document: any;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild("settings") settings: Modal;
-  public sidebar = "";
-  public sidebarMobile = "";
-  public profile = "";
-  public imagePath: any = "../../../assets/img/users/defaultUser.png";
+  @ViewChild('settings') settings: Modal;
+  public sidebar = '';
+  public sidebarMobile = '';
+  public profile = '';
+  public imagePath: any = '../../../assets/img/users/defaultUser.png';
+  public language: any;
   
-  constructor() { }
+  constructor(private service: DashboardService) { }
 
   ngOnInit() {
+    this.initialization();
+  }
+
+  initialization() {
+    if (localStorage.getItem('language') !== null) {
+      this.language = JSON.parse(localStorage.getItem('language'))['login'];
+    } else {
+      this.service.getTranslationFromFS('english').subscribe(data => {
+        console.log(data);
+        localStorage.setItem('language', JSON.stringify(data));
+        this.language = data['login'];
+      });
+    }
   }
 
   hideShowSidebar() {
-    if (this.sidebar === "") {
-      this.sidebar = "sidemenu-closed";
+    if (this.sidebar === '') {
+      this.sidebar = 'sidemenu-closed';
     } else {
-      this.sidebar = "";
+      this.sidebar = '';
     }
   }
 
   hideShowSidebarMobile() {
-    this.sidebar = "";
-    if (this.sidebarMobile === "") {
-      this.sidebarMobile = "collapse show";
+    this.sidebar = '';
+    if (this.sidebarMobile === '') {
+      this.sidebarMobile = 'collapse show';
     } else {
-      this.sidebarMobile = "";
+      this.sidebarMobile = '';
     }
   }
 
   showHideProfile() {
-    if (this.profile === "") {
-      this.profile = "show";
+    if (this.profile === '') {
+      this.profile = 'show';
     } else {
-      this.profile = "";
+      this.profile = '';
     }
   }
 

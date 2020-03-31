@@ -5,39 +5,39 @@
       <div class="fxt-bg-img fxt-none-767" data-bg-image="../../../assets/img/login/background.jpg"
          style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
          <div class="fxt-intro">
-            <div class="sub-title">Welcome To</div>
-            <h1>Our xmee</h1>
-            <p>Grursus mal suada faci lisis Lorem ipsum dolarorit ametion consectetur elit. Vesti ulum nec the dumm.</p>
+            <div class="sub-title">{{language.welcomeBack}}</div>
+            <h1>BC-Inter</h1>
+            <p>{{language.welcomeMessage}}</p>
          </div>
       </div>
       <div class="fxt-bg-color">
          <div class="fxt-header">
             <a href="login-5.html" class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
             <div class="fxt-page-switcher">
-               <a (click)="changeForm('login')" class="switcher-text switcher-text1 active">LogIn</a>
-               <a (click)="changeForm('signup')" class="switcher-text switcher-text2">Register</a>
+               <a (click)="changeForm('login')" class="switcher-text switcher-text1 active">{{language.signIn}}</a>
+               <a (click)="changeForm('signup')" class="switcher-text switcher-text2">{{language.signUp}}</a>
             </div>
          </div>
          <div class="fxt-form">
             <form (ngSubmit)="login(form)">
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="email" [(ngModel)]="data.email" class="form-control" name="email"
-                     placeholder="Email Address" required="required">
+                     placeholder="{{language.email}}" required="required">
                   <i class="flaticon-envelope"></i>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-2">
                   <input type="{{passwordType}}" [(ngModel)]="data.password" class="form-control" name="password"
-                     placeholder="Password" required="required">
+                     placeholder="{{language.password}}" required="required">
                   <i class="{{passwordIcon}}" (mousedown)="showPass()" (mouseup)="hidePass()"
                      style="cursor: pointer; right: 130px !important;"></i>
-                  <a (click)="changeForm('forgot-password')" class="switcher-text3">Forgot Password</a>
+                  <a (click)="changeForm('forgot-password')" class="switcher-text3">{{language.forgotPassword}}</a>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-3">
                   <div class="fxt-content-between">
-                     <button type="submit" class="fxt-btn-fill">Log in</button>
+                     <button type="submit" class="fxt-btn-fill">{{language.signIn}}</button>
                      <div class="checkbox">
                         <input id="checkbox1" type="checkbox">
-                        <label for="checkbox1">Keep me logged in</label>
+                        <label for="checkbox1">{{language.rememberPassword}}</label>
                      </div>
                   </div>
                </div>
@@ -65,54 +65,54 @@
       <div class="fxt-bg-img fxt-none-767" data-bg-image="../../../assets/img/login/background.jpg"
          style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
          <div class="fxt-intro">
-            <div class="sub-title">Welcome To</div>
-            <h1>Our xmee</h1>
-            <p>Grursus mal suada faci lisis Lorem ipsum dolarorit ametion consectetur elit. Vesti ulum nec the dumm.</p>
+            <div class="sub-title">{{language.welcomeBack}}</div>
+            <h1>BC-Inter</h1>
+            <p>{{language.welcomeMessage}}</p>
          </div>
       </div>
       <div class="fxt-bg-color">
          <div class="fxt-header">
             <a href="login-5.html" class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
             <div class="fxt-page-switcher">
-               <a (click)="changeForm('login')" class="switcher-text switcher-text1">LogIn</a>
-               <a (click)="changeForm('signup')" class="switcher-text switcher-text2 active">Register</a>
+               <a (click)="changeForm('login')" class="switcher-text switcher-text1">{{language.signIn}}</a>
+               <a (click)="changeForm('signup')" class="switcher-text switcher-text2 active">{{language.signUp}}</a>
             </div>
          </div>
          <div class="fxt-form">
             <form (ngSubmit)="signup(user)">
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="text" class="form-control" [(ngModel)]="data.firstname" name="firstname"
-                     placeholder="Firstname" required="required">
+                     placeholder="{{language.firstName}}" required="required">
                   <i class="flaticon-user"></i>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="text" class="form-control" [(ngModel)]="data.lastname" name="lastname"
-                     placeholder="Lastname" required="required">
+                     placeholder="{{language.lastName}}" required="required">
                   <i class="flaticon-user"></i>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-2">
                   <input type="email" class="form-control" [(ngModel)]="data.email" name="email"
-                     placeholder="Your Email" required="required">
+                     placeholder="{{language.email}}" required="required">
                   <i class="flaticon-envelope"></i>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-3">
                   <input type="{{passwordType}}" class="form-control" [(ngModel)]="data.password" name="password"
-                     placeholder="Password" required="required">
+                     placeholder="{{language.password}}" required="required">
                   <i class="{{passwordIcon}}" (mousedown)="showPass()" (mouseup)="hidePass()"
                      style="cursor: pointer;"></i>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-3">
                   <input type="{{passwordType}}" class="form-control" [(ngModel)]="data.confirmPassword"
-                     name="confirmPassword" placeholder="Confirm password" required="required">
+                     name="confirmPassword" placeholder="{{language.confirmPassword}}" required="required">
                   <i class="{{passwordIcon}}" (mousedown)="showPass()" (mouseup)="hidePass()"
                      style="cursor: pointer;"></i>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-4">
                   <div class="fxt-content-between">
-                     <button type="submit" class="fxt-btn-fill">Register</button>
+                     <button type="submit" class="fxt-btn-fill">{{language.signUp}}</button>
                      <div class="checkbox">
                         <input id="checkbox1" type="checkbox">
-                        <label for="checkbox1">I agree the terms of services</label>
+                        <label for="checkbox1">{{language.agreeJoin}}</label>
                      </div>
                   </div>
                </div>

@@ -49,7 +49,7 @@ router.post("/login", (req, res, next) => {
       } else {
         console.log(req.body.email, sha1(reqObj.password));
         conn.query(
-          "SELECT * FROM users WHERE email='" +
+          "SELECT * FROM users WHERE active = 1 and email='" +
             req.body.email +
             "'AND password='" +
             sha1(req.body.password) +
@@ -113,12 +113,13 @@ router.post("/signUp", function(req, res, next) {
         });
         return next(err);
       }
-      console.log(rows);
+
       if (rows.length >= 1) {
         response.success = false;
         response.info = "Email already exists!";
         res.json(response);
       } else {
+        req.body.fullname = req.body.lastname + " " + req.body.firstname;
         conn.query("insert into users SET ?", req.body, function(err, rows) {
           conn.release();
           if (!err) {
@@ -157,6 +158,30 @@ router.get("/getUserInfo/:id", function(req, res, next) {
     }
     var id = req.params.id;
     conn.query("SELECT * from users where id = ?", [id], function(err, rows) {
+      conn.release();
+      if (!err) {
+        res.json(rows);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database"
+        });
+      }
+    });
+  });
+});
+
+router.get("/getUserInfoSHA1/:id", function(req, res, next) {
+  connection.getConnection(function(err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database"
+      });
+      return;
+    }
+    var id = req.params.id;
+    conn.query("SELECT * from users where id = '" + id + "'", function(err, rows) {
       conn.release();
       if (!err) {
         res.json(rows);
@@ -212,7 +237,7 @@ router.post("/updateUserSID", function(req, res, next) {
   });
 });
 
-router.get("/korisnik/verifikacija/:id", (req, res, next) => {
+router.get("/user/verification/:id", (req, res, next) => {
   try {
     var reqObj = req.params.id;
 
@@ -251,6 +276,40 @@ router.get("/korisnik/verifikacija/:id", (req, res, next) => {
     console.error("Internal error: " + ex);
     return next(ex);
   }
+});
+
+router.post("/searchDirector", function(req, res, next) {
+  connection.getConnection(function(err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database"
+      });
+      return;
+    }
+    console.log(req.body);
+    conn.query(
+      "SELECT * from users where type = 1 and active = 1 and fullname like '%" +
+        req.body.filter +
+        "%'",
+      function(err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json(null);
+        }
+      }
+    );
+
+    conn.on("error", function(err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database"
+      });
+      return;
+    });
+  });
 });
 
 module.exports = router;

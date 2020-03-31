@@ -34,6 +34,11 @@ export class DashboardService {
       .map(res => res);
   }
 
+  getTranslationFromFS(language: string) {
+    return this.http.get('../assets/configuration/translation/' + language + '.json')
+      .map(res => res);
+  }
+
   getTranslationWithId(id) {
     return this.http.get('/api/getTranslationWithId/' + id)
       .map(res => res);
