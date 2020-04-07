@@ -1,21 +1,22 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { LoginService } from 'src/app/services/login.service';
-import { MailService } from '../../../../services/mail.service';
+import { Component, OnInit, Input } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { LoginService } from "src/app/services/login.service";
+import { MailService } from "../../../../services/mail.service";
 
 @Component({
-  selector: 'app-choose-director',
-  templateUrl: './choose-director.component.html',
-  styleUrls: ['./choose-director.component.scss']
+  selector: "app-choose-director",
+  templateUrl: "./choose-director.component.html",
+  styleUrls: ["./choose-director.component.scss"]
 })
 export class ChooseDirectorComponent implements OnInit {
   public id: number;
-  public step = 'welcome';
-  public line = 'one';
+  public step = "welcome";
+  public line = "one";
   public user: any;
   public directorLoading = false;
   public directorList = null;
   public selectedDirector = null;
+  public language: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,6 +33,20 @@ export class ChooseDirectorComponent implements OnInit {
     this.service.getUserInfo(this.id).subscribe(data => {
       this.user = data[0];
     });
+
+    this.service.checkCountryLocation().subscribe(data => {
+      this.service
+        .getTranslationByCountryCode(data["countryCode"])
+        .subscribe(language => {
+          if (language !== null) {
+            this.language = language["config"];
+          } else {
+            this.service.getDefaultLanguage().subscribe(language => {
+              this.language = language["config"];
+            });
+          }
+        });
+    });
   }
 
   next(step, line) {
@@ -46,37 +61,37 @@ export class ChooseDirectorComponent implements OnInit {
 
   doNotHave() {
     const data = {
-      sid: 0 + '-' + this.id,
+      sid: 0 + "-" + this.id,
       id: this.id
     };
 
     this.service.updateUserSID(data).subscribe(data => {
       console.log(data);
       if (data) {
-        this.step = 'done';
-        this.line = 'three';
+        this.step = "done";
+        this.line = "three";
       }
     });
   }
 
   updateUserSID() {
     const data = {
-      sid: this.selectedDirector.sid + '-' + this.id,
+      sid: this.selectedDirector.sid + "-" + this.id,
       id: this.id
     };
 
     this.service.updateUserSID(data).subscribe(data => {
       console.log(data);
       if (data) {
-        this.step = 'done';
-        this.line = 'three';
+        this.step = "done";
+        this.line = "three";
       }
     });
   }
 
   doneSignUp() {
     this.mailService.sendMail(this.user, function() {
-      this.router.navigate(['/login']);
+      this.router.navigate(["/login"]);
     });
   }
 
@@ -91,14 +106,14 @@ export class ChooseDirectorComponent implements OnInit {
 
   searchDirector(event) {
     console.log(event);
-    if (event !== '' && event.length > 2) {
+    if (event !== "" && event.length > 2) {
       this.directorLoading = true;
       const searchFilter = {
         filter: event
       };
       this.service.searchDirector(searchFilter).subscribe((val: []) => {
         this.directorList = val.sort((a, b) =>
-          String(a['fullname']).localeCompare(String(b['fullname']))
+          String(a["fullname"]).localeCompare(String(b["fullname"]))
         );
         this.directorLoading = false;
       });

@@ -5,7 +5,6 @@ import {
   HostListener,
   Input
 } from "@angular/core";
-import { Modal } from "ngx-modal";
 import {
   process,
   State,
@@ -35,7 +34,7 @@ export class CustomGridComponent implements OnInit {
   @Input() data: any;
   @Input() gridConfiguration: any;
 
-  @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
+  // @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   public customer = false;
   public unamePattern = "^[a-z0-9_-]{8,15}$";
   public emailPattern = "^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$";

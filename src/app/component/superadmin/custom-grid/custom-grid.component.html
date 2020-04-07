@@ -16,7 +16,7 @@
         <button *ngIf="gridConfiguration.new.open === 'modal'" kendoButton [icon]="'add'" (click)="newUser()"
           [primary]="true" class="addButton">{{language.newCustomer}}</button>
         <button *ngIf="gridConfiguration.new.open === 'page'" kendoButton [icon]="'add'"
-          [routerLink]="gridConfiguration.new.link" [primary]="true" class="addButton">{{language.newCustomer}}</button>
+          [routerLink]="gridConfiguration.new.link" [primary]="true" class="addButton">{{language.addNew}}</button>
         <div class="dropdown-grid">
           <button class="btn-grid" style="border-left:1px solid #0d8bf2">
             <i class="fa fa-caret-down"></i>
@@ -54,9 +54,12 @@
           <span *ngIf="!dataItem[item.field]" class="label label-danger ng-star-inserted">Inactive</span>
         </div>
       </ng-template>
+      <ng-template *ngIf="item.type === 'image'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+        <img src="{{item.rootPath}}{{dataItem[item.field]}}" class="column-image">
+      </ng-template>
     </kendo-grid-column>
 
-    <kendo-grid-pdf fileName="Customers.pdf" [allPages]="true" paperSize="A4" [repeatHeaders]="true">
+    <kendo-grid-pdf fileName="Customers.pdf" [allPages]="true" paperSize="A4">
       <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
       <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
         <div class="page-template">

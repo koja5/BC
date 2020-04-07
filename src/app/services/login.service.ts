@@ -21,10 +21,14 @@ export class LoginService {
       .map(res => res);
   }
 
-  getDefaultLanguage() {
+  /*getDefaultLanguage() {
     return this.http
       .get("../../assets/configuration/language/english.json")
       .map(res => res);
+  }*/
+
+  getDefaultLanguage() {
+    return this.http.get("/api/getTranslationByCountryCode/US").map(res => res);
   }
 
   login(data) {
@@ -46,5 +50,13 @@ export class LoginService {
 
   searchDirector(filter) {
     return this.http.post("/api/searchDirector", filter).map(res => res);
+  }
+
+  forgotPassword(data) {
+    return this.http.post("/api/forgotPassword", data).map(res => res);
+  }
+
+  changePassword(data) {
+    return this.http.post("/api/changePassword", data).map(res => res);
   }
 }

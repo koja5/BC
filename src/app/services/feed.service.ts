@@ -12,4 +12,28 @@ export class FeedService {
   getUserInfoSHA1(id) {
     return this.http.get('/api/getUserInfoSHA1/' + id).map(res => res);
   }
+
+  createPost(data) {
+    return this.http.post('/api/createPost', data).map(res => res);
+  }
+
+  getAllPostsForUser(id) {
+    return this.http.get('/api/getAllPostsForUser/' + id).map(res => res);
+  }
+
+  deletePost(id) {
+    return this.http.get('/api/deletePost/'+ id).map(res => res);
+  }
+
+  likePost(data) {
+    return this.http.post('/api/likePost', data).map(res => res);
+  }
+
+  commentPost(data) {
+    return this.http.post('/api/commentPost', data).map(res => res);
+  }
+
+  getLikesForPost(id) {
+    return this.http.get('/api/getLikesForPost/' + id).map(res => res);
+  }
 }

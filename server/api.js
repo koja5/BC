@@ -181,7 +181,35 @@ router.get("/getUserInfoSHA1/:id", function(req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query("SELECT * from users where id = '" + id + "'", function(err, rows) {
+    console.log(id);
+    conn.query("SELECT * from users where sha1(id) = '" + id + "'", function(
+      err,
+      rows
+    ) {
+      conn.release();
+      if (!err) {
+        res.json(rows);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database"
+        });
+      }
+    });
+  });
+});
+
+router.get("/getAllUsers", function(req, res, next) {
+  connection.getConnection(function(err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database"
+      });
+      return;
+    }
+    var id = req.params.id;
+    conn.query("SELECT * from users", function(err, rows) {
       conn.release();
       if (!err) {
         res.json(rows);
@@ -310,6 +338,148 @@ router.post("/searchDirector", function(req, res, next) {
       return;
     });
   });
+});
+
+router.post("/editUser", function(req, res, next) {
+  connection.getConnection(function(err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database"
+      });
+      return;
+    }
+
+    var id = req.body.id;
+    req.body.fullname = req.body.lastname + " " + req.body.firstname;
+    conn.query("update users SET ? where id = '" + id + "'", req.body, function(
+      err,
+      rows
+    ) {
+      conn.release();
+      if (!err) {
+        if (!err) {
+          response = true;
+        } else {
+          response = false;
+        }
+        res.json(response);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database"
+        });
+        console.log(err);
+      }
+    });
+    conn.on("error", function(err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database"
+      });
+      return;
+    });
+  });
+});
+
+router.post("/forgotPassword", (req, res, next) => {
+  try {
+    var reqObj = req.body;
+    connection.getConnection(function(err, conn) {
+      if (err) {
+        console.error("SQL Connection error: ", err);
+        res.json({
+          code: 100,
+          status: "Error in connection database"
+        });
+        return next(err);
+      } else {
+        conn.query(
+          "SELECT * FROM users u WHERE u.email=?",
+          [reqObj.email],
+          function(err, rows, fields) {
+            if (err) {
+              console.error("SQL error:", err);
+              res.json({
+                code: 100,
+                status: "Error in connection database"
+              });
+              return next(err);
+            }
+
+            if (rows.length >= 1 && rows[0].active == "1") {
+              conn.release();
+              res.send({
+                exist: true,
+                notVerified: true
+              });
+            } else if (rows.length >= 1 && rows[0].active != "1") {
+              conn.release();
+              res.send({
+                exist: true,
+                notVerified: true
+              });
+            } else {
+              conn.release();
+              res.send({
+                exist: false,
+                notVerified: false
+              });
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    console.error("Internal error: " + ex);
+    return next(ex);
+  }
+});
+
+router.post("/changePassword", (req, res, next) => {
+  try {
+    var reqObj = req.body;
+    console.log(reqObj);
+    var email = reqObj.email;
+    var password = reqObj.password;
+
+    connection.getConnection(function(err, conn) {
+      if (err) {
+        console.error("SQL Connection error: ", err);
+        res.json({
+          code: 100,
+          status: "Error in connection database"
+        });
+        return next(err);
+      }
+      conn.query(
+        "UPDATE users SET password='" +
+          sha1(password) +
+          "' WHERE sha1(email)='" +
+          email +
+          "'",
+        function(err, rows, fields) {
+          conn.release();
+          if (err) {
+            console.error("SQL error:", err);
+            res.json({
+              code: 100,
+              status: "Error in connection database"
+            });
+            return next(err);
+          } else {
+            res.send({
+              code: "true",
+              message: "The password is success change!"
+            });
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    console.error("Internal error: " + ex);
+    return next(ex);
+  }
 });
 
 module.exports = router;

@@ -18,7 +18,7 @@
 
   <mat-card class="custom-mat custom-mat-{{type}}" *ngIf="schema !== undefined">
     <json-schema-form loadExternalAssets="true" [form]="schema" [data]="data.config"
-      (onSubmit)="saveConfiguration($event)">
+      (onSubmit)="saveConfiguration($event)" framework="material-design">
     </json-schema-form>
   </mat-card>
 </div>

@@ -24,7 +24,28 @@
       "signIn": { "type": "string" },
       "recoveryPassword": { "type": "string" },
       "enterMail": { "type": "string" },
-      "login": { "type": "string" }
+      "login": { "type": "string" },
+      "noCorrectEmailOrPassword": { "type": "string" },
+      "existMail": { "type": "string" },
+      "notEqualPassword": { "type": "string" },
+      "notExistMail": { "type": "string" },
+      "forgotMailSend": { "type": "string" },
+      "confirmPassword": { "type": "string" },
+      "changePassword": { "type": "string" },
+      "chooseWelcome": { "type": "string" },
+      "chooseChoose": { "type": "string" },
+      "chooseDone": { "type": "string" },
+      "chooseHi": { "type": "string" },
+      "chooseWelcomeTitle": { "type": "string" },
+      "chooseWelcomeText1": { "type": "string" },
+      "chooseWelcomeText2": { "type": "string" },
+      "chooseNextButton": { "type": "string" },
+      "chooseDirector": { "type": "string" },
+      "chooseNoDirector": { "type": "string" },
+      "chooseYouDone": { "type": "string" },
+      "chooseDoneText1": { "type": "string" },
+      "chooseDoneText2": { "type": "string" },
+      "chooseLogin": { "type": "string" }
     }
   },
   "layout": [
@@ -83,10 +104,10 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [
-            { "key": "signIn" },
-            { "key": "recoveryPassword" },
-            { "key": "enterMail" },
-            { "key": "login" }
+            { "key": "cookiePolicy" },
+            { "key": "signUpMessage" },
+            { "key": "joinTo" },
+            { "key": "confirmPassword" }
           ]
         },
         {
@@ -94,9 +115,73 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [
-            { "key": "cookiePolicy" },
-            { "key": "signUpMessage" },
-            { "key": "joinTo" }
+            { "key": "recoveryPassword" },
+            { "key": "changePassword" },
+            { "key": "noCorrectEmailOrPassword" },
+            { "key": "existMail" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "notEqualPassword" },
+            { "key": "notExistMail" },
+            { "key": "forgotMailSend" },
+            { }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Choose director",
+      "expandable": true,
+      "expanded": true,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "chooseWelcome" },
+            { "key": "chooseChoose" },
+            { "key": "chooseDone" },
+            { "key": "chooseHi" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "chooseWelcomeTitle" },
+            { "key": "chooseWelcomeText1" },
+            { "key": "chooseWelcomeText2" },
+            { "key": "chooseNextButton" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "chooseDirector" },
+            { "key": "chooseNoDirector" },
+            { "key": "chooseYouDone" },
+            { "key": "chooseDoneText1" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "chooseDoneText2" },
+            { "key": "chooseLogin" },
+            {  },
+            {  }
           ]
         }
       ]

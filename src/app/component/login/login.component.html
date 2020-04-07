@@ -20,6 +20,7 @@
          </div>
          <div class="fxt-form">
             <form (ngSubmit)="login(form)">
+               <div class="error-alert" *ngIf="notCorrent">{{language.noCorrectEmailOrPassword}}</div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="email" [(ngModel)]="data.email" class="form-control" name="email"
                      placeholder="{{language.email}}" required="required">
@@ -29,7 +30,7 @@
                   <input type="{{passwordType}}" [(ngModel)]="data.password" class="form-control" name="password"
                      placeholder="{{language.password}}" required="required">
                   <i class="{{passwordIcon}}" (mousedown)="showPass()" (mouseup)="hidePass()"
-                     style="cursor: pointer; right: 130px !important;"></i>
+                     style="cursor: pointer; right: 160px !important;"></i>
                   <a (click)="changeForm('forgot-password')" class="switcher-text3">{{language.forgotPassword}}</a>
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-3">
@@ -80,6 +81,8 @@
          </div>
          <div class="fxt-form">
             <form (ngSubmit)="signup(user)">
+               <div class="error-alert" *ngIf="existMail">{{language.existMail}}</div>
+               <div class="error-alert" *ngIf="notEqualPassword">{{language.notEqualPassword}}</div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="text" class="form-control" [(ngModel)]="data.firstname" name="firstname"
                      placeholder="{{language.firstName}}" required="required">
@@ -140,26 +143,29 @@
       <div class="fxt-bg-img fxt-none-767" data-bg-image="../../../assets/img/login/background.jpg"
          style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
          <div class="fxt-intro">
-            <div class="sub-title">Welcome To</div>
-            <h1>Our xmee</h1>
-            <p>Grursus mal suada faci lisis Lorem ipsum dolarorit ametion consectetur elit. Vesti ulum nec the dumm.</p>
+            <div class="sub-title">{{language.welcomeBack}}</div>
+            <h1>BC-Inter</h1>
+            <p>{{language.welcomeMessage}}</p>
          </div>
       </div>
       <div class="fxt-bg-color">
          <div class="fxt-header">
             <a href="login-5.html" class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
             <div class="fxt-page-switcher">
-               <a (click)="changeForm('login')" class="switcher-text switcher-text1">LogIn</a>
-               <a (click)="changeForm('signup')" class="switcher-text switcher-text2">Register</a>
+               <a (click)="changeForm('login')" class="switcher-text switcher-text1">{{language.signIn}}</a>
+               <a (click)="changeForm('signup')" class="switcher-text switcher-text2">{{language.signUp}}</a>
             </div>
          </div>
          <div class="fxt-form">
-            <form method="POST">
+            <form (ngSubmit)="forgotPassword(forgot)">
+               <div class="error-alert" *ngIf="notExistMail">{{language.notExistMail}}</div>
+               <div class="success-alert" *ngIf="mailSend">{{language.forgotMailSend}}</div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-2">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="required">
+                  <input type="email" [(ngModel)]="data.email" class="form-control" name="email"
+                     placeholder="{{language.enterMail}}" required="required">
                </div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-4">
-                  <button type="submit" class="fxt-btn-fill">Send Me Email</button>
+                  <button type="submit" class="fxt-btn-fill">{{language.recoveryPassword}}</button>
                </div>
             </form>
          </div>

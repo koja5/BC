@@ -21,6 +21,8 @@ a {
     cursor: pointer;
 }
 
+button:focus {outline:0;}
+
 /* End body */
 /* Slider */
  .slick-arrow:before {
@@ -409,6 +411,8 @@ a {
      overflow: hidden;
      text-overflow: ellipsis;
      white-space: nowrap;
+     color: #385898;
+     cursor: pointer;
 }
  .dropdown .dropdown-menu, .dropdown-item {
      font-size: .85rem;

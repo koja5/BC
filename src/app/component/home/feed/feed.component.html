@@ -1,85 +1,156 @@
-<div class="row" *ngIf="data !== undefined">
-  <!-- Main Content -->
-  <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-    <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
-      <ul class="nav nav-justified border-bottom osahan-line-tab" id="myTab" role="tablist">
-        <li class="nav-item">
-          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-            aria-selected="true"><i class="feather-edit"></i> Share an update</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-            aria-selected="false"><i class="feather-image"></i> Upload a photo</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-            aria-selected="false"><i class="feather-clipboard"></i> Write an article</a>
-        </li>
-      </ul>
-      <div class="tab-content" id="myTabContent">
-        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-          <div class="p-3 d-flex align-items-center w-100" href="#">
+<!-- <app-content-placeholder></app-content-placeholder> -->
+
+<div class="container py-4">
+  <div class="row" *ngIf="data !== undefined">
+    <!-- Main Content -->
+    <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+      <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
+        <ul class="nav nav-justified border-bottom osahan-line-tab" id="myTab" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+              aria-selected="true"><i class="feather-edit"></i> Share an update</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
+              aria-selected="false"><i class="feather-image"></i> Upload a photo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
+              aria-selected="false"><i class="feather-clipboard"></i> Write an article</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+            <div class="p-3 d-flex align-items-center w-100" href="#">
+              <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle feed-image" src="../../../../assets/img/profile_image/{{data.image}}" alt="">
+                <div class="status-indicator bg-success"></div>
+              </div>
+              <div class="w-100">
+                <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none" rows="1"
+                  [(ngModel)]="postData.post" name="post" ng-trim="false"></textarea>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+            <div class="p-3 w-100">
+              <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"
+                rows="3"></textarea>
+            </div>
+          </div>
+          <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            <div class="p-3 w-100">
+              <textarea placeholder="Write an article..." class="form-control border-0 p-0 shadow-none"
+                rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="border-top p-3 d-flex align-items-center">
+          <div class="mr-auto"><a href="#" class="text-link small"><i class="feather-map-pin"></i> Add Location</a>
+          </div>
+          <div class="flex-shrink-1">
+            <button type="button" class="btn btn-light btn-sm">Preview</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="createPost()">Post Status</button>
+          </div>
+        </div>
+      </div>
+      <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
+        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
+          <div class="dropdown-list-image mr-3">
+            <img class="rounded-circle" src="../../../../assets/img/profile_image/{{item.image}}" alt="">
+            <div class="status-indicator bg-success"></div>
+          </div>
+          <div class="font-weight-bold">
+            <div class="text-truncate"><a (click)="openProfile(item.user_id)">{{item.name}}</a></div>
+            <div class="small text-gray-500">{{item.proffesion}}</div>
+          </div>
+          <div class="ml-auto small">
+            <i class="fa fa-ellipsis-h removePost" aria-hidden="true" (click)="showHidePostOption(item._id)"
+              *ngIf="id === item.user_id"></i>
+            <div class="postOptions" [ngClass]="selectedProcessOption === item._id ? 'show' : 'hide'">
+              <ul>
+                <li (click)="deletePost(item._id, i)">Remove</li>
+              </ul>
+            </div>
+            <p class="ml-auto small">{{item.date | date: 'dd/MM/yyyy - HH:mm'}}</p>
+          </div>
+        </div>
+        <div class="p-3 border-bottom osahan-post-body">
+          <pre class="mb-0">{{item.post}}</pre>
+        </div>
+        <div class="p-3 border-bottom osahan-post-footer">
+          <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes"
+              (click)="getLikesForPost(item._id)">{{item.likes.length}}</span></a>
+          <a class="mr-3 text-secondary"><i class="feather-message-square"></i> {{item.recomment.length}}</a>
+        </div>
+        <div class="p-3" class="likeCommentButtons">
+          <button (click)="likePost(item._id, i)" [ngClass]="checkLikedPost(item.likes) ? 'liked' : 'noLike'">
+            <i class="fa fa-thumbs-up"></i> Like
+          </button>
+          <button>
+            <i class="fa fa-comments"></i> Comment
+          </button>
+        </div>
+        <div *ngIf="item.recomment.length > 0">
+          <a *ngIf="item.recomment.length > 3" (click)="showAllComments(item._id)" class="p-2 d-flex"
+            style="color: #007BFF">Show all comments</a>
+          <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment"
+            *ngFor="let comm of item.recomment; let j = index"
+            [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle feed-image" src="../../../../assets/img/profile_image/{{data.image}}" alt="">
+              <img class="rounded-circle" src="../../../../assets/img/profile_image/{{comm.image}}" alt="">
               <div class="status-indicator bg-success"></div>
             </div>
-            <div class="w-100">
-              <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"
-                rows="1"></textarea>
+            <div class="font-weight-bold" style="width: 100%;">
+              <div class="comment-container">
+                <div class="text-truncate"> {{comm.name}} <span
+                    class="float-right small">{{comm.date | date: 'dd/MM/yyyy - HH:mm'}}</span></div>
+                <div class="small" style="font-size: 13px !important;">{{comm.comment}}</div>
+              </div>
+              <!-- <div class="recomment-options">
+                <a (click)="likeItRecomment()">Like it</a>
+                <a (click)="commentOnRecomment()">Comment</a>
+              </div>
+              <div class="sub-comment" *ngIf="comm.recomment.length > 0">
+                <a *ngIf="comm.recomment.length > 3" (click)="showAllComments(item._id)" class="p-2 d-flex"
+                  style="color: #007BFF">Show all comments</a>
+                <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment"
+                  *ngFor="let comm1 of comm.recomment; let j = index"
+                  [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
+                  <div class="dropdown-list-image mr-3">
+                    <img class="rounded-circle" src="../../../../assets/img/profile_image/{{comm.image}}" alt="">
+                    <div class="status-indicator bg-success"></div>
+                  </div>
+                  <div class="font-weight-bold comment-container">
+                    <div class="text-truncate"> {{comm1.name}} <span
+                        class="float-right small">{{comm1.date | date: 'dd/MM/yyyy - HH:mm'}}</span></div>
+                    <div class="small" style="font-size: 13px !important;">{{comm1.comment}}</div>
+                    <div>
+
+                    </div>
+                  </div>
+                </div>
+              </div> -->
             </div>
           </div>
         </div>
-        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-          <div class="p-3 w-100">
-            <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"
-              rows="3"></textarea>
+        <div class="p-3 border-bottom osahan-post-footer comment-input-container">
+          <div class="profile-image-comment">
+            <img src="../../../../assets/img/profile_image/{{item.image}}">
+          </div>
+          <div class="comment-input">
+            <input class="form-control" (keyup.enter)="createComment(item._id, i)" [(ngModel)]="item.newComment"
+              name="comment-{{item._id}}" [id]="item_id" placeholder="Enter your name" type="text">
           </div>
         </div>
-        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-          <div class="p-3 w-100">
-            <textarea placeholder="Write an article..." class="form-control border-0 p-0 shadow-none"
-              rows="3"></textarea>
-          </div>
-        </div>
-      </div>
-      <div class="border-top p-3 d-flex align-items-center">
-        <div class="mr-auto"><a href="#" class="text-link small"><i class="feather-map-pin"></i> Add Location</a>
-        </div>
-        <div class="flex-shrink-1">
-          <button type="button" class="btn btn-light btn-sm">Preview</button>
-          <button type="button" class="btn btn-primary btn-sm">Post Status</button>
-        </div>
-      </div>
-    </div>
-    <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
-      <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
-        <div class="dropdown-list-image mr-3">
-          <img class="rounded-circle" src="../../../assets/img/p5.png" alt="">
-          <div class="status-indicator bg-success"></div>
-        </div>
-        <div class="font-weight-bold">
-          <div class="text-truncate">Tobia Crivellari</div>
-          <div class="small text-gray-500">Product Designer at askbootstrap</div>
-        </div>
-        <span class="ml-auto small">3 hours</span>
-      </div>
-      <div class="p-3 border-bottom osahan-post-body">
-        <p class="mb-0">Tmpo incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-          exercitation ullamco <a href="#">laboris consequat.</a></p>
-      </div>
-      <div class="p-3 border-bottom osahan-post-footer">
-        <a href="#" class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> 16</a>
-        <a href="#" class="mr-3 text-secondary"><i class="feather-message-square"></i> 8</a>
-        <a href="#" class="mr-3 text-secondary"><i class="feather-share-2"></i> 2</a>
-      </div>
-      <div class="p-3">
+        <!-- <div class="p-3">
         <button type="button" class="btn btn-outline-primary btn-sm mr-1">Awesome!!</button>
         <button type="button" class="btn btn-light btn-sm mr-1">😍</button>
         <button type="button" class="btn btn-outline-secondary btn-sm mr-1">Whats it about?</button>
         <button type="button" class="btn btn-outline-secondary btn-sm mr-1">Oooo Great Wow</button>
+      </div> -->
       </div>
-    </div>
-    <div class="mb-3 shadow-sm rounded box bg-white osahan-slider-main">
+      <!-- <div class="mb-3 shadow-sm rounded box bg-white osahan-slider-main">
       <div class="osahan-slider">
         <div class="osahan-slider-item">
           <a href="job-profile.html">
@@ -174,8 +245,8 @@
           </a>
         </div>
       </div>
-    </div>
-    <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
+    </div> -->
+      <!-- <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
       <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
         <div class="dropdown-list-image mr-3">
           <img class="rounded-circle" src="../../../assets/img/p6.png" alt="">
@@ -212,208 +283,220 @@
       <div class="p-3">
         <textarea placeholder="Add Comment..." class="form-control border-0 p-0 shadow-none" rows="1"></textarea>
       </div>
-    </div>
-  </main>
-  <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-    <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
-      <div class="py-4 px-3 border-bottom">
-        <img src="../../../../assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle" alt="Responsive image">
-        <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
-        <p class="mb-0 text-muted">UI / UX Designer</p>
-      </div>
-      <div class="d-flex">
-        <div class="col-6 border-right p-3">
-          <h6 class="font-weight-bold text-dark mb-1">358</h6>
-          <p class="mb-0 text-black-50 small">Connections</p>
+    </div> -->
+    </main>
+    <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+      <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
+        <div class="py-4 px-3 border-bottom">
+          <img src="../../../../assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
+            alt="Responsive image">
+          <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
+          <p class="mb-0 text-muted">No profession info</p>
         </div>
-        <div class="col-6 p-3">
-          <h6 class="font-weight-bold text-dark mb-1">85</h6>
-          <p class="mb-0 text-black-50 small">Views</p>
-        </div>
-      </div>
-      <div class="overflow-hidden border-top">
-        <a class="font-weight-bold p-3 d-block" href="profile.html"> View my profile </a>
-      </div>
-    </div>
-    <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
-      <div class="box-title border-bottom p-3">
-        <h6 class="m-0">Profile Views</h6>
-      </div>
-      <div class="d-flex text-center">
-        <div class="col-6 border-right py-4 px-2">
-          <h5 class="font-weight-bold text-info mb-1">08 <i class="feather-bar-chart-2"></i></h5>
-          <p class="mb-0 text-black-50 small">last 5 days</p>
-        </div>
-        <div class="col-6 py-4 px-2">
-          <h5 class="font-weight-bold text-success mb-1">+ 43% <i class="feather-bar-chart"></i></h5>
-          <p class="mb-0 text-black-50 small">Since last week</p>
-        </div>
-      </div>
-      <div class="overflow-hidden border-top text-center">
-        <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
-      </div>
-    </div>
-    <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
-      <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
-      <div class="p-3 border-bottom">
-        <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
-        <p class="mb-0 text-muted">Looking for talent?</p>
-      </div>
-      <div class="p-3">
-        <button type="button" class="btn btn-outline-primary pl-4 pr-4"> POST A JOB </button>
-      </div>
-    </div>
-  </aside>
-  <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-    <div class="box shadow-sm border rounded bg-white mb-3">
-      <div class="box-title border-bottom p-3">
-        <h6 class="m-0">People you might know</h6>
-      </div>
-      <div class="box-body p-3">
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="../../../assets/img/p8.png" alt="">
-            <div class="status-indicator bg-success"></div>
+        <div class="d-flex">
+          <div class="col-6 border-right p-3">
+            <h6 class="font-weight-bold text-dark mb-1">358</h6>
+            <p class="mb-0 text-black-50 small">Connections</p>
           </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Sophia Lee</div>
-            <div class="small text-gray-500">Student at Harvard
+          <div class="col-6 p-3">
+            <h6 class="font-weight-bold text-dark mb-1">85</h6>
+            <p class="mb-0 text-black-50 small">Views</p>
+          </div>
+        </div>
+        <div class="overflow-hidden border-top">
+          <a class="font-weight-bold p-3 d-block" (click)="openProfile(id)"> View my profile </a>
+        </div>
+      </div>
+      <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">Profile Views</h6>
+        </div>
+        <div class="d-flex text-center">
+          <div class="col-6 border-right py-4 px-2">
+            <h5 class="font-weight-bold text-info mb-1">08 <i class="feather-bar-chart-2"></i></h5>
+            <p class="mb-0 text-black-50 small">last 5 days</p>
+          </div>
+          <div class="col-6 py-4 px-2">
+            <h5 class="font-weight-bold text-success mb-1">+ 43% <i class="feather-bar-chart"></i></h5>
+            <p class="mb-0 text-black-50 small">Since last week</p>
+          </div>
+        </div>
+        <div class="overflow-hidden border-top text-center">
+          <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
+        </div>
+      </div>
+      <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
+        <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
+        <div class="p-3 border-bottom">
+          <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
+          <p class="mb-0 text-muted">Looking for talent?</p>
+        </div>
+        <div class="p-3">
+          <button type="button" class="btn btn-outline-primary pl-4 pr-4"> POST A JOB </button>
+        </div>
+      </div> -->
+    </aside>
+    <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+      <div class="box shadow-sm border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">People you might know</h6>
+        </div>
+        <div class="box-body p-3">
+          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="../../../assets/img/p8.png" alt="">
+              <div class="status-indicator bg-success"></div>
             </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                class="feather-user-plus"></i></button>
-          </span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="../../../assets/img/p9.png" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">John Doe</div>
-            <div class="small text-gray-500">Traveler
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                class="feather-user-plus"></i></button>
-          </span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="../../../assets/img/p10.png" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Julia Cox</div>
-            <div class="small text-gray-500">Art Designer
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                class="feather-user-plus"></i></button>
-          </span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="../../../assets/img/p11.png" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Robert Cook</div>
-            <div class="small text-gray-500">Photographer at Photography
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                class="feather-user-plus"></i></button>
-          </span>
-        </div>
-        <div class="d-flex align-items-center osahan-post-header people-list">
-          <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="../../../assets/img/p12.png" alt="">
-            <div class="status-indicator bg-success"></div>
-          </div>
-          <div class="font-weight-bold mr-2">
-            <div class="text-truncate">Richard Bell</div>
-            <div class="small text-gray-500">Graphic Designer at Envato
-            </div>
-          </div>
-          <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                class="feather-user-plus"></i></button>
-          </span>
-        </div>
-      </div>
-    </div>
-    <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">
-      <img src="../../../assets/img/ads1.png" class="img-fluid" alt="Responsive image">
-      <div class="p-3 border-bottom">
-        <h6 class="font-weight-bold text-gold">Osahanin Premium</h6>
-        <p class="mb-0 text-muted">Grow & nurture your network</p>
-      </div>
-      <div class="p-3">
-        <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE </button>
-      </div>
-    </div>
-    <div class="box shadow-sm border rounded bg-white mb-3">
-      <div class="box-title border-bottom p-3">
-        <h6 class="m-0">Jobs
-        </h6>
-      </div>
-      <div class="box-body p-3">
-        <a href="job-profile.html">
-          <div class="shadow-sm border rounded bg-white job-item mb-3">
-            <div class="d-flex align-items-center p-3 job-item-header">
-              <div class="overflow-hidden mr-2">
-                <h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
-                <div class="text-truncate text-primary">Spotify Inc.</div>
-                <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
+            <div class="font-weight-bold mr-2">
+              <div class="text-truncate">Mica Jovic</div>
+              <div class="small text-gray-500">Student at Harvard
               </div>
-              <img class="img-fluid ml-auto" src="../../../assets/img/l3.png" alt="">
             </div>
-            <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
-              <div class="overlap-rounded-circle">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p9.png" alt="" data-original-title="Sophia Lee">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p10.png" alt="" data-original-title="John Doe">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p11.png" alt="" data-original-title="Julia Cox">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p12.png" alt="" data-original-title="Robert Cook">
-              </div>
-              <span class="font-weight-bold text-muted">18 connections</span>
-            </div>
-            <div class="p-3 job-item-footer">
-              <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
-            </div>
+            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+                  class="feather-user-plus"></i></button>
+            </span>
           </div>
-        </a>
-        <a href="job-profile.html">
-          <div class="shadow-sm border rounded bg-white job-item">
-            <div class="d-flex align-items-center p-3 job-item-header">
-              <div class="overflow-hidden mr-2">
-                <h6 class="font-weight-bold text-dark mb-0 text-truncate">.NET Developer</h6>
-                <div class="text-truncate text-primary">Invision</div>
-                <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
+          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="../../../assets/img/p9.png" alt="">
+              <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold mr-2">
+              <div class="text-truncate">Teodora Karic</div>
+              <div class="small text-gray-500">Traveler
+              </div>
+            </div>
+            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+                  class="feather-user-plus"></i></button>
+            </span>
+          </div>
+          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="../../../assets/img/p10.png" alt="">
+              <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold mr-2">
+              <div class="text-truncate">Milutin Mikic</div>
+              <div class="small text-gray-500">Art Designer
+              </div>
+            </div>
+            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+                  class="feather-user-plus"></i></button>
+            </span>
+          </div>
+          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="../../../assets/img/p11.png" alt="">
+              <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold mr-2">
+              <div class="text-truncate">Anabela Sretenovic</div>
+              <div class="small text-gray-500">Photographer at Photography
+              </div>
+            </div>
+            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+                  class="feather-user-plus"></i></button>
+            </span>
+          </div>
+          <div class="d-flex align-items-center osahan-post-header people-list">
+            <div class="dropdown-list-image mr-3">
+              <img class="rounded-circle" src="../../../assets/img/p12.png" alt="">
+              <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold mr-2">
+              <div class="text-truncate">Marko Jankovic</div>
+              <div class="small text-gray-500">Graphic Designer at Envato
+              </div>
+            </div>
+            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
+                  class="feather-user-plus"></i></button>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">
+        <div class="p-3 border-bottom">
+          <h6 class="font-weight-bold text-gold">BC-Inter Premium</h6>
+          <p class="mb-0 text-muted">Grow & nurture your network</p>
+        </div>
+        <div class="p-3">
+          <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE </button>
+        </div>
+      </div>
+      <!-- <div class="box shadow-sm border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">Jobs
+          </h6>
+        </div>
+        <div class="box-body p-3">
+          <a href="job-profile.html">
+            <div class="shadow-sm border rounded bg-white job-item mb-3">
+              <div class="d-flex align-items-center p-3 job-item-header">
+                <div class="overflow-hidden mr-2">
+                  <h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
+                  <div class="text-truncate text-primary">Spotify Inc.</div>
+                  <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
                 </div>
+                <img class="img-fluid ml-auto" src="../../../assets/img/l3.png" alt="">
               </div>
-              <img class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
-            </div>
-            <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
-              <div class="overlap-rounded-circle">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p13.png" alt="" data-original-title="Sophia Lee">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p1.png" alt="" data-original-title="John Doe">
-                <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                  src="../../../assets/img/p3.png" alt="" data-original-title="Robert Cook">
+              <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+                <div class="overlap-rounded-circle">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p9.png" alt="" data-original-title="Sophia Lee">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p10.png" alt="" data-original-title="John Doe">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p11.png" alt="" data-original-title="Julia Cox">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p12.png" alt="" data-original-title="Robert Cook">
+                </div>
+                <span class="font-weight-bold text-muted">18 connections</span>
               </div>
-              <span class="font-weight-bold text-muted">18 connections</span>
+              <div class="p-3 job-item-footer">
+                <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
+              </div>
             </div>
-            <div class="p-3 job-item-footer">
-              <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
+          </a>
+          <a href="job-profile.html">
+            <div class="shadow-sm border rounded bg-white job-item">
+              <div class="d-flex align-items-center p-3 job-item-header">
+                <div class="overflow-hidden mr-2">
+                  <h6 class="font-weight-bold text-dark mb-0 text-truncate">.NET Developer</h6>
+                  <div class="text-truncate text-primary">Invision</div>
+                  <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
+                  </div>
+                </div>
+                <img class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
+              </div>
+              <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+                <div class="overlap-rounded-circle">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p13.png" alt="" data-original-title="Sophia Lee">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p1.png" alt="" data-original-title="John Doe">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p3.png" alt="" data-original-title="Robert Cook">
+                </div>
+                <span class="font-weight-bold text-muted">18 connections</span>
+              </div>
+              <div class="p-3 job-item-footer">
+                <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
+              </div>
             </div>
-          </div>
-        </a>
-      </div>
-    </div>
-  </aside>
+          </a>
+        </div>
+      </div> -->
+    </aside>
+  </div>
+
+  <kendo-window [title]="'Post likes'" *ngIf="postLikes" [minWidth]="400" [width]="400" [minHeight]="450"
+    (close)="postLikes = false">
+    <ul class="listUserLikes">
+      <li *ngFor="let item of allLikesForPost">
+        <img src="../../../../assets/img/profile_image/{{item.image}}"> <span (click)="showUserProfile(item.user_id)">
+          {{item.name}} </span>
+      </li>
+    </ul>
+  </kendo-window>
+
 </div>

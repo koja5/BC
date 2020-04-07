@@ -5,19 +5,19 @@
         <div class="icon">
           <i class="fa fa-child" [ngClass]="step === 'welcome' ? 'active' : 'disabled'"></i>
         </div>
-        Welcome
+        {{language.chooseWelcome}}
       </li>
       <li class="pay" [ngClass]="step === 'choose' ? 'active' : 'disabled'">
         <div class="icon">
           <i class="fa fa-users" [ngClass]="step === 'choose' ? 'active' : 'disabled'"></i>
         </div>
-        Choose
+        {{language.chooseChoose}}
       </li>
       <li class="wrap" [ngClass]="step === 'done' ? 'active' : 'disabled'">
         <div class="icon">
           <i class="fa fa-check-circle" [ngClass]="step === 'done' ? 'active' : 'disabled'"></i>
         </div>
-        Done
+        {{language.chooseDone}}
       </li>
     </ul>
   </div>
@@ -32,13 +32,13 @@
         <i class="fa fa-child"></i>
       </div>
 
-      <h1>Hi, {{user.lastname}} {{user.firstname}}!</h1>
+      <h1>{{language.chooseHi}}, {{user.lastname}} {{user.firstname}}!</h1>
 
-      <h3>Welcome to our network!</h3>
-      <p>We are glad to you a became a member of our community.</p>
-      <p>We ask you to complete a few more steps.</p>
+      <h3>{{language.chooseWelcomeTitle}}</h3>
+      <p>{{language.chooseWelcomeText1}}</p>
+      <p>{{language.chooseWelcomeText2}}</p>
       <div class="next-previous-button">
-        <button class="fxt-btn-fill" (click)="next('choose', 'two')">Next <i class="fa fa-arrow-right"></i></button>
+        <button class="fxt-btn-fill" (click)="next('choose', 'two')">{{language.chooseNextButton}} <i class="fa fa-arrow-right"></i></button>
       </div>
     </div>
     <div id="second" *ngIf="step === 'choose'">
@@ -46,7 +46,7 @@
         <i class="fa fa-users"></i>
       </div>
 
-      <h1>Choose your director!</h1>
+      <h1>{{language.chooseDirector}}</h1>
 
       <div class="choose-options">
         <kendo-combobox [data]="directorList" [textField]="'fullname'" [valueField]="'id'"
@@ -61,8 +61,8 @@
       </div>
 
       <div class="next-previous-button">
-        <button class="do-not-have" (click)="doNotHave()">I don't have director</button>
-        <button class="fxt-btn-fill" (click)="updateUserSID()" [disabled]="selectedDirector === null">Next <i class="fa fa-arrow-right"></i></button>
+        <button class="do-not-have" (click)="doNotHave()">{{language.chooseNoDirector}}</button>
+        <button class="fxt-btn-fill" (click)="updateUserSID()" [disabled]="selectedDirector === null">{{language.chooseNextButton}} <i class="fa fa-arrow-right"></i></button>
       </div>
     </div>
     <div id="third" *ngIf="step === 'done'">
@@ -79,12 +79,12 @@
         </div>
       </div>
 
-      <h1>You are done!</h1>
+      <h1>{{language.chooseYouDone}}</h1>
 
-      <p>Please check your mail and confirm your mail address.</p>
-      <p>After that you can start to make your professional connections!</p>
+      <p>{{language.chooseDoneText1}}</p>
+      <p>{{language.chooseDoneText2}}</p>
       <div class="next-previous-button">
-        <button class="fxt-btn-fill" (click)="doneSignUp()" routerLink="/login"> Login </button>
+        <button class="fxt-btn-fill" (click)="doneSignUp()" routerLink="/login"> {{language.chooseLogin}} </button>
       </div>
     </div>
   </div>

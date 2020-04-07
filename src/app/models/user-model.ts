@@ -8,4 +8,11 @@ export class UserModel {
     lastname?: string;
     type?: number;
     active?: number;
+    image?: string;
+    birthday?: Date;
+    location?: string;
+    organization?: string;
+    website?: string;
+    phoneNumber?: string;
+    aboutMe?: string;
 }

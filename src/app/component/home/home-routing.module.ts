@@ -5,6 +5,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { FeedComponent } from './feed/feed.component';
 import { MessageComponent } from './message/message.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
+import { MyProfileComponent } from './profile/my-profile/my-profile.component';
 
 const routes: Routes = [
   {
@@ -22,8 +23,8 @@ const routes: Routes = [
         component: FeedComponent
       },
       {
-        path: 'profile',
-        component: ProfileComponent
+        path: 'my-profile',
+        component: MyProfileComponent
       },
       {
           path: 'edit-profile',
@@ -32,6 +33,10 @@ const routes: Routes = [
       {
           path: 'message',
           component: MessageComponent
+      },
+      {
+        path: 'profile/:id',
+        component: ProfileComponent
       }
     ]
   }

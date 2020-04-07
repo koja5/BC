@@ -1,0 +1,37 @@
+{
+    "type": "members",
+    "new": {
+        "open": "page",
+        "link": "/dashboard/home/translation/edit/create"
+    }, 
+    "columns": [
+        {
+            "type": "image",
+            "field": "image",
+            "rootPath": "../../../../assets/img/profile_image/"
+        },
+        {
+            "type": "data",
+            "field": "id"
+        },
+        {
+            "type": "data",
+            "field": "email"
+        },
+        {
+            "type": "data",
+            "field": "firstname"
+        },
+        {
+            "type": "data",
+            "field": "lastname"
+        },
+        {
+            "type": "boolean",
+            "action": "active",
+            "field": "active"
+        }
+    ],
+    "exportPdfName": "Members.pdf",
+    "exportExcelName": "Members.xlsx"
+}

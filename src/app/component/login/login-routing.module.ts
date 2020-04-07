@@ -1,15 +1,24 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login.component';
-import { SignupComponent } from './signup/signup.component';
-import { ChooseDirectorComponent } from './signup/choose-director/choose-director.component';
+import { NgModule } from "@angular/core";
+import { Routes, RouterModule } from "@angular/router";
+import { LoginComponent } from "./login.component";
+import { SignupComponent } from "./signup/signup.component";
+import { ChooseDirectorComponent } from "./signup/choose-director/choose-director.component";
+import { ChangePasswordComponent } from "./change-password/change-password.component";
+import { LoggedGuard } from "src/app/services/guard/logged-guard.service";
 
 const routes: Routes = [
   {
-    path: '', component: LoginComponent
+    path: "",
+    component: LoginComponent
   },
   {
-    path: 'choose-director/:id', component: ChooseDirectorComponent
+    path: "choose-director/:id",
+    component: ChooseDirectorComponent
+  },
+  {
+    path: "change-password/:id",
+    component: ChangePasswordComponent,
+    canActivate: [LoggedGuard]
   }
 ];
 
@@ -17,4 +26,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class LoginRouting { }
+export class LoginRouting {}

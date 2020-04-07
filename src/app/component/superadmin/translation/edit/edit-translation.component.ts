@@ -47,6 +47,17 @@ export class EditTranslationComponent implements OnInit {
     if (this.id === "create") {
       this.service.createTranslation(this.data).subscribe(data => {
         console.log(data);
+        if (data) {
+          this.toastr.success("Successfull!", "Create data is successfull!", {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right"
+          });
+        } else {
+          this.toastr.error("Error!", "Create data is unsuccessfull!", {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right"
+          });
+        }
       });
     } else {
       this.service.updateTranslation(this.data).subscribe(data => {

@@ -854,7 +854,7 @@ form.search-form-opened .btn.submit {
 .page-header.navbar .top-menu .navbar-nav {
     padding: 0;
     margin-right: 20px;
-    display: block
+    display: block !important;
 }
 .page-header.navbar .top-menu .navbar-nav>li.dropdown {
     margin: 0;
@@ -10831,5 +10831,8 @@ kendo-grid-filter-cell-operators {
     padding-top: 18px;
 }
 
+.show {
+    display: block !important;
+}
 
 /* DASHBOARD END */
