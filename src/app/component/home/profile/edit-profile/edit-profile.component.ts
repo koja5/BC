@@ -3,15 +3,18 @@ import { EditProfileService } from "src/app/services/edit-profile.service";
 import { UserModel } from "src/app/models/user-model";
 import { ToastrService } from "ngx-toastr";
 import { MessageService } from "src/app/services/message.service";
+import { ImageCroppedEvent } from "ngx-image-cropper";
 
 @Component({
   selector: "app-edit-profile",
   templateUrl: "./edit-profile.component.html",
-  styleUrls: ["./edit-profile.component.scss"]
+  styleUrls: ["./edit-profile.component.scss"],
 })
 export class EditProfileComponent implements OnInit {
   public id: any;
   public data: any;
+  imageChangedEvent: any = "";
+  croppedImage: any = "";
 
   constructor(
     private service: EditProfileService,
@@ -25,7 +28,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   initialization() {
-    this.service.getUserInfoSHA1(this.id).subscribe(data => {
+    this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       console.log(data);
       this.data = data[0];
       this.data.birthday = new Date(data[0].birthday);
@@ -33,7 +36,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveChanges() {
-    this.service.editUser(this.data).subscribe(data => {
+    this.service.editUser(this.data).subscribe((data) => {
       console.log(data);
       if (data) {
         this.toastr.success(
@@ -48,5 +51,21 @@ export class EditProfileComponent implements OnInit {
         this.message.sendNewFullname();
       }
     });
+  }
+
+  fileChangeEvent(event: any): void {
+    this.imageChangedEvent = event;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+  imageLoaded() {
+    // show cropper
+  }
+  cropperReady() {
+    // cropper ready
+  }
+  loadImageFailed() {
+    // show message
   }
 }

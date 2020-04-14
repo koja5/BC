@@ -12,6 +12,14 @@ import { ContentPlaceholderComponent } from './content-placeholder/content-place
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { MyProfileComponent } from './profile/my-profile/my-profile.component';
 import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { PremiumComponent } from './premium/premium.component';
+import { ConnectionComponent } from './connection/connection.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
+import { PrivacyPolicyComponent } from '../templates/privacy-policy/privacy-policy.component';
+import { TermsComponent } from '../templates/terms/terms.component';
+import { FindConnectionComponent } from './find-connection/find-connection.component';
+import { ContactComponent } from './contact/contact.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 @NgModule({
   declarations: [
@@ -21,7 +29,13 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
     MessageComponent,
     EditProfileComponent,
     ContentPlaceholderComponent,
-    MyProfileComponent
+    MyProfileComponent,
+    PremiumComponent,
+    ConnectionComponent,
+    PrivacyPolicyComponent,
+    TermsComponent,
+    FindConnectionComponent,
+    ContactComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +43,9 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
     FormsModule,
     DialogsModule,
     InputsModule,
-    DateInputsModule
+    DateInputsModule,
+    ImageCropperModule,
+    DropDownsModule
   ]
 })
 export class HomeModule { }

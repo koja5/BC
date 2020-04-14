@@ -10,7 +10,7 @@ import { MailService } from "src/app/services/mail.service";
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
   public currentForm = "login";
@@ -37,15 +37,17 @@ export class LoginComponent implements OnInit {
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe(data => {
+    this.service.checkCountryLocation().subscribe((data) => {
       this.service
         .getTranslationByCountryCode(data["countryCode"])
-        .subscribe(language => {
+        .subscribe((language) => {
           if (language !== null) {
             this.language = language["config"];
+            localStorage.setItem("language", JSON.stringify(this.language));
           } else {
-            this.service.getDefaultLanguage().subscribe(language => {
+            this.service.getDefaultLanguage().subscribe((language) => {
               this.language = language["config"];
+              localStorage.setItem("language", JSON.stringify(this.language));
             });
           }
         });
@@ -58,18 +60,18 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     console.log(this.data);
-    this.service.login(this.data).subscribe(data => {
+    this.service.login(this.data).subscribe((data) => {
       console.log(data);
       if (data["login"]) {
         // localStorage.setItem('id', sha1(1));
         const user = {
           fullname: data["user"]["fullname"],
-          type: data["user"]["type"],
-          image: data["user"]["image"]
+          type: sha1(data["user"]["type"]),
+          image: data["user"]["image"],
         };
         localStorage.setItem("id", sha1(data["user"]["id"].toString()));
         localStorage.setItem("user", JSON.stringify(user));
-        this.cookie.set("user", data["user"]["type"], 24, "/");
+        this.cookie.set("user", sha1(data["user"]["type"]), 24, "/");
         this.router.navigate(["home"]);
       } else {
         this.notCorrent = true;
@@ -83,7 +85,7 @@ export class LoginComponent implements OnInit {
     if (this.data.password !== this.data.confirmPassword) {
       this.notEqualPassword = true;
     } else {
-      this.service.signUp(this.data).subscribe(data => {
+      this.service.signUp(this.data).subscribe((data) => {
         console.log(data);
         if (data["success"]) {
           this.router.navigate(["/login/choose-director/" + data["id"]]);
@@ -107,13 +109,13 @@ export class LoginComponent implements OnInit {
   forgotPassword() {
     const thisObject = this;
     if (this.data.email !== "") {
-      this.service.forgotPassword(this.data).subscribe(data => {
+      this.service.forgotPassword(this.data).subscribe((data) => {
         setTimeout(() => {
           console.log(data);
           if (data["exist"]) {
             thisObject.mailService
               .sendForgetMail(thisObject.data)
-              .subscribe(data => {
+              .subscribe((data) => {
                 this.mailSend = true;
               });
           } else {

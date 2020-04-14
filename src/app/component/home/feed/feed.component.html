@@ -54,6 +54,14 @@
           </div>
         </div>
       </div>
+
+      <div *ngIf="allPosts !== undefined && allPosts.length === 0"
+        class="no-post box shadow-sm border rounded bg-white mb-3 osahan-post">
+        <h3>You don't have any feed yet.</h3>
+        <h4>Start to type...</h4>
+        <span class="fa fa-rss" style="font-size: 28px;"></span>
+      </div>
+
       <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
         <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
           <div class="dropdown-list-image mr-3">
@@ -294,8 +302,8 @@
           <p class="mb-0 text-muted">No profession info</p>
         </div>
         <div class="d-flex">
-          <div class="col-6 border-right p-3">
-            <h6 class="font-weight-bold text-dark mb-1">358</h6>
+          <div class="col-6 border-right p-3" routerLink="/home/main/connection" style="cursor: pointer;">
+            <h6 class="font-weight-bold text-dark mb-1"></h6>
             <p class="mb-0 text-black-50 small">Connections</p>
           </div>
           <div class="col-6 p-3">
@@ -304,7 +312,7 @@
           </div>
         </div>
         <div class="overflow-hidden border-top">
-          <a class="font-weight-bold p-3 d-block" (click)="openProfile(id)"> View my profile </a>
+          <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> View my profile </a>
         </div>
       </div>
       <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
@@ -342,70 +350,14 @@
           <h6 class="m-0">People you might know</h6>
         </div>
         <div class="box-body p-3">
-          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
+          <div class="d-flex align-items-center osahan-post-header mb-3 people-list" *ngFor="let item of peopleYouMightKnowList">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="../../../assets/img/p8.png" alt="">
+              <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
               <div class="status-indicator bg-success"></div>
             </div>
             <div class="font-weight-bold mr-2">
-              <div class="text-truncate">Mica Jovic</div>
-              <div class="small text-gray-500">Student at Harvard
-              </div>
-            </div>
-            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                  class="feather-user-plus"></i></button>
-            </span>
-          </div>
-          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-            <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="../../../assets/img/p9.png" alt="">
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold mr-2">
-              <div class="text-truncate">Teodora Karic</div>
-              <div class="small text-gray-500">Traveler
-              </div>
-            </div>
-            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                  class="feather-user-plus"></i></button>
-            </span>
-          </div>
-          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-            <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="../../../assets/img/p10.png" alt="">
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold mr-2">
-              <div class="text-truncate">Milutin Mikic</div>
-              <div class="small text-gray-500">Art Designer
-              </div>
-            </div>
-            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                  class="feather-user-plus"></i></button>
-            </span>
-          </div>
-          <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-            <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="../../../assets/img/p11.png" alt="">
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold mr-2">
-              <div class="text-truncate">Anabela Sretenovic</div>
-              <div class="small text-gray-500">Photographer at Photography
-              </div>
-            </div>
-            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                  class="feather-user-plus"></i></button>
-            </span>
-          </div>
-          <div class="d-flex align-items-center osahan-post-header people-list">
-            <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="../../../assets/img/p12.png" alt="">
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold mr-2">
-              <div class="text-truncate">Marko Jankovic</div>
-              <div class="small text-gray-500">Graphic Designer at Envato
+              <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}</div>
+              <div class="small text-gray-500">{{item.profession}}
               </div>
             </div>
             <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
@@ -414,13 +366,31 @@
           </div>
         </div>
       </div>
-      <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">
+      <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden">
+        <img src="../../../../assets/img/premium.png" class="img-fluid" alt="Responsive image">
         <div class="p-3 border-bottom">
           <h6 class="font-weight-bold text-gold">BC-Inter Premium</h6>
           <p class="mb-0 text-muted">Grow & nurture your network</p>
         </div>
         <div class="p-3">
-          <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE </button>
+          <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium"> ACTIVATE
+          </button>
+        </div>
+      </div>
+      <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+        <div class="image-overlap-2 pt-4">
+          <img style="width: 75px" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
+            alt="Responsive image">
+          <img style="width: 75px" src="../../../../assets/img/profile_image/{{user.image}}"
+            class="rounded-circle shadow-sm" alt="Responsive image">
+        </div>
+        <div class="p-3 border-bottom">
+          <h6 class="text-dark">Connect with your friends!</h6>
+          <p class="mb-0 text-muted">Make your own list!</p>
+        </div>
+        <div class="p-3">
+          <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4"> INVITE
+            PEOPLE </button>
         </div>
       </div>
       <!-- <div class="box shadow-sm border rounded bg-white mb-3">
@@ -489,14 +459,39 @@
     </aside>
   </div>
 
-  <kendo-window [title]="'Post likes'" *ngIf="postLikes" [minWidth]="400" [width]="400" [minHeight]="450"
-    (close)="postLikes = false">
-    <ul class="listUserLikes">
-      <li *ngFor="let item of allLikesForPost">
-        <img src="../../../../assets/img/profile_image/{{item.image}}"> <span (click)="showUserProfile(item.user_id)">
-          {{item.name}} </span>
-      </li>
-    </ul>
-  </kendo-window>
-
 </div>
+
+<kendo-window [title]="'Post likes'" *ngIf="postLikes" [minWidth]="400" [width]="400" [minHeight]="450"
+  (close)="postLikes = false">
+  <ul class="listUserLikes">
+    <li *ngFor="let item of allLikesForPost">
+      <img src="../../../../assets/img/profile_image/{{item.image}}"> <span (click)="showUserProfile(item.user_id)">
+        {{item.name}} </span>
+    </li>
+  </ul>
+</kendo-window>
+
+<kendo-window [title]="'Join invite'" *ngIf="inviteWindows" [minWidth]="400" [width]="500"
+  (close)="inviteWindows = false">
+
+  <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
+
+  <form (ngSubmit)="sendInviteFriend(invite)">
+    <label id="nameLabel" class="form-label">
+      Enter email
+      <span class="text-danger">*</span>
+    </label>
+    <div class="form-group">
+      <input type="email" [(ngModel)]="invite.email" class="form-control" name="firstname" placeholder="Enter email"
+        aria-label="Enter your name" required="">
+    </div>
+
+    <textarea class="form-control" [(ngModel)]="invite.message" rows="4" name="text"
+      placeholder="Enter your message"></textarea>
+
+    <div class="p-3" style="text-align: center;">
+      <button type="submit" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+        INVITE PEOPLE </button>
+    </div>
+  </form>
+</kendo-window>

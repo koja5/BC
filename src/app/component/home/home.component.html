@@ -6,13 +6,18 @@
       </a>
       <form class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search">
         <div class="input-group">
-          <input type="text" class="form-control shadow-none border-0" placeholder="Search people, jobs & more..."
-            aria-label="Search" aria-describedby="basic-addon2">
-          <div class="input-group-append">
-            <button class="btn" type="button">
-              <i class="feather-search"></i>
-            </button>
-          </div>
+          <kendo-combobox [data]="userList" [textField]="'fullname'" [valueField]="'id'"
+            (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeUser($event)"
+            [(ngModel)]="selectedUser" name="user" [filterable]="true" (filterChange)="searchUser($event)"
+            [loading]="userListLoading" placeholder="Search...">
+            <ng-template kendoComboBoxItemTemplate let-dataItem>
+              <p style="margin-top: 12px;">
+                <img style="width: 35px; margin-right: 10px;" class="rounded-circle"
+                  src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+              </p>
+            </ng-template>
+          </kendo-combobox>
         </div>
       </form>
       <ul class="navbar-nav ml-auto d-flex align-items-center">
@@ -39,7 +44,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a *ngIf="user.type === 0" class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
+          <a *ngIf="superadminInd" class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
               class="d-none d-lg-inline">Dashboard</span></a>
         </li>
         <!-- Nav Item - User Information -->

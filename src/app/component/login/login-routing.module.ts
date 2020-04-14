@@ -19,6 +19,10 @@ const routes: Routes = [
     path: "change-password/:id",
     component: ChangePasswordComponent,
     canActivate: [LoggedGuard]
+  },
+  {
+    path: "join-to/:id",
+    component: SignupComponent
   }
 ];
 

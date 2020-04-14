@@ -34,7 +34,7 @@ export class DashboardComponent implements OnInit {
 
   initialization() {
     if (localStorage.getItem("language") !== null) {
-      this.language = JSON.parse(localStorage.getItem("language"))["login"];
+      this.language = JSON.parse(localStorage.getItem("language"));
     } else {
       this.service.getTranslationFromFS("english").subscribe(data => {
         console.log(data);

@@ -45,7 +45,100 @@
       "chooseYouDone": { "type": "string" },
       "chooseDoneText1": { "type": "string" },
       "chooseDoneText2": { "type": "string" },
-      "chooseLogin": { "type": "string" }
+      "chooseLogin": { "type": "string" },
+      "logoAdminText": { "type": "string" },
+      "online": { "type": "string" },
+      "members": { "type": "string" },
+      "translation": { "type": "string" },
+      "home": { "type": "string" },
+      "logout": { "type": "string" },
+      "createData": { "type": "string" },
+      "updateData": { "type": "string" },
+      "uploadFromExcel": { "type": "string" },
+      "exportToPDF": { "type": "string" },
+      "exportToExcel": { "type": "string" },
+      "active": { "type": "string" },
+      "inactive": { "type": "string" },
+      "pagerPage": { "type": "string" },
+      "noRecords": { "type": "string" },
+      "areYouSure": { "type": "string" },
+      "no": { "type": "string" },
+      "yes": { "type": "string" },
+      "pagerOf": { "type": "string" },
+      "male": { "type": "string" },
+      "female": { "type": "string" },
+      "backToGrid": { "type": "string" },
+      "language": { "type": "string" },
+      "countryCode": { "type": "string" },
+      "required": { "type": "string" },
+      "searchAllColumn": { "type": "string" },
+      "pagerOf": { "type": "string" },
+      "pagerOf": { "type": "string" },
+      "pagerOf": { "type": "string" },
+      "premiumTitleHeader": { "type": "string" },
+      "premiumTitleCard": { "type": "string" },
+      "premiumCurrency": { "type": "string" },
+      "premiumPrice": { "type": "string" },
+      "premiumPerAccount": { "type": "string" },
+      "opportunities": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" }
+          }
+        }
+      },
+      "premiumBuy": { "type": "string" },
+      "premiumTitleCardHelp": { "type": "string" },
+      "premiumTitleCardHelp2": { "type": "string" },
+      "premiumContactVia": { "type": "string" },
+      "premiumContactPosibility": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" }
+          }
+        }
+      },
+      "premiumContactUs": { "type": "string" },
+      "contectTitleHeader": { "type": "string" },
+      "contectTextHeader": { "type": "string" },
+      "contactFormTitle": { "type": "string" },
+      "contactFormText": { "type": "string" },
+      "contactFormName": { "type": "string" },
+      "contactFormNamePlaceholder": { "type": "string" },
+      "contactFormEmail": { "type": "string" },
+      "contactFormEmailPlaceholder": { "type": "string" },
+      "contactFormSubject": { "type": "string" },
+      "contactFormSubjectPlaceholder": { "type": "string" },
+      "contactFormPhone": { "type": "string" },
+      "contactFormPhonePlaceholder": { "type": "string" },
+      "contactFormMessage": { "type": "string" },
+      "contactFormMessagePlaceholder": { "type": "string" },
+      "contactFormSend": { "type": "string" },
+      "answerResponse": { "type": "string" },
+      "inputAllFields": { "type": "string" },
+      "successfulSendMessageTitle": { "type": "string" },
+      "successfulSendMessageText": { "type": "string" },
+      "errorSendMessageTitle": { "type": "string" },
+      "termsHeaderTitleBrand": { "type": "string" },
+      "termsHeaderTitle": { "type": "string" },
+      "termsEffectiveDate": { "type": "string" },
+      "termsEffectiveDateValue": { "type": "string" },
+      "termsWelcomeTitle": { "type": "textarea" },
+      "termsWelcomeText": { "type": "string" },
+      "termsItems": { 
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "text": { "type": "text" }
+          }
+        }
+       }
     }
   },
   "layout": [
@@ -53,7 +146,7 @@
       "type": "section",
       "title": "Login",
       "expandable": true,
-      "expanded": true,
+      "expanded": false,
       "items": [
         {
           "type": "div",
@@ -129,7 +222,7 @@
             { "key": "notEqualPassword" },
             { "key": "notExistMail" },
             { "key": "forgotMailSend" },
-            { }
+            {}
           ]
         }
       ]
@@ -138,7 +231,7 @@
       "type": "section",
       "title": "Choose director",
       "expandable": true,
-      "expanded": true,
+      "expanded": false,
       "items": [
         {
           "type": "div",
@@ -180,8 +273,315 @@
           "items": [
             { "key": "chooseDoneText2" },
             { "key": "chooseLogin" },
-            {  },
-            {  }
+            {},
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Superadmin",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "logoAdminText" },
+            { "key": "online" },
+            { "key": "members" },
+            { "key": "translation" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "home" },
+            { "key": "logout" },
+            { "key": "createData" },
+            { "key": "updateData" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "uploadFromExcel" },
+            { "key": "exportToPDF" },
+            { "key": "exportToExcel" },
+            { "key": "active" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inactive" },
+            { "key": "pagerPage" },
+            { "key": "noRecords" },
+            { "key": "areYouSure" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "no" },
+            { "key": "yes" },
+            { "key": "pagerOf" },
+            { "key": "male" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "female" },
+            { "key": "backToGrid" },
+            { "key": "language" },
+            { "key": "countryCode" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "required" }, { "key": "searchAllColumn" }, {}, {}]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Premium",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumTitleHeader" },
+            { "key": "premiumTitleCard" },
+            { "key": "premiumCurrency" },
+            { "key": "premiumPrice" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumPerAccount" },
+            { "key": "premiumBuy" },
+            { "key": "premiumCurrency" },
+            { "key": "premiumPrice" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "opportunities",
+              "type": "array",
+              "items": [
+                {
+                  "type": "div",
+                  "displayFlex": true,
+                  "flex-direction": "row",
+                  "items": [
+                    {
+                      "key": "opportunities[].text",
+                      "flex": "1 1 50px"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumTitleCardHelp" },
+            { "key": "premiumTitleCardHelp2" },
+            { "key": "premiumContactVia" },
+            { "key": "premiumContactUs" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "premiumContactPosibility",
+              "type": "array",
+              "items": [
+                {
+                  "type": "div",
+                  "displayFlex": true,
+                  "flex-direction": "row",
+                  "items": [
+                    {
+                      "key": "premiumContactPosibility[].text"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Contact",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "contectTitleHeader" },
+            { "key": "contectTextHeader" },
+            { "key": "contactFormTitle" },
+            { "key": "contactFormText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "contactFormName" },
+            { "key": "contactFormNamePlaceholder" },
+            { "key": "contactFormEmail" },
+            { "key": "contactFormEmailPlaceholder" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "contactFormSubject" },
+            { "key": "contactFormSubjectPlaceholder" },
+            { "key": "contactFormPhone" },
+            { "key": "contactFormPhonePlaceholder" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "contactFormMessage" },
+            { "key": "contactFormMessagePlaceholder" },
+            { "key": "contactFormSend" },
+            { "key": "answerResponse" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inputAllFields" },
+            { "key": "successfulSendMessageTitle" },
+            { "key": "successfulSendMessageText" },
+            { "key": "errorSendMessageTitle" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "errorSendMessageText" },
+            { },
+            { },
+            { }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Terms",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "termsHeaderTitleBrand" },
+            { "key": "termsHeaderTitle" },
+            { "key": "termsEffectiveDate" },
+            { "key": "termsEffectiveDateValue" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "termsWelcomeTitle" },
+            { },
+            { },
+            { }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "termsWelcomeText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "termsItems",
+              "type": "array",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "div",
+                  "items": [
+                    {
+                      "key": "termsItems[].title"
+                    },
+                    {
+                      "key": "termsItems[].text",
+                      "type": "textarea"
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         }
       ]

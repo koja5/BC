@@ -7,6 +7,7 @@ var fs = require("fs");
 const mysql = require("mysql");
 
 var link = "http://localhost:3000/api/";
+var linkClinet = "http://localhost:4200/";
 
 var connection = mysql.createPool({
   host: "185.178.193.141",
@@ -93,27 +94,78 @@ router.post("/forgotmail", function(req, res) {
   });
 });
 
-router.post("/askQuestion", function(req, res) {
-  let ime = req.body.ime;
-  let naslov = req.body.naslov;
-  let email = req.body.email;
-  let poruka = req.body.poruka;
-  let mail = "Posiljalac: \n" + ime + "\n" + email + "\n\n" + poruka;
+router.post("/inviteFriend", function(req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./server/templates/inviteFriend.hjs",
+    "utf-8"
+  );
+  var compiledTemplate = hogan.compile(confirmTemplate);
+  var inviteLink =
+   linkClinet + "login/join-to/" + req.body.directorId;
 
-  console.log(mail);
   var mailOptions = {
-    to: "info@app-production.eu",
-    subject: naslov,
-    text: mail
+    from: '"BCI" info@app-production.eu',
+    to: req.body.email,
+    subject: "Join to my team!",
+    html: compiledTemplate.render({
+      message: req.body.message,
+      inviteLink: inviteLink
+    })
   };
 
   smtpTransport.sendMail(mailOptions, function(error, response) {
+    console.log(response);
     if (error) {
       console.log(error);
-      res.send({ message: "error" });
+      res.end("error");
     } else {
       console.log("Message sent: " + response.message);
-      res.send({ message: "sent" });
+      res.end("sent");
+    }
+  });
+});
+
+router.post("/sendQuestion", function(req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./server/templates/sendQuestion.hjs",
+    "utf-8"
+  );
+  var compiledTemplate = hogan.compile(confirmTemplate);
+  var inviteLink =
+   linkClinet + "login/join-to/" + req.body.directorId;
+
+  var mailOptions = {
+    from: '"BCI" info@app-production.eu',
+    to: "kojaaa95@gmail.com",
+    subject: "Message from " + req.body.name,
+    html: compiledTemplate.render({
+      name: req.body.name,
+      email: req.body.email,
+      subject: req.body.subject,
+      phone: req.body.phone,
+      message: req.body.message
+    })
+  };
+  /*let ime = req.body.name;
+  let naslov = req.body.subject;
+  let email = req.body.email;
+  let poruka = req.body.message;
+  let mail = "Sent: \n" + ime + "\n" + email + "\n\n" + poruka;
+
+  console.log(mail);
+  var mailOptions = {
+    // to: "info@app-production.eu",
+    from: '"BCI" info@app-production.eu',
+    to: "kojaaa95@gmail.com",
+    subject: naslov,
+    text: mail
+  };*/
+
+  smtpTransport.sendMail(mailOptions, function(error, response) {
+    if (error) {
+      res.send(false);
+    } else {
+      res.send(true);
     }
   });
 });

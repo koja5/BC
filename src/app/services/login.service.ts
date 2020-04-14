@@ -59,4 +59,8 @@ export class LoginService {
   changePassword(data) {
     return this.http.post("/api/changePassword", data).map(res => res);
   }
+
+  joinTo(data) {
+    return this.http.post('/api/joinTo', data).map(res => res);
+  }
 }

@@ -25,10 +25,9 @@ export class MailService {
             .map(res => res);
     }
 
-    public posaljiMiPoruku(data, callback) {
-        this.http.post('/api/askQuestion', data)
-            .map(res => res)
-            .subscribe(val => callback(val));
+    public sendQuestion(data) {
+        return this.http.post('/api/sendQuestion', data)
+            .map(res => res);
 
     }
 

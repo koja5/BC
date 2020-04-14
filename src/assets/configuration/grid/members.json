@@ -1,8 +1,7 @@
 {
     "type": "members",
     "new": {
-        "open": "page",
-        "link": "/dashboard/home/translation/edit/create"
+        "open": "modal"
     }, 
     "columns": [
         {
@@ -30,6 +29,21 @@
             "type": "boolean",
             "action": "active",
             "field": "active"
+        },
+        {
+            "type": "button",
+            "action": "edit-member",
+            "class": "k-preview", 
+            "icon": "k-icon k-i-edit",
+            "method": "editUser"
+        },
+        {
+            "type": "button",
+            "action": "delete",
+            "class": "k-preview", 
+            "icon": "k-icon k-i-delete",
+            "method": "deleteMember",
+            "param": "id"
         }
     ],
     "exportPdfName": "Members.pdf",

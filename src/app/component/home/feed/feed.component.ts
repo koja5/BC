@@ -3,11 +3,14 @@ import { FeedService } from "src/app/services/feed.service";
 import { PostModel } from "src/app/models/post-model";
 import { HelpService } from "src/app/services/help.service";
 import { Router } from "@angular/router";
+import { InviteModel } from "src/app/models/invite-model";
+import { MessageSubmitModel } from "src/app/models/message-submit-model";
+import * as sha1 from "sha1";
 
 @Component({
   selector: "app-feed",
   templateUrl: "./feed.component.html",
-  styleUrls: ["./feed.component.scss"]
+  styleUrls: ["./feed.component.scss"],
 })
 export class FeedComponent implements OnInit {
   public id: any;
@@ -20,6 +23,11 @@ export class FeedComponent implements OnInit {
   public allLikesForPost: any;
   public commentInput: any;
   public postShowAllComments = -1;
+  public user: any;
+  public inviteWindows = false;
+  public invite = new InviteModel();
+  public inviteInfo = new MessageSubmitModel();
+  public peopleYouMightKnowList: any;
 
   constructor(
     private service: FeedService,
@@ -29,11 +37,12 @@ export class FeedComponent implements OnInit {
 
   ngOnInit() {
     this.id = localStorage.getItem("id");
+    this.user = JSON.parse(localStorage.getItem("user"));
     this.initialization();
   }
 
   initialization() {
-    this.service.getUserInfoSHA1(this.id).subscribe(data => {
+    this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       console.log(data);
       if (data !== null) {
         this.data = data[0];
@@ -41,6 +50,12 @@ export class FeedComponent implements OnInit {
         this.getAllPostForUser(this.data.id, this.data.sid);
       }
     });
+
+    this.service.getPeopleYouMightKnow().subscribe(
+      data => {
+        this.peopleYouMightKnowList = data;
+      }
+    );
   }
 
   getAllPostForUser(id, sid) {
@@ -64,10 +79,10 @@ export class FeedComponent implements OnInit {
       post: this.postData.post,
       date: new Date(),
       recomment: [],
-      likes: []
+      likes: [],
     };
 
-    this.service.createPost(this.postData).subscribe(data => {
+    this.service.createPost(this.postData).subscribe((data) => {
       console.log(data);
       if (data["info"]) {
         this.postData._id = data["insertId"];
@@ -86,7 +101,7 @@ export class FeedComponent implements OnInit {
   }
 
   deletePost(id, index) {
-    this.service.deletePost(id).subscribe(data => {
+    this.service.deletePost(id).subscribe((data) => {
       if (data) {
         this.allPosts.splice(index, 1);
         this.selectedProcessOption = -1;
@@ -99,9 +114,9 @@ export class FeedComponent implements OnInit {
       id: id,
       user_id: this.id,
       name: this.data.fullname,
-      image: this.data.image
+      image: this.data.image,
     };
-    this.service.likePost(likePostData).subscribe(data => {
+    this.service.likePost(likePostData).subscribe((data) => {
       console.log(data);
       if (data["info"] === 201) {
         this.allPosts[index].likes.push(likePostData);
@@ -133,7 +148,7 @@ export class FeedComponent implements OnInit {
   }
 
   getLikesForPost(id) {
-    this.service.getLikesForPost(id).subscribe(data => {
+    this.service.getLikesForPost(id).subscribe((data) => {
       console.log(data);
       this.allLikesForPost = data["likes"];
       this.postLikes = true;
@@ -151,9 +166,9 @@ export class FeedComponent implements OnInit {
       name: this.data.fullname,
       image: this.data.image,
       recomment: [],
-      likes: []
+      likes: [],
     };
-    this.service.commentPost(commentPostData).subscribe(data => {
+    this.service.commentPost(commentPostData).subscribe((data) => {
       console.log(data);
       if (data["info"] === 201) {
         commentPostData["_id"] = data["insertId"];
@@ -172,6 +187,32 @@ export class FeedComponent implements OnInit {
   }
 
   openProfile(id) {
+    this.router.navigate(["/home/main/profile/" + sha1(id.toString())]);
+  }
+
+  openProfileWithoutSHA1(id) {
     this.router.navigate(["/home/main/profile/" + id]);
+  }
+
+  sendInviteFriend(invite) {
+    console.log(this.invite);
+    if (this.invite.email && this.invite.message) {
+      this.invite.directorId = localStorage.getItem('id');
+      this.service.sendInviteFriend(this.invite).subscribe((data) => {
+        console.log(data);
+      });
+
+      this.inviteInfo.show = true;
+      this.inviteInfo.status = "success";
+      this.inviteInfo.message = "Your invite is send!";
+
+      setTimeout(() => {
+        this.inviteWindows = false;
+      }, 2000);
+    } else {
+      this.inviteInfo.show = true;
+      this.inviteInfo.status = "error";
+      this.inviteInfo.message = "Please input all required data!";
+    }
   }
 }

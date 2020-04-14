@@ -3,32 +3,34 @@ import {
   OnInit,
   ViewChild,
   HostListener,
-  Input
+  Input,
 } from "@angular/core";
 import {
   process,
   State,
   GroupDescriptor,
-  SortDescriptor
+  SortDescriptor,
 } from "@progress/kendo-data-query";
 import { UploadEvent, SelectEvent } from "@progress/kendo-angular-upload";
 import {
   DataStateChangeEvent,
   PageChangeEvent,
   RowArgs,
-  DataBindingDirective
+  DataBindingDirective,
 } from "@progress/kendo-angular-grid";
 import { WindowModule } from "@progress/kendo-angular-dialog";
 import * as XLSX from "ts-xlsx";
 import { Router } from "@angular/router";
 import { CustomGridService } from "src/app/services/custom-grid.service";
 import { ToastrService } from "ngx-toastr";
-import { LoadingBarService } from '@ngx-loading-bar/core';
+import { LoadingBarService } from "@ngx-loading-bar/core";
+import { UserModel } from "src/app/models/user-model";
+import { ExcelExportData } from "@progress/kendo-angular-excel-export";
 
 @Component({
   selector: "app-custom-grid",
   templateUrl: "./custom-grid.component.html",
-  styleUrls: ["./custom-grid.component.scss"]
+  styleUrls: ["./custom-grid.component.scss"],
 })
 export class CustomGridComponent implements OnInit {
   @Input() data: any;
@@ -45,7 +47,7 @@ export class CustomGridComponent implements OnInit {
   public state: State = {
     skip: 0,
     take: 10,
-    filter: null
+    filter: null,
   };
   public groups: GroupDescriptor[] = [];
   public storeLocation: any;
@@ -70,18 +72,35 @@ export class CustomGridComponent implements OnInit {
   public pageSize = 5;
   public pageable = {
     pageSizes: true,
-    previousNext: true
+    previousNext: true,
   };
   public dialogDelete = false;
   public id: any;
   public method: any;
   public index: number;
+  public filterColumns: [];
+  public memberWindow = false;
+  public member: any;
+  public typeOfUsers = [
+    {
+      id: 1,
+      type: "business",
+    },
+    {
+      id: 2,
+      type: "member",
+    },
+  ];
+  public operationMode: any;
+  public allServerData: any;
+  public exportServerInd = false;
 
   constructor(
     private router: Router,
     private service: CustomGridService,
     private toastr: ToastrService
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     console.log(this.data);
@@ -90,7 +109,7 @@ export class CustomGridComponent implements OnInit {
     this.height += "px";
 
     if (localStorage.getItem("language") !== null) {
-      this.language = JSON.parse(localStorage.getItem("language")).grid;
+      this.language = JSON.parse(localStorage.getItem("language"));
     }
 
     if (localStorage.getItem("theme") !== null) {
@@ -108,7 +127,7 @@ export class CustomGridComponent implements OnInit {
     console.log(event);
   }
 
-  selectionChangeStore(event) {
+  selectionUserType(event) {
     console.log(event);
   }
 
@@ -118,7 +137,6 @@ export class CustomGridComponent implements OnInit {
     if (this.state.filter !== null && this.state.filter.filters.length === 0) {
       this.gridView.total = this.currentLoadData.length;
     }
-    this.changeTheme(this.theme);
   }
 
   pageChange(event: PageChangeEvent): void {
@@ -146,7 +164,7 @@ export class CustomGridComponent implements OnInit {
   onFileChange(args) {
     this.customerDialogOpened = true;
     let fileReader = new FileReader();
-    fileReader.onload = e => {
+    fileReader.onload = (e) => {
       this.arrayBuffer = fileReader.result;
       var data = new Uint8Array(this.arrayBuffer);
       var arr = new Array();
@@ -189,100 +207,13 @@ export class CustomGridComponent implements OnInit {
     const allData = {
       table: "customers",
       columns: columns,
-      data: dataArray
+      data: dataArray,
     };
     return allData;
   }
 
   closeCustomer() {
     this.customer = false;
-  }
-
-  changeTheme(theme: string) {
-    setTimeout(() => {
-      if (localStorage.getItem("allThemes") !== undefined) {
-        const allThemes = JSON.parse(localStorage.getItem("allThemes"));
-        console.log(allThemes);
-        let items = document.querySelectorAll(".k-dialog-titlebar");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const themeName = allThemes[j]["name"];
-            console.log(clas);
-            clas.remove("k-dialog-titlebar-" + themeName);
-            clas.add("k-dialog-titlebar-" + theme);
-          }
-        }
-
-        items = document.querySelectorAll(".k-header");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("gridHeader-" + element);
-
-            clas.add("gridHeader-" + this.theme);
-          }
-        }
-        items = document.querySelectorAll(".k-pager-numbers");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("k-pager-numbers-" + element);
-            clas.add("k-pager-numbers-" + this.theme);
-          }
-        }
-
-        items = document.querySelectorAll(".k-select");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("k-select-" + element);
-            clas.add("k-select-" + this.theme);
-          }
-        }
-
-        items = document.querySelectorAll(".k-grid-table");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("k-grid-table-" + element);
-            clas.add("k-grid-table-" + this.theme);
-          }
-        }
-        items = document.querySelectorAll(".k-grid-header");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("k-grid-header-" + element);
-            clas.add("k-grid-header-" + this.theme);
-          }
-        }
-        items = document.querySelectorAll(".k-pager-wrap");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("k-pager-wrap-" + element);
-            clas.add("k-pager-wrap-" + this.theme);
-          }
-        }
-
-        items = document.querySelectorAll(".k-button");
-        for (let i = 0; i < items.length; i++) {
-          const clas = items[i].classList;
-          for (let j = 0; j < allThemes.length; j++) {
-            const element = allThemes[j]["name"];
-            clas.remove("inputTheme-" + element);
-            clas.add("inputTheme-" + this.theme);
-          }
-        }
-      }
-    }, 50);
   }
 
   @HostListener("window:resize", ["$event"])
@@ -295,44 +226,33 @@ export class CustomGridComponent implements OnInit {
   public onFilter(inputValue: string): void {
     this.searchFilter = inputValue;
     this.state.skip = 0;
+    let filterItemList = this.makeFilterItems(inputValue);
+    console.log(filterItemList);
     this.gridData = process(this.currentLoadData, {
       filter: {
         logic: "or",
-        filters: [
-          {
-            field: "shortname",
-            operator: "contains",
-            value: inputValue
-          },
-          {
-            field: "firstname",
-            operator: "contains",
-            value: inputValue
-          },
-          {
-            field: "lastname",
-            operator: "contains",
-            value: inputValue
-          },
-          {
-            field: "telephone",
-            operator: "contains",
-            value: inputValue
-          },
-          {
-            field: "mobile",
-            operator: "contains",
-            value: inputValue
-          },
-          {
-            field: "email",
-            operator: "contains",
-            value: inputValue
-          }
-        ]
-      }
+        filters: filterItemList,
+      },
     });
-    this.gridView = process(this.data, this.state);
+    this.gridView = process(this.gridData.data, this.state);
+  }
+
+  public makeFilterItems(inputValue) {
+    let filterItemsList = [];
+    for (let i = 0; i < this.gridConfiguration.columns.length; i++) {
+      if (
+        this.gridConfiguration.columns[i].field !== undefined &&
+        this.gridConfiguration.columns[i].field !== "active"
+      ) {
+        const filterItem = {
+          field: this.gridConfiguration.columns[i].field,
+          operator: "contains",
+          value: inputValue,
+        };
+        filterItemsList.push(filterItem);
+      }
+    }
+    return filterItemsList;
   }
 
   public groupChange(groups: GroupDescriptor[]): void {
@@ -358,7 +278,7 @@ export class CustomGridComponent implements OnInit {
 
   public dialogDeleteAction(answer) {
     if (answer === "yes") {
-      this.service[this.method](this.id).subscribe(data => {
+      this.service[this.method](this.id).subscribe((data) => {
         console.log(data);
         if (data) {
           console.log(this.index);
@@ -368,5 +288,56 @@ export class CustomGridComponent implements OnInit {
       });
     }
     this.dialogDelete = false;
+  }
+
+  editMember(dataItem) {
+    this.member = dataItem;
+    this.member.type = Number(this.member.type);
+    this.member.birthday = new Date(this.member.birthday);
+    this.operationMode = "edit";
+    this.memberWindow = true;
+  }
+
+  newMember() {
+    this.member = new UserModel();
+    this.member.image = "no-image.png";
+    this.operationMode = "add";
+    this.memberWindow = true;
+  }
+
+  updateMember(data) {
+    this.service.updateMember(this.member).subscribe((data) => {
+      if (data) {
+        this.toastr.success("Successfull!", "Successfull update data!", {
+          timeOut: 7000,
+          positionClass: "toast-bottom-right",
+        });
+      } else {
+        this.toastr.error("Error!", "Error update data!", {
+          timeOut: 7000,
+          positionClass: "toast-bottom-right",
+        });
+      }
+      this.memberWindow = false;
+    });
+  }
+
+  createNewMember(data) {
+    this.service.createMember(this.member).subscribe((data) => {
+      if (data["success"]) {
+        this.member.id = data["id"];
+        this.gridView.push(this.member);
+        this.toastr.success("Successfull!", "Successfull create data!", {
+          timeOut: 7000,
+          positionClass: "toast-bottom-right",
+        });
+      } else {
+        this.toastr.error("Error!", "Error create data!", {
+          timeOut: 7000,
+          positionClass: "toast-bottom-right",
+        });
+      }
+      this.memberWindow = false;
+    });
   }
 }
