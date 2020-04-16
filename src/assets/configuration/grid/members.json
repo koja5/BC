@@ -2,7 +2,10 @@
     "type": "members",
     "new": {
         "open": "modal"
-    }, 
+    },
+    "search": {
+        "display": true
+    },
     "columns": [
         {
             "type": "image",

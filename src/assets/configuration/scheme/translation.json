@@ -72,9 +72,6 @@
       "countryCode": { "type": "string" },
       "required": { "type": "string" },
       "searchAllColumn": { "type": "string" },
-      "pagerOf": { "type": "string" },
-      "pagerOf": { "type": "string" },
-      "pagerOf": { "type": "string" },
       "premiumTitleHeader": { "type": "string" },
       "premiumTitleCard": { "type": "string" },
       "premiumCurrency": { "type": "string" },
@@ -103,6 +100,33 @@
         }
       },
       "premiumContactUs": { "type": "string" },
+      "premiumAcceptBuyFirst": { "type": "string" },
+      "premiumAcceptBuyEnd": { "type": "string" },
+      "premiumAcceptBuyTerms": { "type": "string" },
+      "premiumAcceptBuyCookie": { "type": "string" },
+      "premiumRequiredToAllow": { "type": "string" },
+      "premiumSuccessBuyTitle": { "type": "string" },
+      "premiumSuccessBuyText": { "type": "string" },
+      "premiumInvoice": { "type": "string" },
+      "premiumStatus": { "type": "string" },
+      "premiumPending": { "type": "string" },
+      "premiumBankAccount": { "type": "string" },
+      "premiumOr": { "type": "string" },
+      "premiumScreenQRCode": { "type": "string" },
+      "premiumItem": { "type": "string" },
+      "premiumUnitCost": { "type": "string" },
+      "premiumQty": { "type": "string" },
+      "premiumTotal": { "type": "string" },
+      "premiumPremiumAccount": { "type": "string" },
+      "premiumThanksForUsing": { "type": "string" },
+      "premiumHaveQuestion": { "type": "string" },
+      "premiumAutomateMail": { "type": "string" },
+      "premiumCopyRight": { "type": "string" },
+      "premiumSubject": { "type": "string" },
+      "premiumRegardsFirst": { "type": "string" },
+      "premiumRegardsEnd": { "type": "string" },
+      "premiumMessage": { "type": "string" },
+      "ok": { "type": "string" },
       "contectTitleHeader": { "type": "string" },
       "contectTextHeader": { "type": "string" },
       "contactFormTitle": { "type": "string" },
@@ -123,13 +147,14 @@
       "successfulSendMessageTitle": { "type": "string" },
       "successfulSendMessageText": { "type": "string" },
       "errorSendMessageTitle": { "type": "string" },
+      "errorSendMessageText": { "type": "string" },
       "termsHeaderTitleBrand": { "type": "string" },
       "termsHeaderTitle": { "type": "string" },
       "termsEffectiveDate": { "type": "string" },
       "termsEffectiveDateValue": { "type": "string" },
-      "termsWelcomeTitle": { "type": "textarea" },
+      "termsWelcomeTitle": { "type": "string" },
       "termsWelcomeText": { "type": "string" },
-      "termsItems": { 
+      "termsItems": {
         "type": "array",
         "items": {
           "type": "object",
@@ -138,7 +163,7 @@
             "text": { "type": "text" }
           }
         }
-       }
+      }
     }
   },
   "layout": [
@@ -427,6 +452,83 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [
+            { "key": "premiumAcceptBuyFirst" },
+            { "key": "premiumAcceptBuyTerms" },
+            { "key": "premiumAcceptBuyEnd" },
+            { "key": "premiumAcceptBuyCookie" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumRequiredToAllow" },
+            { "key": "premiumSuccessBuyTitle" },
+            { "key": "premiumSuccessBuyText" },
+            { "key": "ok" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumInvoice" },
+            { "key": "premiumStatus" },
+            { "key": "premiumPending" },
+            { "key": "premiumBankAccount" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumOr" },
+            { "key": "premiumScreenQRCode" },
+            { "key": "premiumItem" },
+            { "key": "premiumUnitCost" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumQty" },
+            { "key": "premiumTotal" },
+            { "key": "premiumPremiumAccount" },
+            { "key": "premiumThanksForUsing" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumHaveQuestion" },
+            { "key": "premiumAutomateMail" },
+            { "key": "premiumCopyRight" },
+            { "key": "premiumSubject" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumRegardsFirst" },
+            { "key": "premiumRegardsEnd" },
+            { "key": "premiumMessage" },
+            {}
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
             {
               "key": "premiumContactPosibility",
               "type": "array",
@@ -512,12 +614,7 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [
-            { "key": "errorSendMessageText" },
-            { },
-            { },
-            { }
-          ]
+          "items": [{ "key": "errorSendMessageText" }, {}, {}, {}]
         }
       ]
     },
@@ -542,20 +639,13 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [
-            { "key": "termsWelcomeTitle" },
-            { },
-            { },
-            { }
-          ]
+          "items": [{ "key": "termsWelcomeTitle" }, {}, {}, {}]
         },
         {
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [
-            { "key": "termsWelcomeText" }
-          ]
+          "items": [{ "key": "termsWelcomeText", "type": "textarea" }]
         },
         {
           "type": "div",

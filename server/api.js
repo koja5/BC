@@ -823,4 +823,36 @@ router.post("/createMember", function (req, res, next) {
   });
 });
 
+router.post("/updatePaymentStatus", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    console.log(req.body.id);
+    console.log("CAOOOOOOOOOOOOOOOOOOOOOOOO!!!!");
+    conn.query(
+      "UPDATE users SET type = 3 where id = '" + req.body.id + "'",
+      function (err, rows) {
+        conn.release();
+        if (err) {
+          res.send(err);
+        } else {
+          res.send(true);
+        }
+      }
+    );
+    conn.on("error", function (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    });
+  });
+});
+
 module.exports = router;

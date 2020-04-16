@@ -1,4 +1,7 @@
 import { Component, OnInit } from "@angular/core";
+import { FacturaModel } from "src/app/models/factura-model";
+import { PremiumService } from "src/app/services/premium.service";
+import { ProfileService } from "src/app/services/profile.service";
 
 @Component({
   selector: "app-premium",
@@ -7,14 +10,76 @@ import { Component, OnInit } from "@angular/core";
 })
 export class PremiumComponent implements OnInit {
   public language: any;
+  public buyWindow = false;
+  public agree = true;
+  public areYouSureWindow = false;
+  public buyCompleted = false;
+  public data = new FacturaModel();
+  public id: any;
 
-  constructor() {}
+  constructor(
+    private service: PremiumService,
+    private profileService: ProfileService
+  ) {}
 
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
+    this.id = localStorage.getItem("id");
   }
 
-  initialize() {
-    
+  initialize() {}
+
+  agreeWithTerms() {
+    this.agree = false;
+  }
+
+  buyAnswer(answer) {
+    if (answer === "yes") {
+      this.profileService.getUserInfoSHA1(this.id).subscribe((user) => {
+        if (user["length"] !== 0) {
+          this.generateDataForMail(user[0]);
+          this.service.sendFacture(this.data).subscribe((data) => {
+            console.log(data);
+            if (data) {
+              console.log(user[0].id);
+              const data = {
+                id: user[0].id,
+              };
+              this.service.updatePaymentStatus(data).subscribe((pay) => {
+                console.log(pay);
+              });
+            }
+          });
+        }
+      });
+      this.buyCompleted = true;
+    }
+
+    this.areYouSureWindow = false;
+  }
+
+  generateDataForMail(user) {
+    this.data.email = user.email;
+    this.data.id = user.id;
+    this.data.name = user.fullname;
+    this.data.premiumSubject = this.language.premiumSubject;
+    this.data.premiumInvoice = this.language.premiumInvoice;
+    this.data.premiumStatus = this.language.premiumStatus;
+    this.data.premiumPending = this.language.premiumPending;
+    this.data.premiumBankAccount = this.language.premiumBankAccount;
+    this.data.premiumOr = this.language.premiumOr;
+    this.data.premiumScreenQRCode = this.language.premiumScreenQRCode;
+    this.data.premiumItem = this.language.premiumItem;
+    this.data.premiumUnitCost = this.language.premiumUnitCost;
+    this.data.premiumQty = this.language.premiumQty;
+    this.data.premiumTotal = this.language.premiumTotal;
+    this.data.premiumPremiumAccount = this.language.premiumPremiumAccount;
+    this.data.premiumThanksForUsing = this.language.premiumThanksForUsing;
+    this.data.premiumHaveQuestion = this.language.premiumHaveQuestion;
+    this.data.premiumAutomateMail = this.language.premiumAutomateMail;
+    this.data.premiumCopyRight = this.language.premiumCopyRight;
+    this.data.premiumRegardsFirst = this.language.premiumRegardsFirst;
+    this.data.premiumRegardsEnd = this.language.premiumRegardsEnd;
+    this.data.premiumMessage = this.language.premiumMessage;
   }
 }

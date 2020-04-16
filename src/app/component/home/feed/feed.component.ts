@@ -28,6 +28,8 @@ export class FeedComponent implements OnInit {
   public invite = new InviteModel();
   public inviteInfo = new MessageSubmitModel();
   public peopleYouMightKnowList: any;
+  public simpleMember = false;
+  public userType = 2;
 
   constructor(
     private service: FeedService,
@@ -38,6 +40,15 @@ export class FeedComponent implements OnInit {
   ngOnInit() {
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
+    if (this.user.type === sha1(0)) {
+      this.userType = 0;
+    } else if (this.user.type === sha1(1)) {
+      this.userType = 1;
+    } else if (this.user.type === sha1(2)) {
+      this.userType = 2;
+    } else if (this.user.type === sha1(3)) {
+      this.userType = 3;
+    }
     this.initialization();
   }
 
@@ -51,11 +62,9 @@ export class FeedComponent implements OnInit {
       }
     });
 
-    this.service.getPeopleYouMightKnow().subscribe(
-      data => {
-        this.peopleYouMightKnowList = data;
-      }
-    );
+    this.service.getPeopleYouMightKnow().subscribe((data) => {
+      this.peopleYouMightKnowList = data;
+    });
   }
 
   getAllPostForUser(id, sid) {
@@ -197,7 +206,7 @@ export class FeedComponent implements OnInit {
   sendInviteFriend(invite) {
     console.log(this.invite);
     if (this.invite.email && this.invite.message) {
-      this.invite.directorId = localStorage.getItem('id');
+      this.invite.directorId = localStorage.getItem("id");
       this.service.sendInviteFriend(this.invite).subscribe((data) => {
         console.log(data);
       });

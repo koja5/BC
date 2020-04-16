@@ -41,7 +41,7 @@ router.post("/send", function(req, res) {
     link + "user/verification/" + sha1(req.body.email);
 
   var mailOptions = {
-    from: '"ClinicNode" info@app-production.eu',
+    from: '"BCI" info@app-production.eu',
     to: req.body.email,
     subject: "Confirm registration",
     html: compiledTemplate.render({
@@ -74,7 +74,7 @@ router.post("/forgotmail", function(req, res) {
     "http://localhost:4200/change-password/" + sha1(req.body.email);
 
   var mailOptions = {
-    from: '"ClinicNode" info@app-production.eu',
+    from: '"BCI" info@app-production.eu',
     to: req.body.email,
     subject: "Reset password",
     html: compiledTemplate.render({
@@ -170,83 +170,49 @@ router.post("/sendQuestion", function(req, res) {
   });
 });
 
-router.post("/sendConfirmArrivalAgain", function(req, res) {
-  connection.getConnection(function(err, conn) {
-    var confirmTemplate = fs.readFileSync(
-      "./server/templates/confirmArrival.hjs",
-      "utf-8"
-    );
-    var compiledTemplate = hogan.compile(confirmTemplate);
-    if (err) {
-      res.json({
-        code: 100,
-        status: "Error in connection database"
-      });
-      return;
+router.post("/sendFacture", function(req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./server/templates/facture.hjs",
+    "utf-8"
+  );
+  var compiledTemplate = hogan.compile(confirmTemplate);
+
+  var mailOptions = {
+    from: '"BCI" info@app-production.eu',
+    to: req.body.email,
+    subject: req.body.premiumSubject,
+    html: compiledTemplate.render({
+      invoice: req.body.premiumInvoice,
+      id: req.body.id,
+      regardsFirst: req.body.premiumRegardsFirst,
+      regardsEnd: req.body.premiumRegardsEnd,
+      name: req.body.name,
+      message: req.body.premiumMessage,
+      status: req.body.premiumStatus,
+      pending: req.body.premiumPending,
+      bankAccount: req.body.premiumBankAccount,
+      or: req.body.premiumOr,
+      screenQRCode: req.body.premiumScreenQRCode,
+      item: req.body.premiumItem,
+      unitCost: req.body.premiumUnitCost,
+      qty: req.body.premiumQty,
+      total: req.body.premiumTotal,
+      premiumAccount: req.body.premiumPremiumAccount,
+      thanksForUsing: req.body.premiumThanksForUsing,
+      haveQuestion: req.body.premiumHaveQuestion,
+      automateMail: req.body.premiumAutomateMail,
+      copyRight: req.body.premiumCopyRight
+    })
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, response) {
+    if (error) {
+      console.log(error);
+      res.json(error);
+    } else {
+      console.log("Message sent: " + response);
+      res.json(true);
     }
-    console.log(req.body);
-    conn.query(
-      "SELECT c.shortname, c.email, t.start, t.end, u.lastname, u.firstname, th.therapies_title from customers c join tasks t on c.id = t.customer_id join therapy th on t.therapy_id = th.id join users u on t.creator_id = u.id where c.id = '" +
-        req.body.customer_id +
-        "' and t.id = '" +
-        req.body.id +
-        "'",
-      function(err, rows, fields) {
-        if (err) {
-          console.error("SQL error:", err);
-        }
-        console.log(rows);
-        rows.forEach(function(to, i, array) {
-          var verificationLinkButton =
-            link + "task/confirmationArrival/" + req.body.id;
-          var convertToDateStart = new Date(to.start);
-          var convertToDateEnd = new Date(to.end);
-          var startHours = convertToDateStart.getHours();
-          var startMinutes = convertToDateStart.getMinutes();
-          var endHours = convertToDateEnd.getHours();
-          var endMinutes = convertToDateEnd.getMinutes();
-          var date =
-            convertToDateStart.getDay() +
-            "." +
-            convertToDateStart.getMonth() +
-            "." +
-            convertToDateStart.getFullYear();
-          var start =
-            (startHours < 10 ? "0" + startHours : startHours) +
-            ":" +
-            (startMinutes < 10 ? "0" + startMinutes : startMinutes);
-          var end =
-            (endHours < 10 ? "0" + endHours : endHours) +
-            ":" +
-            (endMinutes < 10 ? "0" + endMinutes : endMinutes);
-          var mailOptions = {
-            from: '"ClinicNode" info@app-production.eu',
-            subject: "Confirm arrival",
-            html: compiledTemplate.render({
-              firstName: to.shortname,
-              verificationLink: verificationLinkButton,
-              date: date,
-              start: start,
-              end: end,
-              therapy: to.therapies_title,
-              doctor: to.lastname + " " + to.firstname
-            })
-          };
-          mailOptions.to = to.email;
-          smtpTransport.sendMail(mailOptions, function(error, response) {
-            console.log(response);
-            if (error) {
-              console.log(error);
-            } else {
-              console.log("Message sent: " + response.message);
-            }
-          });
-        });
-      }
-    );
-    conn.on("error", function(err) {
-      console.log("[mysql error]", err);
-    });
   });
 });
 

@@ -3,6 +3,12 @@
   float: left;
 }
 
+.search-combobox {
+  width: 200px !important;
+  float: left;
+  margin-left: 25px;
+}
+
 .addButton {
   background: #6673fc !important;
   margin-left: 12px;
@@ -107,4 +113,8 @@ input[type="file"] {
 .name-member {
   margin-top: 10px;
   margin-bottom: 0px;
+}
+
+kendo-combobox {
+  border-bottom: 1px solid;
 }

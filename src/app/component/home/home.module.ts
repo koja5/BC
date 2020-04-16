@@ -20,6 +20,7 @@ import { TermsComponent } from '../templates/terms/terms.component';
 import { FindConnectionComponent } from './find-connection/find-connection.component';
 import { ContactComponent } from './contact/contact.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
     InputsModule,
     DateInputsModule,
     ImageCropperModule,
-    DropDownsModule
+    DropDownsModule,
+    ButtonsModule
   ]
 })
 export class HomeModule { }

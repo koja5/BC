@@ -12,6 +12,13 @@
           <input kendoTextBox (input)="onFilter($event.target.value)" [(ngModel)]="searchFilter" />
         </kendo-textbox-container>
       </div>
+      <div class="search-combobox" *ngIf="gridConfiguration.search !== undefined">
+        <kendo-textbox-container floatingLabel="{{language.searchAllColumn}}">
+          <kendo-combobox [data]="typeOfUsers" [valuePrimitive]="true" [textField]="'type'" [valueField]="'id'"
+            (selectionChange)="filterUserType($event)" class="col-xs-12 noPadding">
+          </kendo-combobox>
+        </kendo-textbox-container>
+      </div>
       <div style="float: right; padding-right: 30px; padding-top: 14px;">
         <button *ngIf="gridConfiguration.new.open === 'modal'" kendoButton [icon]="'add'" (click)="newMember()"
           [primary]="true" class="addButton">{{language.createData}}</button>
@@ -91,7 +98,7 @@
         </div>
         <div class="text-center m-t-md">
           <p class="m-b-none">
-           {{language.noRecords}} </p>
+            {{language.noRecords}} </p>
         </div>
       </div>
     </ng-template>
@@ -112,8 +119,7 @@
   <kendo-window title="{{language.createNewCustomer}}" *ngIf="memberWindow" [minWidth]="700" [width]="850"
     [height]="auto" (close)="memberWindow = false">
     <form name="loginForm" class="loginForm"
-      (ngSubmit)="operationMode === 'add' ? createNewMember(data) : updateMember(data)"
-      #customerForm="ngForm">
+      (ngSubmit)="operationMode === 'add' ? createNewMember(data) : updateMember(data)" #customerForm="ngForm">
       <div class="form-group">
         <div class="row">
           <div class="text-center vd_info-parent col-md-4 col-xs-12">
@@ -204,7 +210,7 @@
         </div>
       </div>
       <!-- ./remember-row -->
-      <div class="form-group" style="text-align: center">
+      <div class="form-group" style="text-align: center; margin-top: 15px;">
         <button kendoButton [primary]="true" [primary]="true" class="form-button"
           type="submit">{{operationMode === 'add' ? language.createData : language.updateData}}</button>
       </div>

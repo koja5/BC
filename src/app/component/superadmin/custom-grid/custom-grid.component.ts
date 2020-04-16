@@ -90,6 +90,10 @@ export class CustomGridComponent implements OnInit {
       id: 2,
       type: "member",
     },
+    {
+      id: 3,
+      type: "business - not pay",
+    },
   ];
   public operationMode: any;
   public allServerData: any;
@@ -99,8 +103,7 @@ export class CustomGridComponent implements OnInit {
     private router: Router,
     private service: CustomGridService,
     private toastr: ToastrService
-  ) {
-  }
+  ) {}
 
   ngOnInit() {
     console.log(this.data);
@@ -127,8 +130,18 @@ export class CustomGridComponent implements OnInit {
     console.log(event);
   }
 
-  selectionUserType(event) {
+  filterUserType(event) {
     console.log(event);
+    if (event !== undefined) {
+      const data = this.data.filter((x) => x.type === event.id);
+      this.gridView = process(data, this.state);
+    } else {
+      this.gridView = process(this.data, this.state);
+    }
+  }
+
+  selectionUserType(event) {
+    
   }
 
   public dataStateChange(state: DataStateChangeEvent): void {
