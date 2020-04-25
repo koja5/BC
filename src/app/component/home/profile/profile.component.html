@@ -1,7 +1,14 @@
-<div *ngIf="data !== undefined">
+<div *ngIf="data !== undefined && language !== undefined">
   <div class="profile-cover text-center">
-    <a class="cover-photo-update"><i class="fa fa-camera-retro"></i> Update cover photo</a>
-    <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt="">
+    <label for="file-upload-cover" class="cover-photo-update">
+      <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
+    </label>
+    <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
+      [uploader]="uploader" />
+    <div class="loader4 imageLoader" *ngIf="loadImage"></div>
+    <!-- <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
+    <img class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''"
+      src="/assets/img/profile_image/{{data.cover}}" alt="">
   </div>
   <div class="bg-white shadow-sm border-bottom">
     <div class="container">
@@ -15,9 +22,11 @@
               <p class="mb-0 text-muted"> </p>
             </div>
             <div class="profile-right ml-auto">
-              <button type="button" class="btn btn-light mr-2"> <i class="fa fa-envelope"></i> Send message
+              <button type="button" class="btn btn-light mr-2"> <i class="fa fa-envelope"></i>
+                {{language.profileSendMessage}}
               </button>
-              <button type="button" class="btn btn-primary"> <i class="feather-plus"></i> Follow </button>
+              <button type="button" class="btn btn-primary"> <i class="feather-plus"></i> {{language.profileFollow}}
+              </button>
             </div>
           </div>
         </div>
@@ -28,32 +37,32 @@
     <div class="container">
       <div class="row">
         <!-- Main Content -->
-        <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+        <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
           <div class="box shadow-sm rounded bg-white mb-3 overflow-hidden">
             <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
               <li class="nav-item">
                 <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-                  aria-selected="true">About</a>
+                  aria-selected="true">{{language.profileAbout}}</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-                  aria-controls="profile" aria-selected="false">Update</a>
+                  aria-controls="profile" aria-selected="false">{{language.profileUpdate}}</a>
               </li>
-              <li class="nav-item">
+              <!-- <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                   aria-controls="contact" aria-selected="false">Jobs</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" id="type-tab" data-toggle="tab" href="#type" role="tab" aria-controls="type"
                   aria-selected="false">Life</a>
-              </li>
+              </li> -->
             </ul>
           </div>
           <div class="tab-content" id="myTabContent">
             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
               <div class="box shadow-sm border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
-                  <h6 class="m-0">About</h6>
+                  <h6 class="m-0">{{language.profileAbout}}</h6>
                 </div>
                 <div class="box-body p-3">
                   <p>
@@ -63,7 +72,7 @@
               </div>
               <div class="box shadow-sm border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
-                  <h6 class="m-0">Overview</h6>
+                  <h6 class="m-0">{{language.profileOverview}}</h6>
                 </div>
                 <div class="box-body">
                   <table class="table table-borderless mb-0">
@@ -102,41 +111,6 @@
                       </tr>
                     </tbody>
                   </table>
-                </div>
-              </div>
-              <div class="box shadow-sm border rounded bg-white mb-3">
-                <div class="box-title border-bottom p-3">
-                  <h6 class="m-0">Locations</h6>
-                </div>
-                <div class="p-3">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="card overflow-hidden">
-                        <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501889.172354371!2d73.15671299623955!3d31.003573085499198!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391964aa569e7355%3A0x8fbd263103a38861!2sPunjab!5e0!3m2!1sen!2sin!4v1575738201305!5m2!1sen!2sin"
-                          width="100%" height="150" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-                        <div class="card-body">
-                          <h6 class="card-title">Postal Address</h6>
-                          <p class="card-text">PO Box 16122 Collins Street West Victoria 8007 Australia</p>
-                          <a href="#" class="text-link font-weight-bold"><i class="feather-external-link"></i> Get
-                            Directions</a>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="card overflow-hidden">
-                        <iframe
-                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d109552.19658166621!2d75.78663235513761!3d30.900473637624447!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x391a837462345a7d%3A0x681102348ec60610!2sLudhiana%2C%20Punjab!5e0!3m2!1sen!2sin!4v1575738867148!5m2!1sen!2sin"
-                          width="100%" height="150" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
-                        <div class="card-body">
-                          <h6 class="card-title">Envato HQ</h6>
-                          <p class="card-text">121 King Street, Melbourne Victoria 3000 Australia</p>
-                          <a href="#" class="text-link font-weight-bold"><i class="feather-external-link"></i> Get
-                            Directions</a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -504,9 +478,18 @@
         <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
           <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
             <div class="p-5">
-              <img src="../../../../assets/img/profile_image/{{data.image}}" class="img-fluid" alt="Responsive image">
+
+              <div class="loader4 imageLoader" *ngIf="loadImage"></div>
+              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''"
+                class="img-fluid" alt="Responsive image">
+              <label for="file-upload-profile" class="custom-file-upload">
+                <i class="fa fa-cloud-upload"></i> {{language.profileUpdateProfileImage}}
+              </label>
+              <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
+                [uploader]="uploader" />
+
             </div>
-            <div class="p-3">
+            <!-- <div class="p-3">
               <div class="d-flex align-items-top mb-2">
                 <p class="mb-0 text-dark font-weight-bold">Common Connections</p>
                 <p class="font-weight-bold text-info mb-0 mt-0 ml-auto">358</p>
@@ -515,7 +498,7 @@
                 <p class="mb-0 text-dark font-weight-bold">All Employees</p>
                 <p class="font-weight-bold text-info mb-0 mt-0 ml-auto">191,895</p>
               </div>
-            </div>
+            </div> -->
           </div>
           <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
             <img src="../../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
@@ -528,85 +511,36 @@
             </div>
           </div> -->
         </aside>
-        <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-          <div class="box shadow-sm border rounded bg-white mb-3">
-            <div class="box-title border-bottom p-3">
-              <h6 class="m-0">People also viewed</h6>
-            </div>
-            <div class="box-body p-3">
-              <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../../../../assets/img/p4.png" alt="">
-                </div>
-                <div class="font-weight-bold mr-2">
-                  <div class="text-truncate">Sophia Lee</div>
-                  <div class="small text-gray-500">@Harvard
-                  </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-outline-primary btn-sm">Connent</button>
-                </span>
-              </div>
-              <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../../../../assets/img/p9.png" alt="">
-                </div>
-                <div class="font-weight-bold mr-2">
-                  <div class="text-truncate">John Doe</div>
-                  <div class="small text-gray-500">Traveler
-                  </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-outline-primary btn-sm">Connent</button>
-                </span>
-              </div>
-              <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../../../../assets/img/p10.png" alt="">
-                </div>
-                <div class="font-weight-bold mr-2">
-                  <div class="text-truncate">Julia Cox</div>
-                  <div class="small text-gray-500">Art Designer
-                  </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-outline-primary btn-sm">Connent</button>
-                </span>
-              </div>
-              <div class="d-flex align-items-center osahan-post-header mb-3 people-list">
-                <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../../../../assets/img/p11.png" alt="">
-                </div>
-                <div class="font-weight-bold mr-2">
-                  <div class="text-truncate">Robert Cook</div>
-                  <div class="small text-gray-500">@Photography
-                  </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-outline-primary btn-sm">Connent</button>
-                </span>
-              </div>
-              <div class="d-flex align-items-center osahan-post-header people-list">
-                <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle" src="../../../../assets/img/p12.png" alt="">
-                </div>
-                <div class="font-weight-bold mr-2">
-                  <div class="text-truncate">Richard Bell</div>
-                  <div class="small text-gray-500">@Envato
-                  </div>
-                </div>
-                <span class="ml-auto"><button type="button" class="btn btn-outline-primary btn-sm">Connent</button>
-                </span>
-              </div>
-            </div>
-          </div>
-          <div class="box shadow-sm mb-3 border rounded bg-white ads-box text-center">
-            <div class="p-3 border-bottom">
-              <h6 class="font-weight-bold text-gold">BCI Premium</h6>
-              <p class="mb-0 text-muted">Grow &amp; nurture your network</p>
-            </div>
-            <div class="p-3">
-              <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE </button>
-            </div>
-          </div>
-        </aside>
       </div>
     </div>
   </div>
+</div>
+
+
+<div *ngIf="uploader !== undefined" style="text-align: center;">
+  <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false"
+    [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 400">
+
+    <div class="loader4 imageLoader" *ngIf="showCropper"></div>
+    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png"
+      (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="380" [cropperMinHeight]="380" [onlyScaleDown]="false">
+    </image-cropper>
+    <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
+      {{language.profileUpdateProfileImage}}
+    </button>
+  </kendo-window>
+
+  <kendo-window title="{{language.profileUpdateCover}}" *ngIf="changeImageCover" (close)="changeImageCover = false"
+    [width]="windowWidth ? windowWidth : 600" [height]="windowHeight ? windowHeight : 400">
+
+    <div class="loader4 imageLoader" *ngIf="showCropper"></div>
+    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png"
+      (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
+      (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="1500" [cropperMinHeight]="300" [onlyScaleDown]="false">
+    </image-cropper>
+    <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
+      {{language.profileUpdateCover}}
+    </button>
+  </kendo-window>
 </div>

@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/Subject';
 export class MessageService {
 
   public newFullname = new Subject<any>();
+  public userInfo = new Subject<null>();
 
   constructor() { }
 
@@ -17,5 +18,13 @@ export class MessageService {
 
   getNewFullname() {
     return this.newFullname.asObservable();
+  }
+
+  sendUserInfo() {
+    this.userInfo.next();
+  }
+
+  getUserInfo() {
+    return this.userInfo.asObservable();
   }
 }

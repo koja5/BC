@@ -14,6 +14,7 @@ export class EditTranslationComponent implements OnInit {
   public data = new TranslationModel();
   public id: any;
   public loading = true;
+  public language: any;
 
   constructor(
     private service: DashboardService,
@@ -24,6 +25,7 @@ export class EditTranslationComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
+    this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
   }
 
@@ -48,12 +50,12 @@ export class EditTranslationComponent implements OnInit {
       this.service.createTranslation(this.data).subscribe(data => {
         console.log(data);
         if (data) {
-          this.toastr.success("Successfull!", "Create data is successfull!", {
+          this.toastr.success(this.language.adminSuccessCreateTitle, this.language.adminSuccessCreateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });
         } else {
-          this.toastr.error("Error!", "Create data is unsuccessfull!", {
+          this.toastr.error(this.language.adminErrorCreateTitle, this.language.adminErrorCreateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });
@@ -63,12 +65,12 @@ export class EditTranslationComponent implements OnInit {
       this.service.updateTranslation(this.data).subscribe(data => {
         console.log(data);
         if (data) {
-          this.toastr.success("Successfull!", "Update data is successfull!", {
+          this.toastr.success(this.language.adminSuccessUpdateTitle, this.language.adminSuccessUpdateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });
         } else {
-          this.toastr.error("Error!", "Update data is unsuccessfull!", {
+          this.toastr.error(this.language.adminErrorUpdateTitle, this.language.adminErrorUpdateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });

@@ -1,4 +1,4 @@
-<body>
+<body *ngIf="user !== undefined&&language !== undefined">
   <!-- Navigation -->
   <nav class="navbar navbar-expand navbar-dark bg-dark osahan-nav-top p-0">
     <div class="container">
@@ -9,7 +9,7 @@
           <kendo-combobox [data]="userList" [textField]="'fullname'" [valueField]="'id'"
             (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeUser($event)"
             [(ngModel)]="selectedUser" name="user" [filterable]="true" (filterChange)="searchUser($event)"
-            [loading]="userListLoading" placeholder="Search...">
+            [loading]="userListLoading" placeholder="{{language.feedSearch}}">
             <ng-template kendoComboBoxItemTemplate let-dataItem>
               <p style="margin-top: 12px;">
                 <img style="width: 35px; margin-right: 10px;" class="rounded-circle"
@@ -33,7 +33,7 @@
             <form class="form-inline mr-auto w-100 navbar-search">
               <div class="input-group">
                 <input type="text" class="form-control border-0 shadow-none"
-                  placeholder="Search people, jobs and more..." aria-label="Search" aria-describedby="basic-addon2">
+                  placeholder="{{language.feedSearch}}" aria-label="Search" aria-describedby="basic-addon2">
                 <div class="input-group-append">
                   <button class="btn" type="button">
                     <i class="feather-search"></i>
@@ -45,20 +45,20 @@
         </li>
         <li class="nav-item">
           <a *ngIf="superadminInd" class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
-              class="d-none d-lg-inline">Dashboard</span></a>
+              class="d-none d-lg-inline">{{language.feedDashboard}}</span></a>
         </li>
         <!-- Nav Item - User Information -->
         <li class="nav-item dropdown no-arrow ml-1 osahan-profile-dropdown {{dropDownProfile}}"
           (click)="dropDownProfile === '' ? dropDownProfile = 'show' : dropDownProfile = ''">
           <a class="nav-link dropdown-toggle pr-0" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false">
-            <img class="img-profile rounded-circle" src="../../../assets/img/profile_image/{{user.image}}">
+            <img class="img-profile rounded-circle" src="assets/img/profile_image/{{user.image}}">
           </a>
           <!-- Dropdown - User Information -->
           <div class="dropdown-menu dropdown-menu-right shadow-sm {{dropDownProfile}}">
             <div class="p-3 d-flex align-items-center">
               <div class="dropdown-list-image mr-3">
-                <img class="rounded-circle" src="../../../assets/img/profile_image/no-image.png" alt="">
+                <img class="rounded-circle" src="assets/img/profile_image/{{user.image}}" alt="">
                 <div class="status-indicator bg-success"></div>
               </div>
               <div class="font-weight-bold">
@@ -67,11 +67,11 @@
               </div>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" routerLink="/home/main/my-profile"><i class="feather-edit mr-1"></i> My Account</a>
-            <a class="dropdown-item" routerLink="/home/main/edit-profile"><i class="feather-user mr-1"></i> Edit
-              Profile</a>
+            <a class="dropdown-item" routerLink="/home/main/my-profile"><i class="feather-edit mr-1"></i> {{language.feedMyAccount}}</a>
+            <a class="dropdown-item" routerLink="/home/main/edit-profile"><i class="feather-user mr-1"></i> {{language.feedEdit}}
+              {{language.feedProfile}}</a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" (click)="logout()"><i class="feather-log-out mr-1"></i> Logout</a>
+            <a class="dropdown-item" (click)="logout()"><i class="feather-log-out mr-1"></i> {{language.feedLogout}}</a>
           </div>
         </li>
       </ul>

@@ -4,6 +4,7 @@
     "properties": {
       "welcomeBack": { "type": "string" },
       "welcomeMessage": { "type": "string" },
+      "bciText": { "type": "string" },
       "email": { "type": "string" },
       "password": { "type": "string" },
       "rememberPassword": { "type": "string" },
@@ -72,6 +73,20 @@
       "countryCode": { "type": "string" },
       "required": { "type": "string" },
       "searchAllColumn": { "type": "string" },
+      "adminProfile": { "type": "string" },
+      "adminSettings": { "type": "string" },
+      "adminHelp": { "type": "string" },
+      "adminLock": { "type": "string" },
+      "adminSearch": { "type": "string" },
+      "adminPleaseConfirm": { "type": "string" },
+      "adminSuccessUpdateTitle": { "type": "string" },
+      "adminSuccessUpdateText": { "type": "string" },
+      "adminErrorUpdateTitle": { "type": "string" },
+      "adminErrorUpdateText": { "type": "string" },
+      "adminSuccessCreateTitle": { "type": "string" },
+      "adminSuccessCreateText": { "type": "string" },
+      "adminErrorCreateTitle": { "type": "string" },
+      "adminErrorCreateText": { "type": "string" },
       "premiumTitleHeader": { "type": "string" },
       "premiumTitleCard": { "type": "string" },
       "premiumCurrency": { "type": "string" },
@@ -160,10 +175,69 @@
           "type": "object",
           "properties": {
             "title": { "type": "string" },
-            "text": { "type": "text" }
+            "text": { "type": "string" }
           }
         }
-      }
+      },
+      "privacyHeaderTitle": { "type": "string" },
+      "privacyLastModificationDate": { "type": "string" },
+      "privacyLastModificationDateValue": { "type": "string" },
+      "privacyIntroductionTitle": { "type": "string" },
+      "privacyIntroductionText": { "type": "string" },
+      "privacyItems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "text": { "type": "string" }
+          }
+        }
+      },
+      "feedShareAUpdate": { "type": "string" },
+      "feedUploadPhoto": { "type": "string" },
+      "feedWriteAnArticle": { "type": "string" },
+      "feedWriteYourPost": { "type": "string" },
+      "feedAddLocation": { "type": "string" },
+      "feedPreview": { "type": "string" },
+      "feedPost": { "type": "string" },
+      "feedNoHaveFeed": { "type": "string" },
+      "feedStartType": { "type": "string" },
+      "feedRemove": { "type": "string" },
+      "feedLike": { "type": "string" },
+      "feedPostLikes": { "type": "string" },
+      "feedComment": { "type": "string" },
+      "feedShowAll": { "type": "string" },
+      "feedNoProfessionInfo": { "type": "string" },
+      "feedConnections": { "type": "string" },
+      "feedViews": { "type": "string" },
+      "feedViewMyProfile": { "type": "string" },
+      "feedYourConnections": { "type": "string" },
+      "feedPremium": { "type": "string" },
+      "feedGrowAndNature": { "type": "string" },
+      "feedActivate": { "type": "string" },
+      "feedInviteTitle": { "type": "string" },
+      "feedInviteText": { "type": "string" },
+      "feedSendInvite": { "type": "string" },
+      "feedEnterMail": { "type": "string" },
+      "feedEnterMessage": { "type": "string" },
+      "feedSendInviteToMail": { "type": "string" },
+      "feedSearch": { "type": "string" },
+      "feedDashboard": { "type": "string" },
+      "feedMyAccount": { "type": "string" },
+      "feedEdit": { "type": "string" },
+      "feedLogout": { "type": "string" },
+      "feedProfile": { "type": "string" },
+      "feedYourInviteIsSend": { "type": "string" },
+      "feedInputAllRequired": { "type": "string" },
+      "feedEnterYourComment": { "type": "string" },
+      "profileUpdateCover": { "type": "string" },
+      "profileUpdateProfileImage": { "type": "string" },
+      "profileSendMessage": { "type": "string" },
+      "profileFollow": { "type": "string" },
+      "profileAbout": { "type": "string" },
+      "profileUpdate": { "type": "string" },
+      "profileOverview": { "type": "string" }
     }
   },
   "layout": [
@@ -247,8 +321,14 @@
             { "key": "notEqualPassword" },
             { "key": "notExistMail" },
             { "key": "forgotMailSend" },
-            {}
+            { "key": "signIn" }
           ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "bciText" }, {}, {}, {}]
         }
       ]
     },
@@ -380,7 +460,45 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [{ "key": "required" }, { "key": "searchAllColumn" }, {}, {}]
+          "items": [
+            { "key": "required" },
+            { "key": "searchAllColumn" },
+            { "key": "adminProfile" },
+            { "key": "adminSettings" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "adminHelp" },
+            { "key": "adminLock" },
+            { "key": "adminSearch" },
+            { "key": "adminPleaseConfirm" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "adminSuccessUpdateTitle" },
+            { "key": "adminSuccessUpdateText" },
+            { "key": "adminErrorUpdateTitle" },
+            { "key": "adminErrorUpdateText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "adminSuccessCreateTitle" },
+            { "key": "adminSuccessCreateText" },
+            { "key": "adminErrorCreateTitle" },
+            { "key": "adminErrorCreateText" }
+          ]
         }
       ]
     },
@@ -672,6 +790,207 @@
                 }
               ]
             }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Privacy & policy",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "privacyHeaderTitle" },
+            { "key": "privacyLastModificationDate" },
+            { "key": "privacyLastModificationDateValue" },
+            {}
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "privacyIntroductionTitle" }, {}, {}, {}]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "privacyIntroductionText", "type": "textarea" }]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "privacyItems",
+              "type": "array",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "div",
+                  "items": [
+                    {
+                      "key": "privacyItems[].title"
+                    },
+                    {
+                      "key": "privacyItems[].text",
+                      "type": "textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Feed",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedShareAUpdate" },
+            { "key": "feedUploadPhoto" },
+            { "key": "feedWriteAnArticle" },
+            { "key": "feedWriteYourPost" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedAddLocation" },
+            { "key": "feedPreview" },
+            { "key": "feedPost" },
+            { "key": "feedNoHaveFeed" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedStartType" },
+            { "key": "feedRemove" },
+            { "key": "feedLike" },
+            { "key": "feedPostLikes" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedComment" },
+            { "key": "feedShowAll" },
+            { "key": "feedNoProfessionInfo" },
+            { "key": "feedConnections" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedViews" },
+            { "key": "feedViewMyProfile" },
+            { "key": "feedYourConnections" },
+            { "key": "feedPremium" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedGrowAndNature" },
+            { "key": "feedActivate" },
+            { "key": "feedInviteTitle" },
+            { "key": "feedInviteText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedSendInvite" },
+            { "key": "feedEnterMail" },
+            { "key": "feedEnterMessage" },
+            { "key": "feedSendInviteToMail" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedSearch" },
+            { "key": "feedDashboard" },
+            { "key": "feedMyAccount" },
+            { "key": "feedEdit" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedLogout" },
+            { "key": "feedProfile" },
+            { "key": "feedYourInviteIsSend" },
+            { "key": "feedInputAllRequired" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "feedEnterYourComment" }, {}, {}, {}]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Profile",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileUpdateCover" },
+            { "key": "profileSendMessage" },
+            { "key": "profileFollow" },
+            { "key": "profileAbout" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileUpdate" },
+            { "key": "profileOverview" },
+            { "key": "profileUpdateProfileImage" },
+            {}
           ]
         }
       ]

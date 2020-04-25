@@ -1,6 +1,6 @@
 <!-- <app-content-placeholder></app-content-placeholder> -->
 
-<div class="container py-4">
+<div class="container py-4" *ngIf="language !== undefined">
   <div class="row" *ngIf="data !== undefined">
     <!-- Main Content -->
     <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
@@ -8,68 +8,69 @@
         <ul class="nav nav-justified border-bottom osahan-line-tab" id="myTab" role="tablist">
           <li class="nav-item">
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
-              aria-selected="true"><i class="feather-edit"></i> Share an update</a>
+              aria-selected="true"><i class="feather-edit"></i> {{language.feedShareAUpdate}}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
-              aria-selected="false"><i class="feather-image"></i> Upload a photo</a>
+              aria-selected="false"><i class="feather-image"></i> {{language.feedUploadPhoto}}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
-              aria-selected="false"><i class="feather-clipboard"></i> Write an article</a>
+              aria-selected="false"><i class="feather-clipboard"></i> {{language.feedWriteAnArticle}}</a>
           </li>
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
             <div class="p-3 d-flex align-items-center w-100" href="#">
               <div class="dropdown-list-image mr-3">
-                <img class="rounded-circle feed-image" src="../../../../assets/img/profile_image/{{data.image}}" alt="">
+                <img class="rounded-circle feed-image" src="assets/img/profile_image/{{data.image}}" alt="">
                 <div class="status-indicator bg-success"></div>
               </div>
               <div class="w-100">
-                <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none" rows="1"
-                  [(ngModel)]="postData.post" name="post" ng-trim="false"></textarea>
+                <textarea placeholder="{{language.feedWriteYourPost}}" class="form-control border-0 p-0 shadow-none"
+                  rows="1" [(ngModel)]="postData.post" name="post" ng-trim="false"></textarea>
               </div>
             </div>
           </div>
           <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
             <div class="p-3 w-100">
-              <textarea placeholder="Write your thoughts..." class="form-control border-0 p-0 shadow-none"
+              <textarea placeholder="{{language.feedWriteYourPost}}" class="form-control border-0 p-0 shadow-none"
                 rows="3"></textarea>
             </div>
           </div>
           <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
             <div class="p-3 w-100">
-              <textarea placeholder="Write an article..." class="form-control border-0 p-0 shadow-none"
+              <textarea placeholder="{{language.feedWriteAnArticle}}" class="form-control border-0 p-0 shadow-none"
                 rows="3"></textarea>
             </div>
           </div>
         </div>
         <div class="border-top p-3 d-flex align-items-center">
-          <div class="mr-auto"><a href="#" class="text-link small"><i class="feather-map-pin"></i> Add Location</a>
+          <div class="mr-auto"><a href="#" class="text-link small"><i class="feather-map-pin"></i>
+              {{language.feedAddLocation}}</a>
           </div>
           <div class="flex-shrink-1">
-            <button type="button" class="btn btn-light btn-sm">Preview</button>
-            <button type="button" class="btn btn-primary btn-sm" (click)="createPost()">Post Status</button>
+            <button type="button" class="btn btn-light btn-sm">{{language.feedPreview}}</button>
+            <button type="button" class="btn btn-primary btn-sm" (click)="createPost()">{{language.feedPost}}</button>
           </div>
         </div>
       </div>
 
       <div *ngIf="allPosts !== undefined && allPosts.length === 0"
         class="no-post box shadow-sm border rounded bg-white mb-3 osahan-post">
-        <h3>You don't have any feed yet.</h3>
-        <h4>Start to type...</h4>
+        <h3>{{language.feedNoHaveFeed}}</h3>
+        <h4>{{language.feedStartType}}</h4>
         <span class="fa fa-rss" style="font-size: 28px;"></span>
       </div>
 
       <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
         <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
           <div class="dropdown-list-image mr-3">
-            <img class="rounded-circle" src="../../../../assets/img/profile_image/{{item.image}}" alt="">
+            <img class="rounded-circle" src="assets/img/profile_image/{{item.image}}" alt="">
             <div class="status-indicator bg-success"></div>
           </div>
           <div class="font-weight-bold">
-            <div class="text-truncate"><a (click)="openProfile(item.user_id)">{{item.name}}</a></div>
+            <div class="text-truncate"><a (click)="openProfileWithoutSHA1(item.user_id)">{{item.name}}</a></div>
             <div class="small text-gray-500">{{item.proffesion}}</div>
           </div>
           <div class="ml-auto small">
@@ -77,7 +78,7 @@
               *ngIf="id === item.user_id"></i>
             <div class="postOptions" [ngClass]="selectedProcessOption === item._id ? 'show' : 'hide'">
               <ul>
-                <li (click)="deletePost(item._id, i)">Remove</li>
+                <li (click)="deletePostQuestion(item._id, i)">{{language.feedRemove}}</li>
               </ul>
             </div>
             <p class="ml-auto small">{{item.date | date: 'dd/MM/yyyy - HH:mm'}}</p>
@@ -93,25 +94,25 @@
         </div>
         <div class="p-3" class="likeCommentButtons">
           <button (click)="likePost(item._id, i)" [ngClass]="checkLikedPost(item.likes) ? 'liked' : 'noLike'">
-            <i class="fa fa-thumbs-up"></i> Like
+            <i class="fa fa-thumbs-up"></i> {{language.feedLike}}
           </button>
           <button>
-            <i class="fa fa-comments"></i> Comment
+            <i class="fa fa-comments"></i> {{language.feedComment}}
           </button>
         </div>
         <div *ngIf="item.recomment.length > 0">
           <a *ngIf="item.recomment.length > 3" (click)="showAllComments(item._id)" class="p-2 d-flex"
-            style="color: #007BFF">Show all comments</a>
+            style="color: #007BFF">{{language.feedShowAll}}</a>
           <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment"
             *ngFor="let comm of item.recomment; let j = index"
             [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="../../../../assets/img/profile_image/{{comm.image}}" alt="">
+              <img class="rounded-circle" [src]="comm.img" alt="">
               <div class="status-indicator bg-success"></div>
             </div>
             <div class="font-weight-bold" style="width: 100%;">
               <div class="comment-container">
-                <div class="text-truncate"> {{comm.name}} <span
+                <div class="text-truncate"> <a (click)="openProfileWithoutSHA1(comm.user_id)"> {{comm.name}}</a> <span
                     class="float-right small">{{comm.date | date: 'dd/MM/yyyy - HH:mm'}}</span></div>
                 <div class="small" style="font-size: 13px !important;">{{comm.comment}}</div>
               </div>
@@ -144,11 +145,11 @@
         </div>
         <div class="p-3 border-bottom osahan-post-footer comment-input-container">
           <div class="profile-image-comment">
-            <img src="../../../../assets/img/profile_image/{{item.image}}">
+            <img src="assets/img/profile_image/{{data.image}}">
           </div>
           <div class="comment-input">
             <input class="form-control" (keyup.enter)="createComment(item._id, i)" [(ngModel)]="item.newComment"
-              name="comment-{{item._id}}" [id]="item_id" placeholder="Enter your name" type="text">
+              name="comment-{{item._id}}" [id]="item_id" placeholder="{{language.feedEnterYourComment}}" type="text">
           </div>
         </div>
         <!-- <div class="p-3">
@@ -296,26 +297,27 @@
     <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
       <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
         <div class="py-4 px-3 border-bottom">
-          <img src="../../../../assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
+          <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
             alt="Responsive image">
           <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
-          <p class="mb-0 text-muted">No profession info</p>
+          <p class="mb-0 text-muted">{{language.feedNoProfessionInfo}}</p>
         </div>
         <div class="d-flex">
           <div class="col-6 border-right p-3" routerLink="/home/main/connection" style="cursor: pointer;">
             <h6 class="font-weight-bold text-dark mb-1"></h6>
-            <p class="mb-0 text-black-50 small">Connections</p>
+            <p class="mb-0 text-black-50 small">{{language.feedConnections}}</p>
           </div>
           <div class="col-6 p-3">
             <h6 class="font-weight-bold text-dark mb-1">85</h6>
-            <p class="mb-0 text-black-50 small">Views</p>
+            <p class="mb-0 text-black-50 small">{{language.feedViews}}</p>
           </div>
         </div>
         <div class="overflow-hidden border-top">
-          <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> View my profile </a>
+          <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> {{language.feedViewMyProfile}}
+          </a>
         </div>
       </div>
-      <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
+      <!-- <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">Profile Views</h6>
         </div>
@@ -332,7 +334,7 @@
         <div class="overflow-hidden border-top text-center">
           <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
         </div>
-      </div>
+      </div> -->
       <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
         <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
         <div class="p-3 border-bottom">
@@ -347,10 +349,11 @@
     <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
       <div class="box shadow-sm border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
-          <h6 class="m-0">People you might know</h6>
+          <h6 class="m-0">{{language.feedYourConnections}}</h6>
         </div>
         <div class="box-body p-3">
-          <div class="d-flex align-items-center osahan-post-header mb-3 people-list" *ngFor="let item of peopleYouMightKnowList">
+          <div class="d-flex align-items-center osahan-post-header mb-3 people-list"
+            *ngFor="let item of peopleYouMightKnowList">
             <div class="dropdown-list-image mr-3">
               <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
               <div class="status-indicator bg-success"></div>
@@ -366,14 +369,16 @@
           </div>
         </div>
       </div>
-      <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2 || userType === 3">
+      <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden"
+        *ngIf="userType === 2 || userType === 3">
         <img src="../../../../assets/img/premium.png" class="img-fluid" alt="Responsive image">
         <div class="p-3 border-bottom">
-          <h6 class="font-weight-bold text-gold">BC-Inter Premium</h6>
-          <p class="mb-0 text-muted">Grow & nurture your network</p>
+          <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
+          <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
         </div>
         <div class="p-3">
-          <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium"> ACTIVATE
+          <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium">
+            {{language.feedActivate}}
           </button>
         </div>
       </div>
@@ -381,16 +386,16 @@
         <div class="image-overlap-2 pt-4">
           <img style="width: 75px" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
             alt="Responsive image">
-          <img style="width: 75px" src="../../../../assets/img/profile_image/{{user.image}}"
-            class="rounded-circle shadow-sm" alt="Responsive image">
+          <img style="width: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm"
+            alt="Responsive image">
         </div>
         <div class="p-3 border-bottom">
-          <h6 class="text-dark">Connect with your friends!</h6>
-          <p class="mb-0 text-muted">Make your own list!</p>
+          <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
+          <p class="mb-0 text-muted">{{language.feedInviteText}}</p>
         </div>
         <div class="p-3">
-          <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4"> INVITE
-            PEOPLE </button>
+          <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+            {{language.feedSendInvite}} </button>
         </div>
       </div>
       <!-- <div class="box shadow-sm border rounded bg-white mb-3">
@@ -461,37 +466,49 @@
 
 </div>
 
-<kendo-window [title]="'Post likes'" *ngIf="postLikes" [minWidth]="400" [width]="400" [minHeight]="450"
-  (close)="postLikes = false">
+<kendo-window [title]="language.feedPostLikes" *ngIf="postLikes" [width]="windowWidth ? windowWidth : 410"
+  [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">
   <ul class="listUserLikes">
     <li *ngFor="let item of allLikesForPost">
-      <img src="../../../../assets/img/profile_image/{{item.image}}"> <span (click)="showUserProfile(item.user_id)">
+      <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfile(item.user_id)">
         {{item.name}} </span>
     </li>
   </ul>
 </kendo-window>
 
-<kendo-window [title]="'Join invite'" *ngIf="inviteWindows" [minWidth]="400" [width]="500"
-  (close)="inviteWindows = false">
+<kendo-window [title]="language.feedInviteTitle" *ngIf="inviteWindows" [height]="windowHeight ? windowHeight : 400"
+  [width]="windowWidth ? windowWidth : 500" (close)="inviteWindows = false">
 
   <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
 
   <form (ngSubmit)="sendInviteFriend(invite)">
     <label id="nameLabel" class="form-label">
-      Enter email
+      {{language.feedEnterMail}}
       <span class="text-danger">*</span>
     </label>
     <div class="form-group">
-      <input type="email" [(ngModel)]="invite.email" class="form-control" name="firstname" placeholder="Enter email"
-        aria-label="Enter your name" required="">
+      <input type="email" [(ngModel)]="invite.email" class="form-control" name="firstname"
+        placeholder="{{language.feedEnterMail}}" required="">
     </div>
 
     <textarea class="form-control" [(ngModel)]="invite.message" rows="4" name="text"
-      placeholder="Enter your message"></textarea>
+      placeholder="{{language.feedEnterMessage}}"></textarea>
 
     <div class="p-3" style="text-align: center;">
       <button type="submit" class="btn btn-outline-primary btn-sm pl-4 pr-4">
-        INVITE PEOPLE </button>
+        {{language.feedSendInviteToMail}} </button>
     </div>
   </form>
 </kendo-window>
+
+<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureRemoveWindow" (close)="areYouSureRemoveWindow = false"
+  [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
+  <div class="modal-body text-center">
+    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
+    <h3>{{language.areYouSure}}</h3>
+  </div>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="areYouSureRemoveWindow = false">{{language.no}}</button>
+    <button kendoButton (click)="deletePost('yes')" primary="true">{{language.yes}}</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

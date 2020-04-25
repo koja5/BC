@@ -6,7 +6,7 @@ const Schema = mongo.Schema;
 // const url = 'mongodb://localhost:27017/management_mongodb';
 // const url = 'mongodb://appprodu_appproduction_prod:CJr4eUqWg33tT97mxPFx@vps.app-production.eu:42526/management_mongodb'
 // const url = "mongodb://78.47.206.131:27017/management_mongo?gssapiServiceName=mongodb";
-const url = " mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
+const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
 
@@ -205,6 +205,7 @@ router.get("/getTranslationWithId/:id", function(req, res, next) {
   mongo.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
+    console.log(db);
     dbo
       .collection("translation")
       .findOne({ _id: ObjectId(id) }, function(err, rows) {
@@ -220,6 +221,7 @@ router.get("/getTranslationByCountryCode/:code", function(req, res, next) {
   mongo.connect(url, function(err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
+    console.log(dbo);
     dbo
       .collection("translation")
       .findOne({ countryCode: code, active: true }, function(err, rows) {
@@ -297,7 +299,7 @@ router.post("/createPost", function(req, res, next) {
 
 router.get("/getAllPostsForUser/:id", function(req, res, next) {
   let id = req.params.id;
-  if (id !== "0") {
+  if (id !== "1") {
     id = "-" + id + "-";
   }
 

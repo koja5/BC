@@ -16,7 +16,7 @@
         </ul>
         <form class="search-form-opened" action="#" method="GET">
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." name="query">
+            <input type="text" class="form-control" placeholder="{{language.adminSearch}}" name="query">
             <span class="input-group-btn">
               <a href="javascript:;" class="btn submit">
                 <i class="icon-magnifier"></i>
@@ -54,22 +54,22 @@
               <ul class="dropdown-menu dropdown-menu-default {{profile}}">
                 <li>
                   <a routerLink="/home/main/my-profile" (click)="showHideProfile()">
-                    <i class="fa fa-user"></i> Profile </a>
+                    <i class="fa fa-user"></i> {{language.adminProfile}} </a>
                 </li>
                 <li>
                   <a (click)="settings.open()" (click)="showHideProfile()">
-                    <i class="fa fa-cog"></i> Settings
+                    <i class="fa fa-cog"></i> {{language.adminSettings}}
                   </a>
                 </li>
                 <li>
                   <a href="#" (click)="showHideProfile()">
-                    <i class="icon-directions"></i> Help
+                    <i class="icon-directions"></i> {{language.adminHelp}}
                   </a>
                 </li>
                 <li class="divider"> </li>
                 <li>
                   <a href="lock_screen.html" (click)="showHideProfile()">
-                    <i class="icon-lock"></i> Lock
+                    <i class="icon-lock"></i> {{language.adminLock}}
                   </a>
                 </li>
                 <li>

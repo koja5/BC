@@ -7,7 +7,7 @@ var fs = require("fs");
 const mysql = require("mysql");
 
 var link = "http://localhost:3000/api/";
-var linkClinet = "http://localhost:4200/";
+var linkClient = "http://localhost:4200/";
 
 var connection = mysql.createPool({
   host: "185.178.193.141",
@@ -101,7 +101,7 @@ router.post("/inviteFriend", function(req, res) {
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
   var inviteLink =
-   linkClinet + "login/join-to/" + req.body.directorId;
+   linkClient + "login/join-to/" + req.body.directorId;
 
   var mailOptions = {
     from: '"BCI" info@app-production.eu',
@@ -132,7 +132,7 @@ router.post("/sendQuestion", function(req, res) {
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
   var inviteLink =
-   linkClinet + "login/join-to/" + req.body.directorId;
+   linkClient + "login/join-to/" + req.body.directorId;
 
   var mailOptions = {
     from: '"BCI" info@app-production.eu',

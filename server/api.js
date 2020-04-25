@@ -181,7 +181,6 @@ router.get("/getUserInfoSHA1/:id", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    console.log(id);
     conn.query("SELECT * from users where sha1(id) = '" + id + "'", function (
       err,
       rows
@@ -495,7 +494,7 @@ router.get("/getMyOwnConnection/:id", function (req, res, next) {
     var id = req.params.id;
     console.log(id);
     conn.query(
-      "SELECT id from users where active = 1 and type = 1 and sha1(id) = '" +
+      "SELECT id from users where active = 1 and (type = 1 or type = 0) and sha1(id) = '" +
         id +
         "'",
       function (err, rows) {
@@ -505,7 +504,12 @@ router.get("/getMyOwnConnection/:id", function (req, res, next) {
             conn.release();
             res.json(rows);
           } else {
-            var directorId = "-" + rows[0].id + "-";
+            console.log(rows[0].id);
+            if (rows[0].id !== 1) {
+              var directorId = "-" + rows[0].id + "-";
+            } else {
+              var directorId = rows[0].id;
+            }
             console.log(directorId);
             conn.query(
               "SELECT * from users where active = 1 and sid like '%" +
@@ -608,7 +612,6 @@ router.post("/joinTo", (req, res, next) => {
         });
         return next(err);
       }
-      console.log(req.body);
       conn.query(
         "SELECT * from users where sha1(id) = '" + req.body.directorId + "'",
         function (err, rows, fields) {
@@ -792,7 +795,7 @@ router.post("/createMember", function (req, res, next) {
     if (err) {
       res.json({
         code: 100,
-        status: "Error in connection database"
+        status: "Error in connection database",
       });
       return;
     }
@@ -812,7 +815,7 @@ router.post("/createMember", function (req, res, next) {
       } else {
         res.json({
           code: 100,
-          status: "Error in connection database"
+          status: "Error in connection database",
         });
         console.log(err);
       }
@@ -833,7 +836,6 @@ router.post("/updatePaymentStatus", function (req, res, next) {
       return;
     }
     console.log(req.body.id);
-    console.log("CAOOOOOOOOOOOOOOOOOOOOOOOO!!!!");
     conn.query(
       "UPDATE users SET type = 3 where id = '" + req.body.id + "'",
       function (err, rows) {
@@ -852,6 +854,85 @@ router.post("/updatePaymentStatus", function (req, res, next) {
       });
       return;
     });
+  });
+});
+
+router.post("/uploadImage", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    test = {};
+    var id = req.body.id;
+    console.log(req.body);
+    // console.log(fs);
+    var img = fs.readFileSync(
+      "C:\\Users\\Aleksandar\\Pictures\\" + "468739.jpg"
+    );
+
+    conn.query(
+      "UPDATE users SET img = ? where id = '" + id + "'",
+      [img],
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          if (!err) {
+            test = {
+              img: img,
+            };
+          } else {
+            test.success = false;
+          }
+          res.json(test);
+          console.log("Usao sam u DB!!!!");
+        } else {
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+          console.log(err);
+        }
+      }
+    );
+  });
+});
+
+router.post("/uploadImage1", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    test = {};
+    conn.query(
+      "UPDATE users SET img = '" + req.body.myFile + "' where id = 1",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          if (!err) {
+            test = {
+              img: img,
+            };
+          } else {
+            test.success = false;
+          }
+          res.json(test);
+        } else {
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+          console.log(err);
+        }
+      }
+    );
   });
 });
 

@@ -321,12 +321,12 @@ export class CustomGridComponent implements OnInit {
   updateMember(data) {
     this.service.updateMember(this.member).subscribe((data) => {
       if (data) {
-        this.toastr.success("Successfull!", "Successfull update data!", {
+        this.toastr.success(this.language.adminSuccessUpdateTitle, this.language.adminSuccessUpdateText, {
           timeOut: 7000,
           positionClass: "toast-bottom-right",
         });
       } else {
-        this.toastr.error("Error!", "Error update data!", {
+        this.toastr.error(this.language.adminErrorUpdateTitle, this.language.adminErrorUpdateText, {
           timeOut: 7000,
           positionClass: "toast-bottom-right",
         });
@@ -340,12 +340,12 @@ export class CustomGridComponent implements OnInit {
       if (data["success"]) {
         this.member.id = data["id"];
         this.gridView.push(this.member);
-        this.toastr.success("Successfull!", "Successfull create data!", {
+        this.toastr.success(this.language.adminSuccessCreateTitle, this.language.adminSuccessCreateText, {
           timeOut: 7000,
           positionClass: "toast-bottom-right",
         });
       } else {
-        this.toastr.error("Error!", "Error create data!", {
+        this.toastr.error(this.language.adminErrorCreateTitle, this.language.adminErrorCreateText, {
           timeOut: 7000,
           positionClass: "toast-bottom-right",
         });

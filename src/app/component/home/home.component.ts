@@ -4,6 +4,8 @@ import { CookieService } from "ng2-cookies";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { FindConnectionService } from "src/app/services/find-connection.service";
+import { ProfileService } from "src/app/services/profile.service";
+import { HelpService } from "src/app/services/help.service";
 
 @Component({
   selector: "app-home",
@@ -15,29 +17,47 @@ export class HomeComponent implements OnInit {
   public type: any;
   public fullname: any;
   public user: any;
+  public id: any;
   public superadminInd = false;
   public userListLoading = false;
   public userList: any;
   public selectedUser: any;
+  public language: any;
 
   constructor(
     private router: Router,
     private cookie: CookieService,
     private message: MessageService,
-    private findConnection: FindConnectionService
+    private findConnection: FindConnectionService,
+    private profileService: ProfileService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
-    this.user = JSON.parse(localStorage.getItem("user"));
-    if (this.user.type === sha1(0)) {
-      this.superadminInd = true;
-    }
-
-    this.message.getNewFullname().subscribe((mess) => {
-      this.user = JSON.parse(localStorage.getItem("user"));
-    });
+    this.id = localStorage.getItem("id");
+    this.language = JSON.parse(localStorage.getItem("language"));
+    this.initialization();
     this.selectedUser = null;
-    console.log(this.selectedUser);
+
+    this.message.getUserInfo().subscribe(
+      data => {
+        this.initialization();
+      }
+    )
+  }
+
+  initialization() {
+    this.getUserProfile();
+  }
+
+  getUserProfile() {
+    this.profileService.getUserInfoSHA1(this.id).subscribe((data) => {
+      this.user = data[0];
+      // this.user.img = this.helpService.getImage(data[0].img);
+      if (this.user.type === 0) {
+        this.superadminInd = true;
+      }
+    });
   }
 
   logout() {
@@ -52,7 +72,9 @@ export class HomeComponent implements OnInit {
       this.selectedUser = null;
     } else {
       this.selectedUser = event;
-      this.router.navigate(['/home/main/profile/' + sha1(this.selectedUser.id.toString())]);
+      this.router.navigate([
+        "/home/main/profile/" + sha1(this.selectedUser.id.toString()),
+      ]);
     }
   }
 

@@ -21,6 +21,7 @@ import { FindConnectionComponent } from './find-connection/find-connection.compo
 import { ContactComponent } from './contact/contact.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
+import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
     DateInputsModule,
     ImageCropperModule,
     DropDownsModule,
-    ButtonsModule
+    ButtonsModule,
+    FileUploadModule
   ]
 })
 export class HomeModule { }

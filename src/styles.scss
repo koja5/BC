@@ -826,3 +826,13 @@ button:focus {outline:0;}
  .k-dialog-wrapper {
    z-index: 99999 !important;
  }
+
+ input[type="file"] {
+  display: none !important;
+}
+.custom-file-upload {
+  border: 1px solid #ccc;
+  display: inline-block;
+  padding: 6px 12px;
+  cursor: pointer;
+}

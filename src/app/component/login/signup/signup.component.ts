@@ -45,7 +45,7 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  signup(form) {
+  signup() {
     this.existMail = false;
     this.notEqualPassword = false;
     if (this.data.password !== this.data.confirmPassword) {

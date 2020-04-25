@@ -104,7 +104,7 @@
     </ng-template>
   </kendo-grid>
 
-  <kendo-dialog title="Please confirm" *ngIf="dialogDelete" (close)="dialogDelete = false" [minWidth]="250"
+  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="dialogDelete" (close)="dialogDelete = false" [minWidth]="250"
     [width]="450">
     <div class="modal-body text-center">
       <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">

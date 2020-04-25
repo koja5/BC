@@ -7,9 +7,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrivacyPolicyComponent implements OnInit {
 
+  public language: any;
+  
   constructor() { }
 
   ngOnInit() {
+    this.language = JSON.parse(localStorage.getItem("language"));
   }
 
 }

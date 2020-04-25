@@ -6,8 +6,53 @@
     color: #FFF;
     border: 1px solid;
     margin: 7px;
+    cursor: pointer;
 }
 
 .cover-photo-update:hover {
     color: #FFF;
 }
+
+
+.loader4 {
+    width:45px;
+    height:45px;
+    display:inline-block;
+    padding:0px;
+    border-radius:100%;
+    border:5px solid;
+    border-top-color:#0B6794;
+    border-bottom-color:rgba(255,255,255, 0.3);
+    border-left-color:#0B6794;
+    border-right-color:rgba(255,255,255, 0.3);
+    -webkit-animation: loader4 1s ease-in-out infinite;
+    animation: loader4 1s ease-in-out infinite;
+ }
+ @keyframes loader4 {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+ }
+ @-webkit-keyframes loader4 {
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+ }
+
+ .imageLoader {
+    position: absolute;
+    left: 42%;
+    top: 17%;
+    z-index: 1;
+ }
+
+ .blur {
+    filter: blur(2px);
+ }
+
+ image-cropper {
+    height: 260px;
+  }
+
+  .image-cover {
+      width: 1500px;
+      height: 300px;
+  }

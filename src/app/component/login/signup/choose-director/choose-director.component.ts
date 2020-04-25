@@ -61,7 +61,7 @@ export class ChooseDirectorComponent implements OnInit {
 
   doNotHave() {
     const data = {
-      sid: 0 + "-" + this.id,
+      sid: 1 + "-" + this.id,
       id: this.id
     };
 
