@@ -4,7 +4,7 @@
 
 <head style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
   <meta charset="UTF-8" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
-  <title style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">Confirm Mail - ClinicNode</title>
+  <title style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{confirmMailBCITitle}}</title>
   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@0.7.4/dist/tailwind.min.css" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
 
@@ -26,17 +26,16 @@
 
         <div class="content__body py-8 border-b" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;border-bottom-width: 1px;padding-top: 2rem;padding-bottom: 2rem;">
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            Hey {{firstName}}, <br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;"><br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">It looks like you just signed up for BC-Inter, that’s awesome! Can we ask you for email
-            confirmation? Just click the button bellow.
+            {{confirmMailRegardsFirst}} {{firstName}}, <br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;"><br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{confirmMailMessage}}
           </p>
-          <a href={{verificationLink}} style="cursor: pointer; text-decoration: initial;"><button class="text-white text-sm tracking-wide rounded w-full my-8 p-4 " style="background: #01A9E9;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;font-family: inherit;font-size: .875rem;line-height: 1.15;margin: 0;overflow: visible;text-transform: none;-webkit-appearance: button;padding: 1rem;cursor: pointer;border-radius: .25rem;margin-top: 2rem;margin-bottom: 2rem;color: #fff;letter-spacing: .05em;">CONFIRM EMAIL ADDRESS</button></a>
+          <a href={{verificationLink}} style="cursor: pointer; text-decoration: initial;"><button class="text-white text-sm tracking-wide rounded w-full my-8 p-4 " style="background: #01A9E9;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;font-family: inherit;font-size: .875rem;line-height: 1.15;margin: 0;overflow: visible;text-transform: none;-webkit-appearance: button;padding: 1rem;cursor: pointer;border-radius: .25rem;margin-top: 2rem;margin-bottom: 2rem;color: #fff;letter-spacing: .05em;">{{confirmMailConfirmEmailButton}}</button></a>
           <p class="text-sm" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;font-size: .875rem;">
-            Thanks,<br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;"> BC-Inter Team
+            {{confirmMailRegardsEnd}}<br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;"> {{confirmMailBCISignature}}
           </p>
         </div>
 
         <div class="content__footer mt-8 text-center text-grey-darker" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin-top: 2rem;text-align: center;color: #606f7b;">
-          <h3 class="text-base sm:text-lg mb-4" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;margin-bottom: 1rem;font-size: 1.125rem;">Thanks for using BC-Inter!</h3>
+          <h3 class="text-base sm:text-lg mb-4" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;margin-bottom: 1rem;font-size: 1.125rem;">{{confirmMailThanksForUsing}}</h3>
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">www.bc-inter.net</p>
         </div>
 
@@ -52,15 +51,15 @@
 
         <div class="meta__help" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
           <p class="leading-loose" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;line-height: 2;">
-            If you have question? <a href="#" class="text-grey-darkest" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;background-color: transparent;color: #3d4852;">help@bc-inter.net</a>
+            {{confirmMailHaveQuestion}} <a href="#" class="text-grey-darkest" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;background-color: transparent;color: #3d4852;">help@bc-inter.net</a>
           </p>
         </div>
         <div class="auto-generate" style="font-size: 10px;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            This is an automated email - please do not reply.
+            {{confirmMailGenerateMail}}
           </p>
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            Copyright © 2020 BC-Inter, All rights reserved.
+            {{confirmMailCopyright}}
           </p>
         </div>
 

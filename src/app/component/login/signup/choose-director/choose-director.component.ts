@@ -90,6 +90,19 @@ export class ChooseDirectorComponent implements OnInit {
   }
 
   doneSignUp() {
+    this.user["language"] = {
+      confirmMailSubject: this.language.confirmMailSubject,
+      confirmMailBCITitle: this.language.confirmMailBCITitle,
+      confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
+      confirmMailMessage: this.language.confirmMailMessage,
+      confirmMailConfirmEmailButton: this.language.confirmMailConfirmEmailButton,
+      confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
+      confirmMailBCISignature: this.language.confirmMailBCISignature,
+      confirmMailThanksForUsing: this.language.confirmMailThanksForUsing,
+      confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
+      confirmMailGenerateMail: this.language.confirmMailGenerateMail,
+      confirmMailCopyright: this.language.confirmMailCopyright
+    }
     this.mailService.sendMail(this.user, function() {
       this.router.navigate(["/login"]);
     });

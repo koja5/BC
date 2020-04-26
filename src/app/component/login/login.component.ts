@@ -113,6 +113,19 @@ export class LoginComponent implements OnInit {
         setTimeout(() => {
           console.log(data);
           if (data["exist"]) {
+            thisObject.data['language'] = {
+              forgotMailSubject: this.language.forgotMailSubject,
+              forgotMailBCITitle: this.language.forgotMailBCITitle,
+              forgotMailRegardsFirst: this.language.forgotMailRegardsFirst,
+              forgotMailMessage: this.language.forgotMailMessage,
+              forgotMailConfirmEmailButton: this.language.forgotMailConfirmEmailButton,
+              forgotMailRegardsEnd: this.language.forgotMailRegardsEnd,
+              forgotMailBCISignature: this.language.forgotMailBCISignature,
+              forgotMailThanksForUsing: this.language.forgotMailThanksForUsing,
+              forgotMailHaveQuestion: this.language.forgotMailHaveQuestion,
+              forgotMailGenerateMail: this.language.forgotMailGenerateMail,
+              forgotMailCopyright: this.language.forgotMailCopyright
+            }
             thisObject.mailService
               .sendForgetMail(thisObject.data)
               .subscribe((data) => {

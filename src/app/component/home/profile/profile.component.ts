@@ -43,6 +43,8 @@ export class ProfileComponent implements OnInit {
   public typeOfUpload: any;
   public windowHeight: any;
   public windowWidth: any;
+  // public url = "localhost:" + location.port + "/upload";
+  public url = "http://78.47.206.131:" + location.port + "/upload";
 
   constructor(
     private service: ProfileService,
@@ -73,7 +75,7 @@ export class ProfileComponent implements OnInit {
     });
 
     this.uploader = new FileUploader({
-      url: "http://localhost:3000/upload",
+      url: this.url,
     });
 
     this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {

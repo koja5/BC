@@ -39,14 +39,24 @@ router.post("/send", function(req, res) {
   var compiledTemplate = hogan.compile(confirmTemplate);
   var verificationLinkButton =
     link + "user/verification/" + sha1(req.body.email);
-
+    console.log(req.body);
   var mailOptions = {
     from: '"BCI" info@app-production.eu',
     to: req.body.email,
-    subject: "Confirm registration",
+    subject: req.body.language.confirmMailSubject,
     html: compiledTemplate.render({
       firstName: req.body.firstname,
-      verificationLink: verificationLinkButton
+      verificationLink: verificationLinkButton,
+      confirmMailBCITitle: req.body.language.confirmMailBCITitle,
+      confirmMailRegardsFirst: req.body.language.confirmMailRegardsFirst,
+      confirmMailMessage: req.body.language.confirmMailMessage,
+      confirmMailConfirmEmailButton: req.body.language.confirmMailConfirmEmailButton,
+      confirmMailRegardsEnd: req.body.language.confirmMailRegardsEnd,
+      confirmMailBCISignature: req.body.language.confirmMailBCISignature,
+      confirmMailThanksForUsing: req.body.language.confirmMailThanksForUsing,
+      confirmMailHaveQuestion: req.body.language.confirmMailHaveQuestion,
+      confirmMailGenerateMail: req.body.language.confirmMailGenerateMail,
+      confirmMailCopyright: req.body.language.confirmMailCopyright
     })
   };
 
@@ -70,16 +80,25 @@ router.post("/forgotmail", function(req, res) {
     "utf-8"
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
-  var verificationLinkButton =
-    "http://localhost:4200/change-password/" + sha1(req.body.email);
+  var verificationLinkButton = linkClient + "login/change-password/" + sha1(req.body.email);
 
   var mailOptions = {
     from: '"BCI" info@app-production.eu',
     to: req.body.email,
-    subject: "Reset password",
+    subject: req.body.language.forgotMailSubject,
     html: compiledTemplate.render({
       firstName: req.body.firstname,
-      verificationLink: verificationLinkButton
+      verificationLink: verificationLinkButton,
+      forgotMailBCITitle: req.body.language.forgotMailBCITitle,
+      forgotMailRegardsFirst: req.body.language.forgotMailRegardsFirst,
+      forgotMailMessage: req.body.language.forgotMailMessage,
+      forgotMailConfirmEmailButton: req.body.language.forgotMailConfirmEmailButton,
+      forgotMailRegardsEnd: req.body.language.forgotMailRegardsEnd,
+      forgotMailBCISignature: req.body.language.forgotMailBCISignature,
+      forgotMailThanksForUsing: req.body.language.forgotMailThanksForUsing,
+      forgotMailHaveQuestion: req.body.language.forgotMailHaveQuestion,
+      forgotMailGenerateMail: req.body.language.forgotMailGenerateMail,
+      forgotMailCopyright: req.body.language.forgotMailCopyright
     })
   };
 
@@ -106,10 +125,16 @@ router.post("/inviteFriend", function(req, res) {
   var mailOptions = {
     from: '"BCI" info@app-production.eu',
     to: req.body.email,
-    subject: "Join to my team!",
+    subject: req.body.language.inviteFriendSubject,
     html: compiledTemplate.render({
       message: req.body.message,
-      inviteLink: inviteLink
+      inviteLink: inviteLink,
+      inviteFriendBCITitle: req.body.language.inviteFriendBCITitle,
+      inviteFriendJoinTo: req.body.language.inviteFriendJoinTo,
+      inviteFriendThanksForUsing: req.body.language.inviteFriendThanksForUsing,
+      inviteFriendHaveQuestion: req.body.language.inviteFriendHaveQuestion,
+      inviteFriendGenerateMail: req.body.language.inviteFriendGenerateMail,
+      inviteFriendCopyright: req.body.language.inviteFriendCopyright
     })
   };
 
@@ -137,13 +162,27 @@ router.post("/sendQuestion", function(req, res) {
   var mailOptions = {
     from: '"BCI" info@app-production.eu',
     to: "kojaaa95@gmail.com",
-    subject: "Message from " + req.body.name,
+    subject: req.body.language.sendQuestionSubjectTitle + " " + req.body.name,
     html: compiledTemplate.render({
       name: req.body.name,
       email: req.body.email,
       subject: req.body.subject,
       phone: req.body.phone,
-      message: req.body.message
+      message: req.body.message,
+      sendQuestionBCITitle: req.body.language.sendQuestionBCITitle,
+      sendQuestionRegardsFirst: req.body.language.sendQuestionRegardsFirst,
+      sendQuestionMessage: req.body.language.sendQuestionMessage,
+      sendQuestionName: req.body.language.sendQuestionName,
+      sendQuestionPhone: req.body.language.sendQuestionPhone,
+      sendQuestionEmail: req.body.language.sendQuestionEmail,
+      sendQuestionSubject: req.body.language.sendQuestionSubject,
+      sendQuestionMessageClient: req.body.language.sendQuestionMessageClient,
+      sendQuestionRegardsEnd: req.body.language.sendQuestionRegardsEnd,
+      sendQuestionBCISignature: req.body.language.sendQuestionBCISignature,
+      sendQuestionThanksForUsing: req.body.language.sendQuestionThanksForUsing,
+      sendQuestionHaveQuestion: req.body.language.sendQuestionHaveQuestion,
+      sendQuestionGenerateMail: req.body.language.sendQuestionGenerateMail,
+      sendQuestionCopyright: req.body.language.sendQuestionCopyright
     })
   };
   /*let ime = req.body.name;

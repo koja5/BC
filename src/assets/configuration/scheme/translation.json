@@ -237,7 +237,56 @@
       "profileFollow": { "type": "string" },
       "profileAbout": { "type": "string" },
       "profileUpdate": { "type": "string" },
-      "profileOverview": { "type": "string" }
+      "profileOverview": { "type": "string" },
+      "connectionallYourConnections": { "type": "string" },
+      "connectionMyOwnList": { "type": "string" },
+      "connectionOtherConnection": { "type": "string" },
+      "connectionSendMessage": { "type": "string" },
+      "connectionFollow": { "type": "string" },
+      "forgotMailSubject": { "type": "string" },
+      "forgotMailBCITitle": { "type": "string" },
+      "forgotMailRegardsFirst": { "type": "string" },
+      "forgotMailMessage": { "type": "string" },
+      "forgotMailConfirmEmailButton": { "type": "string" },
+      "forgotMailRegardsEnd": { "type": "string" },
+      "forgotMailBCISignature": { "type": "string" },
+      "forgotMailThanksForUsing": { "type": "string" },
+      "forgotMailHaveQuestion": { "type": "string" },
+      "forgotMailGenerateMail": { "type": "string" },
+      "forgotMailCopyright": { "type": "string" },
+      "confirmMailSubject": { "type": "string" },
+      "confirmMailBCITitle": { "type": "string" },
+      "confirmMailRegardsFirst": { "type": "string" },
+      "confirmMailMessage": { "type": "string" },
+      "confirmMailConfirmEmailButton": { "type": "string" },
+      "confirmMailRegardsEnd": { "type": "string" },
+      "confirmMailBCISignature": { "type": "string" },
+      "confirmMailThanksForUsing": { "type": "string" },
+      "confirmMailHaveQuestion": { "type": "string" },
+      "confirmMailGenerateMail": { "type": "string" },
+      "confirmMailCopyright": { "type": "string" },
+      "inviteFriendSubject": { "type": "string" },
+      "inviteFriendBCITitle": { "type": "string" },
+      "inviteFriendJoinTo": { "type": "string" },
+      "inviteFriendThanksForUsing": { "type": "string" },
+      "inviteFriendHaveQuestion": { "type": "string" },
+      "inviteFriendGenerateMail": { "type": "string" },
+      "inviteFriendCopyright": { "type": "string" },
+      "sendQuestionSubjectTitle": { "type": "string" },
+      "sendQuestionBCITitle": { "type": "string" },
+      "sendQuestionRegardsFirst": { "type": "string" },
+      "sendQuestionMessage": { "type": "string" },
+      "sendQuestionName": { "type": "string" },
+      "sendQuestionPhone": { "type": "string" },
+      "sendQuestionEmail": { "type": "string" },
+      "sendQuestionSubject": { "type": "string" },
+      "sendQuestionMessageClient": { "type": "string" },
+      "sendQuestionRegardsEnd": { "type": "string" },
+      "sendQuestionBCISignature": { "type": "string" },
+      "sendQuestionThanksForUsing": { "type": "string" },
+      "sendQuestionHaveQuestion": { "type": "string" },
+      "sendQuestionGenerateMail": { "type": "string" },
+      "sendQuestionCopyright": { "type": "string" }
     }
   },
   "layout": [
@@ -991,6 +1040,195 @@
             { "key": "profileOverview" },
             { "key": "profileUpdateProfileImage" },
             {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Connection",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "connectionallYourConnections" },
+            { "key": "connectionMyOwnList" },
+            { "key": "connectionOtherConnection" },
+            { "key": "connectionSendMessage" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "connectionFollow" }, {}, {}, {}]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Forgot mail",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "forgotMailBCITitle" },
+            { "key": "forgotMailRegardsFirst" },
+            { "key": "forgotMailMessage" },
+            { "key": "forgotMailConfirmEmailButton" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "forgotMailRegardsEnd" },
+            { "key": "forgotMailBCISignature" },
+            { "key": "forgotMailThanksForUsing" },
+            { "key": "forgotMailHaveQuestion" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "forgotMailGenerateMail" },
+            { "key": "forgotMailCopyright" },
+            { "key": "forgotMailSubject" },
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Confirm mail",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "confirmMailBCITitle" },
+            { "key": "confirmMailRegardsFirst" },
+            { "key": "confirmMailMessage" },
+            { "key": "confirmMailConfirmEmailButton" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "confirmMailRegardsEnd" },
+            { "key": "confirmMailBCISignature" },
+            { "key": "confirmMailThanksForUsing" },
+            { "key": "confirmMailHaveQuestion" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "confirmMailGenerateMail" },
+            { "key": "confirmMailCopyright" },
+            { "key": "confirmMailSubject" },
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Invite friend mail",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inviteFriendBCITitle" },
+            { "key": "inviteFriendJoinTo" },
+            { "key": "inviteFriendThanksForUsing" },
+            { "key": "inviteFriendHaveQuestion" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inviteFriendGenerateMail" },
+            { "key": "inviteFriendCopyright" },
+            { "key": "inviteFriendSubject" },
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Send question",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "sendQuestionBCITitle" },
+            { "key": "sendQuestionRegardsFirst" },
+            { "key": "sendQuestionMessage" },
+            { "key": "sendQuestionName" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "sendQuestionPhone" },
+            { "key": "sendQuestionEmail" },
+            { "key": "sendQuestionSubject" },
+            { "key": "sendQuestionMessageClient" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "sendQuestionRegardsEnd" },
+            { "key": "sendQuestionBCISignature" },
+            { "key": "sendQuestionThanksForUsing" },
+            { "key": "sendQuestionHaveQuestion" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "sendQuestionGenerateMail" },
+            { "key": "sendQuestionCopyright" },
+            { "key": "sendQuestionSubjectTitle" },
+            { }
           ]
         }
       ]

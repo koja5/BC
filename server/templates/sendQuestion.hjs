@@ -4,8 +4,7 @@
 
 <head style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
   <meta charset="UTF-8" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
-  <title style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">Confirm Arrival -
-    BCI</title>
+  <title style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{sendQuestionBCITitle}}</title>
   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@0.7.4/dist/tailwind.min.css"
     style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
@@ -35,30 +34,30 @@
         <div class="content__body py-8 border-b"
           style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;border-bottom-width: 1px;padding-top: 2rem;padding-bottom: 2rem;">
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            Hey, <br
+            {{sendQuestionRegardsFirst}}, <br
               style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;"><br
-              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">You are have a message from contact form. This is user data:</p>
+              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{sendQuestionMessage}}</p>
 
           <div style="text-align: center; padding: 15px;">
             <div style="padding-top: 7px;">
-              <p style="text-align: initial; font-size: 13px; margin: 0px">Name: <span
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{sendQuestionName}} <span
                   style="font-size: 15px; font-weight: bold;">{{name}}</span>
               </p>
-              <p style="text-align: initial; font-size: 13px; margin: 0px">Phone: <span
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{sendQuestionPhone}} <span
                   style="font-size: 15px; font-weight: bold;">{{phone}}</span></p>
-              <p style="text-align: initial; font-size: 13px; margin: 0px">Email: <span
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{sendQuestionEmail}} <span
                   style="font-size: 15px; font-weight: bold;">{{email}}</span></p>
-              <p style="text-align: initial; font-size: 13px; margin: 0px">Subject: <span
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{sendQuestionSubject}} <span
                   style="font-size: 15px; font-weight: bold;">{{subject}}</span></p>
-              <p style="text-align: initial; font-size: 13px; margin: 0px">Message:</p><br>
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{sendQuestionMessageClient}}</p><br>
               <pre>{{message}}</pre>
             </div>
           </div>
           <br>
           <p class="text-sm"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;font-size: .875rem;">
-            Thanks,<br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
-            BCI Team
+            {{sendQuestionRegardsEnd}},<br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
+            {{sendQuestionBCISignature}}
           </p>
         </div>
 
@@ -66,7 +65,7 @@
           style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin-top: 2rem;text-align: center;color: #606f7b;">
           <h3 class="text-base sm:text-lg mb-4"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;margin-bottom: 1rem;font-size: 1.125rem;">
-            Thanks for using BCI!</h3>
+            {{sendQuestionThanksForUsing}}</h3>
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
             www.BCI.com</p>
         </div>
@@ -97,17 +96,17 @@
         <div class="meta__help" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
           <p class="leading-loose"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;line-height: 2;">
-            If you have question? <a href="#" class="text-grey-darkest"
+            {{sendQuestionHaveQuestion}} <a href="#" class="text-grey-darkest"
               style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;background-color: transparent;color: #3d4852;">help@BCI.com</a>
           </p>
         </div>
         <div class="auto-generate"
           style="font-size: 10px;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            This is an automated email - please do not reply.
+            {{sendQuestionGenerateMail}}
           </p>
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            Copyright © 2020 BCI, All rights reserved.
+            {{sendQuestionCopyright}}
           </p>
         </div>
 

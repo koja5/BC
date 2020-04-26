@@ -11,10 +11,12 @@ import * as sha1 from "sha1";
 export class ConnectionComponent implements OnInit {
   public selectTab = "myConnection";
   public allUsers: any;
+  public language: any;
 
   constructor(private service: ConnectionService, private router: Router) {}
 
   ngOnInit() {
+    this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
   }
 

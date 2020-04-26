@@ -274,6 +274,15 @@ export class FeedComponent implements OnInit {
     console.log(this.invite);
     if (this.invite.email && this.invite.message) {
       this.invite.directorId = localStorage.getItem("id");
+      this.invite["language"] = {
+        inviteFriendSubject: this.language.inviteFriendSubject,
+        inviteFriendBCITitle: this.language.inviteFriendBCITitle,
+        inviteFriendJoinTo: this.language.inviteFriendJoinTo,
+        inviteFriendThanksForUsing: this.language.inviteFriendThanksForUsing,
+        inviteFriendHaveQuestion: this.language.inviteFriendHaveQuestion,
+        inviteFriendGenerateMail: this.language.inviteFriendGenerateMail,
+        inviteFriendCopyright: this.language.inviteFriendCopyrigh
+      }
       this.service.sendInviteFriend(this.invite).subscribe((data) => {
         console.log(data);
       });

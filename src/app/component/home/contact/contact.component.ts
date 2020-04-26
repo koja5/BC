@@ -19,6 +19,23 @@ export class ContactComponent implements OnInit {
   }
 
   submitForm() {
+    this.data["language"] = {
+      sendQuestionSubjectTitle: this.language.sendQuestionSubjectTitle,
+      sendQuestionBCITitle: this.language.sendQuestionBCITitle,
+      sendQuestionRegardsFirst: this.language.sendQuestionRegardsFirst,
+      sendQuestionMessage: this.language.sendQuestionMessage,
+      sendQuestionName: this.language.sendQuestionName,
+      sendQuestionPhone: this.language.sendQuestionPhone,
+      sendQuestionEmail: this.language.sendQuestionEmail,
+      sendQuestionSubject: this.language.sendQuestionSubject,
+      sendQuestionMessageClient: this.language.sendQuestionMessageClient,
+      sendQuestionRegardsEnd: this.language.sendQuestionRegardsEnd,
+      sendQuestionBCISignature: this.language.sendQuestionBCISignature,
+      sendQuestionThanksForUsing: this.language.sendQuestionThanksForUsing,
+      sendQuestionHaveQuestion: this.language.sendQuestionHaveQuestion,
+      sendQuestionGenerateMail: this.language.sendQuestionGenerateMail,
+      sendQuestionCopyright: this.language.sendQuestionCopyright
+    };
     this.service.sendQuestion(this.data).subscribe((data) => {
       console.log(data);
       if (data) {
