@@ -17,7 +17,7 @@ export class FeedComponent implements OnInit {
   public id: any;
   public data: any;
   public postData = new PostModel();
-  public allPosts: any;
+  public allPosts = [];
   public allPostsT = [];
   public selectedProcessOption = -1;
   public likePostIndex = -1;

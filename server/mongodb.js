@@ -9,13 +9,27 @@ const Schema = mongo.Schema;
 const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
+const mysql = require("mysql");
+var sha1 = require("sha1");
+
+var connection = mysql.createPool({
+  host: "185.178.193.141",
+  user: "appproduction.",
+  password: "jBa9$6v7",
+  database: "business_circle",
+});
+
+connection.getConnection(function (err, conn) {
+  console.log(conn);
+  console.log(err);
+});
 
 router.get("/", (req, res) => {
   res.send("Initialize mongodb!");
 });
 
-router.post("/updateLanguage", function(req, res, next) {
-  mongo.connect(url, function(err, db, res) {
+router.post("/updateLanguage", function (req, res, next) {
+  mongo.connect(url, function (err, db, res) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
@@ -23,7 +37,7 @@ router.post("/updateLanguage", function(req, res, next) {
       .updateOne(
         { user_id: req.body.user_id },
         { $set: { language: req.body.language } },
-        function(err, res) {
+        function (err, res) {
           if (err) throw err;
         }
       );
@@ -31,13 +45,13 @@ router.post("/updateLanguage", function(req, res, next) {
   res.json({ code: 201 });
 });
 
-router.post("/updateTheme", function(req, res, next) {
+router.post("/updateTheme", function (req, res, next) {
   var item = {
     user_id: req.body.user_id,
-    theme: req.body.theme
+    theme: req.body.theme,
   };
 
-  mongo.connect(url, function(err, db, res) {
+  mongo.connect(url, function (err, db, res) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
@@ -45,7 +59,7 @@ router.post("/updateTheme", function(req, res, next) {
       .updateOne(
         { user_id: item.user_id },
         { $set: { theme: req.body.theme } },
-        function(err, res) {
+        function (err, res) {
           if (err) throw err;
         }
       );
@@ -53,18 +67,18 @@ router.post("/updateTheme", function(req, res, next) {
   res.json({ code: 201 });
 });
 
-router.post("/setSelectedStore", function(req, res, next) {
+router.post("/setSelectedStore", function (req, res, next) {
   var item = {
     user_id: req.body.user_id,
-    selectedStore: req.body.selectedStore
+    selectedStore: req.body.selectedStore,
   };
 
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
       .collection("user_configuration")
-      .findOne({ user_id: Number(req.body.user_id) }, function(err, rows) {
+      .findOne({ user_id: Number(req.body.user_id) }, function (err, rows) {
         if (err) throw err;
         console.log(rows);
         if (rows === null || rows.length === 0) {
@@ -73,7 +87,7 @@ router.post("/setSelectedStore", function(req, res, next) {
             .updateOne(
               { user_id: item.user_id },
               { $push: { selectedStore: req.body.selectedStore } },
-              function(err, res) {
+              function (err, res) {
                 if (err) throw err;
               }
             );
@@ -83,7 +97,7 @@ router.post("/setSelectedStore", function(req, res, next) {
             .updateOne(
               { user_id: req.body.user_id },
               { $set: { "selectedStore.0": req.body.selectedStore } },
-              function(err, res) {
+              function (err, res) {
                 if (err) throw err;
               }
             );
@@ -93,18 +107,18 @@ router.post("/setSelectedStore", function(req, res, next) {
   res.json({ code: 201 });
 });
 
-router.post("/setUsersFor", function(req, res, next) {
+router.post("/setUsersFor", function (req, res, next) {
   var item = {
     key: req.body.key,
-    value: req.body.value
+    value: req.body.value,
   };
   console.log(req.body.user_id);
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
       .collection("user_configuration")
-      .findOne({ usersFor: { $elemMatch: { key: item.key } } }, function(
+      .findOne({ usersFor: { $elemMatch: { key: item.key } } }, function (
         err,
         rows
       ) {
@@ -116,7 +130,7 @@ router.post("/setUsersFor", function(req, res, next) {
             .updateOne(
               { user_id: Number(req.body.user_id) },
               { $push: { usersFor: item } },
-              function(err, res) {
+              function (err, res) {
                 if (err) throw err;
               }
             );
@@ -126,7 +140,7 @@ router.post("/setUsersFor", function(req, res, next) {
             .updateOne(
               { usersFor: { $elemMatch: { key: item.key } } },
               { $set: { "usersFor.$": item } },
-              function(err, res) {
+              function (err, res) {
                 if (err) throw err;
               }
             );
@@ -136,18 +150,16 @@ router.post("/setUsersFor", function(req, res, next) {
   });
 });
 
-router.get("/getConfiguration/:id", function(req, res, next) {
+router.get("/getConfiguration/:id", function (req, res, next) {
   const id = req.params.id;
 
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
       .collection("user_configuration")
-      .findOne({ user_id: Number(id) }, function(err, rows) {
+      .findOne({ user_id: Number(id) }, function (err, rows) {
         if (err) throw err;
-        console.log(rows);
-        console.log("prosao sam ovde!");
         if (rows !== null) {
           res.json(rows);
         } else {
@@ -156,12 +168,11 @@ router.get("/getConfiguration/:id", function(req, res, next) {
             language: "english",
             theme: "Theme1",
             selectedStore: [],
-            usersFor: []
+            usersFor: [],
           };
           dbo
             .collection("user_configuration")
-            .insertOne(item, function(err, result) {
-              console.log(result);
+            .insertOne(item, function (err, result) {
               res.json(item);
             });
         }
@@ -169,11 +180,11 @@ router.get("/getConfiguration/:id", function(req, res, next) {
   });
 });
 
-router.post("/createTranslation", function(req, res, next) {
-  mongo.connect(url, function(err, db) {
+router.post("/createTranslation", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("translation").insertOne(req.body, function(err, result) {
+    dbo.collection("translation").insertOne(req.body, function (err, result) {
       console.log("Item inserted!" + result);
       if (err) {
         throw err;
@@ -184,14 +195,14 @@ router.post("/createTranslation", function(req, res, next) {
   });
 });
 
-router.get("/getTranslation", function(req, res, next) {
-  mongo.connect(url, function(err, db) {
+router.get("/getTranslation", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
       .collection("translation")
       .find()
-      .toArray(function(err, rows) {
+      .toArray(function (err, rows) {
         if (err) throw err;
         console.log(rows);
         res.json(rows);
@@ -199,16 +210,16 @@ router.get("/getTranslation", function(req, res, next) {
   });
 });
 
-router.get("/getTranslationWithId/:id", function(req, res, next) {
+router.get("/getTranslationWithId/:id", function (req, res, next) {
   const id = req.params.id;
   console.log(id);
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     console.log(db);
     dbo
       .collection("translation")
-      .findOne({ _id: ObjectId(id) }, function(err, rows) {
+      .findOne({ _id: ObjectId(id) }, function (err, rows) {
         if (err) throw err;
         console.log(rows);
         res.json(rows);
@@ -216,15 +227,15 @@ router.get("/getTranslationWithId/:id", function(req, res, next) {
   });
 });
 
-router.get("/getTranslationByCountryCode/:code", function(req, res, next) {
+router.get("/getTranslationByCountryCode/:code", function (req, res, next) {
   const code = req.params.code;
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     console.log(dbo);
     dbo
       .collection("translation")
-      .findOne({ countryCode: code, active: true }, function(err, rows) {
+      .findOne({ countryCode: code, active: true }, function (err, rows) {
         if (err) throw err;
         console.log(rows);
         res.json(rows);
@@ -232,17 +243,17 @@ router.get("/getTranslationByCountryCode/:code", function(req, res, next) {
   });
 });
 
-router.get("/deleteTranslation/:id", function(req, res, next) {
+router.get("/deleteTranslation/:id", function (req, res, next) {
   const id = req.params.id;
   console.log(id);
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo.collection("translation").deleteOne(
       {
-        _id: ObjectId(id)
+        _id: ObjectId(id),
       },
-      function(err, rows) {
+      function (err, rows) {
         if (err) throw err;
         console.log(rows);
         res.json(true);
@@ -251,8 +262,8 @@ router.get("/deleteTranslation/:id", function(req, res, next) {
   });
 });
 
-router.post("/updateTranslation", function(req, res, next) {
-  mongo.connect(url, function(err, db) {
+router.post("/updateTranslation", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     console.log(req.body);
@@ -263,11 +274,11 @@ router.post("/updateTranslation", function(req, res, next) {
           language: req.body.language,
           countryCode: req.body.countryCode,
           active: req.body.active,
-          config: req.body.config
-        }
+          config: req.body.config,
+        },
       },
       { upsert: true },
-      function(err, rows) {
+      function (err, rows) {
         if (err) throw err;
 
         res.json(true);
@@ -277,19 +288,19 @@ router.post("/updateTranslation", function(req, res, next) {
   // res.json({ code: 201 });
 });
 
-router.post("/createPost", function(req, res, next) {
-  mongo.connect(url, function(err, db) {
+router.post("/createPost", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
     console.log(req.body);
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("posts").insertOne(req.body, function(err, result) {
+    dbo.collection("posts").insertOne(req.body, function (err, result) {
       console.log("Item inserted!" + result);
       if (err) {
         throw err;
       } else {
         const respose = {
           info: true,
-          insertId: result["ops"][0]._id
+          insertId: result["ops"][0]._id,
         };
         res.send(respose);
       }
@@ -297,40 +308,115 @@ router.post("/createPost", function(req, res, next) {
   });
 });
 
-router.get("/getAllPostsForUser/:id", function(req, res, next) {
+var mergePostWithUsers = (posts, res) => {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var arrayPosts = [];
+    conn.query("SELECT * from users", function (err, rows) {
+      conn.release();
+      if (!err) {
+        console.log("------------------------");
+        console.log(rows);
+        for (let user of rows) {
+          for (let post of posts) {
+            if (sha1(user.id.toString()) === post.user_id) {
+              var recommentArray = [];
+              for (comm of post.recomment) {
+                if (sha1(user.id.toString()) === comm.user_id) {
+                  var itemComm = {
+                    _id: comm._id,
+                    user_id: comm.user_id,
+                    image: user.image,
+                    name: user.fullname,
+                    date: comm.date,
+                    comment: comm.comment,
+                  };
+                  recommentArray.push(itemComm);
+                }
+              }
+              var likesArray = [];
+              for (like of post.likes) {
+                if (sha1(user.id.toString()) === like.user_id) {
+                  var itemLike = {
+                    _id: like._id,
+                    user_id: like.user_id,
+                    image: user.image,
+                    name: user.fullname
+                  };
+                  likesArray.push(itemLike);
+                }
+              }
+              console.log(likesArray);
+
+              const item = {
+                _id: post._id,
+                user_id: post.user_id,
+                image: user.image,
+                name: user.fullname,
+                proffesion: user.proffesion,
+                sid: post.sid,
+                date: post.date,
+                post: post.post,
+                likes: likesArray,
+                recomment: recommentArray,
+              };
+              arrayPosts.push(item);
+            }
+          }
+        }
+        console.log(arrayPosts);
+        res.json(arrayPosts);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+      }
+    });
+  });
+};
+
+router.get("/getAllPostsForUser/:id", function (req, res, next) {
   let id = req.params.id;
   if (id !== "1") {
     id = "-" + id + "-";
   }
-
   console.log(id);
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
       .collection("posts")
       .find({
-        sid: new RegExp(id)
+        sid: new RegExp(id),
       })
-      .toArray(function(err, rows) {
+      .toArray(function (err, rows) {
         if (err) throw err;
+        // res.json(rows);
         console.log(rows);
-        res.json(rows);
+        mergePostWithUsers(rows, res);
+        // res.json(arrayResponse);
+        db.close();
       });
   });
 });
 
-router.get("/deletePost/:id", function(req, res, next) {
+router.get("/deletePost/:id", function (req, res, next) {
   const id = req.params.id;
-  console.log(id);
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo.collection("posts").deleteOne(
       {
-        _id: ObjectId(id)
+        _id: ObjectId(id),
       },
-      function(err, rows) {
+      function (err, rows) {
         if (err) throw err;
         res.json(true);
       }
@@ -338,17 +424,16 @@ router.get("/deletePost/:id", function(req, res, next) {
   });
 });
 
-router.post("/likePost", function(req, res, next) {
-  mongo.connect(url, function(err, db) {
+router.post("/likePost", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo.collection("posts").findOne(
       {
         _id: ObjectId(req.body.id),
-        likes: { $elemMatch: { user_id: req.body.user_id } }
+        likes: { $elemMatch: { user_id: req.body.user_id } },
       },
-      function(err, rows) {
-        console.log(rows);
+      function (err, rows) {
         if (err) throw err;
         if (rows === null || rows.length === 0) {
           dbo
@@ -356,10 +441,10 @@ router.post("/likePost", function(req, res, next) {
             .updateOne(
               { _id: ObjectId(req.body.id) },
               { $push: { likes: req.body } },
-              function(err, rows) {
+              function (err, rows) {
                 if (err) throw err;
                 const response = {
-                  info: 201
+                  info: 201,
                 };
                 res.json(response);
               }
@@ -368,18 +453,18 @@ router.post("/likePost", function(req, res, next) {
           const deleteLikePostUserId = rows.user_id;
           dbo.collection("posts").updateOne(
             {
-              _id: ObjectId(req.body.id)
+              _id: ObjectId(req.body.id),
             },
             {
               $pull: {
-                likes: { user_id: req.body.user_id }
-              }
+                likes: { user_id: req.body.user_id },
+              },
             },
-            function(err, rows) {
+            function (err, rows) {
               if (err) throw err;
               const response = {
                 info: 202,
-                user_id: deleteLikePostUserId
+                user_id: deleteLikePostUserId,
               };
               res.json(response);
             }
@@ -390,21 +475,22 @@ router.post("/likePost", function(req, res, next) {
   });
 });
 
-router.get("/getLikesForPost/:id", function(req, res, next) {
+router.get("/getLikesForPost/:id", function (req, res, next) {
   const id = req.params.id;
-  mongo.connect(url, function(err, db) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("posts").findOne({ _id: ObjectId(id) }, function(err, rows) {
-      if (err) throw err;
-      console.log(rows);
-      res.json(rows);
-    });
+    dbo
+      .collection("posts")
+      .findOne({ _id: ObjectId(id) }, function (err, rows) {
+        if (err) throw err;
+        res.json(rows);
+      });
   });
 });
 
-router.post("/commentPost", function(req, res, next) {
-  mongo.connect(url, function(err, db) {
+router.post("/commentPost", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     var generateId = ObjectId();
@@ -414,11 +500,11 @@ router.post("/commentPost", function(req, res, next) {
       .updateOne(
         { _id: ObjectId(req.body.id) },
         { $push: { recomment: req.body } },
-        function(err, result) {
+        function (err, result) {
           if (err) throw err;
           const response = {
             info: 201,
-            insertId: generateId
+            insertId: generateId,
           };
           res.json(response);
         }

@@ -43,8 +43,8 @@ export class ProfileComponent implements OnInit {
   public typeOfUpload: any;
   public windowHeight: any;
   public windowWidth: any;
-  // public url = "localhost:" + location.port + "/upload";
-  public url = "http://78.47.206.131:" + location.port + "/upload";
+  public url = "http://localhost:3000/upload";
+  // public url = "http://78.47.206.131:" + location.port + "/upload";
 
   constructor(
     private service: ProfileService,

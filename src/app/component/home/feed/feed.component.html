@@ -107,7 +107,7 @@
             *ngFor="let comm of item.recomment; let j = index"
             [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
             <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" [src]="comm.img" alt="">
+              <img class="rounded-circle" src="/assets/img/profile_image/{{comm.image}}" alt="">
               <div class="status-indicator bg-success"></div>
             </div>
             <div class="font-weight-bold" style="width: 100%;">
