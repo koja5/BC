@@ -15,6 +15,7 @@ export class EditProfileComponent implements OnInit {
   public data: any;
   imageChangedEvent: any = "";
   croppedImage: any = "";
+  public language: any;
 
   constructor(
     private service: EditProfileService,
@@ -24,6 +25,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit() {
     this.id = localStorage.getItem("id");
+    this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
   }
 
@@ -40,8 +42,8 @@ export class EditProfileComponent implements OnInit {
       console.log(data);
       if (data) {
         this.toastr.success(
-          "Successfull!",
-          "New complaint is successfull added!",
+          this.language.adminSuccessUpdateTitle,
+          this.language.adminSuccessUpdateText,
           { timeOut: 7000, positionClass: "toast-top-right" }
         );
         const fullName = this.data.lastname + " " + this.data.firstname;

@@ -469,7 +469,7 @@
   [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">
   <ul class="listUserLikes">
     <li *ngFor="let item of allLikesForPost">
-      <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfile(item.user_id)">
+      <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfileWithoutSHA1(item.user_id)">
         {{item.name}} </span>
     </li>
   </ul>

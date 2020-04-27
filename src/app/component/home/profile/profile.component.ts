@@ -70,8 +70,8 @@ export class ProfileComponent implements OnInit {
     this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       console.log(data);
       this.data = data[0];
-      this.imageData = this.helpService.getImage(this.data.img);
-      this.imageCover = this.helpService.getImage(this.data.cover);
+      // this.imageData = this.helpService.getImage(this.data.img);
+      // this.imageCover = this.helpService.getImage(this.data.cover);
     });
 
     this.uploader = new FileUploader({
