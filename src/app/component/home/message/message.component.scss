@@ -36,3 +36,20 @@
 .item-message {
     cursor: pointer;
 }
+
+.mobile-textarea {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 80px;
+    position: absolute;
+    bottom: 12px;
+    width: 90% !important;
+}
+
+.k-combobox {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 1px 7pxs;
+    padding-left: 35px !important;
+    width: 100% !important;
+}

@@ -8,7 +8,19 @@
           <div class="osahan-chat-left">
             <div class="position-relative icon-form-control p-3 border-bottom">
               <i class="feather-search position-absolute"></i>
-              <input placeholder="Search messages" type="text" class="form-control">
+              <!-- <input placeholder="Search messages" type="text" class="form-control"> -->
+              <kendo-combobox [data]="userList" [textField]="'fullname'" [valueField]="'id'"
+                (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeUser($event)"
+                [(ngModel)]="selectedUser" name="user" [filterable]="true" (filterChange)="searchUser($event)"
+                [loading]="userListLoading" placeholder="Search...">
+                <ng-template kendoComboBoxItemTemplate let-dataItem>
+                  <p style="margin-top: 12px;">
+                    <img style="width: 35px; margin-right: 10px;" class="rounded-circle"
+                      src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                    <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                  </p>
+                </ng-template>
+              </kendo-combobox>
             </div>
             <div class="osahan-chat-list">
               <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden item-message"
@@ -56,12 +68,15 @@
             </div>
           </div>
         </div>
-        <div class="col-lg-7 col-xl-8 px-0" *ngIf="selectUserForComunication">
+        <div class="col-lg-7 col-xl-8 px-0" *ngIf="selectUserForComunication&&!mobile">
           <div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
             <div class="font-weight-bold mr-1 overflow-hidden">
-              <div class="text-truncate">{{selectUserForComunication.name}}
+              <div class="text-truncate"><img class="rounded-circle"
+                  src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""
+                  style="width: 40px; margin-right: 9px">{{selectUserForComunication.name}}
               </div>
-              <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}</div>
+              <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
+              </div>
             </div>
             <span class="ml-auto">
               <button type="button" class="btn btn-light btn-sm rounded">
@@ -82,7 +97,7 @@
               </div>
             </span>
           </div>
-          <div class="osahan-chat-box p-3 border-top border-bottom bg-light">
+          <div class="osahan-chat-box p-3 border-top border-bottom bg-light hidden-xs">
             <div *ngFor="let item of messageArray">
 
               <div class="d-flex align-items-center osahan-post-header message-padding-top"
@@ -131,16 +146,61 @@
               </button>
             </span>
           </div> -->
-
-
-          <div *ngFor="let item of messageArray">
-            <span><strong>{{item.user}} : </strong> {{item.message}}</span>
-          </div>
-        </div>
-        <div class="col-lg-7 col-xl-8 px-0" *ngIf="selectUserForComunication === undefined">
-          
         </div>
       </div>
     </div>
   </main>
 </div>
+<kendo-window [title]="'Messages'" *ngIf="messageWindow" [height]="windowHeight ? windowHeight : 400"
+  [width]="windowWidth ? windowWidth : 500" (close)="messageWindow = false">
+  <div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
+    <div class="font-weight-bold mr-1 overflow-hidden">
+      <div class="text-truncate"><img class="rounded-circle"
+          src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""
+          style="width: 40px; margin-right: 9px"> {{selectUserForComunication.name}}
+      </div>
+      <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
+      </div>
+    </div>
+    <span class="ml-auto">
+      <div class="btn-group">
+        <button type="button" class="btn btn-light btn-sm rounded" data-toggle="dropdown" aria-haspopup="true"
+          aria-expanded="false">
+          <i class="feather-more-vertical"></i>
+        </button>
+        <div class="dropdown-menu dropdown-menu-right">
+          <button class="dropdown-item" type="button"><i class="feather-trash"></i> Delete</button>
+          <button class="dropdown-item" type="button"><i class="feather-x-circle"></i> Turn Off</button>
+        </div>
+      </div>
+    </span>
+  </div>
+  <div *ngFor="let item of messageArray">
+
+    <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id !== id">
+      <div class="dropdown-list-image"><img class="rounded-circle"
+          src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
+      <div class="mr-1">
+        <p class="receive-message">{{item.message}}
+        </p>
+      </div>
+      <span class="ml-auto mb-auto">
+        <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+      </span>
+    </div>
+
+    <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id === id">
+      <span class="mr-auto mb-auto">
+        <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+      </span>
+      <div class="sender-message">
+        <p>{{item.message}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="w-100 border-top border-bottom mobile-textarea">
+    <textarea placeholder="Write a message…" [(ngModel)]="messageText" name="message"
+      class="form-control border-0 p-3 shadow-none" rows="2" (keyup.enter)="sendMessage()"></textarea>
+  </div>
+</kendo-window>

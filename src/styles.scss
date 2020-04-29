@@ -459,7 +459,11 @@ button:focus {outline:0;}
 	}
 	.profile-right .btn {
 		margin: 2px 0 !important;
-	}
+  }
+  
+  .hidden-xs {
+    display: none !important;
+  }
 }
 /* End Mobile Media */
 
