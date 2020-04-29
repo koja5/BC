@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from "@angular/core";
 import { MessageChatService } from "src/app/services/message-chat.service";
 import { MessageModel } from "src/app/models/message-model";
 import { FindConnectionService } from "src/app/services/find-connection.service";
+import * as sha1 from "sha1";
 
 @Component({
   selector: "app-message",
@@ -24,6 +25,7 @@ export class MessageComponent implements OnInit {
   public userListLoading = false;
   public userList: any;
   public selectedUser: any;
+  public room: any;
 
   constructor(
     private service: MessageChatService,
@@ -53,7 +55,7 @@ export class MessageComponent implements OnInit {
     this.user = JSON.parse(localStorage.getItem("user"));
     this.messageData = null;
     this.initilization();
-    this.join();
+    // this.join();
   }
 
   initilization() {
@@ -63,16 +65,18 @@ export class MessageComponent implements OnInit {
     });
   }
 
-  join() {
-    this.service.joinRoom({ sender_id: this.id, room: "1" });
+  join(room) {
+    this.service.joinRoom({ sender_id: this.id, room: room });
+    this.room = room;
   }
 
-  leave() {
-    this.service.leaveRoom({ sender_id: this.id, room: "1" });
+  leave(room) {
+    this.service.leaveRoom({ sender_id: this.id, room: room });
   }
 
   sendMessage() {
-    /*if (this.messageData) {
+    /*if (this.messageArray.length !== 0) {
+
     } else {
       this.messageData = {
         sender1: this.id,
@@ -83,9 +87,20 @@ export class MessageComponent implements OnInit {
         console.log(data);
       });
     }*/
+    const data = {
+      _id: this.room,
+      message: {
+        sender_id: this.id,
+        message: this.messageText,
+        date: new Date(),
+      }
+    };
+    this.service.pushNewMessage(data).subscribe((data) => {
+      console.log(data);
+    });
     this.service.sendMessage({
       sender_id: this.id,
-      room: "1",
+      room: this.room,
       message: this.messageText,
       name: this.user.fullname,
       image: this.user.image,
@@ -96,6 +111,8 @@ export class MessageComponent implements OnInit {
 
   showMessages(id, image, name, profession) {
     this.selectedMessage = id;
+    this.room = id;
+    this.join(id);
     this.service.getMessageForSelectedUser(id).subscribe((data) => {
       this.selectUserForComunication = {
         name: name,
@@ -128,11 +145,12 @@ export class MessageComponent implements OnInit {
     if (event === undefined) {
       this.selectUserForComunication = null;
     } else {
-      this.selectUserForComunication = {
+      /*this.selectUserForComunication = {
         name: event.fullname,
         profession: event.profession,
         image: event.image
-      };
+      };*/
+      this.getOrCreate(event);
     }
   }
 
@@ -156,5 +174,29 @@ export class MessageComponent implements OnInit {
 
   selectionChangeUser(event) {
     console.log(event);
+  }
+
+  getOrCreate(user) {
+    const data = {
+      sender1: this.id,
+      sender2: sha1(user.id.toString()),
+      messages: [],
+    };
+
+    this.service.getOrCreate(data).subscribe((data) => {
+      if (data["info"] === "get") {
+        this.messageArray = data["messages"][0]["messages"];
+        this.join(data["messages"][0]["_id"]);
+      } else {
+        this.join(data["id"]);
+        this.messageArray = [];
+      }
+
+      this.selectUserForComunication = {
+        name: user.fullname,
+        profession: user.profession,
+        image: user.image,
+      };
+    });
   }
 }

@@ -16,16 +16,18 @@ export class MessageChatService {
   }
 
   newUserJoined() {
-    let observable = new Observable<{ date: String; message: String; sender_id: String }>(
-      (observer) => {
-        this.socket.on("new user joined", (data) => {
-          observer.next(data);
-        });
-        return () => {
-          this.socket.disconnect();
-        };
-      }
-    );
+    let observable = new Observable<{
+      date: String;
+      message: String;
+      sender_id: String;
+    }>((observer) => {
+      this.socket.on("new user joined", (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
 
     return observable;
   }
@@ -35,16 +37,18 @@ export class MessageChatService {
   }
 
   userLeftRoom() {
-    let observable = new Observable<{ date: String; message: String; sender_id: String }>(
-      (observer) => {
-        this.socket.on("left room", (data) => {
-          observer.next(data);
-        });
-        return () => {
-          this.socket.disconnect();
-        };
-      }
-    );
+    let observable = new Observable<{
+      date: String;
+      message: String;
+      sender_id: String;
+    }>((observer) => {
+      this.socket.on("left room", (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
 
     return observable;
   }
@@ -86,4 +90,15 @@ export class MessageChatService {
       .get("/api/getMessageForSelectedUser/" + id)
       .map((res) => res);
   }
+
+  getOrCreate(data) {
+    return this.http.post("/api/getOrCreate", data).map((res) => res);
+  }
+
+  pushNewMessage(data) {
+    this.socket.emit('new message', { username: "john" });
+    return this.http.post("/api/pushNewMessage", data).map((res) => res);
+  }
+
+
 }

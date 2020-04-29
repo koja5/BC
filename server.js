@@ -80,7 +80,7 @@ app.post("/upload", function (req, res) {
                 response = {
                   name: req.file.filename,
                   type: "img",
-                  info: true
+                  info: true,
                 };
                 res.json(response);
               } else {
@@ -102,7 +102,7 @@ app.post("/upload", function (req, res) {
                 response = {
                   name: req.file.filename,
                   type: "cover",
-                  info: true
+                  info: true,
                 };
                 res.json(response);
               } else {
@@ -167,44 +167,50 @@ app.set("port", port);
  */
 const server = http.createServer(app);
 
-
 /* SOCKET START */
 
-var io = require('socket.io').listen(server);
+var io = require("socket.io").listen(server);
 
-io.on('connection',(socket)=>{
+io.on("connection", (socket) => {
+  console.log("new connection made.");
 
-    console.log('new connection made.');
+  socket.on("join", function (data) {
+    //joining
+    socket.join(data.room);
 
+    console.log(data.sender_id + "joined the room : " + data.room);
 
-    socket.on('join', function(data){
-      //joining
-      socket.join("1");
+    socket.broadcast.to(data.room).emit("new user joined", {
+      sender_id: data.sender_id,
+      message: "has joined this room.",
+    });
+  });
 
-      console.log(data.sender_id + 'joined the room : ' + "1");
+  socket.on("leave", function (data) {
+    console.log(data.sender_id + "left the room : " + data.room);
 
-      socket.broadcast.to("1").emit('new user joined', {sender_id:data.sender_id, message:'has joined this room.'});
+    socket.broadcast.to(data.room).emit("left room", {
+      sender_id: data.sender_id,
+      message: "has left this room.",
     });
 
+    socket.leave(data.room);
+  });
 
-    socket.on('leave', function(data){
-    
-      console.log(data.sender_id + 'left the room : ' + "1");
+  socket.on("message", function (data) {
+    console.log(data);
 
-      socket.broadcast.to("1").emit('left room', {sender_id:data.sender_id, message:'has left this room.'});
-
-      socket.leave("1");
+    io.in(data.room).emit("new message", {
+      sender_id: data.sender_id,
+      message: data.message,
+      fullname: data.fullname,
+      image: data.image,
+      date: data.date,
     });
-
-    socket.on('message',function(data){
-      console.log(data);
-
-      io.in("1").emit('new message', {sender_id:data.sender_id, message:data.message, fullname: data.fullname, image: data.image, date: data.date});
-    })
+  });
 });
 
 /* SOCKET END */
-
 
 /**
  * Listen on provided port, on all network interfaces.

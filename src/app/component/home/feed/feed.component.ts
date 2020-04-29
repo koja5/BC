@@ -282,8 +282,8 @@ export class FeedComponent implements OnInit {
         inviteFriendThanksForUsing: this.language.inviteFriendThanksForUsing,
         inviteFriendHaveQuestion: this.language.inviteFriendHaveQuestion,
         inviteFriendGenerateMail: this.language.inviteFriendGenerateMail,
-        inviteFriendCopyright: this.language.inviteFriendCopyrigh
-      }
+        inviteFriendCopyright: this.language.inviteFriendCopyrigh,
+      };
       this.service.sendInviteFriend(this.invite).subscribe((data) => {
         console.log(data);
       });
