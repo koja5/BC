@@ -66,7 +66,7 @@ app.post("/upload", function (req, res) {
       var response = {};
       const file = req.file.originalname.split("-");
       console.log(req.file);
-      if (file[1] === "img") {
+      if (file["1"] === "img") {
         /*conn.query(
           "update users set img = ? where sha1(id) = ?",
           [req.file.buffer, file[0]],*/
@@ -167,21 +167,44 @@ app.set("port", port);
  */
 const server = http.createServer(app);
 
-const io = socketIO(server);
 
-let numberOfOnlineUsers = 0;
+/* SOCKET START */
 
-io.on("connection", (socket) => {
-  numberOfOnlineUsers++;
-  socket.on("/", (numberOfOnlineUsers) => {
-    socket.emit("numberOfOnlineUsers", numberOfOnlineUsers);
-  });
+var io = require('socket.io').listen(server);
 
-  socket.on("disconnect", () => {
-    numberOfOnlineUsers--;
-    socket.emit("numberOfOnlineUsers", numberOfOnlineUsers);
-  });
+io.on('connection',(socket)=>{
+
+    console.log('new connection made.');
+
+
+    socket.on('join', function(data){
+      //joining
+      socket.join("1");
+
+      console.log(data.sender_id + 'joined the room : ' + "1");
+
+      socket.broadcast.to("1").emit('new user joined', {sender_id:data.sender_id, message:'has joined this room.'});
+    });
+
+
+    socket.on('leave', function(data){
+    
+      console.log(data.sender_id + 'left the room : ' + "1");
+
+      socket.broadcast.to("1").emit('left room', {sender_id:data.sender_id, message:'has left this room.'});
+
+      socket.leave("1");
+    });
+
+    socket.on('message',function(data){
+      console.log(data);
+
+      io.in("1").emit('new message', {sender_id:data.sender_id, message:data.message, fullname: data.fullname, image: data.image, date: data.date});
+    })
 });
+
+/* SOCKET END */
+
 
 /**
  * Listen on provided port, on all network interfaces.

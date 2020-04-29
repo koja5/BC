@@ -328,20 +328,22 @@ var mergePostWithUsers = (posts, res) => {
             if (sha1(user.id.toString()) === post.user_id) {
               var recommentArray = [];
               for (comm of post.recomment) {
-                if (sha1(user.id.toString()) === comm.user_id) {
-                  var itemComm = {
-                    _id: comm._id,
-                    user_id: comm.user_id,
-                    image: user.image,
-                    name: user.fullname,
-                    date: comm.date,
-                    comment: comm.comment,
-                  };
-                  recommentArray.push(itemComm);
+                for (let userComm of rows) {
+                  if (sha1(userComm.id.toString()) === comm.user_id) {
+                    var itemComm = {
+                      _id: comm._id,
+                      user_id: comm.user_id,
+                      image: userComm.image,
+                      name: userComm.fullname,
+                      date: comm.date,
+                      comment: comm.comment,
+                    };
+                    recommentArray.push(itemComm);
+                  }
                 }
               }
               var likesArray = [];
-              for (like of post.likes) {
+              /*for (like of post.likes) {
                 if (sha1(user.id.toString()) === like.user_id) {
                   var itemLike = {
                     _id: like._id,
@@ -351,7 +353,7 @@ var mergePostWithUsers = (posts, res) => {
                   };
                   likesArray.push(itemLike);
                 }
-              }
+              }*/
               console.log(likesArray);
 
               const item = {
@@ -363,7 +365,7 @@ var mergePostWithUsers = (posts, res) => {
                 sid: post.sid,
                 date: post.date,
                 post: post.post,
-                likes: likesArray,
+                likes: post.likes,
                 recomment: recommentArray,
               };
               arrayPosts.push(item);
@@ -509,6 +511,117 @@ router.post("/commentPost", function (req, res, next) {
           res.json(response);
         }
       );
+  });
+});
+
+router.post("/createMessage", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo.collection("messages").insertOne(req.body, function (err, result) {
+      console.log("Item inserted!" + result);
+      if (err) {
+        throw err;
+      } else {
+        res.send(result["ops"][0]["_id"]);
+      }
+    });
+  });
+});
+
+var mergeMessageWithUsers = (messages, id, res) => {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var arrayMessages = [];
+    conn.query("SELECT * from users", function (err, rows) {
+      conn.release();
+      if (!err) {
+        console.log(rows);
+        for (let mess of messages) {
+          var receiveId = null;
+          if(mess["sender1"] !== id) {
+            receiveId = mess["sender1"];
+          } else {
+            receiveId = mess["sender2"];
+          }
+          for (let user of rows) {
+            if(sha1(user.id.toString()) == receiveId) {
+              var messageItem = {
+                _id: mess._id,
+                receiveId: receiveId,
+                name: user.fullname,
+                image: user.image,
+                profession: user.profession,
+                message: mess.messages[mess.messages.length - 1]
+              }
+              arrayMessages.push(messageItem);
+            }
+          }
+        }
+        console.log(arrayMessages);
+        res.json(arrayMessages);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+      }
+    });
+  });
+};
+
+router.get("/getAllMessagesForUser/:id", function (req, res, next) {
+  let id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .find({
+        $or: [
+          {
+            sender1: id,
+          },
+          { sender2: id },
+        ],
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        // res.json(rows);
+        console.log(rows);
+        mergeMessageWithUsers(rows, id, res);
+        // res.json(arrayResponse);
+        db.close();
+      });
+  });
+});
+
+router.get("/getMessageForSelectedUser/:id", function (req, res, next) {
+  let id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .find({
+        _id: ObjectId(id)
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        console.log(rows);
+        res.json(rows[0].messages);
+        // mergeMessageWithUsers(rows, id, res);
+        // res.json(arrayResponse);
+        db.close();
+      });
   });
 });
 

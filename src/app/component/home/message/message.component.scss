@@ -1,0 +1,38 @@
+.receive-message {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 9px;
+    background: #FFF;
+}
+
+.receive-message p {
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #000 !important;
+}
+
+.sender-message {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 9px;
+    background: #0B6794;
+}
+
+.sender-message p {
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #FFF;
+}
+
+.dropdown-list-image img {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+.message-padding-top {
+    padding-top: 5px;
+}
+
+.item-message {
+    cursor: pointer;
+}

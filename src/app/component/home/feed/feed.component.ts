@@ -92,6 +92,7 @@ export class FeedComponent implements OnInit {
       this.allPosts = data.sort((a, b) => {
         return new Date(b["date"]).getTime() - new Date(a["date"]).getTime();
       });
+      console.log(this.allPosts);
     });
   }
 
