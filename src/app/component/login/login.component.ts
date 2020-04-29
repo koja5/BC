@@ -37,21 +37,30 @@ export class LoginComponent implements OnInit {
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe((data) => {
-      this.service
-        .getTranslationByCountryCode(data["countryCode"])
-        .subscribe((language) => {
-          if (language !== null) {
-            this.language = language["config"];
-            localStorage.setItem("language", JSON.stringify(this.language));
-          } else {
-            this.service.getDefaultLanguage().subscribe((language) => {
+    this.service.checkCountryLocation().subscribe(
+      (data) => {
+        this.service
+          .getTranslationByCountryCode(data["countryCode"])
+          .subscribe((language) => {
+            if (language !== null) {
               this.language = language["config"];
               localStorage.setItem("language", JSON.stringify(this.language));
-            });
-          }
+            } else {
+              this.service.getDefaultLanguage().subscribe((language) => {
+                this.language = language["config"];
+                localStorage.setItem("language", JSON.stringify(this.language));
+              });
+            }
+          });
+      },
+      (error) => {
+        console.log(error);
+        this.service.getDefaultLanguage().subscribe((language) => {
+          this.language = language["config"];
+          localStorage.setItem("language", JSON.stringify(this.language));
         });
-    });
+      }
+    );
   }
 
   changeForm(form) {
@@ -113,19 +122,20 @@ export class LoginComponent implements OnInit {
         setTimeout(() => {
           console.log(data);
           if (data["exist"]) {
-            thisObject.data['language'] = {
+            thisObject.data["language"] = {
               forgotMailSubject: this.language.forgotMailSubject,
               forgotMailBCITitle: this.language.forgotMailBCITitle,
               forgotMailRegardsFirst: this.language.forgotMailRegardsFirst,
               forgotMailMessage: this.language.forgotMailMessage,
-              forgotMailConfirmEmailButton: this.language.forgotMailConfirmEmailButton,
+              forgotMailConfirmEmailButton: this.language
+                .forgotMailConfirmEmailButton,
               forgotMailRegardsEnd: this.language.forgotMailRegardsEnd,
               forgotMailBCISignature: this.language.forgotMailBCISignature,
               forgotMailThanksForUsing: this.language.forgotMailThanksForUsing,
               forgotMailHaveQuestion: this.language.forgotMailHaveQuestion,
               forgotMailGenerateMail: this.language.forgotMailGenerateMail,
-              forgotMailCopyright: this.language.forgotMailCopyright
-            }
+              forgotMailCopyright: this.language.forgotMailCopyright,
+            };
             thisObject.mailService
               .sendForgetMail(thisObject.data)
               .subscribe((data) => {
