@@ -1,14 +1,16 @@
 <div *ngIf="data !== undefined && language !== undefined">
   <div class="profile-cover text-center">
-    <label for="file-upload-cover" class="cover-photo-update">
-      <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
-    </label>
-    <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
-      [uploader]="uploader" />
+    <div *ngIf="owner">
+      <label for="file-upload-cover" class="cover-photo-update">
+        <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
+      </label>
+      <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
+        [uploader]="uploader" />
+    </div>
     <div class="loader4 imageLoader" *ngIf="loadImage"></div>
     <!-- <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
-    <img class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''"
-      src="/assets/img/profile_image/{{data.cover}}" alt="">
+    <img class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''" src="/assets/img/profile_image/{{data.cover}}"
+      alt="">
   </div>
   <div class="bg-white shadow-sm border-bottom">
     <div class="container">
@@ -78,36 +80,68 @@
                   <table class="table table-borderless mb-0">
                     <tbody>
                       <tr class="border-bottom">
-                        <th class="p-3">Firstname</th>
+                        <th class="p-3">{{language.fieldSalutation}}</th>
+                        <td class="p-3">{{data.salutation}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldTitleBefore}}</th>
+                        <td class="p-3">{{data.titleBefore}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldFirstname}}</th>
                         <td class="p-3">{{data.firstname}}</td>
                       </tr>
                       <tr class="border-bottom">
-                        <th class="p-3">Lastname</th>
+                        <th class="p-3">{{language.fieldLastname}}</th>
                         <td class="p-3">{{data.lastname}}</td>
                       </tr>
                       <tr class="border-bottom">
-                        <th class="p-3">Birthday</th>
-                        <td class="p-3">{{data.birthday}}</td>
+                        <th class="p-3">{{language.fieldTitleAfter}}</th>
+                        <td class="p-3">{{data.titleAfter}}</td>
                       </tr>
                       <tr class="border-bottom">
-                        <th class="p-3">Phone number</th>
+                        <th class="p-3">{{language.fieldGender}}</th>
+                        <td class="p-3">{{data.gender}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldBirthday}}</th>
+                        <td class="p-3">{{data.birthday | date: 'dd.MM.yyyy'}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldPhoneNumber}}</th>
                         <td class="p-3">{{data.phoneNumber}}</td>
                       </tr>
                       <tr class="border-bottom">
-                        <th class="p-3">Email</th>
+                        <th class="p-3">{{language.fieldMobile1}}</th>
+                        <td class="p-3">{{data.mobile1}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldMobile2}}</th>
+                        <td class="p-3">{{data.mobile2}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldEmail}}</th>
                         <td class="p-3">{{data.email}}</td>
                       </tr>
                       <tr class="border-bottom">
-                        <th class="p-3">Location</th>
+                        <th class="p-3">{{language.fieldLocation}}</th>
                         <td class="p-3">{{data.location}}</td>
                       </tr>
                       <tr class="border-bottom">
-                        <th class="p-3">Organization</th>
+                        <th class="p-3">{{language.fieldOrganization}}</th>
                         <td class="p-3">{{data.organization}}</td>
                       </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldStreet}}</th>
+                        <td class="p-3">{{data.street}}</td>
+                      </tr>
+                      <tr class="border-bottom">
+                        <th class="p-3">{{language.fieldZip}}</th>
+                        <td class="p-3">{{data.zip}}</td>
+                      </tr>
                       <tr>
-                        <th class="p-3">Website</th>
-                        <td class="p-3"><a href="{{data.website}}">{{data.website}}</a></td>
+                        <th class="p-3">{{language.fieldWebsite}}</th>
+                        <td class="p-3"><a href="{{data.website}}" target="_blank">{{data.website}}</a></td>
                       </tr>
                     </tbody>
                   </table>
@@ -480,14 +514,14 @@
             <div class="p-5">
 
               <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''"
-                class="img-fluid" alt="Responsive image">
-              <label for="file-upload-profile" class="custom-file-upload">
-                <i class="fa fa-cloud-upload"></i> {{language.profileUpdateProfileImage}}
-              </label>
-              <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
-                [uploader]="uploader" />
-
+              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid"
+                alt="Responsive image">
+              <div *ngIf="owner"> <label for="file-upload-profile" class="custom-file-upload">
+                  <i class="fa fa-cloud-upload"></i> {{language.profileUpdateProfileImage}}
+                </label>
+                <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
+                  [uploader]="uploader" />
+              </div>
             </div>
             <!-- <div class="p-3">
               <div class="d-flex align-items-top mb-2">

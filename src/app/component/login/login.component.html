@@ -83,6 +83,7 @@
             <form (ngSubmit)="signup(user)">
                <div class="error-alert" *ngIf="existMail">{{language.existMail}}</div>
                <div class="error-alert" *ngIf="notEqualPassword">{{language.notEqualPassword}}</div>
+               <div class="error-alert" *ngIf="notAgree">{{language.notAgree}}</div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="text" class="form-control" [(ngModel)]="data.firstname" name="firstname"
                      placeholder="{{language.firstName}}" required="required">
@@ -113,9 +114,12 @@
                <div class="form-group fxt-transformY-50 fxt-transition-delay-4">
                   <div class="fxt-content-between">
                      <button type="submit" class="fxt-btn-fill">{{language.signUp}}</button>
-                     <div class="checkbox">
-                        <input id="checkbox1" type="checkbox">
-                        <label for="checkbox1">{{language.agreeJoin}}</label>
+                     <div style="padding-top: 15px">
+                        <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" />
+                        {{language.signUpAcceptFirst}} <a routerLink="/terms"
+                           target="_blank">{{language.signUpAcceptTerms}}</a> {{language.signUpAcceptEnd}} <a
+                           routerLink="/privacy-policy"
+                           target="_blank">{{language.signUpAcceptCookie}}</a>.
                      </div>
                   </div>
                </div>

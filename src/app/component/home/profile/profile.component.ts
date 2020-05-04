@@ -17,6 +17,8 @@ import {
 import { Dimensions, ImageCroppedEvent } from "ngx-image-cropper";
 import { HelpService } from 'src/app/services/help.service';
 import { MessageService } from 'src/app/services/message.service';
+import * as sha1 from "sha1";
+
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.component.html",
@@ -43,6 +45,7 @@ export class ProfileComponent implements OnInit {
   public typeOfUpload: any;
   public windowHeight: any;
   public windowWidth: any;
+  public owner = false;
   // public url = "http://localhost:3000/upload";
   public url = "http://78.47.206.131:" + location.port + "/upload";
 
@@ -70,6 +73,11 @@ export class ProfileComponent implements OnInit {
     this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       console.log(data);
       this.data = data[0];
+      console.log(sha1(data[0].id.toString()));
+      console.log(this.id);
+      if(sha1(data[0].id.toString()) === localStorage.getItem("id")) {
+        this.owner = true;
+      }
       // this.imageData = this.helpService.getImage(this.data.img);
       // this.imageCover = this.helpService.getImage(this.data.cover);
     });

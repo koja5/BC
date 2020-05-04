@@ -85,7 +85,8 @@
           </div>
         </div>
         <div class="p-3 border-bottom osahan-post-body">
-          <pre class="mb-0">{{item.post}}</pre>
+          <!-- <pre class="mb-0"><code>{{item.post}} <a href="http://google.rs">http://google.rs</a></code></pre> -->
+          <div [innerHTML]="'<pre>' + item.post + '</pre>'"></div> 
         </div>
         <div class="p-3 border-bottom osahan-post-footer">
           <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes"

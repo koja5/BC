@@ -135,27 +135,45 @@ export class FeedComponent implements OnInit {
   }
 
   createPost() {
-    this.postData = {
+    const postData = {
       user_id: this.id,
       name: this.data.fullname,
       proffesion: "CEO",
       image: this.data.image,
       sid: this.data.sid,
-      post: this.postData.post,
+      post: this.linkify(this.postData.post),
       date: new Date(),
       recomment: [],
       likes: [],
     };
 
-    this.service.createPost(this.postData).subscribe((data) => {
+    this.service.createPost(postData).subscribe((data) => {
       console.log(data);
       if (data["info"]) {
         this.postData._id = data["insertId"];
-        this.allPosts.unshift(this.postData);
+        this.allPosts.unshift(postData);
         this.postData = new PostModel();
       }
     });
   }
+
+  linkify(inputText) {
+    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+
+    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+
+    //Change email addresses to mailto:: links.
+    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+    return replacedText;
+}
 
   showHidePostOption(id) {
     if (this.selectedProcessOption === -1) {

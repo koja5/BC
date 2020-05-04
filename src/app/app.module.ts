@@ -8,18 +8,25 @@ import { NotFoundComponent } from "./component/templates/not-found/not-found.com
 
 import { HttpModule } from "@angular/http";
 import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
-import { ToastrModule } from 'ngx-toastr';
-import { LoadingBarRouterModule } from '@ngx-loading-bar/router';
-import { LoggedGuard } from './services/guard/logged-guard.service';
-import { DashboardGuard } from './services/guard/dashboard-guard.service';
-import { LoginGuard } from './services/guard/login-guard.service';
-import { CookieService } from 'ng2-cookies';
-import { MailService } from './services/mail.service';
-import { DashboardModule } from './component/superadmin/dashboard.module';
-import { SplitterModule, LayoutModule } from '@progress/kendo-angular-layout';
+import { ToastrModule } from "ngx-toastr";
+import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
+import { LoggedGuard } from "./services/guard/logged-guard.service";
+import { DashboardGuard } from "./services/guard/dashboard-guard.service";
+import { LoginGuard } from "./services/guard/login-guard.service";
+import { CookieService } from "ng2-cookies";
+import { MailService } from "./services/mail.service";
+import { DashboardModule } from "./component/superadmin/dashboard.module";
+import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
+import { PrivacyPolicyComponent } from "./component/templates/privacy-policy/privacy-policy.component";
+import { TermsComponent } from "./component/templates/terms/terms.component";
 
 @NgModule({
-  declarations: [AppComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    NotFoundComponent,
+    PrivacyPolicyComponent,
+    TermsComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -31,15 +38,15 @@ import { SplitterModule, LayoutModule } from '@progress/kendo-angular-layout';
     ToastrModule.forRoot(),
     LoadingBarRouterModule,
     LayoutModule,
-    SplitterModule
+    SplitterModule,
   ],
   providers: [
     LoggedGuard,
     CookieService,
     LoginGuard,
     DashboardGuard,
-    MailService
+    MailService,
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

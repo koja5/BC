@@ -643,3 +643,9 @@ ul {
   color: green;
   font-size: 15px;
 }
+
+.k-checkbox:checked {
+  border-color: #0e9d88 !important;
+  color: #fff;
+  background-color: #0e9d88 !important;
+}

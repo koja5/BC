@@ -8,8 +8,6 @@ import { EditProfileComponent } from './profile/edit-profile/edit-profile.compon
 import { MyProfileComponent } from './profile/my-profile/my-profile.component';
 import { PremiumComponent } from './premium/premium.component';
 import { ConnectionComponent } from './connection/connection.component';
-import { PrivacyPolicyComponent } from '../templates/privacy-policy/privacy-policy.component';
-import { TermsComponent } from '../templates/terms/terms.component';
 import { ContactComponent } from './contact/contact.component';
 
 const routes: Routes = [
@@ -50,14 +48,6 @@ const routes: Routes = [
       {
         path: 'connection',
         component: ConnectionComponent
-      },
-      {
-        path: 'privacy-policy',
-        component: PrivacyPolicyComponent
-      },
-      {
-        path: 'terms',
-        component: TermsComponent
       },
       {
         path: 'contact',

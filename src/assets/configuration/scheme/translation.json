@@ -32,6 +32,11 @@
       "notExistMail": { "type": "string" },
       "forgotMailSend": { "type": "string" },
       "confirmPassword": { "type": "string" },
+      "signUpAcceptFirst": { "type": "string" },
+      "signUpAcceptTerms": { "type": "string" },
+      "signUpAcceptEnd": { "type": "string" },
+      "signUpAcceptCookie": { "type": "string" },
+      "notAgree": { "type": "string" },
       "changePassword": { "type": "string" },
       "chooseWelcome": { "type": "string" },
       "chooseChoose": { "type": "string" },
@@ -47,6 +52,7 @@
       "chooseDoneText1": { "type": "string" },
       "chooseDoneText2": { "type": "string" },
       "chooseLogin": { "type": "string" },
+      "chooseDirectorPlaceholder" : { "type": "string" },
       "logoAdminText": { "type": "string" },
       "online": { "type": "string" },
       "members": { "type": "string" },
@@ -286,7 +292,45 @@
       "sendQuestionThanksForUsing": { "type": "string" },
       "sendQuestionHaveQuestion": { "type": "string" },
       "sendQuestionGenerateMail": { "type": "string" },
-      "sendQuestionCopyright": { "type": "string" }
+      "sendQuestionCopyright": { "type": "string" },
+      "fieldId": { "type": "string" },
+      "fieldSID": { "type": "string" },
+      "fieldEmail": { "type": "string" },
+      "fieldPassword": { "type": "string" },
+      "fieldSalutation": { "type": "string" },
+      "fieldSalutationItem": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" }
+          }
+        }
+      },
+      "fieldTitleBefore": { "type": "string" },
+      "fieldFirstname": { "type": "string" },
+      "fieldLastname": { "type": "string" },
+      "fieldMale": { "type": "string" },
+      "fieldFemale": { "type": "string" },
+      "fieldGender": { "type": "string" },
+      "fieldTitleAfter": { "type": "string" },
+      "fieldFullname": { "type": "string" },
+      "fieldType": { "type": "string" },
+      "fieldActive": { "type": "string" },
+      "fieldActiveDate": { "type": "string" },
+      "fieldActivePremiumDate": { "type": "string" },
+      "fieldImage": { "type": "string" },
+      "fieldBirthday": { "type": "string" },
+      "fieldLocation": { "type": "string" },
+      "fieldStreet": { "type": "string" },
+      "fieldZip": { "type": "string" },
+      "fieldOrganization": { "type": "string" },
+      "fieldWebsite": { "type": "string" },
+      "fieldPhoneNumber": { "type": "string" },
+      "fieldMobile1": { "type": "string" },
+      "fieldMobile2": { "type": "string" },
+      "fieldAboutMe": { "type": "string" },
+      "fieldCover": { "type": "string" }
     }
   },
   "layout": [
@@ -377,7 +421,18 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [{ "key": "bciText" }, {}, {}, {}]
+          "items": [
+            { "key": "bciText" },
+            { "key": "signUpAcceptFirst" },
+            { "key": "signUpAcceptTerms" },
+            { "key": "signUpAcceptEnd" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "signUpAcceptCookie" }, { "key": "notAgree" }, {}, {}]
         }
       ]
     },
@@ -427,7 +482,7 @@
           "items": [
             { "key": "chooseDoneText2" },
             { "key": "chooseLogin" },
-            {},
+            { "key": "chooseDirectorPlaceholder" },
             {}
           ]
         }
@@ -1228,6 +1283,125 @@
             { "key": "sendQuestionGenerateMail" },
             { "key": "sendQuestionCopyright" },
             { "key": "sendQuestionSubjectTitle" },
+            {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Fields",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldId" },
+            { "key": "fieldSID" },
+            { "key": "fieldEmail" },
+            { "key": "fieldPassword" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "fieldSalutationItem",
+              "type": "array",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "div",
+                  "items": [
+                    {
+                      "key": "fieldSalutationItem[].title"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [ 
+            { "key": "fieldSalutation" },
+            { "key": "fieldTitleBefore" },
+            { "key": "fieldFirstname" },
+            { "key": "fieldLastname" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldTitleAfter" },
+            { "key": "fieldFullname" },
+            { "key": "fieldType" },
+            { "key": "fieldActive" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldActiveDate" },
+            { "key": "fieldActivePremiumDate" },
+            { "key": "fieldImage" },
+            { "key": "fieldBirthday" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldLocation" },
+            { "key": "fieldStreet" },
+            { "key": "fieldZip" },
+            { "key": "fieldOrganization" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldWebsite" },
+            { "key": "fieldPhoneNumber" },
+            { "key": "fieldMobile1" },
+            { "key": "fieldMobile2" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldAboutMe" },
+            { "key": "fieldCover" },
+            { "key": "fieldMale" },
+            { "key": "fieldFemale" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldGender" },
+            { },
+            { },
             { }
           ]
         }

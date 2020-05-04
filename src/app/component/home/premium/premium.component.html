@@ -107,7 +107,7 @@
       </div>
     </div>
   </footer>
-  <kendo-dialog title="Please confirm" *ngIf="areYouSureWindow" (close)="areYouSureWindow = false" [minWidth]="250"
+  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureWindow" (close)="areYouSureWindow = false" [minWidth]="250"
     [width]="450">
     <div class="modal-body text-center">
       <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
@@ -134,9 +134,9 @@
       </span>
       <div style="padding-top: 15px">
         <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" />
-        {{language.premiumAcceptBuyFirst}} <a routerLink="/home/main/terms"
+        {{language.premiumAcceptBuyFirst}} <a routerLink="/terms"
           target="_blank">{{language.premiumAcceptBuyTerms}}</a> {{language.premiumAcceptBuyEnd}} <a
-          routerLink="/home/main/privacy-policy" target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
+          routerLink="/privacy-policy" target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
       </div>
     </header>
     <!-- End Header -->

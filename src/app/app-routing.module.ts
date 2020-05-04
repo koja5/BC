@@ -4,6 +4,8 @@ import { NotFoundComponent } from "./component/templates/not-found/not-found.com
 import { LoggedGuard } from "./services/guard/logged-guard.service";
 import { LoginGuard } from './services/guard/login-guard.service';
 import { DashboardGuard } from './services/guard/dashboard-guard.service';
+import { PrivacyPolicyComponent } from './component/templates/privacy-policy/privacy-policy.component';
+import { TermsComponent } from './component/templates/terms/terms.component';
 
 const routes: Routes = [
   {
@@ -20,6 +22,14 @@ const routes: Routes = [
     path: "home",
     canActivate: [LoginGuard, DashboardGuard],
     loadChildren: "./component/home/home.module#HomeModule"
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
+  },
+  {
+    path: 'terms',
+    component: TermsComponent
   },
   {
     path: "**",

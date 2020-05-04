@@ -98,6 +98,8 @@ export class CustomGridComponent implements OnInit {
   public operationMode: any;
   public allServerData: any;
   public exportServerInd = false;
+  public selectedUserTypeFilter: any;
+  public salutationItem: any;
 
   constructor(
     private router: Router,
@@ -120,6 +122,15 @@ export class CustomGridComponent implements OnInit {
     }
 
     this.initialize();
+    this.getLanguageItems();
+  }
+
+  getLanguageItems() {
+    if (this.language.fieldSalutationItem !== undefined) {
+      this.salutationItem = this.language.fieldSalutationItem;
+    } else {
+      this.salutationItem = [];
+    }
   }
 
   initialize() {
@@ -138,11 +149,10 @@ export class CustomGridComponent implements OnInit {
     } else {
       this.gridView = process(this.data, this.state);
     }
+    this.selectedUserTypeFilter = event;
   }
 
-  selectionUserType(event) {
-    
-  }
+  selectionUserType(event) {}
 
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
@@ -307,6 +317,8 @@ export class CustomGridComponent implements OnInit {
     this.member = dataItem;
     this.member.type = Number(this.member.type);
     this.member.birthday = new Date(this.member.birthday);
+    this.member.activeDate = new Date(this.member.activeDate);
+    this.member.activePremiumDate = new Date(this.member.activePremiumDate);
     this.operationMode = "edit";
     this.memberWindow = true;
   }
@@ -321,15 +333,23 @@ export class CustomGridComponent implements OnInit {
   updateMember(data) {
     this.service.updateMember(this.member).subscribe((data) => {
       if (data) {
-        this.toastr.success(this.language.adminSuccessUpdateTitle, this.language.adminSuccessUpdateText, {
-          timeOut: 7000,
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.success(
+          this.language.adminSuccessUpdateTitle,
+          this.language.adminSuccessUpdateText,
+          {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right",
+          }
+        );
       } else {
-        this.toastr.error(this.language.adminErrorUpdateTitle, this.language.adminErrorUpdateText, {
-          timeOut: 7000,
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.error(
+          this.language.adminErrorUpdateTitle,
+          this.language.adminErrorUpdateText,
+          {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right",
+          }
+        );
       }
       this.memberWindow = false;
     });
@@ -340,17 +360,29 @@ export class CustomGridComponent implements OnInit {
       if (data["success"]) {
         this.member.id = data["id"];
         this.gridView.push(this.member);
-        this.toastr.success(this.language.adminSuccessCreateTitle, this.language.adminSuccessCreateText, {
-          timeOut: 7000,
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.success(
+          this.language.adminSuccessCreateTitle,
+          this.language.adminSuccessCreateText,
+          {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right",
+          }
+        );
       } else {
-        this.toastr.error(this.language.adminErrorCreateTitle, this.language.adminErrorCreateText, {
-          timeOut: 7000,
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.error(
+          this.language.adminErrorCreateTitle,
+          this.language.adminErrorCreateText,
+          {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right",
+          }
+        );
       }
       this.memberWindow = false;
     });
+  }
+
+  selectedSalutation(event) {
+    this.member.salutation = event;
   }
 }

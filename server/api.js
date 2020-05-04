@@ -278,8 +278,9 @@ router.get("/user/verification/:id", (req, res, next) => {
         });
         return next(err);
       } else {
+        var activeDate = new Date();
         conn.query(
-          "UPDATE users SET active='1' WHERE SHA1(email)='" + reqObj + "'",
+          "UPDATE users SET active='1' and activeDate='" + activeDate + "'WHERE SHA1(email)='" + reqObj + "'",
           function (err, rows, fields) {
             conn.release();
             if (err) {
@@ -316,9 +317,11 @@ router.post("/searchDirector", function (req, res, next) {
     }
     console.log(req.body);
     conn.query(
-      "SELECT * from users where type = 1 and active = 1 and fullname like '%" +
+      "SELECT * from users where type = 1 and active = 1 and (fullname like '%" +
         req.body.filter +
-        "%'",
+        "%' or email like '%" +
+        req.body.filter +
+        "%')",
       function (err, rows) {
         conn.release();
         if (!err) {
@@ -836,8 +839,9 @@ router.post("/updatePaymentStatus", function (req, res, next) {
       return;
     }
     console.log(req.body.id);
+    const activePremiumDate = new Date();
     conn.query(
-      "UPDATE users SET type = 3 where id = '" + req.body.id + "'",
+      "UPDATE users SET type = 3, activePremiumDate = '" + activePremiumDate +  "' where id = '" + req.body.id + "'",
       function (err, rows) {
         conn.release();
         if (err) {

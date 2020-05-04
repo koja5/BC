@@ -23,6 +23,8 @@ export class LoginComponent implements OnInit {
   public notExistMail = false;
   public notEqualPassword = false;
   public mailSend = false;
+  public agree = false;
+  public notAgree = false;
 
   constructor(
     private service: LoginService,
@@ -93,6 +95,8 @@ export class LoginComponent implements OnInit {
     this.notEqualPassword = false;
     if (this.data.password !== this.data.confirmPassword) {
       this.notEqualPassword = true;
+    } else if(!this.agree) {
+      this.notAgree = true;
     } else {
       this.service.signUp(this.data).subscribe((data) => {
         console.log(data);
@@ -148,5 +152,9 @@ export class LoginComponent implements OnInit {
       });
     } else {
     }
+  }
+
+  agreeWithTerms() {
+    this.agree = false;
   }
 }

@@ -51,7 +51,7 @@
       <div class="choose-options">
         <kendo-combobox [data]="directorList" [textField]="'fullname'" [valueField]="'id'"
           (valueChange)="onValueChange($event)" [(ngModel)]="selectedDirector" [filterable]="true"
-          (filterChange)="searchDirector($event)" [loading]="directorLoading">
+          (filterChange)="searchDirector($event)" [loading]="directorLoading" placeholder="{{language.chooseDirectorPlaceholder}}">
           <ng-template kendoComboBoxItemTemplate let-dataItem>
             <p style="height: 45px !important;">
               <img style="width: 40px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">

@@ -15,8 +15,6 @@ import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
 import { PremiumComponent } from './premium/premium.component';
 import { ConnectionComponent } from './connection/connection.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
-import { PrivacyPolicyComponent } from '../templates/privacy-policy/privacy-policy.component';
-import { TermsComponent } from '../templates/terms/terms.component';
 import { FindConnectionComponent } from './find-connection/find-connection.component';
 import { ContactComponent } from './contact/contact.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
@@ -34,8 +32,6 @@ import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-fi
     MyProfileComponent,
     PremiumComponent,
     ConnectionComponent,
-    PrivacyPolicyComponent,
-    TermsComponent,
     FindConnectionComponent,
     ContactComponent
   ],
