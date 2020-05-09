@@ -38,6 +38,7 @@ export class FeedComponent implements OnInit {
   public windowHeight: any;
   public windowWidth: any;
   public imageData: any;
+  public loading = true;
 
   constructor(
     private service: FeedService,
@@ -92,6 +93,7 @@ export class FeedComponent implements OnInit {
       this.allPosts = data.sort((a, b) => {
         return new Date(b["date"]).getTime() - new Date(a["date"]).getTime();
       });
+      this.loading = false;
     });
   }
 

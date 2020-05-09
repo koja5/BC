@@ -56,13 +56,17 @@
         </div>
       </div>
 
-      <div *ngIf="allPosts !== undefined && allPosts.length === 0"
+      <div *ngIf="loading">
+        <app-content-placeholder></app-content-placeholder>
+      </div>
+
+      <div *ngIf="allPosts !== undefined && allPosts.length === 0 && !loading"
         class="no-post box shadow-sm border rounded bg-white mb-3 osahan-post">
         <h3>{{language.feedNoHaveFeed}}</h3>
         <h4>{{language.feedStartType}}</h4>
         <span class="fa fa-rss" style="font-size: 28px;"></span>
       </div>
-
+  
       <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
         <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
           <div class="dropdown-list-image mr-3">

@@ -18,6 +18,7 @@ import { Dimensions, ImageCroppedEvent } from "ngx-image-cropper";
 import { HelpService } from 'src/app/services/help.service';
 import { MessageService } from 'src/app/services/message.service';
 import * as sha1 from "sha1";
+import { EditProfileService } from 'src/app/services/edit-profile.service';
 
 @Component({
   selector: "app-profile",
@@ -48,6 +49,12 @@ export class ProfileComponent implements OnInit {
   public owner = false;
   // public url = "http://localhost:3000/upload";
   public url = "http://78.47.206.131:" + location.port + "/upload";
+  public allExperience: any;
+  public allEducation: any;
+  public lookingOffer: any;
+  public additionalInfo: any;
+  public bankAccount: any;
+  public selectedTab = 'profile';
 
   constructor(
     private service: ProfileService,
@@ -55,7 +62,8 @@ export class ProfileComponent implements OnInit {
     private message: MessageService,
     public http: HttpClient,
     public domSanitizer: DomSanitizer,
-    public helpService: HelpService
+    public helpService: HelpService,
+    public editProfileService: EditProfileService
   ) {}
 
   ngOnInit() {
@@ -71,15 +79,10 @@ export class ProfileComponent implements OnInit {
 
   initialization() {
     this.service.getUserInfoSHA1(this.id).subscribe((data) => {
-      console.log(data);
       this.data = data[0];
-      console.log(sha1(data[0].id.toString()));
-      console.log(this.id);
       if(sha1(data[0].id.toString()) === localStorage.getItem("id")) {
         this.owner = true;
       }
-      // this.imageData = this.helpService.getImage(this.data.img);
-      // this.imageCover = this.helpService.getImage(this.data.cover);
     });
 
     this.uploader = new FileUploader({
@@ -126,6 +129,36 @@ export class ProfileComponent implements OnInit {
       }
       this.loadImage = false;
     };
+
+    this.editProfileService.getExperience(this.id).subscribe(
+      data => {
+        this.allExperience = data;
+      }
+    );
+
+    this.editProfileService.getEducation(this.id).subscribe(
+      data => {
+        this.allEducation = data;
+      }
+    );
+
+    this.editProfileService.getLookingOffer(this.id).subscribe((data) => {
+      if (data["length"] > 0) {
+        this.lookingOffer = data[0];
+      }
+    });
+
+    this.editProfileService.getAdditionalInfo(this.id).subscribe((data) => {
+      if (data["length"] > 0) {
+        this.additionalInfo = data[0];
+      }
+    });
+
+    this.editProfileService.getBankAccount(this.id).subscribe((data) => {
+      if (data["length"] > 0) {
+        this.bankAccount = data[0];
+      }
+    });
   }
 
   fileChangeEventProfile(event: any): void {
@@ -199,5 +232,9 @@ export class ProfileComponent implements OnInit {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     }
+  }
+
+  changeTab(tab) {
+    this.selectedTab = tab;
   }
 }

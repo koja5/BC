@@ -52,7 +52,7 @@
       "chooseDoneText1": { "type": "string" },
       "chooseDoneText2": { "type": "string" },
       "chooseLogin": { "type": "string" },
-      "chooseDirectorPlaceholder" : { "type": "string" },
+      "chooseDirectorPlaceholder": { "type": "string" },
       "logoAdminText": { "type": "string" },
       "online": { "type": "string" },
       "members": { "type": "string" },
@@ -93,6 +93,8 @@
       "adminSuccessCreateText": { "type": "string" },
       "adminErrorCreateTitle": { "type": "string" },
       "adminErrorCreateText": { "type": "string" },
+      "adminDeleteTitle": { "type": "string" },
+      "adminDeleteText": { "type": "string" },
       "premiumTitleHeader": { "type": "string" },
       "premiumTitleCard": { "type": "string" },
       "premiumCurrency": { "type": "string" },
@@ -244,7 +246,57 @@
       "profileAbout": { "type": "string" },
       "profileUpdate": { "type": "string" },
       "profileOverview": { "type": "string" },
-      "connectionallYourConnections": { "type": "string" },
+      "profileProfessionText": { "type": "string" },
+      "profileAboutMeText": { "type": "string" },
+      "profileSocialProfileTitle": { "type": "string" },
+      "profileSocialProfileText": { "type": "string" },
+      "profileEditBasicInfoTitle": { "type": "string" },
+      "profileEditBasicInfoText": { "type": "string" },
+      "profileExperienceTitle": { "type": "string" },
+      "profileExperienceText": { "type": "string" },
+      "profileSave": { "type": "string" },
+      "profileDelete": { "type": "string" },
+      "profilePresent": { "type": "string" },
+      "profileFrom": { "type": "string" },
+      "profileTo": { "type": "string" },
+      "profileCompany": { "type": "string" },
+      "profilePosition": { "type": "string" },
+      "profileUpdateSocialProfile": { "type": "string" },
+      "profileExperienceDescription": { "type": "string" },
+      "profileAddNewExperience": { "type": "string" },
+      "profileEducationTitle": { "type": "string" },
+      "profileEducationText": { "type": "string" },
+      "profileEducationDescription": { "type": "string" },
+      "profileSchool": { "type": "string" },
+      "profileDirection": { "type": "string" },
+      "profileAddNewEducation": { "type": "string" },
+      "profileNoInfoAboutExperience": { "type": "string" },
+      "profileNoInfoAboutEducation": { "type": "string" },
+      "profileLookingOfferTitle": { "type": "string" },
+      "profileLookingOfferText": { "type": "string" },
+      "profileLooking": { "type": "string" },
+      "profileOffer": { "type": "string" },
+      "profileOtherInfoTitle": { "type": "string" },
+      "profileOtherInfoText": { "type": "string" },
+      "profileAbilitiesAndKnowledge": { "type": "string" },
+      "profileLanguages": { "type": "string" },
+      "profileQualifications": { "type": "string" },
+      "profileInterests": { "type": "string" },
+      "profileNoInfoAboutLooking": { "type": "string" },
+      "profileNoInfoAboutOffer": { "type": "string" },
+      "profileBankAccountTitle": { "type": "string" },
+      "profileBankAccountText": { "type": "string" },
+      "profileBankAccount": { "type": "string" },
+      "profileIBAN": { "type": "string" },
+      "profileBIC": { "type": "string" },
+      "profileMobile": { "type": "string" },
+      "profileTelephone": { "type": "string" },
+      "profileSID": { "type": "string" },
+      "adminErrorBadIBANTitle": { "type": "string" },
+      "adminErrorBadIBANText": { "type": "string" },
+      "profileJustYouCanSee": { "type": "string" },
+      "profileNoInfoOtherInfo": { "type": "string" },
+      "profileNoInfoBankAccount": { "type": "string" },
       "connectionMyOwnList": { "type": "string" },
       "connectionOtherConnection": { "type": "string" },
       "connectionSendMessage": { "type": "string" },
@@ -313,6 +365,7 @@
       "fieldMale": { "type": "string" },
       "fieldFemale": { "type": "string" },
       "fieldGender": { "type": "string" },
+      "fieldProfession": { "type": "string" },
       "fieldTitleAfter": { "type": "string" },
       "fieldFullname": { "type": "string" },
       "fieldType": { "type": "string" },
@@ -432,7 +485,12 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [{ "key": "signUpAcceptCookie" }, { "key": "notAgree" }, {}, {}]
+          "items": [
+            { "key": "signUpAcceptCookie" },
+            { "key": "notAgree" },
+            {},
+            {}
+          ]
         }
       ]
     },
@@ -602,6 +660,17 @@
             { "key": "adminSuccessCreateText" },
             { "key": "adminErrorCreateTitle" },
             { "key": "adminErrorCreateText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "adminDeleteTitle" },
+            { "key": "adminDeleteText" },
+            {},
+            {}
           ]
         }
       ]
@@ -1096,6 +1165,149 @@
             { "key": "profileUpdateProfileImage" },
             {}
           ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileProfessionText" },
+            { "key": "profileAboutMeText" },
+            { "key": "profileSocialProfileTitle" },
+            { "key": "profileSocialProfileText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileEditBasicInfoTitle" },
+            { "key": "profileEditBasicInfoText" },
+            { "key": "profileExperienceTitle" },
+            { "key": "profileExperienceText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileSave" },
+            { "key": "profileFrom" },
+            { "key": "profileTo" },
+            { "key": "profileCompany" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profilePosition" },
+            { "key": "profileUpdateSocialProfile" },
+            { "key": "profileExperienceDescription" },
+            { "key": "profileAddNewExperience" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileDelete" },
+            { "key": "profilePresent" },
+            { "key": "profileEducationTitle" },
+            { "key": "profileEducationText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileEducationDescription" },
+            { "key": "profileSchool" },
+            { "key": "profileDirection" },
+            { "key": "profileAddNewEducation" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileNoInfoAboutExperience" },
+            { "key": "profileNoInfoAboutEducation" },
+            { "key": "profileLookingOfferTitle" },
+            { "key": "profileLookingOfferText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileLooking" },
+            { "key": "profileOffer" },
+            { "key": "profileOtherInfoTitle" },
+            { "key": "profileOtherInfoText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileAbilitiesAndKnowledge" },
+            { "key": "profileLanguages" },
+            { "key": "profileQualifications" },
+            { "key": "profileInterests" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileNoInfoAboutLooking" },
+            { "key": "profileNoInfoAboutOffer" },
+            { "key": "profileBankAccountTitle" },
+            { "key": "profileBankAccountText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileBankAccount" },
+            { "key": "profileIBAN" },
+            { "key": "profileBIC" },
+            { "key": "profileMobile" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileTelephone" },
+            { "key": "profileSID" },
+            { "key": "profileJustYouCanSee" },
+            { "key": "adminErrorBadIBANTitle" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "adminErrorBadIBANText" },
+            { "key": "profileNoInfoOtherInfo" },
+            { "key": "profileNoInfoBankAccount" },
+            {}
+          ]
         }
       ]
     },
@@ -1332,7 +1544,7 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [ 
+          "items": [
             { "key": "fieldSalutation" },
             { "key": "fieldTitleBefore" },
             { "key": "fieldFirstname" },
@@ -1400,9 +1612,9 @@
           "flex-direction": "row",
           "items": [
             { "key": "fieldGender" },
-            { },
-            { },
-            { }
+            { "key": "fieldProfession" },
+            {},
+            {}
           ]
         }
       ]

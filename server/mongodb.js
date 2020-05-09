@@ -328,28 +328,32 @@ var mergePostWithUsers = (posts, res) => {
             if (sha1(user.id.toString()) === post.user_id) {
               var recommentArray = [];
               for (comm of post.recomment) {
-                if (sha1(user.id.toString()) === comm.user_id) {
-                  var itemComm = {
-                    _id: comm._id,
-                    user_id: comm.user_id,
-                    image: user.image,
-                    name: user.fullname,
-                    date: comm.date,
-                    comment: comm.comment,
-                  };
-                  recommentArray.push(itemComm);
+                for (let userComm of rows) {
+                  if (sha1(userComm.id.toString()) === comm.user_id) {
+                    var itemComm = {
+                      _id: comm._id,
+                      user_id: comm.user_id,
+                      image: user.image,
+                      name: user.fullname,
+                      date: comm.date,
+                      comment: comm.comment,
+                    };
+                    recommentArray.push(itemComm);
+                  }
                 }
               }
               var likesArray = [];
               for (like of post.likes) {
-                if (sha1(user.id.toString()) === like.user_id) {
-                  var itemLike = {
-                    _id: like._id,
-                    user_id: like.user_id,
-                    image: user.image,
-                    name: user.fullname
-                  };
-                  likesArray.push(itemLike);
+                for (let userLike of rows) {
+                  if (sha1(userLike.id.toString()) === like.user_id) {
+                    var itemLike = {
+                      _id: like._id,
+                      user_id: like.user_id,
+                      image: user.image,
+                      name: user.fullname,
+                    };
+                    likesArray.push(itemLike);
+                  }
                 }
               }
               console.log(likesArray);

@@ -105,7 +105,9 @@ export class CustomGridComponent implements OnInit {
     private router: Router,
     private service: CustomGridService,
     private toastr: ToastrService
-  ) {}
+  ) {
+    this.allData = this.allData.bind(this);
+  }
 
   ngOnInit() {
     console.log(this.data);
@@ -384,5 +386,13 @@ export class CustomGridComponent implements OnInit {
 
   selectedSalutation(event) {
     this.member.salutation = event;
+  }
+
+  public allData(): ExcelExportData {
+    const result: ExcelExportData = {
+      data: this.currentLoadData
+    };
+
+    return result;
   }
 }

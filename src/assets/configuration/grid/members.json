@@ -8,37 +8,12 @@
     },
     "columns": [
         {
-            "type": "image",
-            "field": "image",
-            "rootPath": "../../../../assets/img/profile_image/"
-        },
-        {
-            "type": "data",
-            "field": "id"
-        },
-        {
-            "type": "data",
-            "field": "email"
-        },
-        {
-            "type": "data",
-            "field": "firstname"
-        },
-        {
-            "type": "data",
-            "field": "lastname"
-        },
-        {
-            "type": "boolean",
-            "action": "active",
-            "field": "active"
-        },
-        {
             "type": "button",
             "action": "edit-member",
             "class": "k-preview", 
             "icon": "k-icon k-i-edit",
-            "method": "editUser"
+            "method": "editUser",
+            "width": 80
         },
         {
             "type": "button",
@@ -46,7 +21,150 @@
             "class": "k-preview", 
             "icon": "k-icon k-i-delete",
             "method": "deleteMember",
-            "param": "id"
+            "param": "id",
+            "width": 80
+        },
+        {
+            "type": "image",
+            "field": "image",
+            "rootPath": "../../../../assets/img/profile_image/",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldId",
+            "field": "id",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldSID",
+            "field": "sid",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldEmail",
+            "field": "email",
+            "width": 220
+        },
+        {
+            "type": "data",
+            "title": "fieldSalutation",
+            "field": "salutation",
+            "width": 120
+        },
+        {
+            "type": "boolean",
+            "title": "fieldActive",
+            "action": "active",
+            "field": "active",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldTitleBefore",
+            "field": "titleBefore",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldFirstname",
+            "field": "firstname",
+            "width": 150
+        },
+        {
+            "type": "data",
+            "title": "fieldLastname",
+            "field": "lastname",
+            "width": 150
+        },
+        {
+            "type": "data",
+            "title": "fieldGender",
+            "field": "gender",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldTitleAfter",
+            "field": "titleAfter",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldType",
+            "field": "type",
+            "width": 120
+        },
+        {
+            "type": "datetime",
+            "title": "fieldActiveDate",
+            "field": "activeDate",
+            "format": "dd.mm.yyyy",
+            "width": 120
+        },
+        {
+            "type": "datetime",
+            "title": "fieldActivePremiumDate",
+            "field": "activePremiumDate",
+            "format": "dd.mm.yyyy",
+            "width": 120
+        },
+        {
+            "type": "datetime",
+            "title": "fieldBirthday",
+            "field": "birthday",
+            "format": "dd.mm.yyyy",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldLocation",
+            "field": "location",
+            "width": 150
+        },
+        {
+            "type": "data",
+            "title": "fieldStreet",
+            "field": "street",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldZip",
+            "field": "zip",
+            "width": 120
+        },
+        {
+            "type": "data",
+            "title": "fieldOrganization",
+            "field": "organization",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldWebsite",
+            "field": "website",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldPhoneNumber",
+            "field": "phoneNumber",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldMobile1",
+            "field": "mobile1",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldMobile2",
+            "field": "mobile2",
+            "width": 180
         }
     ],
     "exportPdfName": "Members.pdf",

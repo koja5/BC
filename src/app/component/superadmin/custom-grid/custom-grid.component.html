@@ -42,7 +42,7 @@
     </ng-template>
 
     <kendo-grid-column *ngFor="let item of gridConfiguration.columns; let i = index" [field]="item.field"
-      title="{{language[item.field]}}">
+      title="{{language[item.title]}}" [width]="item.width" [hidden]="item.hidden">
       <ng-template *ngIf="item.type === 'button'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
         <div *ngIf="item.action === 'preview'">
           <button *ngIf="item.open === 'modal'" kendoButton [icon]="item.icon" class='{{item.class}}'
@@ -69,29 +69,17 @@
       <ng-template *ngIf="item.type === 'image'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
         <img src="{{item.rootPath}}{{dataItem[item.field]}}" class="column-image">
       </ng-template>
+      <ng-template *ngIf="item.type === 'datetime'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
+        <div>
+          {{ dataItem[item.field] | date: item.format }}
+        </div>
+      </ng-template>
     </kendo-grid-column>
 
     <kendo-grid-pdf fileName="Customers.pdf" [allPages]="true" paperSize="A4">
-      <kendo-grid-pdf-margin top="2cm" left="1cm" right="1cm" bottom="2cm"></kendo-grid-pdf-margin>
-      <ng-template kendoGridPDFTemplate let-pageNum="pageNum" let-totalPages="totalPages">
-        <div class="page-template">
-          <div class="header">
-            <div>{{language.pagerPage}} {{ pageNum }} {{language.pagerOf}} {{ totalPages }}</div>
-          </div>
-        </div>
-      </ng-template>
-      <kendo-grid-column field="shortname" title="{{language.username}}">
-      </kendo-grid-column>
-      <kendo-grid-column field="firstname" title="{{language.firstname}}">
-      </kendo-grid-column>
-      <kendo-grid-column field="lastname" title="{{language.lastname}}">
-      </kendo-grid-column>
-      <kendo-grid-column field="telephone" title="{{language.telephone}}">
-      </kendo-grid-column>
-      <kendo-grid-column field="mobile" title="{{language.mobile}}">
-      </kendo-grid-column>
     </kendo-grid-pdf>
-    <kendo-grid-excel fileName="Customers.xlsx"></kendo-grid-excel>
+    <!-- <kendo-grid-excel fileName="Customers.xlsx"></kendo-grid-excel> -->
+    <kendo-grid-excel fileName="Translation.xlsx" [fetchData]="allData"></kendo-grid-excel>
     <ng-template kendoGridNoRecordsTemplate>
       <div class="row no-results-element">
         <div class="text-center">
