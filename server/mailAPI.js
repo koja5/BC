@@ -240,7 +240,15 @@ router.post("/sendFacture", function(req, res) {
       thanksForUsing: req.body.premiumThanksForUsing,
       haveQuestion: req.body.premiumHaveQuestion,
       automateMail: req.body.premiumAutomateMail,
-      copyRight: req.body.premiumCopyRight
+      copyRight: req.body.premiumCopyRight,
+      fullname: req.body.name,
+      street: req.body.street,
+      zip: req.body.zip,
+      location: req.body.location,
+      email: req.body.email,
+      phone: req.body.phone,
+      mobile1: req.body.mobile1,
+      mobile2: req.body.mobile2
     })
   };
 

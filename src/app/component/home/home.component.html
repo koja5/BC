@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" routerLink="/home/main/my-profile"><i class="feather-edit mr-1"></i> {{language.feedMyAccount}}</a>
+            <a class="dropdown-item" (click)="openProfileWithoutSHA1()"><i class="feather-edit mr-1"></i> {{language.feedMyAccount}}</a>
             <a class="dropdown-item" routerLink="/home/main/edit-profile"><i class="feather-user mr-1"></i> {{language.feedEdit}}
               {{language.feedProfile}}</a>
             <div class="dropdown-divider"></div>

@@ -318,11 +318,18 @@ export class CustomGridComponent implements OnInit {
   editMember(dataItem) {
     this.member = dataItem;
     this.member.type = Number(this.member.type);
-    this.member.birthday = new Date(this.member.birthday);
-    this.member.activeDate = new Date(this.member.activeDate);
-    this.member.activePremiumDate = new Date(this.member.activePremiumDate);
+    this.member.birthday = this.convertToDate(this.member.birthday);
+    this.member.activeDate = this.convertToDate(this.member.activeDate);
+    this.member.activePremiumDate = this.convertToDate(this.member.activePremiumDate);
     this.operationMode = "edit";
     this.memberWindow = true;
+  }
+
+  convertToDate(date) {
+    if(date) {
+      return new Date(date);
+    }
+    return null;
   }
 
   newMember() {

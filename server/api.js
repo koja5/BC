@@ -278,11 +278,11 @@ router.get("/user/verification/:id", (req, res, next) => {
         });
         return next(err);
       } else {
-        var activeDate = new Date();
+        var activeDate = new Date().toDateString();
         conn.query(
-          "UPDATE users SET active='1' and activeDate='" +
+          "UPDATE users SET activeDate='" +
             activeDate +
-            "'WHERE SHA1(email)='" +
+            "', active=1 WHERE SHA1(email)='" +
             reqObj +
             "'",
           function (err, rows, fields) {

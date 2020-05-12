@@ -1,7 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { ContactModel } from "src/app/models/contact-model";
 import { MailService } from "src/app/services/mail.service";
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from "ngx-toastr";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-contact",
@@ -12,7 +13,11 @@ export class ContactComponent implements OnInit {
   public language: any;
   public data = new ContactModel();
 
-  constructor(private service: MailService, private toastr: ToastrService) {}
+  constructor(
+    private service: MailService,
+    private toastr: ToastrService,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
@@ -34,20 +39,31 @@ export class ContactComponent implements OnInit {
       sendQuestionThanksForUsing: this.language.sendQuestionThanksForUsing,
       sendQuestionHaveQuestion: this.language.sendQuestionHaveQuestion,
       sendQuestionGenerateMail: this.language.sendQuestionGenerateMail,
-      sendQuestionCopyright: this.language.sendQuestionCopyright
+      sendQuestionCopyright: this.language.sendQuestionCopyright,
     };
     this.service.sendQuestion(this.data).subscribe((data) => {
       console.log(data);
       if (data) {
-        this.toastr.success(this.language.successfulSendMessageText, this.language.successfulSendMessageTitle, {
-          timeOut: 7000,
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.success(
+          this.language.successfulSendMessageText,
+          this.language.successfulSendMessageTitle,
+          {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right",
+          }
+        );
+        setTimeout(() => {
+          this.router.navigate(["/home/main/feed"]);
+        }, 4000);
       } else {
-        this.toastr.error(this.language.errorSendMessageText, this.language.errorSendMessageTitle, {
-          timeOut: 7000,
-          positionClass: "toast-bottom-right",
-        });
+        this.toastr.error(
+          this.language.errorSendMessageText,
+          this.language.errorSendMessageTitle,
+          {
+            timeOut: 7000,
+            positionClass: "toast-bottom-right",
+          }
+        );
       }
     });
   }

@@ -99,4 +99,8 @@ export class HomeComponent implements OnInit {
   selectionChangeUser(event) {
     console.log(event);
   }
+
+  openProfileWithoutSHA1() {
+    this.router.navigate(["/home/main/profile/" + this.id]);
+  }
 }

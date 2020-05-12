@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { FacturaModel } from "src/app/models/factura-model";
 import { PremiumService } from "src/app/services/premium.service";
 import { ProfileService } from "src/app/services/profile.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-premium",
@@ -19,7 +20,8 @@ export class PremiumComponent implements OnInit {
 
   constructor(
     private service: PremiumService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -62,6 +64,12 @@ export class PremiumComponent implements OnInit {
     this.data.email = user.email;
     this.data.id = user.id;
     this.data.name = user.fullname;
+    this.data.street = user.street;
+    this.data.zip = user.zip;
+    this.data.location = user.location;
+    this.data.phone = user.phoneNumber;
+    this.data.mobile1 = user.mobile1;
+    this.data.mobile2 = user.mobile2;
     this.data.premiumSubject = this.language.premiumSubject;
     this.data.premiumInvoice = this.language.premiumInvoice;
     this.data.premiumStatus = this.language.premiumStatus;
@@ -81,5 +89,10 @@ export class PremiumComponent implements OnInit {
     this.data.premiumRegardsFirst = this.language.premiumRegardsFirst;
     this.data.premiumRegardsEnd = this.language.premiumRegardsEnd;
     this.data.premiumMessage = this.language.premiumMessage;
+  }
+
+  finishBuyRedirect() {
+    this.buyWindow = false;
+    this.router.navigate(["/home/main/feed"]);
   }
 }

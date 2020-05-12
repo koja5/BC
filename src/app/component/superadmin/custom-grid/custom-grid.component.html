@@ -1,8 +1,8 @@
-<div style="height: 100%">
-  <kendo-grid *ngIf="language !== undefined" [data]="gridView" [style.height]="height" [resizable]="true"
-    [pageSize]="state.take" [skip]="state.skip" [sort]="state.sort" [filter]="state.filter" [sortable]="true"
-    [pageable]="pageable" (pageChange)="pageChange($event)" [kendoGridSelectBy]="mySelectionKey" [groupable]="true"
-    [group]="state.group" [pageSize]="pageSize" (groupChange)="groupChange($event)" (sortChange)="sortChange($event)">
+<div style="height: 100%" *ngIf="language !== undefined">
+  <kendo-grid [data]="gridView" [style.height]="height" [resizable]="true" [pageSize]="state.take" [skip]="state.skip"
+    [sort]="state.sort" [filter]="state.filter" [sortable]="true" [pageable]="pageable"
+    (pageChange)="pageChange($event)" [kendoGridSelectBy]="mySelectionKey" [groupable]="true" [group]="state.group"
+    [pageSize]="pageSize" (groupChange)="groupChange($event)" (sortChange)="sortChange($event)">
     <kendo-grid-messages pagerPage="{{language.pagerPage}}" pagerOf="{{language.pagerOf}}"
       pagerItems="{{language.pagerItems}}" pagerItemsPerPage="{{language.pagerItemsPerPage}}">
     </kendo-grid-messages>
@@ -71,7 +71,7 @@
       </ng-template>
       <ng-template *ngIf="item.type === 'datetime'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
         <div>
-          {{ dataItem[item.field] | date: item.format }}
+          {{ dataItem[item.field] }}
         </div>
       </ng-template>
     </kendo-grid-column>

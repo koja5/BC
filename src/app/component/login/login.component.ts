@@ -98,6 +98,7 @@ export class LoginComponent implements OnInit {
     } else if(!this.agree) {
       this.notAgree = true;
     } else {
+      this.notAgree = false;
       this.service.signUp(this.data).subscribe((data) => {
         console.log(data);
         if (data["success"]) {
@@ -155,6 +156,6 @@ export class LoginComponent implements OnInit {
   }
 
   agreeWithTerms() {
-    this.agree = false;
+    this.agree = true;
   }
 }

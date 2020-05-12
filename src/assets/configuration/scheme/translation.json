@@ -297,6 +297,7 @@
       "profileJustYouCanSee": { "type": "string" },
       "profileNoInfoOtherInfo": { "type": "string" },
       "profileNoInfoBankAccount": { "type": "string" },
+      "profileNoUser": { "type": "string" },
       "connectionMyOwnList": { "type": "string" },
       "connectionOtherConnection": { "type": "string" },
       "connectionSendMessage": { "type": "string" },
@@ -383,7 +384,11 @@
       "fieldMobile1": { "type": "string" },
       "fieldMobile2": { "type": "string" },
       "fieldAboutMe": { "type": "string" },
-      "fieldCover": { "type": "string" }
+      "fieldCover": { "type": "string" },
+      "notFoundTitle": { "type": "string" },
+      "notFoundText1": { "type": "string" },
+      "notFoundText2": { "type": "string" },
+      "notFoundGoBack": { "type": "string" }
     }
   },
   "layout": [
@@ -1306,7 +1311,7 @@
             { "key": "adminErrorBadIBANText" },
             { "key": "profileNoInfoOtherInfo" },
             { "key": "profileNoInfoBankAccount" },
-            {}
+            { "key": "profileNoUser" }
           ]
         }
       ]
@@ -1615,6 +1620,25 @@
             { "key": "fieldProfession" },
             {},
             {}
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "404 page",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "notFoundTitle" },
+            { "key": "notFoundText1" },
+            { "key": "notFoundText2" },
+            { "key": "notFoundGoBack" }
           ]
         }
       ]

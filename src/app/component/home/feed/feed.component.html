@@ -46,12 +46,12 @@
           </div>
         </div>
         <div class="border-top p-3 d-flex align-items-center">
-          <div class="mr-auto"><a href="#" class="text-link small"><i class="feather-map-pin"></i>
+          <div class="mr-auto hidden-xs"><a href="#" class="text-link small"><i class="feather-map-pin"></i>
               {{language.feedAddLocation}}</a>
           </div>
-          <div class="flex-shrink-1">
-            <button type="button" class="btn btn-light btn-sm">{{language.feedPreview}}</button>
-            <button type="button" class="btn btn-primary btn-sm" (click)="createPost()">{{language.feedPost}}</button>
+          <div class="flex-shrink-1 row-xs">
+            <button type="button" class="btn btn-light btn-sm col-xs-6">{{language.feedPreview}}</button>
+            <button type="button" class="btn btn-primary btn-sm col-xs-6" (click)="createPost()">{{language.feedPost}}</button>
           </div>
         </div>
       </div>
@@ -305,7 +305,8 @@
           <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
             alt="Responsive image">
           <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
-          <p class="mb-0 text-muted">{{language.feedNoProfessionInfo}}</p>
+          <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
+          <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
         </div>
         <div class="d-flex">
           <div class="col-12 border-right p-3" routerLink="/home/main/connection" style="cursor: pointer;">

@@ -23,9 +23,9 @@
             <div class="form-group mb-4">
               <h6 class="m-0">{{language.fieldAboutMe}}</h6>
               <p class="mb-0 mt-0 small">{{language.profileAboutMeText}}
-                <div class="position-relative">
-                  <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.aboutMe"></textarea>
-                </div>
+              <div class="position-relative">
+                <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.aboutMe"></textarea>
+              </div>
             </div>
             <div class="form-group mb-0">
               <label class="mb-1 w-100">SKILLS</label>
@@ -91,23 +91,38 @@
         <div class="box-body p-3">
           <form class="js-validate" novalidate="novalidate">
             <div class="row">
-              <div class="col-sm-6 mb-2">
+              <div class="col-sm-4 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldSalutation}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="lastname" [(ngModel)]="data.lastname">
+                    <kendo-combobox style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="salutationItem" [valuePrimitive]="true" [textField]="'title'"
+                      [valueField]="'title'" (selectionChange)="selectedSalutation($event)" class="col-xs-12 noPadding"
+                      [(ngModel)]="data.salutation" name="salutation">
+                    </kendo-combobox>
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-6 mb-2">
+              <div class="col-sm-4 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.fieldTitleAfter}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleAfter">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldTitleBefore}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleBefore">
@@ -121,7 +136,7 @@
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldFirstname}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="firstname" [(ngModel)]="data.firstname">
@@ -133,7 +148,7 @@
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldLastname}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="lastname" [(ngModel)]="data.lastname">
@@ -147,7 +162,7 @@
                 <div class="js-form-message">
                   <label id="phoneNumberLabel" class="form-label">
                     {{language.fieldBirthday}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
 
@@ -161,7 +176,7 @@
                 <div class="js-form-message">
                   <label id="phoneNumberLabel" class="form-label">
                     {{language.fieldPhoneNumber}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="data.phoneNumber"
@@ -179,7 +194,7 @@
                 <div class="js-form-message">
                   <label id="emailLabel" class="form-label">
                     {{language.fieldMobile1}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="mobile1" [(ngModel)]="data.mobile1">
@@ -192,7 +207,7 @@
                 <div class="js-form-message">
                   <label id="locationLabel" class="form-label">
                     {{language.fieldMobile2}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="mobile2" [(ngModel)]="data.mobile2">
@@ -207,7 +222,7 @@
                 <div class="js-form-message">
                   <label id="emailLabel" class="form-label">
                     {{language.fieldEmail}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="email" class="form-control" name="email" [(ngModel)]="data.email">
@@ -220,7 +235,7 @@
                 <div class="js-form-message">
                   <label id="locationLabel" class="form-label">
                     {{language.fieldLocation}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="location" [(ngModel)]="data.location">
@@ -235,7 +250,7 @@
                 <div class="js-form-message">
                   <label id="organizationLabel" class="form-label">
                     {{language.fieldStreet}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="street" [(ngModel)]="data.street">
@@ -248,7 +263,7 @@
                 <div class="js-form-message">
                   <label id="websiteLabel" class="form-label">
                     {{language.fieldZip}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input class="form-control" type="url" name="zip" [(ngModel)]="data.zip">
@@ -263,7 +278,7 @@
                 <div class="js-form-message">
                   <label id="organizationLabel" class="form-label">
                     {{language.fieldOrganization}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="organization" [(ngModel)]="data.organization">
@@ -276,7 +291,7 @@
                 <div class="js-form-message">
                   <label id="websiteLabel" class="form-label">
                     {{language.fieldWebsite}}
-                    <span class="text-danger">*</span>
+                    <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
                     <input class="form-control" type="url" name="website" [(ngModel)]="data.website">
@@ -548,7 +563,8 @@
               <label id="TO" class="form-label">{{language.profileIBAN}}</label>
               <!-- Input -->
               <div class="form-group">
-                <input type="text" class="form-control" [ngClass]="badIBAN === true ? 'badIBAN' : ''" [(ngModel)]="bankAccount.iban" name="iban">
+                <input type="text" class="form-control" [ngClass]="badIBAN === true ? 'badIBAN' : ''"
+                  [(ngModel)]="bankAccount.iban" name="iban">
                 <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
               </div>
               <!-- End Input -->

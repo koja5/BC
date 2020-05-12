@@ -245,7 +245,6 @@ export class FeedComponent implements OnInit {
 
   getLikesForPost(id) {
     this.service.getLikesForPost(id).subscribe((data) => {
-      console.log(data);
       this.allLikesForPost = data["likes"];
       this.postLikes = true;
     });

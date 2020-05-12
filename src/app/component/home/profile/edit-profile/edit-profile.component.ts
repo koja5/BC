@@ -41,6 +41,7 @@ export class EditProfileComponent implements OnInit {
   public bankAccount = new BankAccountModel();
   public bankAccountCreate = false;
   public badIBAN = false;
+  public salutationItem: any;
 
   constructor(
     private service: EditProfileService,
@@ -54,6 +55,11 @@ export class EditProfileComponent implements OnInit {
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
+    }
+    if (this.language.fieldSalutationItem !== undefined) {
+      this.salutationItem = this.language.fieldSalutationItem;
+    } else {
+      this.salutationItem = [];
     }
     this.initialization();
   }
@@ -554,5 +560,9 @@ export class EditProfileComponent implements OnInit {
       checksum = parseInt(fragment, 10) % 97;
     }
     return checksum;
+  }
+
+  selectedSalutation(event) {
+    this.data.salutation = event;
   }
 }

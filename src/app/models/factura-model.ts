@@ -4,6 +4,12 @@ export class FacturaModel {
     email?: string;
     id?: string;
     name?: string;
+    street?: string;
+    zip?: string;
+    location?: string;
+    phone?: string;
+    mobile1?: string;
+    mobile2?: string;
     premiumStatus?: string;
     premiumPending: string;
     premiumBankAccount: string;
