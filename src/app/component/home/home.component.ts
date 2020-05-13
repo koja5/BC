@@ -6,6 +6,7 @@ import * as sha1 from "sha1";
 import { FindConnectionService } from "src/app/services/find-connection.service";
 import { ProfileService } from "src/app/services/profile.service";
 import { HelpService } from "src/app/services/help.service";
+import { MessageChatService } from "src/app/services/message-chat.service";
 
 @Component({
   selector: "app-home",
@@ -23,6 +24,9 @@ export class HomeComponent implements OnInit {
   public userList: any;
   public selectedUser: any;
   public language: any;
+  public messageCenter = "";
+  public allMessages: any;
+  public newMessageCounter = 0;
 
   constructor(
     private router: Router,
@@ -30,7 +34,8 @@ export class HomeComponent implements OnInit {
     private message: MessageService,
     private findConnection: FindConnectionService,
     private profileService: ProfileService,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private messageService: MessageChatService
   ) {}
 
   ngOnInit() {
@@ -39,11 +44,13 @@ export class HomeComponent implements OnInit {
     this.initialization();
     this.selectedUser = null;
 
-    this.message.getUserInfo().subscribe(
-      data => {
-        this.initialization();
-      }
-    )
+    this.message.getUserInfo().subscribe((data) => {
+      this.initialization();
+    });
+
+    this.messageService.newMessageReceived().subscribe((data) => {
+      this.newMessageCounter++;
+    });
   }
 
   initialization() {
@@ -98,5 +105,18 @@ export class HomeComponent implements OnInit {
 
   selectionChangeUser(event) {
     console.log(event);
+  }
+
+  showMessageCenter() {
+    if (this.messageCenter === "") {
+      this.messageCenter = "show";
+      this.messageService.getAllMessagesForUser(this.id).subscribe((data) => {
+        console.log(data);
+        this.allMessages = data;
+      });
+    } else {
+      this.messageCenter = "";
+    }
+    this.newMessageCounter = 0;
   }
 }
