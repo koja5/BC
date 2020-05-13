@@ -7,6 +7,7 @@ import { InviteModel } from "src/app/models/invite-model";
 import { MessageSubmitModel } from "src/app/models/message-submit-model";
 import * as sha1 from "sha1";
 import { ProfileService } from "src/app/services/profile.service";
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: "app-feed",
@@ -39,12 +40,15 @@ export class FeedComponent implements OnInit {
   public windowWidth: any;
   public imageData: any;
   public loading = true;
+  public linkClient = window.location.origin;
+  public referralLinkCopied = false;
 
   constructor(
     private service: FeedService,
     private helpService: HelpService,
     private router: Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -337,5 +341,26 @@ export class FeedComponent implements OnInit {
     } else {
       return "../../../../assets/img/profile_image/no-image.png";
     }
+  }
+
+  copyLinkInClipboard() {
+    const link = this.linkClient + "/login/join-to/" + this.id;
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = link;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
+    this.referralLinkCopied = true;
+    this.toastr.success(
+      this.language.feedCopiedLinkInClipboard,
+      "",
+      { timeOut: 7000, positionClass: "toast-bottom-right" }
+    );
   }
 }

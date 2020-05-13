@@ -51,7 +51,8 @@
           </div>
           <div class="flex-shrink-1 row-xs">
             <button type="button" class="btn btn-light btn-sm col-xs-6">{{language.feedPreview}}</button>
-            <button type="button" class="btn btn-primary btn-sm col-xs-6" (click)="createPost()">{{language.feedPost}}</button>
+            <button type="button" class="btn btn-primary btn-sm col-xs-6"
+              (click)="createPost()">{{language.feedPost}}</button>
           </div>
         </div>
       </div>
@@ -66,7 +67,7 @@
         <h4>{{language.feedStartType}}</h4>
         <span class="fa fa-rss" style="font-size: 28px;"></span>
       </div>
-  
+
       <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
         <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
           <div class="dropdown-list-image mr-3">
@@ -90,7 +91,7 @@
         </div>
         <div class="p-3 border-bottom osahan-post-body">
           <!-- <pre class="mb-0"><code>{{item.post}} <a href="http://google.rs">http://google.rs</a></code></pre> -->
-          <div [innerHTML]="'<pre>' + item.post + '</pre>'"></div> 
+          <div [innerHTML]="'<pre>' + item.post + '</pre>'"></div>
         </div>
         <div class="p-3 border-bottom osahan-post-footer">
           <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes"
@@ -322,6 +323,16 @@
           </a>
         </div>
       </div>
+      <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center"
+        *ngIf="userType !== 2 && userType !== 3">
+        <h6 class="text-dark mt-2">{{language.feedReferralLinkTitle}}</h6>
+        <div class="p-3"><button class="btn btn-referral-link btn-sm pl-4 pr-4" *ngIf="!referralLinkCopied"
+            type="button" (click)="copyLinkInClipboard()"> <span
+              *ngIf="!referralLinkCopied">{{language.feedReferralLinkButton}}</span> </button>
+          <button class="btn btn-referral-link-copied btn-sm pl-4 pr-4" *ngIf="referralLinkCopied" type="button"
+            (click)="copyLinkInClipboard()"> <span>{{language.feedCopiedLinkButton}}</span> </button></div>
+        <p class="ml-1 mr-1 text-muted">{{language.feedReferralLinkText}}</p>
+      </div>
       <!-- <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">Profile Views</h6>
@@ -506,8 +517,9 @@
   </form>
 </kendo-window>
 
-<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureRemoveWindow" (close)="areYouSureRemoveWindow = false"
-  [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
+<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureRemoveWindow"
+  (close)="areYouSureRemoveWindow = false" [width]="windowWidth ? windowWidth : 450"
+  [height]="windowHeight ? windowHeight : 250">
   <div class="modal-body text-center">
     <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
     <h3>{{language.areYouSure}}</h3>

@@ -239,6 +239,11 @@
       "feedYourInviteIsSend": { "type": "string" },
       "feedInputAllRequired": { "type": "string" },
       "feedEnterYourComment": { "type": "string" },
+      "feedReferralLinkTitle": { "type": "string" },
+      "feedReferralLinkButton": { "type": "string" },
+      "feedReferralLinkText": { "type": "string" },
+      "feedCopiedLinkInClipboard": { "type": "string" },
+      "feedCopiedLinkButton": { "type": "string" },
       "profileUpdateCover": { "type": "string" },
       "profileUpdateProfileImage": { "type": "string" },
       "profileSendMessage": { "type": "string" },
@@ -1139,7 +1144,23 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [{ "key": "feedEnterYourComment" }, {}, {}, {}]
+          "items": [
+            { "key": "feedEnterYourComment" },
+            { "key": "feedReferralLinkTitle" },
+            { "key": "feedReferralLinkButton" },
+            { "key": "feedReferralLinkText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "feedCopiedLinkInClipboard" },
+            { "key": "feedCopiedLinkButton" },
+            { },
+            { }
+          ]
         }
       ]
     },

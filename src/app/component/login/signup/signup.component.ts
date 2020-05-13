@@ -17,6 +17,8 @@ export class SignupComponent implements OnInit {
   public passwordIcon = "fa fa-eye";
   public passwordType = "password";
   public directorId: any;
+  public agree = false;
+  public notAgree = false;
 
   constructor(
     private service: LoginService,
@@ -50,7 +52,10 @@ export class SignupComponent implements OnInit {
     this.notEqualPassword = false;
     if (this.data.password !== this.data.confirmPassword) {
       this.notEqualPassword = true;
+    } else if (!this.agree) {
+      this.notAgree = true;
     } else {
+      this.notAgree = false;
       const data = {
         data: this.data,
         directorId: this.directorId,
@@ -74,5 +79,9 @@ export class SignupComponent implements OnInit {
   hidePass() {
     this.passwordType = "password";
     this.passwordIcon = "fa fa-eye";
+  }
+
+  agreeWithTerms() {
+    this.agree = true;
   }
 }
