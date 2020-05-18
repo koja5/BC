@@ -462,7 +462,7 @@ button:focus {outline:0;}
   }
   
   .hidden-xs {
-    display: none;
+    display: none !important;
   }
 
   .col-xs-6 {

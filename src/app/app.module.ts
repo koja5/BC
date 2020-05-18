@@ -19,13 +19,15 @@ import { DashboardModule } from "./component/superadmin/dashboard.module";
 import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
 import { PrivacyPolicyComponent } from "./component/templates/privacy-policy/privacy-policy.component";
 import { TermsComponent } from "./component/templates/terms/terms.component";
+import { MaintenceComponent } from './component/templates/maintence/maintence.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NotFoundComponent,
     PrivacyPolicyComponent,
-    TermsComponent
+    TermsComponent,
+    MaintenceComponent
   ],
   imports: [
     BrowserModule,

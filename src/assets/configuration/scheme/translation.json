@@ -51,6 +51,7 @@
       "chooseYouDone": { "type": "string" },
       "chooseDoneText1": { "type": "string" },
       "chooseDoneText2": { "type": "string" },
+      "successfulSignUp": { "type": "string" },
       "chooseLogin": { "type": "string" },
       "chooseDirectorPlaceholder": { "type": "string" },
       "logoAdminText": { "type": "string" },
@@ -148,6 +149,7 @@
       "premiumSubject": { "type": "string" },
       "premiumRegardsFirst": { "type": "string" },
       "premiumRegardsEnd": { "type": "string" },
+      "premiumConfirmMailBCISignature": { "type": "string" },
       "premiumMessage": { "type": "string" },
       "ok": { "type": "string" },
       "contectTitleHeader": { "type": "string" },
@@ -228,6 +230,8 @@
       "feedInviteText": { "type": "string" },
       "feedSendInvite": { "type": "string" },
       "feedEnterMail": { "type": "string" },
+      "feedEnterFirstname": { "type": "string" },
+      "feedEnterLastname": { "type": "string" },
       "feedEnterMessage": { "type": "string" },
       "feedSendInviteToMail": { "type": "string" },
       "feedSearch": { "type": "string" },
@@ -365,6 +369,16 @@
           }
         }
       },
+      "fieldRelationshipStatus": { "type": "string" },
+      "fieldRelationshipStatusItem": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" }
+          }
+        }
+      },
       "fieldTitleBefore": { "type": "string" },
       "fieldFirstname": { "type": "string" },
       "fieldLastname": { "type": "string" },
@@ -388,12 +402,17 @@
       "fieldPhoneNumber": { "type": "string" },
       "fieldMobile1": { "type": "string" },
       "fieldMobile2": { "type": "string" },
+      "fieldBankAccount": { "type": "string" },
+      "fieldIBAN": { "type": "string" },
+      "fieldBIC": { "type": "string" },
       "fieldAboutMe": { "type": "string" },
       "fieldCover": { "type": "string" },
       "notFoundTitle": { "type": "string" },
       "notFoundText1": { "type": "string" },
       "notFoundText2": { "type": "string" },
-      "notFoundGoBack": { "type": "string" }
+      "notFoundGoBack": { "type": "string" },
+      "maintenceText1": { "type": "string" },
+      "maintenceText2": { "type": "string" }
     }
   },
   "layout": [
@@ -498,7 +517,7 @@
           "items": [
             { "key": "signUpAcceptCookie" },
             { "key": "notAgree" },
-            {},
+            { "key": "successfulSignUp" },
             {}
           ]
         }
@@ -551,7 +570,7 @@
             { "key": "chooseDoneText2" },
             { "key": "chooseLogin" },
             { "key": "chooseDirectorPlaceholder" },
-            {}
+            { }
           ]
         }
       ]
@@ -822,7 +841,7 @@
             { "key": "premiumRegardsFirst" },
             { "key": "premiumRegardsEnd" },
             { "key": "premiumMessage" },
-            {}
+            { "key": "premiumConfirmMailBCISignature" }
           ]
         },
         {
@@ -1158,8 +1177,8 @@
           "items": [
             { "key": "feedCopiedLinkInClipboard" },
             { "key": "feedCopiedLinkButton" },
-            { },
-            { }
+            { "key": "feedEnterFirstname" },
+            { "key": "feedEnterLastname" }
           ]
         }
       ]
@@ -1571,6 +1590,29 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [
+            {
+              "key": "fieldRelationshipStatusItem",
+              "type": "array",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "div",
+                  "items": [
+                    {
+                      "key": "fieldRelationshipStatusItem[].title"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
             { "key": "fieldSalutation" },
             { "key": "fieldTitleBefore" },
             { "key": "fieldFirstname" },
@@ -1639,8 +1681,19 @@
           "items": [
             { "key": "fieldGender" },
             { "key": "fieldProfession" },
-            {},
-            {}
+            { "key": "fieldRelationshipStatus" },
+            { "key": "fieldBankAccount" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldIBAN" },
+            { "key": "fieldBIC" },
+            { },
+            { }
           ]
         }
       ]
@@ -1661,6 +1714,20 @@
             { "key": "notFoundText2" },
             { "key": "notFoundGoBack" }
           ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Maintence",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "maintenceText1" }, { "key": "maintenceText2" }]
         }
       ]
     }

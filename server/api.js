@@ -208,7 +208,7 @@ router.get("/getAllUsers", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query("SELECT * from users", function (err, rows) {
+    conn.query("SELECT * from users u left join bankAccount b on sha1(u.id) = b.id_user", function (err, rows) {
       conn.release();
       if (!err) {
         res.json(rows);
@@ -335,6 +335,37 @@ router.post("/searchDirector", function (req, res, next) {
         }
       }
     );
+
+    conn.on("error", function (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    });
+  });
+});
+
+router.get("/getDirectors", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    conn.query("SELECT * from users where (type = 1 or type = 0) and active = 1", function (
+      err,
+      rows
+    ) {
+      conn.release();
+      if (!err) {
+        res.json(rows);
+      } else {
+        res.json(null);
+      }
+    });
 
     conn.on("error", function (err) {
       res.json({
@@ -633,32 +664,58 @@ router.post("/joinTo", (req, res, next) => {
             req.body.data.fullname =
               req.body.data.lastname + " " + req.body.data.firstname;
             delete req.body.data.confirmPassword;
-            conn.query("insert into users SET ?", req.body.data, function (
-              err,
-              rows
-            ) {
-              if (err) {
-                conn.release();
-                return res.json(err);
-              }
-
-              var newUserSID = directorSID + "-" + rows.insertId;
-              console.log(newUserSID);
-              conn.query(
-                "update users set sid = '" +
-                  newUserSID +
-                  "' where id = '" +
-                  rows.insertId +
-                  "'",
-                function (err, rows, fields) {
-                  conn.release();
-                  if (err) {
-                    res.json(err);
-                  }
-                  res.json(true);
+            conn.query(
+              "SELECT * FROM users WHERE email=?",
+              [req.body.data.email],
+              function (err, rows, fields) {
+                if (err) {
+                  console.error("SQL error:", err);
+                  res.json({
+                    code: 100,
+                    status: "Error in connection database",
+                  });
+                  return next(err);
                 }
-              );
-            });
+                var response = {};
+                if (rows.length >= 1) {
+                  response.success = false;
+                  response.info = "Email already exists!";
+                  res.json(response);
+                } else {
+                  conn.query(
+                    "insert into users SET ?",
+                    req.body.data,
+                    function (err, rows) {
+                      if (err) {
+                        conn.release();
+                        return res.json(err);
+                      }
+
+                      var newUserSID = directorSID + "-" + rows.insertId;
+                      console.log(newUserSID);
+                      conn.query(
+                        "update users set sid = '" +
+                          newUserSID +
+                          "', active = 1 where id = '" +
+                          rows.insertId +
+                          "'",
+                        function (err, rows, fields) {
+                          conn.release();
+                          if (!err) {
+                            response.id = rows.insertId;
+                            response.success = true;
+                          } else {
+                            response.success = false;
+                            response.info = "Error";
+                          }
+                          res.json(response);
+                        }
+                      );
+                    }
+                  );
+                }
+              }
+            );
           } else {
             conn.release();
             res.json(rows);
@@ -670,6 +727,68 @@ router.post("/joinTo", (req, res, next) => {
     console.error("Internal error: " + ex);
     return next(ex);
   }
+});
+
+router.post("/signUp", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    console.log(conn);
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+
+    var response = {};
+    delete req.body.confirmPassword;
+    req.body.password = sha1(req.body.password);
+
+    conn.query("SELECT * FROM users WHERE email=?", [req.body.email], function (
+      err,
+      rows,
+      fields
+    ) {
+      if (err) {
+        console.error("SQL error:", err);
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+        return next(err);
+      }
+
+      if (rows.length >= 1) {
+        response.success = false;
+        response.info = "Email already exists!";
+        res.json(response);
+      } else {
+        req.body.fullname = req.body.lastname + " " + req.body.firstname;
+        conn.query("insert into users SET ?", req.body, function (err, rows) {
+          conn.release();
+          if (!err) {
+            if (!err) {
+              response.id = rows.insertId;
+              response.success = true;
+            } else {
+              response.success = false;
+              response.info = "Error";
+            }
+            res.json(response);
+          } else {
+            res.json({
+              code: 100,
+              status: "Error in connection database",
+            });
+            console.log(err);
+          }
+        });
+      }
+    });
+    conn.on("error", function (err) {
+      console.log("[mysql error]", err);
+    });
+  });
 });
 
 router.post("/searchUser", function (req, res, next) {
@@ -773,7 +892,7 @@ router.post("/updateMember", function (req, res, next) {
       return;
     }
     response = {};
-
+    req.body.fullname = req.body.lastname + " " + req.body.firstname;
     conn.query(
       "UPDATE users SET ? where id = '" + req.body.id + "'",
       [req.body],
@@ -1080,7 +1199,6 @@ router.get("/deleteExperience/:id", (req, res, next) => {
   }
 });
 
-
 router.post("/createEducation", function (req, res, next) {
   connection.getConnection(function (err, conn) {
     console.log(conn);
@@ -1226,7 +1344,10 @@ router.post("/createLookingOffer", function (req, res, next) {
 
     response = {};
 
-    conn.query("insert into lookingOffer SET ?", req.body, function (err, rows) {
+    conn.query("insert into lookingOffer SET ?", req.body, function (
+      err,
+      rows
+    ) {
       conn.release();
       if (!err) {
         if (!err) {
@@ -1260,21 +1381,20 @@ router.get("/getLookingOffer/:id", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query(
-      "SELECT * from lookingOffer where id_user = ?",
-      [id],
-      function (err, rows) {
-        conn.release();
-        if (!err) {
-          res.json(rows);
-        } else {
-          res.json({
-            code: 100,
-            status: "Error in connection database",
-          });
-        }
+    conn.query("SELECT * from lookingOffer where id_user = ?", [id], function (
+      err,
+      rows
+    ) {
+      conn.release();
+      if (!err) {
+        res.json(rows);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
       }
-    );
+    });
   });
 });
 
@@ -1358,7 +1478,10 @@ router.post("/createAdditionalInfo", function (req, res, next) {
 
     response = {};
 
-    conn.query("insert into additionalInfo SET ?", req.body, function (err, rows) {
+    conn.query("insert into additionalInfo SET ?", req.body, function (
+      err,
+      rows
+    ) {
       conn.release();
       if (!err) {
         if (!err) {
@@ -1524,21 +1647,20 @@ router.get("/getBankAccount/:id", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query(
-      "SELECT * from bankAccount where id_user = ?",
-      [id],
-      function (err, rows) {
-        conn.release();
-        if (!err) {
-          res.json(rows);
-        } else {
-          res.json({
-            code: 100,
-            status: "Error in connection database",
-          });
-        }
+    conn.query("SELECT * from bankAccount where id_user = ?", [id], function (
+      err,
+      rows
+    ) {
+      conn.release();
+      if (!err) {
+        res.json(rows);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
       }
-    );
+    });
   });
 });
 

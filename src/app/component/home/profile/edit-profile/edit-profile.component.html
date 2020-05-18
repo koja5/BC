@@ -27,7 +27,7 @@
                 <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.aboutMe"></textarea>
               </div>
             </div>
-            <div class="form-group mb-0">
+            <!-- <div class="form-group mb-0">
               <label class="mb-1 w-100">SKILLS</label>
               <div class="custom-control custom-checkbox d-inline mr-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1">
@@ -37,7 +37,7 @@
                 <input type="checkbox" class="custom-control-input" id="customCheck2">
                 <label class="custom-control-label" for="customCheck2">HTML5, CSS3</label>
               </div>
-            </div>
+            </div> -->
           </div>
           <div class="overflow-hidden text-center p-3">
             <a class="font-weight-bold btn btn-light rounded p-3 d-block" (click)="saveChanges()">
@@ -45,7 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="border rounded bg-white mb-3">
+      <!-- <div class="border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">{{language.profileSocialProfileTitle}}</h6>
           <p class="mb-0 mt-0 small">{{language.profileSocialProfileText}}
@@ -79,7 +79,7 @@
               {{language.profileUpdateSocialProfile}} </a>
           </div>
         </div>
-      </div>
+      </div> -->
     </aside>
     <main class="col-md-8">
       <div class="border rounded bg-white mb-3">
@@ -98,22 +98,12 @@
                     <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
-                    <kendo-combobox style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="salutationItem" [valuePrimitive]="true" [textField]="'title'"
-                      [valueField]="'title'" (selectionChange)="selectedSalutation($event)" class="col-xs-12 noPadding"
+                    <kendo-combobox
+                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
+                      [data]="salutationItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'"
+                      (selectionChange)="selectedSalutation($event)" class="col-xs-12 noPadding"
                       [(ngModel)]="data.salutation" name="salutation">
                     </kendo-combobox>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-4 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldTitleAfter}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleAfter">
                   </div>
                 </div>
               </div>
@@ -126,6 +116,18 @@
                   </label>
                   <div class="form-group">
                     <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleBefore">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.fieldTitleAfter}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <input type="text" class="form-control" name="titleAfter" [(ngModel)]="data.titleAfter">
                   </div>
                 </div>
               </div>
@@ -160,6 +162,23 @@
 
               <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.fieldRelationshipStatus}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <kendo-combobox
+                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
+                      [data]="relationshipItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'"
+                      (selectionChange)="selectedRelationship($event)" class="col-xs-12 noPadding"
+                      [(ngModel)]="data.relationship" name="relationship">
+                    </kendo-combobox>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 mb-2">
+                <div class="js-form-message">
                   <label id="phoneNumberLabel" class="form-label">
                     {{language.fieldBirthday}}
                     <!--<span class="text-danger">*</span>-->
@@ -171,8 +190,10 @@
                   </div>
                 </div>
               </div>
+            </div>
+            <div class="row">
               <!-- Input -->
-              <div class="col-sm-6 mb-2">
+              <div class="col-sm-4 mb-2">
                 <div class="js-form-message">
                   <label id="phoneNumberLabel" class="form-label">
                     {{language.fieldPhoneNumber}}
@@ -187,10 +208,8 @@
                 </div>
               </div>
               <!-- End Input -->
-            </div>
-            <div class="row">
               <!-- Input -->
-              <div class="col-sm-6 mb-2">
+              <div class="col-sm-4 mb-2">
                 <div class="js-form-message">
                   <label id="emailLabel" class="form-label">
                     {{language.fieldMobile1}}
@@ -203,7 +222,7 @@
               </div>
               <!-- End Input -->
               <!-- Input -->
-              <div class="col-sm-6 mb-2">
+              <div class="col-sm-4 mb-2">
                 <div class="js-form-message">
                   <label id="locationLabel" class="form-label">
                     {{language.fieldMobile2}}
@@ -578,31 +597,6 @@
               </div>
               <!-- End Input -->
             </div>
-          </div>
-
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileMobile}}</label>
-              <!-- Input -->
-              <div class="form-group">
-                <input type="text" class="form-control" [(ngModel)]="bankAccount.mobile" name="mobile">
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileTelephone}}</label>
-              <!-- Input -->
-              <div class="form-group">
-                <input type="text" class="form-control" [(ngModel)]="bankAccount.telephone" name="telephone">
-              </div>
-              <!-- End Input -->
-            </div>
-            <!-- <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileSID}}</label>
-              <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="bankAccount.telephone" name="telephone">
-              </div>
-            </div> -->
           </div>
 
           <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"

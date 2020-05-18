@@ -6,6 +6,7 @@ import { LoginGuard } from './services/guard/login-guard.service';
 import { DashboardGuard } from './services/guard/dashboard-guard.service';
 import { PrivacyPolicyComponent } from './component/templates/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './component/templates/terms/terms.component';
+import { MaintenceComponent } from './component/templates/maintence/maintence.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
   {
     path: 'terms',
     component: TermsComponent
+  },
+  {
+    path: 'maintence',
+    component: MaintenceComponent
   },
   {
     path: "**",

@@ -7,7 +7,8 @@ import { InviteModel } from "src/app/models/invite-model";
 import { MessageSubmitModel } from "src/app/models/message-submit-model";
 import * as sha1 from "sha1";
 import { ProfileService } from "src/app/services/profile.service";
-import { ToastrService } from 'ngx-toastr';
+import { ToastrService } from "ngx-toastr";
+import $ from "jquery";
 
 @Component({
   selector: "app-feed",
@@ -42,6 +43,7 @@ export class FeedComponent implements OnInit {
   public loading = true;
   public linkClient = window.location.origin;
   public referralLinkCopied = false;
+  public previewPost = false;
 
   constructor(
     private service: FeedService,
@@ -58,7 +60,7 @@ export class FeedComponent implements OnInit {
     }
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
-    if (this.user.type === sha1(0)) {
+    /*if (this.user.type === sha1(0)) {
       this.userType = 0;
     } else if (this.user.type === sha1(1)) {
       this.userType = 1;
@@ -66,9 +68,10 @@ export class FeedComponent implements OnInit {
       this.userType = 2;
     } else if (this.user.type === sha1(3)) {
       this.userType = 3;
-    }
+    }*/
     this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
+    this.backOnTop();
   }
 
   initialization() {
@@ -76,6 +79,7 @@ export class FeedComponent implements OnInit {
       console.log(data);
       if (data !== null) {
         this.data = data[0];
+        this.userType = data[0].type;
         // this.imageData = this.helpService.getImage(this.data.img);
         this.getAllPostForUser(this.data.id, this.data.sid);
       }
@@ -168,18 +172,27 @@ export class FeedComponent implements OnInit {
 
     //URLs starting with http://, https://, or ftp://
     replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+    replacedText = inputText.replace(
+      replacePattern1,
+      '<a href="$1" target="_blank">$1</a>'
+    );
 
     //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
     replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+    replacedText = replacedText.replace(
+      replacePattern2,
+      '$1<a href="http://$2" target="_blank">$2</a>'
+    );
 
     //Change email addresses to mailto:: links.
     replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
-    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+    replacedText = replacedText.replace(
+      replacePattern3,
+      '<a href="mailto:$1">$1</a>'
+    );
 
     return replacedText;
-}
+  }
 
   showHidePostOption(id) {
     if (this.selectedProcessOption === -1) {
@@ -304,8 +317,8 @@ export class FeedComponent implements OnInit {
         inviteFriendThanksForUsing: this.language.inviteFriendThanksForUsing,
         inviteFriendHaveQuestion: this.language.inviteFriendHaveQuestion,
         inviteFriendGenerateMail: this.language.inviteFriendGenerateMail,
-        inviteFriendCopyright: this.language.inviteFriendCopyrigh
-      }
+        inviteFriendCopyright: this.language.inviteFriendCopyrigh,
+      };
       this.service.sendInviteFriend(this.invite).subscribe((data) => {
         console.log(data);
       });
@@ -345,22 +358,69 @@ export class FeedComponent implements OnInit {
 
   copyLinkInClipboard() {
     const link = this.linkClient + "/login/join-to/" + this.id;
-    const selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
+    const selBox = document.createElement("textarea");
+    selBox.style.position = "fixed";
+    selBox.style.left = "0";
+    selBox.style.top = "0";
+    selBox.style.opacity = "0";
     selBox.value = link;
     document.body.appendChild(selBox);
     selBox.focus();
     selBox.select();
-    document.execCommand('copy');
+    document.execCommand("copy");
     document.body.removeChild(selBox);
     this.referralLinkCopied = true;
-    this.toastr.success(
-      this.language.feedCopiedLinkInClipboard,
-      "",
-      { timeOut: 7000, positionClass: "toast-bottom-right" }
-    );
+    this.toastr.success(this.language.feedCopiedLinkInClipboard, "", {
+      timeOut: 7000,
+      positionClass: "toast-bottom-right",
+    });
+  }
+
+  backOnTop() {
+    /*const scrollToTopButton = document.getElementById("js-top");
+    let back = false;
+    const scrollFunc = () => {
+      let y = window.scrollY;
+      if (y > 500) {
+        scrollToTopButton.className = "top-link show";
+      } else {
+        scrollToTopButton.className = "top-link hide";
+      }
+    };
+
+    window.addEventListener("scroll", scrollFunc);
+
+    const scrollToTop = () => {
+      const c = document.documentElement.scrollTop || document.body.scrollTop;
+      if (c > 0 && back) {
+        window.requestAnimationFrame(scrollToTop);
+        window.scrollTo(0, c - c / 10);
+      } else {
+        back = false;
+      }
+    };
+
+    scrollToTopButton.onclick = function (e) {
+      back = true;
+      e.preventDefault();
+      scrollToTop();
+    };*/
+
+    (function () {
+      $(document).ready(function () {
+        return (
+          $(window).scroll(function () {
+            return $(window).scrollTop() > 200
+              ? $("#back-to-top").addClass("show")
+              : $("#back-to-top").removeClass("show");
+          }),
+          $("#back-to-top").click(function () {
+            return $("html,body").animate({
+              scrollTop: "0",
+            });
+          })
+        );
+      });
+    }.call(this));
   }
 }

@@ -120,7 +120,7 @@ router.post("/inviteFriend", function(req, res) {
   );
   var compiledTemplate = hogan.compile(confirmTemplate);
   var inviteLink =
-   linkClient + "login/join-to/" + req.body.directorId;
+   linkClient + "login/join-to/" + req.body.directorId + "/" + req.body.email + "/" + req.body.firstname + "/" + req.body.lastname;
 
   var mailOptions = {
     from: '"BCI" info@app-production.eu',
@@ -225,6 +225,7 @@ router.post("/sendFacture", function(req, res) {
       id: req.body.id,
       regardsFirst: req.body.premiumRegardsFirst,
       regardsEnd: req.body.premiumRegardsEnd,
+      confirmMailBCISignature: req.body.confirmMailBCISignature,
       name: req.body.name,
       message: req.body.premiumMessage,
       status: req.body.premiumStatus,

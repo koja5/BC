@@ -26,6 +26,7 @@ import { ToastrService } from "ngx-toastr";
 import { LoadingBarService } from "@ngx-loading-bar/core";
 import { UserModel } from "src/app/models/user-model";
 import { ExcelExportData } from "@progress/kendo-angular-excel-export";
+import { HelpService } from "src/app/services/help.service";
 
 @Component({
   selector: "app-custom-grid",
@@ -100,11 +101,18 @@ export class CustomGridComponent implements OnInit {
   public exportServerInd = false;
   public selectedUserTypeFilter: any;
   public salutationItem: any;
+  public relationshipItem: any;
+  public directorId: any;
+  public allDirectors: any;
+  public directorLoading = false;
+  public currentLoadDirector: any;
+  public oldDirectorId: any;
 
   constructor(
     private router: Router,
     private service: CustomGridService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private helpService: HelpService
   ) {
     this.allData = this.allData.bind(this);
   }
@@ -132,6 +140,12 @@ export class CustomGridComponent implements OnInit {
       this.salutationItem = this.language.fieldSalutationItem;
     } else {
       this.salutationItem = [];
+    }
+
+    if (this.language.fieldRelationshipStatusItem !== undefined) {
+      this.relationshipItem = this.language.fieldRelationshipStatusItem;
+    } else {
+      this.relationshipItem = [];
     }
   }
 
@@ -320,13 +334,26 @@ export class CustomGridComponent implements OnInit {
     this.member.type = Number(this.member.type);
     this.member.birthday = this.convertToDate(this.member.birthday);
     this.member.activeDate = this.convertToDate(this.member.activeDate);
-    this.member.activePremiumDate = this.convertToDate(this.member.activePremiumDate);
+    this.member.activePremiumDate = this.convertToDate(
+      this.member.activePremiumDate
+    );
     this.operationMode = "edit";
     this.memberWindow = true;
+    this.directorId = Number(
+      this.helpService.getMyDirectorUser(this.member.id, this.member.sid)
+    );
+    console.log(this.directorId);
+    this.oldDirectorId = this.directorId.toString();
+    this.directorLoading = true;
+    this.service.getDirectors().subscribe((data) => {
+      this.allDirectors = data;
+      this.currentLoadDirector = data;
+      this.directorLoading = false;
+    });
   }
 
   convertToDate(date) {
-    if(date) {
+    if (date) {
       return new Date(date);
     }
     return null;
@@ -395,11 +422,38 @@ export class CustomGridComponent implements OnInit {
     this.member.salutation = event;
   }
 
+  selectedRelationship(event) {
+    this.member.relationship = event;
+  }
+
   public allData(): ExcelExportData {
     const result: ExcelExportData = {
-      data: this.currentLoadData
+      data: this.currentLoadData,
     };
 
     return result;
+  }
+
+  searchDirector(value) {
+    if (value) {
+      this.allDirectors = this.currentLoadDirector.filter(
+        (s) => s.fullname.toLowerCase().indexOf(value.toLowerCase()) !== -1
+      );
+    } else {
+      this.allDirectors = this.currentLoadDirector;
+    }
+  }
+
+  selectedDirector(event) {
+    if (event) {
+      this.directorId = event;
+      const newId = event.toString();
+      // this.member.sid.split(this.oldDirectorId).join(newId);
+      this.member.sid = this.member.sid.replace(this.oldDirectorId, newId);
+      console.log(this.member.sid);
+      this.oldDirectorId = this.directorId.toString();
+    } else {
+      this.directorId = null;
+    }
   }
 }

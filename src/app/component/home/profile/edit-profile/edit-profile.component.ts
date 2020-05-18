@@ -42,6 +42,7 @@ export class EditProfileComponent implements OnInit {
   public bankAccountCreate = false;
   public badIBAN = false;
   public salutationItem: any;
+  public relationshipItem: any;
 
   constructor(
     private service: EditProfileService,
@@ -61,6 +62,11 @@ export class EditProfileComponent implements OnInit {
     } else {
       this.salutationItem = [];
     }
+    if (this.language.fieldRelationshipStatusItem !== undefined) {
+      this.relationshipItem = this.language.fieldRelationshipStatusItem;
+    } else {
+      this.relationshipItem = [];
+    }
     this.initialization();
   }
 
@@ -70,31 +76,9 @@ export class EditProfileComponent implements OnInit {
       this.data.birthday = new Date(data[0].birthday);
     });
 
-    this.service.getExperience(this.id).subscribe((data) => {
-      console.log(data);
-      this.allExperience = data;
-      for (let i = 0; i < this.allExperience.length; i++) {
-        this.allExperience[i].toDate = this.convertStringToDate(
-          this.allExperience[i].toDate
-        );
-        this.allExperience[i].fromDate = this.convertStringToDate(
-          this.allExperience[i].fromDate
-        );
-      }
-    });
+    this.getExperience();
 
-    this.service.getEducation(this.id).subscribe((data) => {
-      console.log(data);
-      this.allEducation = data;
-      for (let i = 0; i < this.allEducation.length; i++) {
-        this.allEducation[i].toDate = this.convertStringToDate(
-          this.allEducation[i].toDate
-        );
-        this.allEducation[i].fromDate = this.convertStringToDate(
-          this.allEducation[i].fromDate
-        );
-      }
-    });
+    this.getEducation();
 
     this.service.getLookingOffer(this.id).subscribe((data) => {
       if (data["length"] > 0) {
@@ -117,6 +101,46 @@ export class EditProfileComponent implements OnInit {
         this.bankAccount = data[0];
       } else {
         this.bankAccountCreate = true;
+      }
+    });
+  }
+
+  getExperience() {
+    this.service.getExperience(this.id).subscribe((data: []) => {
+      console.log(data);
+      this.allExperience = data.sort((a, b) => {
+        return (
+          <any>new Date(b["toDate"] ? b["toDate"] : "") -
+          <any>new Date(a["toDate"])
+        );
+      });
+      for (let i = 0; i < this.allExperience.length; i++) {
+        this.allExperience[i].toDate = this.convertStringToDate(
+          this.allExperience[i].toDate
+        );
+        this.allExperience[i].fromDate = this.convertStringToDate(
+          this.allExperience[i].fromDate
+        );
+      }
+    });
+  }
+
+  getEducation() {
+    this.service.getEducation(this.id).subscribe((data: []) => {
+      console.log(data);
+      this.allEducation = data.sort((a, b) => {
+        return (
+          <any>new Date(b["toDate"] ? b["toDate"] : "") -
+          <any>new Date(a["toDate"])
+        );
+      });
+      for (let i = 0; i < this.allEducation.length; i++) {
+        this.allEducation[i].toDate = this.convertStringToDate(
+          this.allEducation[i].toDate
+        );
+        this.allEducation[i].fromDate = this.convertStringToDate(
+          this.allEducation[i].fromDate
+        );
       }
     });
   }
@@ -172,8 +196,9 @@ export class EditProfileComponent implements OnInit {
           this.language.adminSuccessCreateText,
           { timeOut: 7000, positionClass: "toast-bottom-right" }
         );
-        this.allExperience.push(this.experience);
+        // this.allExperience.push(this.experience);
         this.experience = new ExperienceModel();
+        this.getExperience();
         this.experienceWindow = false;
       } else {
         this.toastr.error(
@@ -212,6 +237,7 @@ export class EditProfileComponent implements OnInit {
           { timeOut: 7000, positionClass: "toast-bottom-right" }
         );
         this.experienceWindow = false;
+        this.getExperience();
         this.experience = new ExperienceModel();
       } else {
         this.toastr.error(
@@ -243,6 +269,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   addNewExperience() {
+    this.modificationType = "add";
     this.experienceWindow = true;
     this.experience = new ExperienceModel();
   }
@@ -256,8 +283,9 @@ export class EditProfileComponent implements OnInit {
           this.language.adminSuccessCreateText,
           { timeOut: 7000, positionClass: "toast-bottom-right" }
         );
-        this.allEducation.push(this.education);
+        // this.allEducation.push(this.education);
         this.education = new EducationModel();
+        this.getEducation();
         this.educationWindow = false;
       } else {
         this.toastr.error(
@@ -288,6 +316,7 @@ export class EditProfileComponent implements OnInit {
           { timeOut: 7000, positionClass: "toast-bottom-right" }
         );
         this.educationWindow = false;
+        this.getEducation();
         this.education = new EducationModel();
       } else {
         this.toastr.error(
@@ -319,6 +348,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   addNewEducation() {
+    this.modificationType = "add";
     this.educationWindow = true;
     this.education = new EducationModel();
   }
@@ -413,6 +443,8 @@ export class EditProfileComponent implements OnInit {
 
   saveBankAccount() {
     if (this.validate(this.bankAccount.iban)) {
+      this.bankAccount.telephone = this.data.phoneNumber;
+      this.bankAccount.mobile = this.data.mobile1;
       if (!this.bankAccountCreate) {
         this.service.updateBankAccount(this.bankAccount).subscribe((data) => {
           if (data) {
@@ -564,5 +596,9 @@ export class EditProfileComponent implements OnInit {
 
   selectedSalutation(event) {
     this.data.salutation = event;
+  }
+
+  selectedRelationship() {
+    this.data.relationship = event;
   }
 }

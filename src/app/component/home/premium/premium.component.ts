@@ -88,6 +88,7 @@ export class PremiumComponent implements OnInit {
     this.data.premiumCopyRight = this.language.premiumCopyRight;
     this.data.premiumRegardsFirst = this.language.premiumRegardsFirst;
     this.data.premiumRegardsEnd = this.language.premiumRegardsEnd;
+    this.data.premiumConfirmMailBCISignature = this.language.premiumConfirmMailBCISignature;
     this.data.premiumMessage = this.language.premiumMessage;
   }
 

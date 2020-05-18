@@ -71,15 +71,16 @@
       </ng-template>
       <ng-template *ngIf="item.type === 'datetime'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
         <div>
-          {{ dataItem[item.field] }}
+          {{ dataItem[item.field] | date: item.format }}
         </div>
       </ng-template>
     </kendo-grid-column>
 
-    <kendo-grid-pdf fileName="Customers.pdf" [allPages]="true" paperSize="A4">
+    <kendo-grid-pdf fileName="data.pdf" [allPages]="true">
+      <kendo-grid-pdf-margin top="1cm" left="1cm" right="1cm" bottom="1cm"></kendo-grid-pdf-margin>
     </kendo-grid-pdf>
     <!-- <kendo-grid-excel fileName="Customers.xlsx"></kendo-grid-excel> -->
-    <kendo-grid-excel fileName="Translation.xlsx" [fetchData]="allData"></kendo-grid-excel>
+    <kendo-grid-excel fileName="data.xlsx" [fetchData]="allData"></kendo-grid-excel>
     <ng-template kendoGridNoRecordsTemplate>
       <div class="row no-results-element">
         <div class="text-center">
@@ -126,10 +127,13 @@
                   </kendo-combobox>
                 </kendo-textbox-container>
               </div>
+
               <div class="col-md-6 col-xs-12">
-                <kendo-textbox-container floatingLabel="{{language.fieldTitleBefore}}">
-                  <input kendoTextBox [(ngModel)]="member.titleBefore" name="titleBefore" class="noPadding"
-                    #titleBefore="ngModel">
+                <kendo-textbox-container floatingLabel="{{language.fieldRelationshipStatus}}">
+                  <kendo-combobox [data]="relationshipItem" [valuePrimitive]="true" [textField]="'title'"
+                    [valueField]="'title'" (selectionChange)="selectedRelationship($event)" class="col-xs-12 noPadding"
+                    [(ngModel)]="member.relationship" name="relationship">
+                  </kendo-combobox>
                 </kendo-textbox-container>
               </div>
             </div>
@@ -145,15 +149,25 @@
                   #lastname="ngModel">
               </kendo-textbox-container>
             </div>
-            <div>
-              <kendo-textbox-container floatingLabel="{{language.fieldTitleAfter}}">
-                <input kendoTextBox [(ngModel)]="member.titleAfter" name="titleAfter" class="noPadding"
-                  #titleAfter="ngModel">
-              </kendo-textbox-container>
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <kendo-textbox-container floatingLabel="{{language.fieldTitleAfter}}">
+                  <input kendoTextBox [(ngModel)]="member.titleAfter" name="titleAfter" class="noPadding"
+                    #titleAfter="ngModel">
+                </kendo-textbox-container>
+              </div>
+
+              <div class="col-md-6 col-xs-12">
+                <kendo-textbox-container floatingLabel="{{language.fieldTitleBefore}}">
+                  <input kendoTextBox [(ngModel)]="member.titleBefore" name="titleBefore" class="noPadding"
+                    #titleBefore="ngModel">
+                </kendo-textbox-container>
+              </div>
             </div>
             <div class="form-group row">
               <div class="col-md-6 col-xs-12" style="padding-top: 5px;">
-                <p style="font-size: 10px; color: #0000006b; padding-bottom: 5px;">{{language.fieldGender}}</p>
+                <p style="font-size: 10px; color: #0000006b; margin-bottom: 10px !important;">{{language.fieldGender}}
+                </p>
                 <label class="k-radio-label col-md-6 col-xs-12" for="female">
                   <input type="radio" name="gender" id="female" class="k-radio"
                     checked="member.gender === 'female' ? checked : ''" [(ngModel)]="member.gender" [value]="'female'">
@@ -236,16 +250,32 @@
             </kendo-datepicker>
           </kendo-textbox-container>
         </div>
-        <div class="email col-md-6 col-xs-6" style="padding-top: 20px; font-weight: bold;">
+        <div class="email col-md-4 col-xs-6" style="padding-top: 20px; font-weight: bold;">
           <label class="k-form-field col-md-6" style="text-align: center;">
             {{language.fieldActive}} &nbsp; <kendo-switch [(ngModel)]="member.active" name='active'></kendo-switch>
           </label>
         </div>
-        <div class="col-md-6 col-xs-6">
+        <div class="col-md-4 col-xs-6">
           <kendo-textbox-container floatingLabel="{{language.storeLocation}}({{language.required}})">
             <kendo-combobox [data]="typeOfUsers" [valuePrimitive]="true" [textField]="'type'" [valueField]="'id'"
               (selectionChange)="selectionUserType($event)" class="col-xs-12 noPadding" [(ngModel)]="member.type"
               name="storeId" required>
+            </kendo-combobox>
+          </kendo-textbox-container>
+        </div>
+        <div class="col-md-4 col-xs-6" *ngIf="allDirectors">
+          <kendo-textbox-container floatingLabel="{{language.sid}}({{language.required}})">
+            <kendo-combobox [data]="allDirectors" [textField]="'fullname'" [valueField]="'id'" [filterable]="true"
+              [(ngModel)]="directorId" [filterable]="true" (filterChange)="searchDirector($event)"
+              (valueChange)="selectedDirector($event)" [valuePrimitive]="true" [loading]="directorLoading"
+              name="directorId" required>
+              <ng-template kendoComboBoxItemTemplate let-dataItem>
+                <p style="height: 45px !important;">
+                  <img style="width: 40px; margin-right: 10px;" class="rounded-circle"
+                    src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                  <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                </p>
+              </ng-template>
             </kendo-combobox>
           </kendo-textbox-container>
         </div>

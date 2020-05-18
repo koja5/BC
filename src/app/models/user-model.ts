@@ -5,6 +5,7 @@ export class UserModel {
     password?: string;
     confirmPassword?: string;
     salutation?: string;
+    relationship?: string;
     titleBefore?: string;
     firstname?: string;
     lastname?: string;

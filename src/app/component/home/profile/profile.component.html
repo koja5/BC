@@ -111,8 +111,12 @@
                           <td class="p-3">{{data.gender}}</td>
                         </tr>
                         <tr class="border-bottom">
+                          <th class="p-3">{{language.fieldRelationshipStatus}}</th>
+                          <td class="p-3">{{data.relationship}}</td>
+                        </tr>
+                        <tr class="border-bottom">
                           <th class="p-3">{{language.fieldBirthday}}</th>
-                          <td class="p-3">{{data.birthday | date: 'dd.MM.yyyy'}}</td>
+                          <td class="p-3">{{data.birthday | date: 'dd/MM/yyyy'}}</td>
                         </tr>
                         <tr class="border-bottom">
                           <th class="p-3">{{language.fieldPhoneNumber}}</th>
@@ -173,9 +177,9 @@
                   <div class="mr-2">
                     <h6 class="font-weight-bold text-dark mb-0">{{item.position}}</h6>
                     <div class="text-truncate text-primary">{{item.company}}</div>
-                    <div class="small text-gray-500">{{item.fromDate | date: 'dd.MM.yyyy'}} - <span
+                    <div class="small text-gray-500">{{item.fromDate | date: 'dd/MM/yyyy'}} - <span
                         *ngIf="item.toDate === null">{{language.profilePresent}}</span> <span
-                        *ngIf="item.toDate !== null">{{item.toDate | date: 'dd.MM.yyyy'}}</span> </div>
+                        *ngIf="item.toDate !== null">{{item.toDate | date: 'dd/MM/yyyy'}}</span> </div>
                   </div>
                 </div>
                 <p class="mb-0">{{item.description}}</p>
@@ -198,9 +202,9 @@
                   <div class="mr-2">
                     <h6 class="font-weight-bold text-dark mb-0">{{item.school}}</h6>
                     <div class="text-truncate text-primary">{{item.direction}}</div>
-                    <div class="small text-gray-500">{{item.fromDate | date: 'dd.MM.yyyy'}} - <span
+                    <div class="small text-gray-500">{{item.fromDate | date: 'dd/MM/yyyy'}} - <span
                         *ngIf="item.toDate === null">{{language.profilePresent}}</span> <span
-                        *ngIf="item.toDate !== null">{{item.toDate | date: 'dd.MM.yyyy'}}</span> </div>
+                        *ngIf="item.toDate !== null">{{item.toDate | date: 'dd/MM/yyyy'}}</span> </div>
                   </div>
                 </div>
                 <p class="mb-0">{{item.description}}</p>
@@ -275,14 +279,6 @@
                         <tr class="border-bottom" *ngIf="owner">
                           <th class="p-3">{{language.profileBIC}}</th>
                           <td class="p-3">{{bankAccount.bic}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileMobile}}</th>
-                          <td class="p-3">{{bankAccount.mobile}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileTelephone}}</th>
-                          <td class="p-3">{{bankAccount.telephone}}</td>
                         </tr>
                       </tbody>
                     </table>

@@ -15,10 +15,10 @@ import {
   SafeUrl,
 } from "@angular/platform-browser";
 import { Dimensions, ImageCroppedEvent } from "ngx-image-cropper";
-import { HelpService } from 'src/app/services/help.service';
-import { MessageService } from 'src/app/services/message.service';
+import { HelpService } from "src/app/services/help.service";
+import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
-import { EditProfileService } from 'src/app/services/edit-profile.service';
+import { EditProfileService } from "src/app/services/edit-profile.service";
 
 @Component({
   selector: "app-profile",
@@ -54,7 +54,7 @@ export class ProfileComponent implements OnInit {
   public lookingOffer: any;
   public additionalInfo: any;
   public bankAccount: any;
-  public selectedTab = 'profile';
+  public selectedTab = "profile";
 
   constructor(
     private service: ProfileService,
@@ -80,7 +80,7 @@ export class ProfileComponent implements OnInit {
   initialization() {
     this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       this.data = data[0];
-      if(sha1(data[0].id.toString()) === localStorage.getItem("id")) {
+      if (sha1(data[0].id.toString()) === localStorage.getItem("id")) {
         this.owner = true;
       }
     });
@@ -120,9 +120,9 @@ export class ProfileComponent implements OnInit {
     ) => {
       console.log(JSON.parse(response));
       const respon = JSON.parse(response);
-      if(respon['info']) {
-        if(respon["type"] === "img") {
-        this.data.image = respon["name"];
+      if (respon["info"]) {
+        if (respon["type"] === "img") {
+          this.data.image = respon["name"];
         } else {
           this.data.cover = respon["name"];
         }
@@ -130,17 +130,26 @@ export class ProfileComponent implements OnInit {
       this.loadImage = false;
     };
 
-    this.editProfileService.getExperience(this.id).subscribe(
-      data => {
-        this.allExperience = data;
-      }
-    );
+    this.editProfileService.getExperience(this.id).subscribe((data: []) => {
+      // this.allExperience = data;
+      const currentDate = new Date().toString();
+      this.allExperience = data.sort((a, b) => {
+        return (
+          <any>new Date(b["toDate"] ? b["toDate"] : "") -
+          <any>new Date(a["toDate"])
+        );
+      });
+    });
 
-    this.editProfileService.getEducation(this.id).subscribe(
-      data => {
-        this.allEducation = data;
-      }
-    );
+    this.editProfileService.getEducation(this.id).subscribe((data: []) => {
+      // this.allEducation = data;
+      this.allEducation = data.sort((a, b) => {
+        return (
+          <any>new Date(b["toDate"] ? b["toDate"] : "") -
+          <any>new Date(a["toDate"])
+        );
+      });
+    });
 
     this.editProfileService.getLookingOffer(this.id).subscribe((data) => {
       if (data["length"] > 0) {

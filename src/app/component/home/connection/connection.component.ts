@@ -30,6 +30,7 @@ export class ConnectionComponent implements OnInit {
   }
 
   getUsers(tab) {
+    this.allUsers = undefined;
     if (tab === "myConnection") {
       this.service
         .getMyOwnConnection(localStorage.getItem("id"))

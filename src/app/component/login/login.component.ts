@@ -41,19 +41,34 @@ export class LoginComponent implements OnInit {
   initialization() {
     this.service.checkCountryLocation().subscribe(
       (data) => {
-        this.service
-          .getTranslationByCountryCode(data["countryCode"])
-          .subscribe((language) => {
+        this.service.getTranslationByCountryCode(data["countryCode"]).subscribe(
+          (language) => {
             if (language !== null) {
               this.language = language["config"];
               localStorage.setItem("language", JSON.stringify(this.language));
             } else {
-              this.service.getDefaultLanguage().subscribe((language) => {
-                this.language = language["config"];
-                localStorage.setItem("language", JSON.stringify(this.language));
-              });
+              this.service.getDefaultLanguage().subscribe(
+                (language) => {
+                  if (language !== null) {
+                    this.language = language["config"];
+                    localStorage.setItem(
+                      "language",
+                      JSON.stringify(this.language)
+                    );
+                  } else {
+                    this.router.navigate(["/maintence"]);
+                  }
+                },
+                (error) => {
+                  this.router.navigate(["/maintence"]);
+                }
+              );
             }
-          });
+          },
+          (error) => {
+            this.router.navigate(["/maintence"]);
+          }
+        );
       },
       (error) => {
         console.log(error);
@@ -71,23 +86,25 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     console.log(this.data);
-    this.service.login(this.data).subscribe((data) => {
-      console.log(data);
-      if (data["login"]) {
-        // localStorage.setItem('id', sha1(1));
-        const user = {
-          fullname: data["user"]["fullname"],
-          type: sha1(data["user"]["type"]),
-          image: data["user"]["image"],
-        };
-        localStorage.setItem("id", sha1(data["user"]["id"].toString()));
-        localStorage.setItem("user", JSON.stringify(user));
-        this.cookie.set("user", sha1(data["user"]["type"]), 24, "/");
-        this.router.navigate(["home"]);
-      } else {
-        this.notCorrent = true;
-      }
-    });
+    if (this.data.email && this.data.password) {
+      this.service.login(this.data).subscribe((data) => {
+        console.log(data);
+        if (data["login"]) {
+          // localStorage.setItem('id', sha1(1));
+          const user = {
+            fullname: data["user"]["fullname"],
+            type: sha1(data["user"]["type"]),
+            image: data["user"]["image"],
+          };
+          localStorage.setItem("id", sha1(data["user"]["id"].toString()));
+          localStorage.setItem("user", JSON.stringify(user));
+          this.cookie.set("user", sha1(data["user"]["type"]), 24, "/");
+          this.router.navigate(["home"]);
+        } else {
+          this.notCorrent = true;
+        }
+      });
+    }
   }
 
   signup(form) {
@@ -95,7 +112,7 @@ export class LoginComponent implements OnInit {
     this.notEqualPassword = false;
     if (this.data.password !== this.data.confirmPassword) {
       this.notEqualPassword = true;
-    } else if(!this.agree) {
+    } else if (!this.agree) {
       this.notAgree = true;
     } else {
       this.notAgree = false;

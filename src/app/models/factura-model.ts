@@ -26,5 +26,6 @@ export class FacturaModel {
     premiumCopyRight: string;
     premiumRegardsFirst: string;
     premiumRegardsEnd: string;
+    premiumConfirmMailBCISignature?: string;
     premiumMessage: string;
 }

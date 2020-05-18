@@ -21,7 +21,7 @@ const routes: Routes = [
     canActivate: [LoggedGuard]
   },
   {
-    path: "join-to/:id",
+    path: "join-to/:id/:email/:firstname/:lastname",
     component: SignupComponent
   }
 ];

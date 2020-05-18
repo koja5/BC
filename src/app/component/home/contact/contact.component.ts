@@ -3,6 +3,7 @@ import { ContactModel } from "src/app/models/contact-model";
 import { MailService } from "src/app/services/mail.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
+import { ProfileService } from "src/app/services/profile.service";
 
 @Component({
   selector: "app-contact",
@@ -12,15 +13,27 @@ import { Router } from "@angular/router";
 export class ContactComponent implements OnInit {
   public language: any;
   public data = new ContactModel();
+  public id: any;
 
   constructor(
     private service: MailService,
     private toastr: ToastrService,
-    private router: Router
+    private router: Router,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
+    this.id = localStorage.getItem("id");
+    this.initialization();
+  }
+
+  initialization() {
+    this.profileService.getUserInfoSHA1(this.id).subscribe((data) => {
+      this.data.name = data[0]["fullname"];
+      this.data.email = data[0]["email"];
+      this.data.phone = data[0]["phoneNumber"];
+    });
   }
 
   submitForm() {

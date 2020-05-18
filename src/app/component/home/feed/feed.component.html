@@ -10,14 +10,14 @@
             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
               aria-selected="true"><i class="feather-edit"></i> {{language.feedShareAUpdate}}</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
               aria-selected="false"><i class="feather-image"></i> {{language.feedUploadPhoto}}</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
               aria-selected="false"><i class="feather-clipboard"></i> {{language.feedWriteAnArticle}}</a>
-          </li>
+          </li> -->
         </ul>
         <div class="tab-content" id="myTabContent">
           <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -50,7 +50,8 @@
               {{language.feedAddLocation}}</a>
           </div>
           <div class="flex-shrink-1 row-xs">
-            <button type="button" class="btn btn-light btn-sm col-xs-6">{{language.feedPreview}}</button>
+            <button type="button" class="btn btn-light btn-sm col-xs-6"
+              (click)="previewPost = true">{{language.feedPreview}}</button>
             <button type="button" class="btn btn-primary btn-sm col-xs-6"
               (click)="createPost()">{{language.feedPost}}</button>
           </div>
@@ -498,12 +499,20 @@
   <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
 
   <form (ngSubmit)="sendInviteFriend(invite)">
-    <label id="nameLabel" class="form-label">
-      {{language.feedEnterMail}}
-      <span class="text-danger">*</span>
-    </label>
+
+    <div class="form-group row">
+      <div class="col-sm-6 col-xs-12">
+        <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname" placeholder="{{language.feedEnterFirstname}}"
+          required="">
+      </div>
+      <div class="col-sm-6 col-xs-12">
+        <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname" placeholder="{{language.feedEnterLastname}}"
+          required="">
+      </div>
+    </div>
+
     <div class="form-group">
-      <input type="email" [(ngModel)]="invite.email" class="form-control" name="firstname"
+      <input type="email" [(ngModel)]="invite.email" class="form-control" name="email"
         placeholder="{{language.feedEnterMail}}" required="">
     </div>
 
@@ -515,6 +524,33 @@
         {{language.feedSendInviteToMail}} </button>
     </div>
   </form>
+</kendo-window>
+
+<kendo-window [title]="language.feedPreviewPost" *ngIf="previewPost" [height]="windowHeight ? windowHeight : 350"
+  [width]="windowWidth ? windowWidth : 500" (close)="previewPost = false">
+  <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
+    <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
+      <div class="dropdown-list-image mr-3">
+        <img class="rounded-circle" src="assets/img/profile_image/{{data.image}}" alt="">
+        <div class="status-indicator bg-success"></div>
+      </div>
+      <div class="font-weight-bold">
+        <div class="text-truncate"><a>{{data.fullname}}</a></div>
+        <div class="small text-gray-500">{{data.profession}}</div>
+      </div>
+    </div>
+    <div class="p-3 border-bottom osahan-post-body">
+      <div [innerHTML]="'<pre>' + postData.post + '</pre>'"></div>
+    </div>
+    <div class="p-3 border-bottom osahan-post-footer">
+      <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes">0</span></a>
+      <a class="mr-3 text-secondary"><i class="feather-message-square"></i> 0</a>
+    </div>
+  </div>
+  <div style="text-align: end;">
+    <button type="button" class="btn btn-primary btn-sm col-xs-6"
+      (click)="createPost();previewPost = false">{{language.feedPost}}</button>
+  </div>
 </kendo-window>
 
 <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureRemoveWindow"
@@ -529,3 +565,8 @@
     <button kendoButton (click)="deletePost('yes')" primary="true">{{language.yes}}</button>
   </kendo-dialog-actions>
 </kendo-dialog>
+<!-- <a class="top-link hide" href="" id="js-top">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
+  <span class="screen-reader-text">Back to top</span>
+</a> -->
+<div class='back-to-top hidden-xs' id='back-to-top' title='Back to top'><i class='fa fa-chevron-up'></i></div>

@@ -23,4 +23,8 @@ export class CustomGridService {
   createMember(data) {
     return this.http.post("/api/createMember", data).map((res) => res);
   }
+
+  getDirectors() {
+    return this.http.get("/api/getDirectors").map((res) => res);
+  }
 }

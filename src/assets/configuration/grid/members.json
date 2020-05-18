@@ -87,6 +87,12 @@
         },
         {
             "type": "data",
+            "title": "fieldRelationshipStatus",
+            "field": "relationship",
+            "width": 120
+        },
+        {
+            "type": "data",
             "title": "fieldTitleAfter",
             "field": "titleAfter",
             "width": 120
@@ -101,21 +107,21 @@
             "type": "datetime",
             "title": "fieldActiveDate",
             "field": "activeDate",
-            "format": "dd.mm.yyyy",
+            "format": "dd/MM/yyyy",
             "width": 120
         },
         {
             "type": "datetime",
             "title": "fieldActivePremiumDate",
             "field": "activePremiumDate",
-            "format": "dd.mm.yyyy",
+            "format": "dd/MM/yyyy",
             "width": 120
         },
         {
             "type": "datetime",
             "title": "fieldBirthday",
             "field": "birthday",
-            "format": "dd.mm.yyyy",
+            "format": "dd/MM/yyyy",
             "width": 120
         },
         {
@@ -164,6 +170,24 @@
             "type": "data",
             "title": "fieldMobile2",
             "field": "mobile2",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldBankAccount",
+            "field": "bankAccount",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldIBAN",
+            "field": "iban",
+            "width": 180
+        },
+        {
+            "type": "data",
+            "title": "fieldBIC",
+            "field": "bic",
             "width": 180
         }
     ],

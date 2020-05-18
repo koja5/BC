@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { LoginService } from "src/app/services/login.service";
 import { UserModel } from "src/app/models/user-model";
 import { Router, ActivatedRoute } from "@angular/router";
+import { MailService } from "src/app/services/mail.service";
 
 @Component({
   selector: "app-signup",
@@ -19,16 +20,25 @@ export class SignupComponent implements OnInit {
   public directorId: any;
   public agree = false;
   public notAgree = false;
+  public successSignUp = false;
 
   constructor(
     private service: LoginService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private mailService: MailService
   ) {}
 
   ngOnInit() {
-    this.directorId = this.route.snapshot.params.id;
+    this.packModelFromUrl();
     this.initialization();
+  }
+
+  packModelFromUrl() {
+    this.directorId = this.route.snapshot.params.id;
+    this.data.email = this.route.snapshot.params.email;
+    this.data.firstname = this.route.snapshot.params.firstname;
+    this.data.lastname = this.route.snapshot.params.lastname;
   }
 
   initialization() {
@@ -62,8 +72,26 @@ export class SignupComponent implements OnInit {
       };
       this.service.joinTo(data).subscribe((data) => {
         console.log(data);
-        if (data) {
-          this.router.navigate(["/login"]);
+        if (data["success"]) {
+          this.data["language"] = {
+            confirmMailSubject: this.language.confirmMailSubject,
+            confirmMailBCITitle: this.language.confirmMailBCITitle,
+            confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
+            confirmMailMessage: this.language.confirmMailMessage,
+            confirmMailConfirmEmailButton: this.language
+              .confirmMailConfirmEmailButton,
+            confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
+            confirmMailBCISignature: this.language.confirmMailBCISignature,
+            confirmMailThanksForUsing: this.language.confirmMailThanksForUsing,
+            confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
+            confirmMailGenerateMail: this.language.confirmMailGenerateMail,
+            confirmMailCopyright: this.language.confirmMailCopyright,
+          };
+          this.mailService.sendMail(this.data, function () {});
+          this.successSignUp = true;
+          setTimeout(() => {
+            this.router.navigate(["/login"]);
+          }, 4000);
         } else {
           this.existMail = true;
         }
