@@ -76,4 +76,8 @@ export class LoginService {
   joinTo(data) {
     return this.http.post("/api/joinTo", data).map((res) => res);
   }
+
+  joinToFromReferral(data) {
+    return this.http.post("/api/joinToFromReferral", data).map((res) => res);
+  }
 }

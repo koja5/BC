@@ -108,7 +108,30 @@
 
   <kendo-window title="{{language.createNewCustomer}}" *ngIf="memberWindow" [minWidth]="700" [width]="850"
     [height]="auto" (close)="memberWindow = false">
-    <form name="loginForm" class="loginForm"
+
+    <div class="box shadow-sm rounded bg-white mb-3 overflow-hidden">
+      <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="selectedTab === 'profile' ? 'active' : ''" (click)="changeTab('profile')"
+            id="home-tab">{{language.profileAbout}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="selectedTab === 'bankAccount' ? 'active' : ''"
+            (click)="changeTab('bankAccount')" id="profile-tab">{{language.profileBankAccountTitle}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="selectedTab === 'other' ? 'active' : ''" (click)="changeTab('other')"
+            id="profile-tab">{{language.profileOtherInfoTitle}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [ngClass]="selectedTab === 'lookingOffer' ? 'active' : ''"
+            (click)="changeTab('lookingOffer')" id="profile-tab">{{language.profileLookingOfferTitle}}</a>
+        </li>
+
+      </ul>
+    </div>
+
+    <form *ngIf="selectedTab === 'profile'" name="loginForm" class="loginForm"
       (ngSubmit)="operationMode === 'add' ? createNewMember(data) : updateMember(data)" #customerForm="ngForm">
       <div class="form-group">
         <div class="row">
@@ -137,17 +160,28 @@
                 </kendo-textbox-container>
               </div>
             </div>
-            <div>
-              <kendo-textbox-container floatingLabel="{{language.fieldFirstname}}({{language.required}})">
-                <input kendoTextBox [(ngModel)]="member.firstname" name="firstname" class="noPadding" required
-                  #firstname="ngModel">
-              </kendo-textbox-container>
+            <div class="row">
+              <div class="col-md-6 col-xs-12">
+                <kendo-textbox-container floatingLabel="{{language.fieldFirstname}}({{language.required}})">
+                  <input kendoTextBox [(ngModel)]="member.firstname" name="firstname" class="noPadding" required
+                    #firstname="ngModel">
+                </kendo-textbox-container>
+              </div>
+              <div class="col-md-6 col-xs-12">
+                <kendo-textbox-container floatingLabel="{{language.fieldLastname}}({{language.required}})">
+                  <input kendoTextBox [(ngModel)]="member.lastname" name="lastname" class="noPadding" required
+                    #lastname="ngModel">
+                </kendo-textbox-container>
+              </div>
             </div>
-            <div>
-              <kendo-textbox-container floatingLabel="{{language.fieldLastname}}({{language.required}})">
-                <input kendoTextBox [(ngModel)]="member.lastname" name="lastname" class="noPadding" required
-                  #lastname="ngModel">
-              </kendo-textbox-container>
+            <div class="row">
+              <div class="col-sm-11">
+                <kendo-textbox-container floatingLabel="{{language.fieldPassword}}({{language.required}})">
+                  <input kendoTextBox [(ngModel)]="member.password" name="password" class="noPadding col-sm-11" required
+                    #password="ngModel" disabled>
+                </kendo-textbox-container>
+              </div>
+              <span class="fa fa-unlock-alt change-icon col-sm-1" (click)="changePasswordWindow = true"></span>
             </div>
             <div class="row">
               <div class="col-md-6 col-xs-12">
@@ -239,13 +273,13 @@
         </div>
 
         <div class="birthday-container col-md-6 col-xs-12">
-          <kendo-textbox-container floatingLabel="{{language.activeDate}}">
+          <kendo-textbox-container floatingLabel="{{language.fieldActiveDate}}">
             <kendo-datepicker class="email noPadding" name="activeDate" [(ngModel)]="member.activeDate">
             </kendo-datepicker>
           </kendo-textbox-container>
         </div>
         <div class="birthday-container col-md-6 col-xs-12">
-          <kendo-textbox-container floatingLabel="{{language.activePremiumDate}}">
+          <kendo-textbox-container floatingLabel="{{language.fieldActivePremiumDate}}">
             <kendo-datepicker class="email noPadding" name="activePremiumDate" [(ngModel)]="member.activePremiumDate">
             </kendo-datepicker>
           </kendo-textbox-container>
@@ -256,7 +290,7 @@
           </label>
         </div>
         <div class="col-md-4 col-xs-6">
-          <kendo-textbox-container floatingLabel="{{language.storeLocation}}({{language.required}})">
+          <kendo-textbox-container floatingLabel="{{language.fieldStoreLocation}}({{language.required}})">
             <kendo-combobox [data]="typeOfUsers" [valuePrimitive]="true" [textField]="'type'" [valueField]="'id'"
               (selectionChange)="selectionUserType($event)" class="col-xs-12 noPadding" [(ngModel)]="member.type"
               name="storeId" required>
@@ -264,7 +298,7 @@
           </kendo-textbox-container>
         </div>
         <div class="col-md-4 col-xs-6" *ngIf="allDirectors">
-          <kendo-textbox-container floatingLabel="{{language.sid}}({{language.required}})">
+          <kendo-textbox-container floatingLabel="{{language.fieldDirector}}({{language.required}})">
             <kendo-combobox [data]="allDirectors" [textField]="'fullname'" [valueField]="'id'" [filterable]="true"
               [(ngModel)]="directorId" [filterable]="true" (filterChange)="searchDirector($event)"
               (valueChange)="selectedDirector($event)" [valuePrimitive]="true" [loading]="directorLoading"
@@ -284,6 +318,156 @@
       <div class="form-group" style="text-align: center; margin-top: 15px;">
         <button kendoButton [primary]="true" [primary]="true" class="form-button"
           type="submit">{{operationMode === 'add' ? language.createData : language.updateData}}</button>
+      </div>
+    </form>
+
+    <form *ngIf="selectedTab === 'bankAccount'" name="loginForm" class="loginForm" (ngSubmit)="saveBankAccount(data)"
+      #customerForm="ngForm">
+      <div class="box-body px-3 pt-3 pb-3">
+        <div class="row">
+          <div class="col-sm-12 mb-4">
+            <label id="FROM" class="form-label">{{language.profileBankAccount}}</label>
+            <!-- Input -->
+            <div class="form-group">
+              <input type="text" class="form-control" [(ngModel)]="bankAccount.bankAccount" name="bankAccount">
+            </div>
+            <!-- End Input -->
+          </div>
+        </div>
+
+        <div class="row">
+
+          <div class="col-sm-6 mb-4">
+            <label id="TO" class="form-label">{{language.profileIBAN}}</label>
+            <!-- Input -->
+            <div class="form-group">
+              <input type="text" class="form-control" [ngClass]="badIBAN === true ? 'badIBAN' : ''"
+                [(ngModel)]="bankAccount.iban" name="iban">
+              <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
+            </div>
+            <!-- End Input -->
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label id="FROM" class="form-label">{{language.profileBIC}}</label>
+            <!-- Input -->
+            <div class="form-group">
+              <input type="text" class="form-control" [(ngModel)]="bankAccount.bic" name="bic">
+              <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
+            </div>
+            <!-- End Input -->
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group" style="text-align: center; margin-top: 15px;">
+        <button kendoButton [primary]="true" [primary]="true" class="form-button"
+          type="submit">{{operationMode === 'add' ? language.createData : language.updateData}}</button>
+      </div>
+    </form>
+
+    <form *ngIf="selectedTab === 'other'" name="loginForm" class="loginForm" (ngSubmit)="saveAdditionalInfo(data)"
+      #customerForm="ngForm">
+      <div class="box-body px-3 pt-3 pb-3">
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <label id="FROM" class="form-label">{{language.profileAbilitiesAndKnowledge}}</label>
+            <!-- Input -->
+            <div class="input-group">
+              <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.abilitiesKnowledge" name="looking">
+            </textarea>
+            </div>
+            <!-- End Input -->
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label id="TO" class="form-label">{{language.profileLanguages}}</label>
+            <!-- Input -->
+            <div class="input-group">
+              <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.languages" name="offer">
+            </textarea>
+            </div>
+            <!-- End Input -->
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <label id="FROM" class="form-label">{{language.profileQualifications}}</label>
+            <!-- Input -->
+            <div class="input-group">
+              <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.qualifications" name="looking">
+            </textarea>
+            </div>
+            <!-- End Input -->
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label id="TO" class="form-label">{{language.profileInterests}}</label>
+            <!-- Input -->
+            <div class="input-group">
+              <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.interests" name="offer">
+            </textarea>
+            </div>
+            <!-- End Input -->
+          </div>
+        </div>
+        <div class="form-group" style="text-align: center; margin-top: 15px;">
+          <button kendoButton [primary]="true" [primary]="true" class="form-button"
+            type="submit">{{operationMode === 'add' ? language.createData : language.updateData}}</button>
+        </div>
+      </div>
+    </form>
+
+    <form *ngIf="selectedTab === 'lookingOffer'" name="loginForm" class="loginForm" (ngSubmit)="saveLookingOffer()"
+      #customerForm="ngForm">
+      <div class="box-body px-3 pt-3 pb-3">
+        <div class="row">
+          <div class="col-sm-6 mb-4">
+            <label id="FROM" class="form-label">{{language.profileLooking}}</label>
+            <!-- Input -->
+            <div class="input-group">
+              <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.looking" name="looking">
+            </textarea>
+            </div>
+            <!-- End Input -->
+          </div>
+          <div class="col-sm-6 mb-4">
+            <label id="TO" class="form-label">{{language.profileOffer}}</label>
+            <!-- Input -->
+            <div class="input-group">
+              <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.offer" name="offer">
+            </textarea>
+            </div>
+            <!-- End Input -->
+          </div>
+        </div>
+      </div>
+      <div class="form-group" style="text-align: center; margin-top: 15px;">
+        <button kendoButton [primary]="true" [primary]="true" class="form-button"
+          type="submit">{{operationMode === 'add' ? language.createData : language.updateData}}</button>
+      </div>
+    </form>
+  </kendo-window>
+
+  <kendo-window title="{{language.changePasswordTitle}}" *ngIf="changePasswordWindow"
+    (close)="changePasswordWindow = false" [width]="windowWidth ? windowWidth : 440"
+    [height]="windowHeight ? windowHeight : 310">
+    <form (ngSubmit)="changePassword()">
+      <div class="error-alert" *ngIf="passwordIsNotEqual">{{language.passwordIsNotEqual}}</div>
+      <div class="col-sm-12 mb-2">
+        <label id="positionLabel" class="form-label">{{language.fieldNewPassword}}</label>
+        <div class="input-group">
+          <input type="password" class="form-control" [(ngModel)]="changePasswordData.new" name="new">
+        </div>
+      </div>
+      <div class="col-sm-12 mb-2">
+        <label id="positionLabel" class="form-label">{{language.fieldNewPasswordRepeat}}</label>
+        <div class="input-group">
+          <input type="password" class="form-control" [(ngModel)]="changePasswordData.newRepeat" name="newRepeat">
+        </div>
+      </div>
+      <div class="form-group" style="text-align: center; margin-top: 15px;">
+        <button kendoButton [primary]="true" [primary]="true" class="form-button"
+          type="submit">{{language.updateData}}</button>
       </div>
     </form>
   </kendo-window>

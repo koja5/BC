@@ -392,6 +392,8 @@
       "fieldActive": { "type": "string" },
       "fieldActiveDate": { "type": "string" },
       "fieldActivePremiumDate": { "type": "string" },
+      "fieldStoreLocation": { "type": "string" },
+      "fieldDirector": { "type": "string" },
       "fieldImage": { "type": "string" },
       "fieldBirthday": { "type": "string" },
       "fieldLocation": { "type": "string" },
@@ -407,6 +409,13 @@
       "fieldBIC": { "type": "string" },
       "fieldAboutMe": { "type": "string" },
       "fieldCover": { "type": "string" },
+      "fieldOldPasword": { "type": "string" },
+      "fieldNewPassword": { "type": "string" },
+      "fieldNewPasswordRepeat": { "type": "string" },
+      "oldPasswordIsBad": { "type": "string" },
+      "passwordIsNotEqual": { "type": "string" },
+      "changePasswordTitle": { "type": "string" },
+      "notUseSamePassword": { "type": "string" },
       "notFoundTitle": { "type": "string" },
       "notFoundText1": { "type": "string" },
       "notFoundText2": { "type": "string" },
@@ -570,7 +579,7 @@
             { "key": "chooseDoneText2" },
             { "key": "chooseLogin" },
             { "key": "chooseDirectorPlaceholder" },
-            { }
+            {}
           ]
         }
       ]
@@ -1692,7 +1701,29 @@
           "items": [
             { "key": "fieldIBAN" },
             { "key": "fieldBIC" },
-            { },
+            { "key": "fieldStoreLocation" },
+            { "key": "fieldDirector" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "fieldOldPasword" },
+            { "key": "fieldNewPassword" },
+            { "key": "fieldNewPasswordRepeat" },
+            { "key": "oldPasswordIsBad" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "passwordIsNotEqual" },
+            { "key": "changePasswordTitle" },
+            { "key": "notUseSamePassword" },
             { }
           ]
         }

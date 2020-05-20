@@ -357,7 +357,7 @@ export class FeedComponent implements OnInit {
   }
 
   copyLinkInClipboard() {
-    const link = this.linkClient + "/login/join-to/" + this.id;
+    const link = this.linkClient + "/login/join-to/" + this.id + "/null/null/null";
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";

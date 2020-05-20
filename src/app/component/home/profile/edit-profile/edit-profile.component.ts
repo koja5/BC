@@ -9,6 +9,9 @@ import { EducationModel } from "src/app/models/education-model";
 import { LookingOfferModel } from "src/app/models/looking-offer-model";
 import { AdditionalInfoModel } from "src/app/models/additional-info-model";
 import { BankAccountModel } from "src/app/models/bank-account-model";
+import { ChangePasswordModel } from "src/app/models/change-password-model";
+import * as sha1 from "sha1";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-edit-profile",
@@ -43,11 +46,17 @@ export class EditProfileComponent implements OnInit {
   public badIBAN = false;
   public salutationItem: any;
   public relationshipItem: any;
+  public changePasswordWindow = false;
+  public changePasswordData = new ChangePasswordModel();
+  public badOldPassword = false;
+  public passwordIsNotEqual = false;
+  public notUseSamePassword = false;
 
   constructor(
     private service: EditProfileService,
     private toastr: ToastrService,
-    private message: MessageService
+    private message: MessageService,
+    public helpService: HelpService
   ) {}
 
   ngOnInit() {
@@ -442,7 +451,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveBankAccount() {
-    if (this.validate(this.bankAccount.iban)) {
+    if (this.helpService.validate(this.bankAccount.iban)) {
       this.bankAccount.telephone = this.data.phoneNumber;
       this.bankAccount.mobile = this.data.mobile1;
       if (!this.bankAccountCreate) {
@@ -495,104 +504,7 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  validate(control) {
-    const codeLengths = {
-      AD: 24,
-      AE: 23,
-      AL: 28,
-      AT: 20,
-      AZ: 28,
-      BA: 20,
-      BE: 16,
-      BG: 22,
-      BH: 22,
-      BR: 29,
-      CH: 21,
-      CR: 21,
-      CY: 28,
-      CZ: 24,
-      DE: 22,
-      DK: 18,
-      DO: 28,
-      EE: 20,
-      ES: 24,
-      LC: 30,
-      FI: 18,
-      FO: 18,
-      FR: 27,
-      GB: 22,
-      GI: 23,
-      GL: 18,
-      GR: 27,
-      GT: 28,
-      HR: 21,
-      HU: 28,
-      IE: 22,
-      IL: 23,
-      IS: 26,
-      IT: 27,
-      JO: 30,
-      KW: 30,
-      KZ: 20,
-      LB: 28,
-      LI: 21,
-      LT: 20,
-      LU: 20,
-      LV: 21,
-      MC: 27,
-      MD: 24,
-      ME: 22,
-      MK: 19,
-      MR: 27,
-      MT: 31,
-      MU: 30,
-      NL: 18,
-      NO: 15,
-      PK: 24,
-      PL: 28,
-      PS: 29,
-      PT: 25,
-      QA: 29,
-      RO: 24,
-      RS: 22,
-      SA: 24,
-      SE: 24,
-      SI: 19,
-      SK: 24,
-      SM: 27,
-      TN: 24,
-      TR: 26,
-    };
-    if (control) {
-      const iban = control
-        .toString()
-        .toUpperCase()
-        .replace(/[^A-Z0-9]/g, "");
-      const code = iban.match(/^([A-Z]{2})(\d{2})([A-Z\d]+)$/);
-      let digits: number;
-      if (!code || iban.length !== codeLengths[code[1]]) {
-        return false;
-      }
-      digits = (code[3] + code[1] + code[2]).replace(
-        /[A-Z]/g,
-        (letter: string) => {
-          return letter.charCodeAt(0) - 55;
-        }
-      );
-      return this.mod97(digits) === 1 ? true : false;
-    }
-  }
-
-  private mod97(digital: number | string) {
-    digital = digital.toString();
-    let checksum: number | string = digital.slice(0, 2);
-    let fragment = "";
-    for (let offset = 2; offset < digital.length; offset += 7) {
-      fragment = checksum + digital.substring(offset, offset + 7);
-      checksum = parseInt(fragment, 10) % 97;
-    }
-    return checksum;
-  }
+  
 
   selectedSalutation(event) {
     this.data.salutation = event;
@@ -600,5 +512,39 @@ export class EditProfileComponent implements OnInit {
 
   selectedRelationship() {
     this.data.relationship = event;
+  }
+
+  changePassword() {
+    this.badOldPassword = false;
+    this.passwordIsNotEqual = false;
+    if (sha1(this.changePasswordData.old) !== this.data.password) {
+      this.badOldPassword = true;
+    } else if (
+      this.changePasswordData.new !== this.changePasswordData.newRepeat
+    ) {
+      this.passwordIsNotEqual = true;
+    } else if (this.data.password === sha1(this.changePasswordData.new)) {
+      this.notUseSamePassword = true;
+    } else {
+      this.changePasswordData.id = this.data.id;
+      this.service.updatePassword(this.changePasswordData).subscribe((data) => {
+        if (data) {
+          this.toastr.success(
+            this.language.adminSuccessUpdateTitle,
+            this.language.adminSuccessUpdateText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+          this.educationWindow = false;
+          this.education = new EducationModel();
+        } else {
+          this.toastr.error(
+            this.language.adminErrorUpdateTitle,
+            this.language.adminErrorUpdateText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+        }
+        this.changePasswordWindow = false;
+      });
+    }
   }
 }

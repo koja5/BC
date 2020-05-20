@@ -55,6 +55,7 @@ export class ProfileComponent implements OnInit {
   public additionalInfo: any;
   public bankAccount: any;
   public selectedTab = "profile";
+  public user: any;
 
   constructor(
     private service: ProfileService,
@@ -69,6 +70,7 @@ export class ProfileComponent implements OnInit {
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
     this.language = JSON.parse(localStorage.getItem("language"));
+    this.user = JSON.parse(localStorage.getItem("user"));
     this.initialization();
 
     if (window.innerWidth < 768) {
@@ -80,7 +82,11 @@ export class ProfileComponent implements OnInit {
   initialization() {
     this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       this.data = data[0];
-      if (sha1(data[0].id.toString()) === localStorage.getItem("id")) {
+      console.log(this.data);
+      if (
+        sha1(data[0].id.toString()) === localStorage.getItem("id") ||
+        this.user.type === sha1(0)
+      ) {
         this.owner = true;
       }
     });

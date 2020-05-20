@@ -208,7 +208,7 @@ router.get("/getAllUsers", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query("SELECT * from users u left join bankAccount b on sha1(u.id) = b.id_user", function (err, rows) {
+    conn.query("SELECT u.*, b.bankAccount, b.iban, b.bic from users u left join bankAccount b on sha1(u.id) = b.id_user", function (err, rows) {
       conn.release();
       if (!err) {
         res.json(rows);
@@ -321,7 +321,7 @@ router.post("/searchDirector", function (req, res, next) {
     }
     console.log(req.body);
     conn.query(
-      "SELECT * from users where type = 1 and active = 1 and (fullname like '%" +
+      "SELECT * from users where type != 2 and active = 1 and (fullname like '%" +
         req.body.filter +
         "%' or email like '%" +
         req.body.filter +
@@ -355,7 +355,7 @@ router.get("/getDirectors", function (req, res, next) {
       });
       return;
     }
-    conn.query("SELECT * from users where (type = 1 or type = 0) and active = 1", function (
+    conn.query("SELECT * from users where (type != 2) and active = 1", function (
       err,
       rows
     ) {
@@ -532,7 +532,7 @@ router.get("/getMyOwnConnection/:id", function (req, res, next) {
     var id = req.params.id;
     console.log(id);
     conn.query(
-      "SELECT id from users where active = 1 and (type = 1 or type = 0) and sha1(id) = '" +
+      "SELECT id from users where active = 1 and (type != 2) and sha1(id) = '" +
         id +
         "'",
       function (err, rows) {
@@ -639,6 +639,7 @@ router.get("/getOtherConnections/:id", function (req, res, next) {
   });
 });
 
+// automatically set active on 1 and don't want to send confirm mail
 router.post("/joinTo", (req, res, next) => {
   try {
     connection.getConnection(function (err, conn) {
@@ -697,6 +698,97 @@ router.post("/joinTo", (req, res, next) => {
                         "update users set sid = '" +
                           newUserSID +
                           "', active = 1 where id = '" +
+                          rows.insertId +
+                          "'",
+                        function (err, rows, fields) {
+                          conn.release();
+                          if (!err) {
+                            response.id = rows.insertId;
+                            response.success = true;
+                          } else {
+                            response.success = false;
+                            response.info = "Error";
+                          }
+                          res.json(response);
+                        }
+                      );
+                    }
+                  );
+                }
+              }
+            );
+          } else {
+            conn.release();
+            res.json(rows);
+          }
+        }
+      );
+    });
+  } catch (ex) {
+    console.error("Internal error: " + ex);
+    return next(ex);
+  }
+});
+
+// NOT automatically set active on 1 and want to send confirm mail
+router.post("/joinToFromReferral", (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        console.error("SQL Connection error: ", err);
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+        return next(err);
+      }
+      conn.query(
+        "SELECT * from users where sha1(id) = '" + req.body.directorId + "'",
+        function (err, rows, fields) {
+          // conn.release();
+          if (err) {
+            conn.release();
+            return res.json(err);
+          }
+          if (rows.length !== 0) {
+            var directorSID = rows[0].sid;
+            req.body.data.password = sha1(req.body.data.password);
+            req.body.data.fullname =
+              req.body.data.lastname + " " + req.body.data.firstname;
+            delete req.body.data.confirmPassword;
+            conn.query(
+              "SELECT * FROM users WHERE email=?",
+              [req.body.data.email],
+              function (err, rows, fields) {
+                if (err) {
+                  console.error("SQL error:", err);
+                  res.json({
+                    code: 100,
+                    status: "Error in connection database",
+                  });
+                  return next(err);
+                }
+                var response = {};
+                if (rows.length >= 1) {
+                  response.success = false;
+                  response.info = "Email already exists!";
+                  res.json(response);
+                } else {
+                  conn.query(
+                    "insert into users SET ?",
+                    req.body.data,
+                    function (err, rows) {
+                      if (err) {
+                        conn.release();
+                        return res.json(err);
+                      }
+
+                      var newUserSID = directorSID + "-" + rows.insertId;
+                      console.log(newUserSID);
+                      conn.query(
+                        "update users set sid = '" +
+                          newUserSID +
+                          "' where id = '" +
                           rows.insertId +
                           "'",
                         function (err, rows, fields) {
@@ -893,6 +985,9 @@ router.post("/updateMember", function (req, res, next) {
     }
     response = {};
     req.body.fullname = req.body.lastname + " " + req.body.firstname;
+    delete req.body.bankAccount;
+    delete req.body.iban;
+    delete req.body.bic;
     conn.query(
       "UPDATE users SET ? where id = '" + req.body.id + "'",
       [req.body],
@@ -1729,6 +1824,46 @@ router.get("/deleteBankAccount/:id", (req, res, next) => {
     console.error("Internal error: " + ex);
     return next(ex);
   }
+});
+
+router.post("/updatePassword", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    console.log(conn);
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+
+    var response = null;
+
+    conn.query(
+      "update users set password = '" +
+        sha1(req.body.new) +
+        "' where id = '" +
+        req.body.id +
+        "'",
+      function (err, rows, fields) {
+        conn.release();
+        if (err) {
+          console.error("SQL error:", err);
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+          return next(err);
+        } else {
+          response = true;
+          res.json(response);
+        }
+      }
+    );
+    conn.on("error", function (err) {
+      console.log("[mysql error]", err);
+    });
+  });
 });
 
 module.exports = router;

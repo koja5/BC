@@ -27,6 +27,12 @@ import { LoadingBarService } from "@ngx-loading-bar/core";
 import { UserModel } from "src/app/models/user-model";
 import { ExcelExportData } from "@progress/kendo-angular-excel-export";
 import { HelpService } from "src/app/services/help.service";
+import { BankAccountModel } from "src/app/models/bank-account-model";
+import { EditProfileService } from "src/app/services/edit-profile.service";
+import * as sha1 from "sha1";
+import { AdditionalInfoModel } from "src/app/models/additional-info-model";
+import { LookingOfferModel } from "src/app/models/looking-offer-model";
+import { ChangePasswordModel } from "src/app/models/change-password-model";
 
 @Component({
   selector: "app-custom-grid",
@@ -107,12 +113,24 @@ export class CustomGridComponent implements OnInit {
   public directorLoading = false;
   public currentLoadDirector: any;
   public oldDirectorId: any;
+  public selectedTab = "profile";
+  public bankAccount = new BankAccountModel();
+  public bankAccountCreate = false;
+  public badIBAN = false;
+  public additionalInfo = new AdditionalInfoModel();
+  public additionalInfoCreate = false;
+  public lookingOffer = new LookingOfferModel();
+  public lookingOfferCreate = false;
+  public changePasswordWindow = false;
+  public changePasswordData = new ChangePasswordModel();
+  public passwordIsNotEqual = false;
 
   constructor(
     private router: Router,
     private service: CustomGridService,
     private toastr: ToastrService,
-    private helpService: HelpService
+    private helpService: HelpService,
+    public serviceEditProfile: EditProfileService
   ) {
     this.allData = this.allData.bind(this);
   }
@@ -321,7 +339,7 @@ export class CustomGridComponent implements OnInit {
         console.log(data);
         if (data) {
           console.log(this.index);
-          this.gridView.data.splice(this.index, 1);
+          this.gridView.data.splice(this.index - this.state.take, 1);
           this.gridView.total -= 1;
         }
       });
@@ -350,6 +368,7 @@ export class CustomGridComponent implements OnInit {
       this.currentLoadDirector = data;
       this.directorLoading = false;
     });
+    this.selectedTab = "profile";
   }
 
   convertToDate(date) {
@@ -445,15 +464,224 @@ export class CustomGridComponent implements OnInit {
   }
 
   selectedDirector(event) {
+    console.log(event);
     if (event) {
-      this.directorId = event;
+      /*this.directorId = event;
       const newId = event.toString();
-      // this.member.sid.split(this.oldDirectorId).join(newId);
       this.member.sid = this.member.sid.replace(this.oldDirectorId, newId);
       console.log(this.member.sid);
-      this.oldDirectorId = this.directorId.toString();
+      this.oldDirectorId = this.directorId.toString();*/
+      const newSID = this.getDirectorSID(event);
+      this.member.sid = newSID + "-" + this.member.id;
     } else {
       this.directorId = null;
+    }
+  }
+
+  getDirectorSID(id) {
+    for (let i = 0; i < this.allDirectors.length; i++) {
+      if (this.allDirectors[i].id === id) {
+        return this.allDirectors[i].sid;
+      }
+    }
+    return null;
+  }
+
+  changeTab(tab) {
+    this.selectedTab = tab;
+    if (tab === "bankAccount") {
+      this.bankAccount = new BankAccountModel();
+      this.serviceEditProfile
+        .getBankAccount(sha1(this.member.id.toString()))
+        .subscribe((data) => {
+          if (data["length"] > 0) {
+            this.bankAccount = data[0];
+          } else {
+            this.bankAccountCreate = true;
+          }
+        });
+    } else if (tab === "other") {
+      this.additionalInfo = new AdditionalInfoModel();
+      this.serviceEditProfile
+        .getAdditionalInfo(sha1(this.member.id.toString()))
+        .subscribe((data) => {
+          if (data["length"] > 0) {
+            this.additionalInfo = data[0];
+          } else {
+            this.additionalInfoCreate = true;
+          }
+        });
+    } else if (tab === "lookingOffer") {
+      this.lookingOffer = new LookingOfferModel();
+      this.serviceEditProfile
+        .getLookingOffer(sha1(this.member.id.toString()))
+        .subscribe((data) => {
+          if (data["length"] > 0) {
+            this.lookingOffer = data[0];
+          } else {
+            this.lookingOfferCreate = true;
+          }
+        });
+    }
+  }
+
+  saveBankAccount(data) {
+    if (this.helpService.validate(this.bankAccount.iban)) {
+      this.bankAccount.telephone = this.data.phoneNumber;
+      this.bankAccount.mobile = this.data.mobile1;
+      if (!this.bankAccountCreate) {
+        this.serviceEditProfile
+          .updateBankAccount(this.bankAccount)
+          .subscribe((data) => {
+            if (data) {
+              this.toastr.success(
+                this.language.adminSuccessUpdateTitle,
+                this.language.adminSuccessUpdateText,
+                { timeOut: 7000, positionClass: "toast-bottom-right" }
+              );
+            } else {
+              this.toastr.error(
+                this.language.adminErrorUpdateTitle,
+                this.language.adminErrorUpdateText,
+                { timeOut: 7000, positionClass: "toast-bottom-right" }
+              );
+            }
+          });
+      } else {
+        this.bankAccount.id_user = sha1(this.member.id.toString());
+        this.serviceEditProfile
+          .createBankAccount(this.bankAccount)
+          .subscribe((data) => {
+            if (data["success"]) {
+              this.toastr.success(
+                this.language.adminSuccessCreateTitle,
+                this.language.adminSuccessCreateText,
+                { timeOut: 7000, positionClass: "toast-bottom-right" }
+              );
+            } else {
+              this.toastr.error(
+                this.language.adminErrorCreateTitle,
+                this.language.adminErrorCreateText,
+                { timeOut: 7000, positionClass: "toast-bottom-right" }
+              );
+            }
+          });
+      }
+      this.badIBAN = false;
+    } else {
+      this.badIBAN = true;
+      this.toastr.error(
+        this.language.adminErrorBadIBANTitle,
+        this.language.adminErrorBadIBANTitle,
+        { timeOut: 7000, positionClass: "toast-bottom-right" }
+      );
+    }
+  }
+
+  saveAdditionalInfo() {
+    if (!this.additionalInfoCreate) {
+      this.serviceEditProfile
+        .updateAdditionalInfo(this.additionalInfo)
+        .subscribe((data) => {
+          if (data) {
+            this.toastr.success(
+              this.language.adminSuccessUpdateTitle,
+              this.language.adminSuccessUpdateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          } else {
+            this.toastr.error(
+              this.language.adminErrorUpdateTitle,
+              this.language.adminErrorUpdateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          }
+        });
+    } else {
+      this.additionalInfo.id_user = sha1(this.member.id.toString());
+      this.serviceEditProfile
+        .createAdditionalInfo(this.additionalInfo)
+        .subscribe((data) => {
+          if (data["success"]) {
+            this.toastr.success(
+              this.language.adminSuccessCreateTitle,
+              this.language.adminSuccessCreateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          } else {
+            this.toastr.error(
+              this.language.adminErrorCreateTitle,
+              this.language.adminErrorCreateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          }
+        });
+    }
+  }
+
+  saveLookingOffer() {
+    if (!this.lookingOfferCreate) {
+      this.serviceEditProfile
+        .updateLookingOffer(this.lookingOffer)
+        .subscribe((data) => {
+          if (data) {
+            this.toastr.success(
+              this.language.adminSuccessUpdateTitle,
+              this.language.adminSuccessUpdateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          } else {
+            this.toastr.error(
+              this.language.adminErrorUpdateTitle,
+              this.language.adminErrorUpdateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          }
+        });
+    } else {
+      this.lookingOffer.id_user = sha1(this.member.id.toString());
+      this.serviceEditProfile
+        .createLookingOffer(this.lookingOffer)
+        .subscribe((data) => {
+          if (data["success"]) {
+            this.toastr.success(
+              this.language.adminSuccessCreateTitle,
+              this.language.adminSuccessCreateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          } else {
+            this.toastr.error(
+              this.language.adminErrorCreateTitle,
+              this.language.adminErrorCreateText,
+              { timeOut: 7000, positionClass: "toast-bottom-right" }
+            );
+          }
+        });
+    }
+  }
+
+  changePassword() {
+    this.passwordIsNotEqual = false;
+    if (this.changePasswordData.new !== this.changePasswordData.newRepeat) {
+      this.passwordIsNotEqual = true;
+    } else {
+      this.member.password = sha1(this.changePasswordData.new);
+      this.service.updateMember(this.member).subscribe((data) => {
+        if (data) {
+          this.toastr.success(
+            this.language.adminSuccessUpdateTitle,
+            this.language.adminSuccessUpdateText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+        } else {
+          this.toastr.error(
+            this.language.adminErrorUpdateTitle,
+            this.language.adminErrorUpdateText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+        }
+        this.changePasswordWindow = false;
+      });
     }
   }
 }

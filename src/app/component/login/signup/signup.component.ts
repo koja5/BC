@@ -36,9 +36,15 @@ export class SignupComponent implements OnInit {
 
   packModelFromUrl() {
     this.directorId = this.route.snapshot.params.id;
-    this.data.email = this.route.snapshot.params.email;
-    this.data.firstname = this.route.snapshot.params.firstname;
-    this.data.lastname = this.route.snapshot.params.lastname;
+    if (this.route.snapshot.params.email !== "null") {
+      this.data.email = this.route.snapshot.params.email;
+    }
+    if (this.route.snapshot.params.firstname !== "null") {
+      this.data.firstname = this.route.snapshot.params.firstname;
+    }
+    if (this.route.snapshot.params.lastname !== "null") {
+      this.data.lastname = this.route.snapshot.params.lastname;
+    }
   }
 
   initialization() {
@@ -70,10 +76,15 @@ export class SignupComponent implements OnInit {
         data: this.data,
         directorId: this.directorId,
       };
-      this.service.joinTo(data).subscribe((data) => {
-        console.log(data);
-        if (data["success"]) {
-          this.data["language"] = {
+      if (
+        this.route.snapshot.params.email === "null" &&
+        this.route.snapshot.params.firstname === "null" &&
+        this.route.snapshot.params.lastname === "null"
+      ) {
+        this.service.joinToFromReferral(data).subscribe((data) => {
+          console.log(data);
+          if (data["success"]) {
+            this.data["language"] = {
             confirmMailSubject: this.language.confirmMailSubject,
             confirmMailBCITitle: this.language.confirmMailBCITitle,
             confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
@@ -88,14 +99,42 @@ export class SignupComponent implements OnInit {
             confirmMailCopyright: this.language.confirmMailCopyright,
           };
           this.mailService.sendMail(this.data, function () {});
-          this.successSignUp = true;
-          setTimeout(() => {
-            this.router.navigate(["/login"]);
-          }, 4000);
-        } else {
-          this.existMail = true;
-        }
-      });
+            this.successSignUp = true;
+            setTimeout(() => {
+              this.router.navigate(["/login"]);
+            }, 4000);
+          } else {
+            this.existMail = true;
+          }
+        });
+      } else {
+        this.service.joinTo(data).subscribe((data) => {
+          console.log(data);
+          if (data["success"]) {
+            /*this.data["language"] = {
+            confirmMailSubject: this.language.confirmMailSubject,
+            confirmMailBCITitle: this.language.confirmMailBCITitle,
+            confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
+            confirmMailMessage: this.language.confirmMailMessage,
+            confirmMailConfirmEmailButton: this.language
+              .confirmMailConfirmEmailButton,
+            confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
+            confirmMailBCISignature: this.language.confirmMailBCISignature,
+            confirmMailThanksForUsing: this.language.confirmMailThanksForUsing,
+            confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
+            confirmMailGenerateMail: this.language.confirmMailGenerateMail,
+            confirmMailCopyright: this.language.confirmMailCopyright,
+          };
+          this.mailService.sendMail(this.data, function () {});*/
+            this.successSignUp = true;
+            setTimeout(() => {
+              this.router.navigate(["/login"]);
+            }, 4000);
+          } else {
+            this.existMail = true;
+          }
+        });
+      }
     }
   }
 

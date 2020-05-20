@@ -118,3 +118,15 @@ input[type="file"] {
 kendo-combobox {
   border-bottom: 1px solid;
 }
+
+.change-icon {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 18px;
+    color: #0B6794;
+    cursor: pointer;
+}
+
+.change-icon:hover {
+    color: #1a93cc;
+}

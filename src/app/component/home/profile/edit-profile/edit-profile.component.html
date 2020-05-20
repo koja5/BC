@@ -91,7 +91,7 @@
         <div class="box-body p-3">
           <form class="js-validate" novalidate="novalidate">
             <div class="row">
-              <div class="col-sm-4 mb-2">
+              <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldSalutation}}
@@ -108,7 +108,22 @@
                 </div>
               </div>
 
-              <div class="col-sm-4 mb-2">
+              <div class="col-sm-6 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.fieldPassword}}
+                  </label>
+                  <div class="form-group row">
+                    <input type="text" class="form-control col-sm-11" name="password" [(ngModel)]="data.password"
+                      disabled>
+                    <span class="fa fa-unlock-alt change-icon col-sm-1" (click)="changePasswordWindow = true"></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldTitleBefore}}
@@ -120,7 +135,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-4 mb-2">
+              <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.fieldTitleAfter}}
@@ -773,5 +788,37 @@
       <button kendoButton (click)="deleteEducation('yes')" primary="true">{{language.yes}}</button>
     </kendo-dialog-actions>
   </kendo-dialog>
+
+  <kendo-window title="{{language.changePasswordTitle}}" *ngIf="changePasswordWindow"
+    (close)="changePasswordWindow = false" [width]="windowWidth ? windowWidth : 440"
+    [height]="windowHeight ? windowHeight : 390">
+    <form (ngSubmit)="changePassword()">
+      <div class="error-alert" *ngIf="badOldPassword">{{language.oldPasswordIsBad}}</div>
+      <div class="error-alert" *ngIf="passwordIsNotEqual">{{language.passwordIsNotEqual}}</div>
+      <div class="error-alert" *ngIf="notUseSamePassword">{{language.notUseSamePassword}}</div>
+      <div class="col-sm-12 mb-2">
+        <label id="positionLabel" class="form-label">{{language.fieldOldPasword}}</label>
+        <div class="input-group">
+          <input type="password" class="form-control" [(ngModel)]="changePasswordData.old" name="old">
+        </div>
+      </div>
+      <div class="col-sm-12 mb-2">
+        <label id="positionLabel" class="form-label">{{language.fieldNewPassword}}</label>
+        <div class="input-group">
+          <input type="password" class="form-control" [(ngModel)]="changePasswordData.new" name="new">
+        </div>
+      </div>
+      <div class="col-sm-12 mb-2">
+        <label id="positionLabel" class="form-label">{{language.fieldNewPasswordRepeat}}</label>
+        <div class="input-group">
+          <input type="password" class="form-control" [(ngModel)]="changePasswordData.newRepeat" name="newRepeat">
+        </div>
+      </div>
+      <div class="form-group" style="text-align: center; margin-top: 15px;">
+        <button kendoButton [primary]="true" [primary]="true" class="form-button"
+          type="submit">{{language.updateData}}</button>
+      </div>
+    </form>
+  </kendo-window>
 
 </div>

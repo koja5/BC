@@ -48,7 +48,7 @@
                 <a class="nav-link" [ngClass]="selectedTab === 'profile' ? 'active' : ''" (click)="changeTab('profile')"
                   id="home-tab">{{language.profileAbout}}</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item" *ngIf="owner">
                 <a class="nav-link" [ngClass]="selectedTab === 'bankAccount' ? 'active' : ''"
                   (click)="changeTab('bankAccount')" id="profile-tab">{{language.profileBankAccountTitle}}</a>
               </li>
@@ -261,7 +261,7 @@
                     <h6 class="m-0">{{language.profileNoInfoBankAccount}}</h6>
                   </div>
                 </div>
-                <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="bankAccount">
+                <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="bankAccount && owner">
                   <div class="box-title border-bottom p-3">
                     <h6 class="m-0">{{language.profileBankAccountTitle}}</h6>
                   </div>
@@ -272,11 +272,11 @@
                           <th class="p-3">{{language.profileBankAccount}}</th>
                           <td class="p-3">{{bankAccount.bankAccount}}</td>
                         </tr>
-                        <tr class="border-bottom" *ngIf="owner">
+                        <tr class="border-bottom">
                           <th class="p-3">{{language.profileIBAN}}</th>
                           <td class="p-3">{{bankAccount.iban}}</td>
                         </tr>
-                        <tr class="border-bottom" *ngIf="owner">
+                        <tr class="border-bottom">
                           <th class="p-3">{{language.profileBIC}}</th>
                           <td class="p-3">{{bankAccount.bic}}</td>
                         </tr>

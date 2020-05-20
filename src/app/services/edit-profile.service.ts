@@ -95,4 +95,8 @@ export class EditProfileService {
   deleteBankAccount(id) {
     return this.http.get("/api/deleteBankAccount/" + id).map((res) => res);
   }
+
+  updatePassword(data) {
+    return this.http.post("/api/updatePassword", data).map((res) => res);
+  }
 }
