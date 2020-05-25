@@ -45,12 +45,13 @@
           </div>
         </div>
         <div class="border-top p-3 d-flex align-items-center">
-          <div class="mr-auto hidden-xs"><a href="#" class="text-link small"><i class="feather-map-pin"></i>
-              {{language.feedAddLocation}}</a>
+          <div class="mr-auto hidden-xs">
+            <!-- <a href="#" class="text-link small"><i class="feather-map-pin"></i>
+              {{language.feedAddLocation}}</a> -->
           </div>
           <div class="flex-shrink-1 row-xs">
             <button type="button" class="btn btn-light btn-sm col-xs-6"
-              (click)="previewPost = true">{{language.feedPreview}}</button>
+              (click)="previewPost = true" [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
             <button type="button" class="btn btn-primary btn-sm col-xs-6"
               (click)="createPost()">{{language.feedPost}}</button>
           </div>
@@ -323,8 +324,7 @@
           </a>
         </div>
       </div>
-      <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center"
-        *ngIf="userType !== 2">
+      <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center" *ngIf="userType !== 2">
         <h6 class="text-dark mt-2">{{language.feedReferralLinkTitle}}</h6>
         <div class="p-3"><button class="btn btn-referral-link btn-sm pl-4 pr-4" *ngIf="!referralLinkCopied"
             type="button" (click)="copyLinkInClipboard()"> <span
@@ -385,9 +385,8 @@
           </div>
         </div>
       </div>
-      <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden"
-        *ngIf="userType === 2">
-        <img src="../../../../assets/img/premium.png" class="img-fluid" alt="Responsive image">
+      <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2">
+        <img src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
         <div class="p-3 border-bottom">
           <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
           <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
@@ -400,9 +399,9 @@
       </div>
       <div class="box shadow-sm mb-3 border rounded bg-white text-center" *ngIf="userType !== 2">
         <div class="image-overlap-2 pt-4">
-          <img style="width: 75px" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
+          <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
             alt="Responsive image">
-          <img style="width: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm"
+          <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm"
             alt="Responsive image">
         </div>
         <div class="p-3 border-bottom">
@@ -501,12 +500,12 @@
 
     <div class="form-group row">
       <div class="col-sm-6 col-xs-12">
-        <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname" placeholder="{{language.feedEnterFirstname}}"
-          required="">
+        <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname"
+          placeholder="{{language.feedEnterFirstname}}" required="">
       </div>
       <div class="col-sm-6 col-xs-12">
-        <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname" placeholder="{{language.feedEnterLastname}}"
-          required="">
+        <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname"
+          placeholder="{{language.feedEnterLastname}}" required="">
       </div>
     </div>
 

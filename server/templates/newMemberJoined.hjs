@@ -4,8 +4,7 @@
 
 <head style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
   <meta charset="UTF-8" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
-  <title style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{confirmMailBCITitle}}
-  </title>
+  <title style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{newMemberJoinedTitle}}</title>
   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@0.7.4/dist/tailwind.min.css"
     style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.4/css/all.css"
@@ -28,27 +27,33 @@
           style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;border-bottom-width: 1px;text-align: center;letter-spacing: .05em;">
           <div class="text-red text-sm font-bold h-24"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;font-weight: 700;height: 6rem;color: #e3342f;font-size: .875rem;">
-            <img src="http://app-production.eu:8082/assets/img/login/logo-5.png"
-              style="width: 60px !important;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;max-width: 100%;height: auto;">
+            <img src="http://app-production.eu:8082/assets/img/login/logo-5.png" style="width: 60px !important;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;max-width: 100%;height: auto;">
           </div>
         </div>
 
         <div class="content__body py-8 border-b"
           style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;border-bottom-width: 1px;padding-top: 2rem;padding-bottom: 2rem;">
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            {{confirmMailRegardsFirst}} {{firstName}}, <br
+            {{newMemberJoinedRegardsFirst}}, <br
               style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;"><br
-              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{confirmMailMessage}}
-          </p>
+              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">{{newMemberJoinedMessage}}</p>
 
-          <a href={{verificationLink}} style="cursor: pointer; text-decoration: initial;"><button
-              class="text-white text-sm tracking-wide rounded w-full my-8 p-4 "
-              style="background: #01A9E9;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;font-family: inherit;font-size: .875rem;line-height: 1.15;margin: 0;overflow: visible;text-transform: none;-webkit-appearance: button;padding: 1rem;cursor: pointer;border-radius: .25rem;margin-top: 2rem;margin-bottom: 2rem;color: #fff;letter-spacing: .05em;">{{confirmMailConfirmEmailButton}}</button></a>
+          <div style="text-align: center; padding: 15px;">
+            <div style="padding-top: 7px;">
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{newMemberJoinedName}} <span
+                  style="font-size: 15px; font-weight: bold;">{{name}}</span>
+              </p>
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{newMemberJoinedEmail}} <span
+                  style="font-size: 15px; font-weight: bold;">{{email}}</span></p>
+              <p style="text-align: initial; font-size: 13px; margin: 0px">{{newMemberJoinedSubject}} <span
+                  style="font-size: 15px; font-weight: bold;">{{subject}}</span></p>
+            </div>
+          </div>
+          <br>
           <p class="text-sm"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;font-size: .875rem;">
-            {{confirmMailRegardsEnd}}<br
-              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
-            {{confirmMailBCISignature}}
+            {{newMemberJoinedRegardsEnd}},<br style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
+            {{newMemberJoinedSignature}}
           </p>
         </div>
 
@@ -56,30 +61,29 @@
           style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin-top: 2rem;text-align: center;color: #606f7b;">
           <h3 class="text-base sm:text-lg mb-4"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;margin-bottom: 1rem;font-size: 1.125rem;">
-            {{confirmMailThanksForUsing}}</h3>
+            {{newMemberJoinedThanksForUsing}}</h3>
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            www.bc-inter.net</p>
+            www.BCI.com</p>
         </div>
 
       </div>
 
       <div class="mail__meta text-center text-sm text-grey-darker mt-8"
         style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin-top: 2rem;text-align: center;color: #606f7b;font-size: .875rem;">
-
         <div class="meta__help" style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
           <p class="leading-loose"
             style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;line-height: 2;">
-            {{confirmMailHaveQuestion}} <a href="#" class="text-grey-darkest"
-              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;background-color: transparent;color: #3d4852;">help@bc-inter.net</a>
+            {{newMemberJoinedHaveQuestion}} <a href="#" class="text-grey-darkest"
+              style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;background-color: transparent;color: #3d4852;">help@BCI.com</a>
           </p>
         </div>
         <div class="auto-generate"
           style="font-size: 10px;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;">
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            {{confirmMailGenerateMail}}
+            {{newMemberJoinedGenerateMail}}
           </p>
           <p style="box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;margin: 0;">
-            {{confirmMailCopyright}}
+            {{newMemberJoinedCopyright}}
           </p>
         </div>
 

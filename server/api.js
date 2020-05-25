@@ -550,7 +550,7 @@ router.get("/getMyOwnConnection/:id", function (req, res, next) {
             }
             console.log(directorId);
             conn.query(
-              "SELECT * from users where active = 1 and sid like '%" +
+              "SELECT u.*, lo.looking, lo.offer from users u left join lookingOffer lo on sha1(u.id) = lo.id_user where active = 1 and sid like '%" +
                 directorId +
                 "%'",
               function (err, rows1) {

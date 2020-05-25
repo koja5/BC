@@ -12,6 +12,7 @@ export class ConnectionComponent implements OnInit {
   public selectTab = "myConnection";
   public allUsers: any;
   public language: any;
+  public searchTerm: any;
 
   constructor(private service: ConnectionService, private router: Router) {}
 

@@ -3,6 +3,7 @@ import { LoginService } from "src/app/services/login.service";
 import { UserModel } from "src/app/models/user-model";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MailService } from "src/app/services/mail.service";
+import { ProfileService } from "src/app/services/profile.service";
 
 @Component({
   selector: "app-signup",
@@ -24,6 +25,7 @@ export class SignupComponent implements OnInit {
 
   constructor(
     private service: LoginService,
+    private profileService: ProfileService,
     private router: Router,
     private route: ActivatedRoute,
     private mailService: MailService
@@ -85,23 +87,25 @@ export class SignupComponent implements OnInit {
           console.log(data);
           if (data["success"]) {
             this.data["language"] = {
-            confirmMailSubject: this.language.confirmMailSubject,
-            confirmMailBCITitle: this.language.confirmMailBCITitle,
-            confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
-            confirmMailMessage: this.language.confirmMailMessage,
-            confirmMailConfirmEmailButton: this.language
-              .confirmMailConfirmEmailButton,
-            confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
-            confirmMailBCISignature: this.language.confirmMailBCISignature,
-            confirmMailThanksForUsing: this.language.confirmMailThanksForUsing,
-            confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
-            confirmMailGenerateMail: this.language.confirmMailGenerateMail,
-            confirmMailCopyright: this.language.confirmMailCopyright,
-          };
-          this.mailService.sendMail(this.data, function () {});
+              confirmMailSubject: this.language.confirmMailSubject,
+              confirmMailBCITitle: this.language.confirmMailBCITitle,
+              confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
+              confirmMailMessage: this.language.confirmMailMessage,
+              confirmMailConfirmEmailButton: this.language
+                .confirmMailConfirmEmailButton,
+              confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
+              confirmMailBCISignature: this.language.confirmMailBCISignature,
+              confirmMailThanksForUsing: this.language
+                .confirmMailThanksForUsing,
+              confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
+              confirmMailGenerateMail: this.language.confirmMailGenerateMail,
+              confirmMailCopyright: this.language.confirmMailCopyright,
+            };
+            this.mailService.sendMail(this.data, function () {});
             this.successSignUp = true;
             setTimeout(() => {
               this.router.navigate(["/login"]);
+              this.sendMailToDirectorAfterRegistration();
             }, 4000);
           } else {
             this.existMail = true;
@@ -111,24 +115,10 @@ export class SignupComponent implements OnInit {
         this.service.joinTo(data).subscribe((data) => {
           console.log(data);
           if (data["success"]) {
-            /*this.data["language"] = {
-            confirmMailSubject: this.language.confirmMailSubject,
-            confirmMailBCITitle: this.language.confirmMailBCITitle,
-            confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
-            confirmMailMessage: this.language.confirmMailMessage,
-            confirmMailConfirmEmailButton: this.language
-              .confirmMailConfirmEmailButton,
-            confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
-            confirmMailBCISignature: this.language.confirmMailBCISignature,
-            confirmMailThanksForUsing: this.language.confirmMailThanksForUsing,
-            confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
-            confirmMailGenerateMail: this.language.confirmMailGenerateMail,
-            confirmMailCopyright: this.language.confirmMailCopyright,
-          };
-          this.mailService.sendMail(this.data, function () {});*/
             this.successSignUp = true;
             setTimeout(() => {
               this.router.navigate(["/login"]);
+              this.sendMailToDirectorAfterRegistration();
             }, 4000);
           } else {
             this.existMail = true;
@@ -136,6 +126,39 @@ export class SignupComponent implements OnInit {
         });
       }
     }
+  }
+
+  sendMailToDirectorAfterRegistration() {
+    this.profileService.getUserInfoSHA1(this.directorId).subscribe((data) => {
+      const dataForRequest = this.generateDataForJoinedMember(data[0].email);
+      this.mailService.sendNewMemberJoined(dataForRequest).subscribe((data) => {
+        console.log(data);
+      });
+    });
+  }
+
+  generateDataForJoinedMember(directorEmail) {
+    let data = {
+      language: {
+        newMemberJoinedSubject: this.language.newMemberJoinedSubject,
+        newMemberJoinedTitle: this.language.newMemberJoinedTitle,
+        newMemberJoinedRegardsFirst: this.language.newMemberJoinedRegardsFirst,
+        newMemberJoinedMessage: this.language.newMemberJoinedMessage,
+        newMemberJoinedName: this.language.newMemberJoinedName,
+        newMemberJoinedEmail: this.language.newMemberJoinedEmail,
+        newMemberJoinedRegardsEnd: this.language.newMemberJoinedRegardsEnd,
+        newMemberJoinedSignature: this.language.newMemberJoinedSignature,
+        newMemberJoinedThanksForUsing: this.language
+          .newMemberJoinedThanksForUsing,
+        newMemberJoinedHaveQuestion: this.language.newMemberJoinedHaveQuestion,
+        newMemberJoinedGenerateMail: this.language.newMemberJoinedGenerateMail,
+        newMemberJoinedCopyright: this.language.newMemberJoinedCopyright,
+      },
+      name: this.data.lastname + " " + this.data.firstname,
+      email: this.data.email,
+      directorEmail: directorEmail,
+    };
+    return data;
   }
 
   showPass() {

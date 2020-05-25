@@ -5,7 +5,7 @@
       <div class="mb-3 border rounded bg-white profile-box text-center w-10">
         <div class="p-4 d-flex align-items-center">
           <img src="../../../../../assets/img/profile_image/{{data.image}}" class="img-fluid rounded-circle"
-            alt="Responsive image" style="width: 175px; margin: auto;">
+            alt="Responsive image" style="width: 175px; height: 175px; margin: auto;">
           <!-- <div class="upload-image">
             <input type="file" (change)="fileChangeEvent($event)" />
           </div> -->
@@ -347,6 +347,42 @@
       </div>
       <div class="border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.profileLookingOfferTitle}}
+          </h6>
+          <p class="mb-0 mt-0 small">{{language.profileLookingOfferText}}
+          </p>
+        </div>
+        <div class="box-body px-3 pt-3 pb-3">
+          <div class="row">
+            <div class="col-sm-6 mb-4">
+              <label id="FROM" class="form-label">{{language.profileLooking}}</label>
+              <!-- Input -->
+              <div class="input-group">
+                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.looking" name="looking">
+                </textarea>
+              </div>
+              <!-- End Input -->
+            </div>
+            <div class="col-sm-6 mb-4">
+              <label id="TO" class="form-label">{{language.profileOffer}}</label>
+              <!-- Input -->
+              <div class="input-group">
+                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.offer" name="offer">
+                </textarea>
+              </div>
+              <!-- End Input -->
+            </div>
+          </div>
+
+          <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"
+              (click)="saveLookingOffer()">
+              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+              &nbsp;&nbsp;&nbsp;&nbsp; </a>
+          </div>
+        </div>
+      </div>
+      <div class="border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
           <h6 class="m-0">{{language.profileExperienceTitle}}
           </h6>
           <p class="mb-0 mt-0 small">{{language.profileExperienceText}}
@@ -476,44 +512,6 @@
             <span class="fa fa-plus"></span> {{language.profileAddNewEducation}}
             &nbsp;&nbsp; </a></div>
       </div>
-
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileLookingOfferTitle}}
-          </h6>
-          <p class="mb-0 mt-0 small">{{language.profileLookingOfferText}}
-          </p>
-        </div>
-        <div class="box-body px-3 pt-3 pb-3">
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileLooking}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.looking" name="looking">
-                </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileOffer}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.offer" name="offer">
-                </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
-
-          <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"
-              (click)="saveLookingOffer()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
-          </div>
-        </div>
-      </div>
-
       <div class="border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">{{language.profileOtherInfoTitle}}

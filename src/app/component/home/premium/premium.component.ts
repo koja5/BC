@@ -39,17 +39,17 @@ export class PremiumComponent implements OnInit {
     if (answer === "yes") {
       this.profileService.getUserInfoSHA1(this.id).subscribe((user) => {
         if (user["length"] !== 0) {
+          const data = {
+            id: user[0].id,
+          };
+          this.service.updatePaymentStatus(data).subscribe((pay) => {
+            console.log(pay);
+          });
           this.generateDataForMail(user[0]);
           this.service.sendFacture(this.data).subscribe((data) => {
             console.log(data);
             if (data) {
               console.log(user[0].id);
-              const data = {
-                id: user[0].id,
-              };
-              this.service.updatePaymentStatus(data).subscribe((pay) => {
-                console.log(pay);
-              });
             }
           });
         }

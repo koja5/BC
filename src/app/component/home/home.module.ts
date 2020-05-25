@@ -20,6 +20,7 @@ import { ContactComponent } from './contact/contact.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-file-upload';
+import { ConnectionFilterPipe } from './connection/connection.pipe';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-fi
     PremiumComponent,
     ConnectionComponent,
     FindConnectionComponent,
-    ContactComponent
+    ContactComponent,
+    ConnectionFilterPipe
   ],
   imports: [
     CommonModule,

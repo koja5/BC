@@ -185,20 +185,43 @@ router.post("/sendQuestion", function(req, res) {
       sendQuestionCopyright: req.body.language.sendQuestionCopyright
     })
   };
-  /*let ime = req.body.name;
-  let naslov = req.body.subject;
-  let email = req.body.email;
-  let poruka = req.body.message;
-  let mail = "Sent: \n" + ime + "\n" + email + "\n\n" + poruka;
 
-  console.log(mail);
+  smtpTransport.sendMail(mailOptions, function(error, response) {
+    if (error) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  });
+});
+
+router.post("/sendNewMemberJoined", function(req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./server/templates/newMemberJoined.hjs",
+    "utf-8"
+  );
+  var compiledTemplate = hogan.compile(confirmTemplate);
+
   var mailOptions = {
-    // to: "info@app-production.eu",
     from: '"BCI" info@app-production.eu',
-    to: "kojaaa95@gmail.com",
-    subject: naslov,
-    text: mail
-  };*/
+    to: req.body.directorEmail,
+    subject: req.body.language.newMemberJoinedSubject,
+    html: compiledTemplate.render({
+      name: req.body.name,
+      email: req.body.email,
+      newMemberJoinedTitle: req.body.language.newMemberJoinedTitle,
+      newMemberJoinedRegardsFirst: req.body.language.newMemberJoinedRegardsFirst,
+      newMemberJoinedMessage: req.body.language.newMemberJoinedMessage,
+      newMemberJoinedName: req.body.language.newMemberJoinedName,
+      newMemberJoinedEmail: req.body.language.newMemberJoinedEmail,
+      newMemberJoinedRegardsEnd: req.body.language.newMemberJoinedRegardsEnd,
+      newMemberJoinedSignature: req.body.language.newMemberJoinedSignature,
+      newMemberJoinedThanksForUsing: req.body.language.newMemberJoinedThanksForUsing,
+      newMemberJoinedHaveQuestion: req.body.language.newMemberJoinedHaveQuestion,
+      newMemberJoinedGenerateMail: req.body.language.newMemberJoinedGenerateMail,
+      newMemberJoinedCopyright: req.body.language.newMemberJoinedCopyright
+    })
+  };
 
   smtpTransport.sendMail(mailOptions, function(error, response) {
     if (error) {
@@ -225,7 +248,7 @@ router.post("/sendFacture", function(req, res) {
       id: req.body.id,
       regardsFirst: req.body.premiumRegardsFirst,
       regardsEnd: req.body.premiumRegardsEnd,
-      confirmMailBCISignature: req.body.confirmMailBCISignature,
+      confirmMailBCISignature: req.body.premiumConfirmMailBCISignature,
       name: req.body.name,
       message: req.body.premiumMessage,
       status: req.body.premiumStatus,

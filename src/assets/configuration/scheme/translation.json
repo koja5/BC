@@ -80,6 +80,7 @@
       "countryCode": { "type": "string" },
       "required": { "type": "string" },
       "searchAllColumn": { "type": "string" },
+      "noInfo": { "type": "string" },
       "adminProfile": { "type": "string" },
       "adminSettings": { "type": "string" },
       "adminHelp": { "type": "string" },
@@ -311,6 +312,8 @@
       "connectionOtherConnection": { "type": "string" },
       "connectionSendMessage": { "type": "string" },
       "connectionFollow": { "type": "string" },
+      "connectionPreviewProfile": { "type": "string" },
+      "connectionSearchByDifferentParams": { "type": "string" },
       "forgotMailSubject": { "type": "string" },
       "forgotMailBCITitle": { "type": "string" },
       "forgotMailRegardsFirst": { "type": "string" },
@@ -421,7 +424,19 @@
       "notFoundText2": { "type": "string" },
       "notFoundGoBack": { "type": "string" },
       "maintenceText1": { "type": "string" },
-      "maintenceText2": { "type": "string" }
+      "maintenceText2": { "type": "string" },
+      "newMemberJoinedSubject": { "type": "string" },
+      "newMemberJoinedTitle": { "type": "string" },
+      "newMemberJoinedRegardsFirst": { "type": "string" },
+      "newMemberJoinedMessage": { "type": "string" },
+      "newMemberJoinedName": { "type": "string" },
+      "newMemberJoinedEmail": { "type": "string" },
+      "newMemberJoinedRegardsEnd": { "type": "string" },
+      "newMemberJoinedSignature": { "type": "string" },
+      "newMemberJoinedThanksForUsing": { "type": "string" },
+      "newMemberJoinedHaveQuestion": { "type": "string" },
+      "newMemberJoinedGenerateMail": { "type": "string" },
+      "newMemberJoinedCopyright": { "type": "string" }
     }
   },
   "layout": [
@@ -707,7 +722,7 @@
           "items": [
             { "key": "adminDeleteTitle" },
             { "key": "adminDeleteText" },
-            {},
+            { "key": "noInfo" },
             {}
           ]
         }
@@ -1386,7 +1401,12 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [{ "key": "connectionFollow" }, {}, {}, {}]
+          "items": [
+            { "key": "connectionFollow" },
+            { "key": "connectionPreviewProfile" },
+            { "key": "connectionSearchByDifferentParams" },
+            {}
+          ]
         }
       ]
     },
@@ -1724,7 +1744,7 @@
             { "key": "passwordIsNotEqual" },
             { "key": "changePasswordTitle" },
             { "key": "notUseSamePassword" },
-            { }
+            {}
           ]
         }
       ]
@@ -1759,6 +1779,47 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [{ "key": "maintenceText1" }, { "key": "maintenceText2" }]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "New member joined",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "newMemberJoinedSubject" },
+            { "key": "newMemberJoinedTitle" },
+            { "key": "newMemberJoinedRegardsFirst" },
+            { "key": "newMemberJoinedMessage" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "newMemberJoinedName" },
+            { "key": "newMemberJoinedEmail" },
+            { "key": "newMemberJoinedRegardsEnd" },
+            { "key": "newMemberJoinedSignature" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "newMemberJoinedThanksForUsing" },
+            { "key": "newMemberJoinedHaveQuestion" },
+            { "key": "newMemberJoinedCopyright" },
+            { "key": "newMemberJoinedGenerateMail" }
+          ]
         }
       ]
     }

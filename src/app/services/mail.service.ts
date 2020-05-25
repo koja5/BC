@@ -31,5 +31,11 @@ export class MailService {
 
     }
 
+    public sendNewMemberJoined(data) {
+        return this.http.post('/api/sendNewMemberJoined', data)
+            .map(res => res);
+
+    }
+
 
 }
