@@ -908,3 +908,41 @@ pre {
   color: green;
   font-size: 15px;
 }
+
+/* footer start */
+
+.footer {
+  height: 49px;
+  background: #0B6794;
+  color: #FFF;
+}
+
+.copyright {
+  float: left;
+  padding: 15px;
+}
+
+.terms-privacy {
+  float: right;
+  padding: 15px;
+  font-weight: bold;
+}
+
+@media (max-width: 1000px) {
+  .footer {
+    height: 65px !important;
+    text-align: center;
+  }
+
+  .copyright {
+    float: inherit !important;
+    padding: 8px !important;
+  }
+
+  .terms-privacy {
+    float: inherit;
+    padding: 0px;
+  }
+}
+
+/* footer end */

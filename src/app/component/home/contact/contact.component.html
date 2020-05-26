@@ -171,23 +171,26 @@
                   <p class="text-muted">{{language.contactFormText}}
                   </p>
                </div>
-               <form name="formInput"  #formInput="ngForm" (ngSubmit)="submitForm()">
+               <form name="formInput" #formInput="ngForm" (ngSubmit)="submitForm()">
                   <div class="form-row">
                      <div class="col">
                         <div class="form-group mb-4">
                            <label class="mb-1">{{language.contactFormName}} <small class="text-danger">*</small></label>
                            <div class="position-relative icon-form-control">
                               <i class="feather-user position-absolute"></i>
-                              <input placeholder="{{language.contactFormNamePlaceholder}}" type="text" class="form-control" name="name" [(ngModel)]="data.name" required>
+                              <input placeholder="{{language.contactFormNamePlaceholder}}" type="text"
+                                 class="form-control" name="name" [(ngModel)]="data.name" required>
                            </div>
                         </div>
                      </div>
                      <div class="col">
                         <div class="form-group mb-4">
-                           <label class="mb-1">{{language.contactFormEmail}} <small class="text-danger">*</small></label>
+                           <label class="mb-1">{{language.contactFormEmail}} <small
+                                 class="text-danger">*</small></label>
                            <div class="position-relative icon-form-control">
                               <i class="feather-mail position-absolute"></i>
-                              <input placeholder="{{language.contactFormEmailPlaceholder}}" type="text" class="form-control" name="email" [(ngModel)]="data.email">
+                              <input placeholder="{{language.contactFormEmailPlaceholder}}" type="text"
+                                 class="form-control" name="email" [(ngModel)]="data.email">
                            </div>
                         </div>
                      </div>
@@ -195,19 +198,23 @@
                   <div class="form-row">
                      <div class="col">
                         <div class="form-group mb-4">
-                           <label class="mb-1">{{language.contactFormSubject}} <small class="text-danger">*</small></label>
+                           <label class="mb-1">{{language.contactFormSubject}} <small
+                                 class="text-danger">*</small></label>
                            <div class="position-relative icon-form-control">
                               <i class="feather-edit-2 position-absolute"></i>
-                              <input placeholder="{{language.contactFormSubjectPlaceholder}}" type="text" class="form-control" name="subject" [(ngModel)]="data.subject">
+                              <input placeholder="{{language.contactFormSubjectPlaceholder}}" type="text"
+                                 class="form-control" name="subject" [(ngModel)]="data.subject">
                            </div>
                         </div>
                      </div>
                      <div class="col">
                         <div class="form-group mb-4">
-                           <label class="mb-1">{{language.contactFormPhone}} <small class="text-danger">*</small></label>
+                           <label class="mb-1">{{language.contactFormPhone}} <small
+                                 class="text-danger">*</small></label>
                            <div class="position-relative icon-form-control">
                               <i class="feather-phone position-absolute"></i>
-                              <input placeholder="{{language.contactFormPhonePlaceholder}}" type="text" class="form-control" name="phone" [(ngModel)]="data.phone">
+                              <input placeholder="{{language.contactFormPhonePlaceholder}}" type="text"
+                                 class="form-control" name="phone" [(ngModel)]="data.phone">
                            </div>
                         </div>
                      </div>
@@ -216,11 +223,14 @@
                      <label class="mb-1">{{language.contactFormMessage}} <small class="text-danger">*</small></label>
                      <div class="position-relative">
                         <textarea class="form-control" rows="4" name="text"
-                           placeholder="{{language.contactFormMessagePlaceholder}}" name="message" [(ngModel)]="data.message"></textarea>
+                           placeholder="{{language.contactFormMessagePlaceholder}}" name="message"
+                           [(ngModel)]="data.message"></textarea>
                      </div>
                   </div>
                   <div class="d-flex align-items-center">
-                     <button class="btn btn-primary text-uppercase btn-lg" type="submit" [title]="formInput.form.invalid ? language.inputAllFields: ''" [disabled]="formInput.form.invalid"> {{language.contactFormSend}} </button>
+                     <button class="btn btn-primary text-uppercase btn-lg" type="submit"
+                        [title]="formInput.form.invalid ? language.inputAllFields: ''"
+                        [disabled]="formInput.form.invalid"> {{language.contactFormSend}} </button>
                      <label class="m-0 pl-4 text-black-50">{{language.answerResponse}}
                      </label>
                   </div>
@@ -229,37 +239,17 @@
          </div>
       </div>
    </div>
-   <footer class="bg-light py-4">
-      <div class="container">
-         <div class="d-flex justify-content-between align-items-center">
-            <!-- Copyright -->
-            <p class="small text-muted mb-0">© 2020 {{language.bciText}}.</p>
-            <!-- End Copyright -->
-            <!-- Social Networks -->
-            <ul class="list-inline mb-0">
-               <li class="list-inline-item">
-                  <a class="btn btn-sm btn-light" href="#">
-                     <span class="feather-facebook"></span>
-                  </a>
-               </li>
-               <li class="list-inline-item">
-                  <a class="btn btn-sm btn-light" href="#">
-                     <span class="feather-youtube"></span>
-                  </a>
-               </li>
-               <li class="list-inline-item">
-                  <a class="btn btn-sm btn-light" href="#">
-                     <span class="feather-twitter"></span>
-                  </a>
-               </li>
-               <li class="list-inline-item">
-                  <a class="btn btn-sm btn-light" href="#">
-                     <span class="feather-github"></span>
-                  </a>
-               </li>
-            </ul>
-            <!-- End Social Networks -->
-         </div>
+   <footer *ngIf="language !== undefined" class="footer">
+      <div class="copyright">
+         <span>{{language.footerCopyright}}</span>
+      </div>
+      <div class="terms-privacy">
+         <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
+            {{language.termsHeaderTitle}}
+         </a>
+         <a routerLink="/privacy-police" target="_blank" style="margin-left: 5px; color: #FFF;">
+            {{language.privacyHeaderTitle}}
+         </a>
       </div>
    </footer>
 </div>

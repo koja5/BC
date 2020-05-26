@@ -180,6 +180,7 @@
       "termsEffectiveDateValue": { "type": "string" },
       "termsWelcomeTitle": { "type": "string" },
       "termsWelcomeText": { "type": "string" },
+      "termsShow": { "type": "string" },
       "termsItems": {
         "type": "array",
         "items": {
@@ -193,6 +194,7 @@
       "privacyHeaderTitle": { "type": "string" },
       "privacyLastModificationDate": { "type": "string" },
       "privacyLastModificationDateValue": { "type": "string" },
+      "privacyShow": { "type": "string" },
       "privacyIntroductionTitle": { "type": "string" },
       "privacyIntroductionText": { "type": "string" },
       "privacyItems": {
@@ -436,7 +438,8 @@
       "newMemberJoinedThanksForUsing": { "type": "string" },
       "newMemberJoinedHaveQuestion": { "type": "string" },
       "newMemberJoinedGenerateMail": { "type": "string" },
-      "newMemberJoinedCopyright": { "type": "string" }
+      "newMemberJoinedCopyright": { "type": "string" },
+      "footerCopyright": { "type": "string" }
     }
   },
   "layout": [
@@ -976,7 +979,8 @@
             { "key": "termsHeaderTitleBrand" },
             { "key": "termsHeaderTitle" },
             { "key": "termsEffectiveDate" },
-            { "key": "termsEffectiveDateValue" }
+            { "key": "termsEffectiveDateValue" },
+            { "key": "termsShow" }
           ]
         },
         {
@@ -1034,7 +1038,7 @@
             { "key": "privacyHeaderTitle" },
             { "key": "privacyLastModificationDate" },
             { "key": "privacyLastModificationDateValue" },
-            {}
+            { "key": "privacyShow" }
           ]
         },
         {
@@ -1822,6 +1826,23 @@
           ]
         }
       ]
-    }
+    },
+    {
+      "type": "section",
+      "title": "Footer",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "footerCopyright" },
+            { }
+          ]
+        }
+      ]
+    }    
   ]
 }

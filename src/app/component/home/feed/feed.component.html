@@ -50,8 +50,8 @@
               {{language.feedAddLocation}}</a> -->
           </div>
           <div class="flex-shrink-1 row-xs">
-            <button type="button" class="btn btn-light btn-sm col-xs-6"
-              (click)="previewPost = true" [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
+            <button type="button" class="btn btn-light btn-sm col-xs-6" (click)="previewPost = true"
+              [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
             <button type="button" class="btn btn-primary btn-sm col-xs-6"
               (click)="createPost()">{{language.feedPost}}</button>
           </div>
@@ -401,8 +401,8 @@
         <div class="image-overlap-2 pt-4">
           <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
             alt="Responsive image">
-          <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm"
-            alt="Responsive image">
+          <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}"
+            class="rounded-circle shadow-sm" alt="Responsive image">
         </div>
         <div class="p-3 border-bottom">
           <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
@@ -411,6 +411,33 @@
         <div class="p-3">
           <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
             {{language.feedSendInvite}} </button>
+        </div>
+      </div>
+      <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.termsHeaderTitle}}</h6>
+        </div>
+        <div class="image-overlap-2 pt-2">
+          <img style="width: 100px;" src="../../../../assets/img/terms-icon.png" class="rounded-circle"
+            alt="Responsive image">
+        </div>
+        <div class="p-3">
+          <a routerLink="/terms" target="_blank"><button type="button" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+              {{language.termsShow}} </button></a>
+        </div>
+      </div>
+      <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.privacyHeaderTitle}}</h6>
+        </div>
+        <div class="image-overlap-2 pt-2">
+          <img style="width: 75px;" src="../../../../assets/img/privacy-policy.png" class="rounded-circle"
+            alt="Responsive image">
+        </div>
+        <div class="p-3">
+          <a routerLink="/privacy-policy" target="_blank"><button type="button"
+              class="btn btn-outline-primary btn-sm pl-4 pr-4">
+              {{language.privacyShow}} </button></a>
         </div>
       </div>
       <!-- <div class="box shadow-sm border rounded bg-white mb-3">
