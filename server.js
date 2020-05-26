@@ -206,6 +206,11 @@ io.on("connection", (socket) => {
       fullname: data.fullname,
       image: data.image,
       date: data.date,
+      not_seen: data.not_seen,
+    });
+
+    io.in(data.not_seen).emit("notification", {
+      text: "notifikacija!!!",
     });
   });
 });

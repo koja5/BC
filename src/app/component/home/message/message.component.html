@@ -24,15 +24,17 @@
             </div>
             <div class="osahan-chat-list">
               <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden item-message"
-                *ngFor="let mess of allMessages"
+                *ngFor="let mess of allMessages; let i = index"
                 [ngClass]="selectedMessage === mess._id ? 'bg-light border-left border-primary' : ''"
-                (click)="showMessages(mess._id, mess.image, mess.name, mess.profession)">
+                (click)="showMessages(mess._id, mess.image, mess.name, mess.profession, i, mess.receiveId)">
                 <div class="dropdown-list-image mr-3"><img class="rounded-circle"
                     src="/assets/img/profile_image/{{mess.image}}" alt=""></div>
                 <div class="font-weight-bold mr-1 overflow-hidden">
                   <div class="text-truncate">{{mess.name}}</div>
-                  <div class="small text-truncate overflow-hidden text-black-50"><i
-                      class="feather-check text-primary"></i> {{mess.message.message}} </div>
+                  <div class="small text-truncate overflow-hidden text-black-50"
+                    [ngClass]="mess.not_seen === id ? 'message-bold' : ''"><i class="feather-check text-primary"></i> <i
+                      *ngIf="mess.not_seen !== id" class="feather-check text-primary"></i> {{mess.message.message}}
+                  </div>
                 </div>
                 <span class="ml-auto mb-auto">
                   <!-- <div class="text-right text-muted pt-1 small">{{mess.message.date | date: hh:mm}}</div> -->
@@ -78,7 +80,7 @@
               <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
               </div>
             </div>
-            <span class="ml-auto">
+            <!-- <span class="ml-auto">
               <div class="btn-group">
                 <button type="button" class="btn btn-light btn-sm rounded" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">
@@ -89,38 +91,41 @@
                   <button class="dropdown-item" type="button"><i class="feather-x-circle"></i> Turn Off</button>
                 </div>
               </div>
-            </span>
+            </span> -->
           </div>
           <div class="osahan-chat-box p-3 border-top border-bottom bg-light hidden-xs">
-            <div *ngFor="let item of messageArray">
+            <div [ngClass]="mobile === true ? 'message-container' : ''">
 
-              <div class="d-flex align-items-center osahan-post-header message-padding-top"
-                *ngIf="item.sender_id !== id">
-                <div class="dropdown-list-image"><img class="rounded-circle"
-                    src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
-                <div class="mr-1">
-                  <p class="receive-message">{{item.message}}
-                  </p>
+              <div *ngFor="let item of messageArray">
+                <div class="d-flex align-items-center osahan-post-header message-padding-top"
+                  *ngIf="item.sender_id !== id">
+                  <div class="dropdown-list-image"><img class="rounded-circle"
+                      src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
+                  <div class="mr-1">
+                    <p class="receive-message">{{item.message}}
+                    </p>
+                  </div>
+                  <span class="ml-auto mb-auto">
+                    <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+                  </span>
                 </div>
-                <span class="ml-auto mb-auto">
-                  <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
-                </span>
-              </div>
 
-              <div class="d-flex align-items-center osahan-post-header message-padding-top"
-                *ngIf="item.sender_id === id">
-                <span class="mr-auto mb-auto">
-                  <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
-                </span>
-                <div class="sender-message">
-                  <p>{{item.message}}</p>
+                <div class="d-flex align-items-center osahan-post-header message-padding-top"
+                  *ngIf="item.sender_id === id">
+                  <span class="mr-auto mb-auto">
+                    <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+                  </span>
+                  <div class="sender-message">
+                    <p>{{item.message}}</p>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div class="w-100 border-top border-bottom">
             <textarea placeholder="Write a message…" [(ngModel)]="messageText" name="message"
-              class="form-control border-0 p-3 shadow-none" rows="2" (keyup.enter)="sendMessage()"></textarea>
+              class="form-control border-0 p-3 shadow-none" rows="2" (keyup.enter)="sendMessage()"
+              (focus)="clickOnTextArea()"></textarea>
           </div>
           <!-- <div class="p-3 d-flex align-items-center">
             <div class="overflow-hidden">
@@ -169,30 +174,31 @@
       </div>
     </span>
   </div>
-  <div *ngFor="let item of messageArray">
+  <div [ngClass]="mobile === true ? 'message-container' : ''">
+    <div *ngFor="let item of messageArray">
 
-    <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id !== id">
-      <div class="dropdown-list-image"><img class="rounded-circle"
-          src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
-      <div class="mr-1">
-        <p class="receive-message">{{item.message}}
-        </p>
+      <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id !== id">
+        <div class="dropdown-list-image"><img class="rounded-circle"
+            src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
+        <div class="mr-1">
+          <p class="receive-message">{{item.message}}
+          </p>
+        </div>
+        <span class="ml-auto mb-auto">
+          <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+        </span>
       </div>
-      <span class="ml-auto mb-auto">
-        <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
-      </span>
-    </div>
 
-    <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id === id">
-      <span class="mr-auto mb-auto">
-        <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
-      </span>
-      <div class="sender-message">
-        <p>{{item.message}}</p>
+      <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id === id">
+        <span class="mr-auto mb-auto">
+          <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+        </span>
+        <div class="sender-message">
+          <p>{{item.message}}</p>
+        </div>
       </div>
     </div>
   </div>
-
   <div class="w-100 border-top border-bottom mobile-textarea">
     <textarea placeholder="Write a message…" [(ngModel)]="messageText" name="message"
       class="form-control border-0 p-3 shadow-none" rows="2" (keyup.enter)="sendMessage()"></textarea>

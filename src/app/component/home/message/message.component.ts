@@ -42,6 +42,11 @@ export class MessageComponent implements OnInit {
     this.service.newMessageReceived().subscribe((data) => {
       console.log(data);
       this.messageArray.push(data);
+      this.initilization();
+    });
+
+    this.service.getNotification().subscribe((data) => {
+      console.log("dosla je notifikacija!!!!");
     });
   }
 
@@ -63,6 +68,23 @@ export class MessageComponent implements OnInit {
       console.log(data);
       this.allMessages = data;
     });
+
+    this.getMessageItem();
+  }
+
+  getMessageItem() {
+    if (sessionStorage.getItem("message_item")) {
+      const message = JSON.parse(sessionStorage.getItem("message_item"));
+      this.showMessages(
+        message.id,
+        message.image,
+        message.name,
+        message.profession,
+        message.index,
+        message.receiveId
+      );
+      sessionStorage.removeItem("message_item");
+    }
   }
 
   join(room) {
@@ -74,26 +96,27 @@ export class MessageComponent implements OnInit {
     this.service.leaveRoom({ sender_id: this.id, room: room });
   }
 
-  sendMessage() {
-    /*if (this.messageArray.length !== 0) {
+  updateGlobalMessageData(message) {
+    let ind = 1;
+    for (let i = 0; i < this.allMessages.length; i++) {
+      if (this.allMessages[i].message.sender_id === message.sender_id) {
+        this.allMessages[i].message.message = message.message;
+        this.allMessages[i].message.date = message.date;
+        ind = 0;
+      }
+    }
+    this.allMessages.push();
+  }
 
-    } else {
-      this.messageData = {
-        sender1: this.id,
-        sender2: "0ade7c2cf97f75d009975f4d720d1fa6c19f4897",
-        messages: this.messageArray,
-      };
-      this.service.createMessage(this.messageData).subscribe((data) => {
-        console.log(data);
-      });
-    }*/
+  sendMessage() {
     const data = {
       _id: this.room,
       message: {
         sender_id: this.id,
         message: this.messageText,
         date: new Date(),
-      }
+      },
+      receiveId: this.selectUserForComunication.receiveId,
     };
     this.service.pushNewMessage(data).subscribe((data) => {
       console.log(data);
@@ -105,23 +128,43 @@ export class MessageComponent implements OnInit {
       name: this.user.fullname,
       image: this.user.image,
       date: new Date(),
+      not_seen: this.selectUserForComunication.receiveId,
     });
     this.messageText = "";
   }
 
-  showMessages(id, image, name, profession) {
+  clickOnTextArea() {
+    const index = this.selectUserForComunication.index;
+    if (this.allMessages[index].not_seen === this.id) {
+      this.allMessages[index].not_seen = "";
+    }
+  }
+
+  showMessages(id, image, name, profession, index, receiveId) {
     this.selectedMessage = id;
     this.room = id;
     this.join(id);
     this.service.getMessageForSelectedUser(id).subscribe((data) => {
+      console.log(data);
       this.selectUserForComunication = {
         name: name,
         profession: profession,
         image: image,
+        receiveId: receiveId,
+        index: index,
       };
       this.messageArray = data;
       if (this.mobile) {
         this.messageWindow = true;
+      }
+      if (this.allMessages[index].not_seen === this.id) {
+        const notSeenData = {
+          _id: id,
+          not_seen: "",
+        };
+        this.service.updateSeen(notSeenData).subscribe((data) => {
+          console.log(data);
+        });
       }
     });
   }

@@ -49,12 +49,24 @@ export class HomeComponent implements OnInit {
     });
 
     this.messageService.newMessageReceived().subscribe((data) => {
-      this.newMessageCounter++;
+      console.log(data);
+      if (data.not_seen === this.id) {
+        this.newMessageCounter++;
+      }
     });
   }
 
   initialization() {
     this.getUserProfile();
+    this.getAllMessageForUser();
+  }
+
+  notificationCounter(data) {
+    for (let i = 0; i < data.length; i++) {
+      if (data[i].not_seen && data[i].not_seen === this.id) {
+        this.newMessageCounter++;
+      }
+    }
   }
 
   getUserProfile() {
@@ -118,5 +130,25 @@ export class HomeComponent implements OnInit {
       this.messageCenter = "";
     }
     this.newMessageCounter = 0;
+  }
+
+  getAllMessageForUser() {
+    this.messageService.getAllMessagesForUser(this.id).subscribe((data) => {
+      this.notificationCounter(data);
+    });
+  }
+
+  openItemMessage(item, index) {
+    const data = {
+      id: item._id,
+      image: item.image,
+      name: item.name,
+      profession: item.profession,
+      index: index,
+      receiveId: item.receiveId,
+    };
+    sessionStorage.setItem("message_item", JSON.stringify(data));
+    this.router.navigate(["/home/main/message"]);
+    this.messageCenter = "";
   }
 }

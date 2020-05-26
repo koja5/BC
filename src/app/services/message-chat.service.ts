@@ -54,7 +54,6 @@ export class MessageChatService {
   }
 
   sendMessage(data) {
-    console.log(data);
     this.socket.emit("message", data);
   }
 
@@ -65,8 +64,24 @@ export class MessageChatService {
       fullname: String;
       image: String;
       date: String;
+      not_seen: String;
     }>((observer) => {
       this.socket.on("new message", (data) => {
+        observer.next(data);
+      });
+      return () => {
+        this.socket.disconnect();
+      };
+    });
+
+    return observable;
+  }
+
+  getNotification() {
+    let observable = new Observable<{
+      text: String;
+    }>((observer) => {
+      this.socket.on("notification", (data) => {
         observer.next(data);
       });
       return () => {
@@ -96,9 +111,11 @@ export class MessageChatService {
   }
 
   pushNewMessage(data) {
-    this.socket.emit('new message', { username: "john" });
+    this.socket.emit("new message", { username: "john" });
     return this.http.post("/api/pushNewMessage", data).map((res) => res);
   }
 
-
+  updateSeen(data) {
+    return this.http.post("/api/updateSeen", data).map((res) => res);
+  }
 }

@@ -558,7 +558,11 @@ var mergeMessageWithUsers = (messages, id, res) => {
                 name: user.fullname,
                 image: user.image,
                 profession: user.profession,
-                message: mess.messages.length > 0 ? mess.messages[mess.messages.length - 1] : [],
+                message:
+                  mess.messages.length > 0
+                    ? mess.messages[mess.messages.length - 1]
+                    : [],
+                not_seen: mess.not_seen,
               };
               arrayMessages.push(messageItem);
             }
@@ -681,13 +685,30 @@ router.post("/pushNewMessage", function (req, res, next) {
       .collection("messages")
       .updateOne(
         { _id: ObjectId(req.body._id) },
-        { $push: { messages: req.body.message } },
+        { $push: { messages: req.body.message }, $set: { not_seen: req.body.receiveId } },
         function (err, rows) {
           if (err) throw err;
           res.json(201);
         }
       );
   });
+});
+
+router.post("/updateSeen", function (req, res, next) {
+  mongo.connect(url, function (err, db, res) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .updateOne(
+        { _id: ObjectId(req.body._id) },
+        { $set: { not_seen: req.body.not_seen } },
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+  });
+  res.json({ code: 201 });
 });
 
 module.exports = router;
