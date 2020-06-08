@@ -107,8 +107,8 @@
       </div>
     </div>
   </footer>
-  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureWindow" (close)="areYouSureWindow = false" [minWidth]="250"
-    [width]="450">
+  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureWindow" (close)="areYouSureWindow = false"
+    [minWidth]="250" [width]="450">
     <div class="modal-body text-center">
       <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
       <h3>{{language.areYouSure}}</h3>
@@ -134,9 +134,9 @@
       </span>
       <div style="padding-top: 15px">
         <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" />
-        {{language.premiumAcceptBuyFirst}} <a routerLink="/terms"
-          target="_blank">{{language.premiumAcceptBuyTerms}}</a> {{language.premiumAcceptBuyEnd}} <a
-          routerLink="/privacy-policy" target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
+        {{language.premiumAcceptBuyFirst}} <a routerLink="/terms" target="_blank">{{language.premiumAcceptBuyTerms}}</a>
+        {{language.premiumAcceptBuyEnd}} <a routerLink="/privacy-policy"
+          target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
       </div>
     </header>
     <!-- End Header -->
@@ -175,8 +175,12 @@
     <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
       {{language.termsHeaderTitle}}
     </a>
-    <a routerLink="/privacy-police" target="_blank" style="margin-left: 5px; color: #FFF;">
+    <a routerLink="/privacy-policy" target="_blank"
+      style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
       {{language.privacyHeaderTitle}}
+    </a>
+    <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
+      {{language.impressumHeaderTitle}}
     </a>
   </div>
 </footer>

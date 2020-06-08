@@ -29,4 +29,8 @@ export class ProfileService {
   uploadImage1(data) {
     return this.http.post("/api/uploadImage1", data).map((res) => res);
   }
+
+  getRecommendation(id) {
+    return this.http.get("/api/getRecommendation/" + id).map((res) => res);
+  }
 }

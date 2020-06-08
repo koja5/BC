@@ -7,6 +7,8 @@ import { DashboardGuard } from './services/guard/dashboard-guard.service';
 import { PrivacyPolicyComponent } from './component/templates/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './component/templates/terms/terms.component';
 import { MaintenceComponent } from './component/templates/maintence/maintence.component';
+import { ImpressumComponent } from './component/templates/impressum/impressum.component';
+import { RecommendedAnswerComponent } from './component/templates/recommended-answer/recommended-answer.component';
 
 const routes: Routes = [
   {
@@ -33,8 +35,16 @@ const routes: Routes = [
     component: TermsComponent
   },
   {
+    path: 'impressum',
+    component: ImpressumComponent
+  },
+  {
     path: 'maintence',
     component: MaintenceComponent
+  },
+  {
+    path: 'recommended-answer',
+    component: RecommendedAnswerComponent
   },
   {
     path: "**",

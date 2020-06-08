@@ -37,5 +37,11 @@ export class MailService {
 
     }
 
+    public sendRecommended(data) {
+        return this.http.post('/api/sendRecommended', data)
+            .map(res => res);
+
+    }
+
 
 }

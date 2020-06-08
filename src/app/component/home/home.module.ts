@@ -21,6 +21,7 @@ import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-file-upload';
 import { ConnectionFilterPipe } from './connection/connection.pipe';
+import { RecommendationButtonComponent } from './recommendation-button/recommendation-button.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ConnectionFilterPipe } from './connection/connection.pipe';
     ConnectionComponent,
     FindConnectionComponent,
     ContactComponent,
-    ConnectionFilterPipe
+    ConnectionFilterPipe,
+    RecommendationButtonComponent
   ],
   imports: [
     CommonModule,

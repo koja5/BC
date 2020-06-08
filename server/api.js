@@ -208,17 +208,20 @@ router.get("/getAllUsers", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query("SELECT u.*, b.bankAccount, b.iban, b.bic from users u left join bankAccount b on sha1(u.id) = b.id_user", function (err, rows) {
-      conn.release();
-      if (!err) {
-        res.json(rows);
-      } else {
-        res.json({
-          code: 100,
-          status: "Error in connection database",
-        });
+    conn.query(
+      "SELECT u.*, b.bankAccount, b.iban, b.bic from users u left join bankAccount b on sha1(u.id) = b.id_user",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+        }
       }
-    });
+    );
   });
 });
 
@@ -355,17 +358,17 @@ router.get("/getDirectors", function (req, res, next) {
       });
       return;
     }
-    conn.query("SELECT * from users where (type != 2) and active = 1", function (
-      err,
-      rows
-    ) {
-      conn.release();
-      if (!err) {
-        res.json(rows);
-      } else {
-        res.json(null);
+    conn.query(
+      "SELECT * from users where (type != 2) and active = 1",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json(null);
+        }
       }
-    });
+    );
 
     conn.on("error", function (err) {
       res.json({
@@ -550,7 +553,7 @@ router.get("/getMyOwnConnection/:id", function (req, res, next) {
             }
             console.log(directorId);
             conn.query(
-              "SELECT u.*, lo.looking, lo.offer from users u left join lookingOffer lo on sha1(u.id) = lo.id_user where active = 1 and sid like '%" +
+              "SELECT u.*, lo.looking, lo.offer, rTrue.help, rFalse.notHelp from users u left join lookingOffer lo on sha1(u.id) = lo.id_user left join (SELECT id_user, count(*) as help from recommendation where status = 1 group by id_user)rTrue on rTrue.id_user = sha1(u.id) left join (SELECT id_user, count(*) as notHelp from recommendation where status = 0 group by id_user)rFalse on rFalse.id_user = sha1(u.id) where active = 1 and sid like '%" +
                 directorId +
                 "%'",
               function (err, rows1) {
@@ -927,7 +930,7 @@ router.get("/getPeopleYouMightKnow", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query("SELECT * from users order by RAND() limit 5", function (
+    conn.query("SELECT *, rTrue.help, rFalse.notHelp from users u left join (SELECT id_user, count(*) as help from recommendation where status = 1 group by id_user)rTrue on rTrue.id_user = sha1(u.id) left join (SELECT id_user, count(*) as notHelp from recommendation where status = 0 group by id_user)rFalse on rFalse.id_user = sha1(u.id) order by RAND() limit 5", function (
       err,
       rows
     ) {
@@ -1862,6 +1865,72 @@ router.post("/updatePassword", function (req, res, next) {
     );
     conn.on("error", function (err) {
       console.log("[mysql error]", err);
+    });
+  });
+});
+
+router.get("/recommendedCount/:id/:status", (req, res, next) => {
+  try {
+    var reqObj = req.params.id;
+
+    console.log(reqObj);
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        console.error("SQL Connection error: ", err);
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+        return next(err);
+      } else {
+        var date = new Date().toDateString();
+        const data = {
+          id_user: sha1(req.params.id),
+          status: req.params.status,
+          date: new Date().toDateString(),
+        };
+        conn.query("insert into recommendation SET ?", data, function (
+          err,
+          rows,
+          fields
+        ) {
+          conn.release();
+          if (err) {
+            res.json(err);
+            return next(err);
+          } else {
+            res.writeHead(302, {
+              Location: "/recommended-answer",
+            });
+            res.end();
+          }
+        });
+      }
+    });
+  } catch (ex) {
+    console.error("Internal error: " + ex);
+    return next(ex);
+  }
+});
+
+router.get("/getRecommendation/:id", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var id = req.params.id;
+    console.log(id);
+    conn.query("SELECT status, count(*) as count from recommendation where id_user = '" + req.params.id +  "' group by status", function (err, rows) {
+      conn.release();
+      if (!err) {
+        res.json(rows);
+      } else {
+        res.json(err);
+      }
     });
   });
 });

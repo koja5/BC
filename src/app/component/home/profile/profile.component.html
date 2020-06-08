@@ -1,8 +1,8 @@
 <div class="loader4 loading" *ngIf="data === undefined"></div>
 
-<div *ngIf="data !== undefined && language !== undefined">
+<div *ngIf="data !== undefined && language !== undefined" [style.height]="height" style="overflow: auto;">
   <div class="profile-cover text-center">
-    <div *ngIf="owner">
+    <div *ngIf="owner" style="position: relative;">
       <label for="file-upload-cover" class="cover-photo-update">
         <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
       </label>
@@ -29,7 +29,9 @@
               <button type="button" class="btn btn-light mr-2"> <i class="fa fa-envelope"></i>
                 {{language.profileSendMessage}}
               </button>
-              <button type="button" class="btn btn-primary"> <i class="feather-plus"></i> {{language.profileFollow}}
+              <button type="button" class="btn btn-primary"
+                (click)="recommended(data.id, data.fullname, data.email, data.phoneNumber)"> <i
+                  class="fa fa-paper-plane"></i> {{language.profileRecommended}}
               </button>
             </div>
           </div>
@@ -291,7 +293,7 @@
         </main>
         <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
           <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
-            <div class="p-5">
+            <div class="pt-5 pl-5 pr-5 pb-3">
 
               <div class="loader4 imageLoader" *ngIf="loadImage"></div>
               <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid"
@@ -303,16 +305,18 @@
                   [uploader]="uploader" />
               </div>
             </div>
-            <!-- <div class="p-3">
-              <div class="d-flex align-items-top mb-2">
-                <p class="mb-0 text-dark font-weight-bold">Common Connections</p>
-                <p class="font-weight-bold text-info mb-0 mt-0 ml-auto">358</p>
+            <div class="d-flex" style="border-top: 1px solid #eaebec;">
+              <div class="col-6 border-right p-3">
+                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="recommendationStatus.helpfull">{{recommendationStatus.helpfull}}</h6>
+                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="!recommendationStatus.helpfull">0</h6>
+                <p class="mb-0 small helpfullColor">{{language.recommendedHelpfullTitle}}</p>
               </div>
-              <div class="d-flex align-items-top">
-                <p class="mb-0 text-dark font-weight-bold">All Employees</p>
-                <p class="font-weight-bold text-info mb-0 mt-0 ml-auto">191,895</p>
+              <div class="col-6 p-3">
+                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="recommendationStatus.notHelpfull">{{recommendationStatus.notHelpfull}}</h6>
+                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="!recommendationStatus.notHelpfull">0</h6>
+                <p class="mb-0 small notHelpfullColor">{{language.recommendedNotHelpfullTitle}}</p>
               </div>
-            </div> -->
+            </div>
           </div>
           <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
             <img src="../../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
@@ -356,6 +360,24 @@
       </div>
     </div>
   </div>
+
+  <footer class="footer">
+    <div class="copyright">
+      <span>{{language.footerCopyright}}</span>
+    </div>
+    <div class="terms-privacy">
+      <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
+        {{language.termsHeaderTitle}}
+      </a>
+      <a routerLink="/privacy-policy" target="_blank"
+        style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
+        {{language.privacyHeaderTitle}}
+      </a>
+      <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
+        {{language.impressumHeaderTitle}}
+      </a>
+    </div>
+  </footer>
 </div>
 
 
@@ -385,18 +407,9 @@
       {{language.profileUpdateCover}}
     </button>
   </kendo-window>
-</div>
 
-<footer *ngIf="data !== undefined&&language !== undefined" class="footer">
-  <div class="copyright">
-    <span>{{language.footerCopyright}}</span>
-  </div>
-  <div class="terms-privacy">
-    <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
-      {{language.termsHeaderTitle}}
-    </a>
-    <a routerLink="/privacy-police" target="_blank" style="margin-left: 5px; color: #FFF;">
-      {{language.privacyHeaderTitle}}
-    </a>
-  </div>
-</footer>
+  <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
+    [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
+    (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
+  </app-recommendation-button>
+</div>

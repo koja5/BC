@@ -287,4 +287,48 @@ router.post("/sendFacture", function(req, res) {
   });
 });
 
+router.post("/sendRecommended", function(req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./server/templates/recommended.hjs",
+    "utf-8"
+  );
+  var recommendedLink =
+  link + "recommendedCount/" + req.body.recommendedId;
+  var compiledTemplate = hogan.compile(confirmTemplate);
+
+  var mailOptions = {
+    from: '"BCI" info@app-production.eu',
+    to: req.body.sendRecommendation,
+    subject: req.body.language.recommendedSubject,
+    html: compiledTemplate.render({
+      recommendedName: req.body.recommendedName,
+      recommendedEmail: req.body.recommendedEmail,
+      recommendedPhone: req.body.recommendedPhone,
+      whoRecommended: req.body.whoRecommended,
+      recommendedBCITitle: req.body.language.recommendedBCITitle,
+      recommendedMessage: req.body.language.recommendedMessage,
+      recommendedHelpful: req.body.language.recommendedHelpful,
+      recommendedNotHelpful: req.body.language.recommendedNotHelpful,
+      recommendedThanksForUsing: req.body.language.recommendedThanksForUsing,
+      recommendedHaveQuestion: req.body.language.recommendedHaveQuestion,
+      recommendedGenerateMail: req.body.language.recommendedGenerateMail,
+      recommendedCopyright: req.body.language.recommendedCopyright,
+      recommendedMemberName: req.body.language.recommendedMemberName,
+      recommendedMemberEmail: req.body.language.recommendedMemberEmail,
+      recommendedMemberPhone: req.body.language.recommendedMemberPhone,
+      recommendedWhoRecommendedMember: req.body.language.recommendedWhoRecommendedMember,
+      helpfullCount: recommendedLink + "/1",
+      notHelpfullCount: recommendedLink + "/0"
+    })
+  };
+
+  smtpTransport.sendMail(mailOptions, function(error, response) {
+    if (error) {
+      res.send(false);
+    } else {
+      res.send(true);
+    }
+  });
+});
+
 module.exports = router;

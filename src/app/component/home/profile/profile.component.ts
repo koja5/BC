@@ -19,6 +19,7 @@ import { HelpService } from "src/app/services/help.service";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { EditProfileService } from "src/app/services/edit-profile.service";
+import { RecommendationModel } from 'src/app/models/recommendation-model';
 
 @Component({
   selector: "app-profile",
@@ -56,6 +57,10 @@ export class ProfileComponent implements OnInit {
   public bankAccount: any;
   public selectedTab = "profile";
   public user: any;
+  public height: any;
+  public recommendedItem: any;
+  public recommendedWindow = false;
+  public recommendationStatus = new RecommendationModel();
 
   constructor(
     private service: ProfileService,
@@ -72,6 +77,13 @@ export class ProfileComponent implements OnInit {
     this.language = JSON.parse(localStorage.getItem("language"));
     this.user = JSON.parse(localStorage.getItem("user"));
     this.initialization();
+
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 55;
+    } else {
+      this.height = window.innerHeight - 72;
+    }
+    this.height += "px";
 
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
@@ -174,6 +186,16 @@ export class ProfileComponent implements OnInit {
         this.bankAccount = data[0];
       }
     });
+
+    this.service.getRecommendation(this.id).subscribe(data => {
+      for(let i = 0; i < data["length"]; i++) {
+        if(data[i].status === 1) {
+          this.recommendationStatus.helpfull = data[i].count;
+        } else {
+          this.recommendationStatus.notHelpfull = data[i].count;
+        }
+      }
+    });
   }
 
   fileChangeEventProfile(event: any): void {
@@ -247,9 +269,31 @@ export class ProfileComponent implements OnInit {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     }
+
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 55;
+    } else {
+      this.height = window.innerHeight - 72;
+    }
+    this.height += "px";
   }
 
   changeTab(tab) {
     this.selectedTab = tab;
+  }
+
+  recommended(id, name, email, phone) {
+    this.recommendedItem = {
+      id: id,
+      name: name,
+      email: email,
+      phone: phone,
+    };
+    this.recommendedWindow = true;
+  }
+
+  recommendedWindowEmitter() {
+    this.recommendedWindow = false;
+    this.recommendedItem = null;
   }
 }

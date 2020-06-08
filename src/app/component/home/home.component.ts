@@ -23,6 +23,7 @@ export class HomeComponent implements OnInit {
   public userList: any;
   public selectedUser: any;
   public language: any;
+  public height: any;
 
   constructor(
     private router: Router,
@@ -34,16 +35,16 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.height = window.innerHeight - 81;
+    this.height += "px";
     this.id = localStorage.getItem("id");
     this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
     this.selectedUser = null;
 
-    this.message.getUserInfo().subscribe(
-      data => {
-        this.initialization();
-      }
-    )
+    this.message.getUserInfo().subscribe((data) => {
+      this.initialization();
+    });
   }
 
   initialization() {

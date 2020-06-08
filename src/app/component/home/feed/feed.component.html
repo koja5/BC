@@ -375,12 +375,20 @@
               <div class="status-indicator bg-success"></div>
             </div>
             <div class="font-weight-bold mr-2">
-              <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}</div>
+              <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}
+              </div>
               <div class="small text-gray-500">{{item.profession}}
+                (
+                <span *ngIf="item.help !== null" class="helpfullColor">{{item.help}}</span>
+                <span *ngIf="item.help === null" class="helpfullColor">0</span> /
+                <span *ngIf="item.notHelp !== null" class="notHelpfullColor">{{item.notHelp}}</span>
+                <span *ngIf="item.notHelp === null" class="notHelpfullColor">0</span>
+                )
               </div>
             </div>
-            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"><i
-                  class="feather-user-plus"></i></button>
+            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+                (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
+                  class="fa fa-paper-plane"></i></button>
             </span>
           </div>
         </div>
@@ -413,7 +421,7 @@
             {{language.feedSendInvite}} </button>
         </div>
       </div>
-      <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+      <!-- <div class="box shadow-sm mb-3 border rounded bg-white text-center">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">{{language.termsHeaderTitle}}</h6>
         </div>
@@ -439,7 +447,7 @@
               class="btn btn-outline-primary btn-sm pl-4 pr-4">
               {{language.privacyShow}} </button></a>
         </div>
-      </div>
+      </div> -->
       <!-- <div class="box shadow-sm border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">Jobs
@@ -590,8 +598,8 @@
     <button kendoButton (click)="deletePost('yes')" primary="true">{{language.yes}}</button>
   </kendo-dialog-actions>
 </kendo-dialog>
-<!-- <a class="top-link hide" href="" id="js-top">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6"><path d="M12 6H0l6-6z"/></svg>
-  <span class="screen-reader-text">Back to top</span>
-</a> -->
+<app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
+  [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
+  (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
+</app-recommendation-button>
 <div class='back-to-top hidden-xs' id='back-to-top' title='Back to top'><i class='fa fa-chevron-up'></i></div>

@@ -919,12 +919,12 @@ pre {
 
 .copyright {
   float: left;
-  padding: 15px;
+  padding: 13px;
 }
 
 .terms-privacy {
   float: right;
-  padding: 15px;
+  padding: 13px;
   font-weight: bold;
 }
 
@@ -946,3 +946,11 @@ pre {
 }
 
 /* footer end */
+
+.helpfullColor {
+  color: #2bc545;
+}
+
+.notHelpfullColor {
+  color: red;
+}

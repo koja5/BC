@@ -207,6 +207,22 @@
           }
         }
       },
+      "impressumHeaderTitle": { "type": "string" },
+      "impressumLastModificationDate": { "type": "string" },
+      "impressumLastModificationDateValue": { "type": "string" },
+      "impressumShow": { "type": "string" },
+      "impressumIntroductionTitle": { "type": "string" },
+      "impressumIntroductionText": { "type": "string" },
+      "impressumItems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title": { "type": "string" },
+            "text": { "type": "string" }
+          }
+        }
+      },
       "feedShareAUpdate": { "type": "string" },
       "feedUploadPhoto": { "type": "string" },
       "feedWriteAnArticle": { "type": "string" },
@@ -254,7 +270,7 @@
       "profileUpdateCover": { "type": "string" },
       "profileUpdateProfileImage": { "type": "string" },
       "profileSendMessage": { "type": "string" },
-      "profileFollow": { "type": "string" },
+      "profileRecommended": { "type": "string" },
       "profileAbout": { "type": "string" },
       "profileUpdate": { "type": "string" },
       "profileOverview": { "type": "string" },
@@ -439,7 +455,36 @@
       "newMemberJoinedHaveQuestion": { "type": "string" },
       "newMemberJoinedGenerateMail": { "type": "string" },
       "newMemberJoinedCopyright": { "type": "string" },
-      "footerCopyright": { "type": "string" }
+      "footerCopyright": { "type": "string" },
+      "recommendedTitle": { "type": "string" },
+      "recommendedText": { "type": "string" },
+      "recommendedSendRecommended": { "type": "string" },
+      "recommendedOr": { "type": "string" },
+      "recommendedSendRecommendedByMail": { "type": "string" },
+      "recommendedMailFormTitle": { "type": "string" },
+      "recommendedTooltip": { "type": "string" },
+      "recommendedBCITitle": { "type": "string" },
+      "recommendedSubject": { "type": "string" },
+      "recommendedMessage": { "type": "string" },
+      "recommendedHelpful": { "type": "string" },
+      "recommendedNotHelpful": { "type": "string" },
+      "recommendedThanksForUsing": { "type": "string" },
+      "recommendedHaveQuestion": { "type": "string" },
+      "recommendedGenerateMail": { "type": "string" },
+      "recommendedCopyright": { "type": "string" },
+      "recommendedMemberName": { "type": "string" },
+      "recommendedMemberEmail": { "type": "string" },
+      "recommendedMemberPhone": { "type": "string" },
+      "recommendedWhoRecommendedMember": { "type": "string" },
+      "recommendedHelpfullTitle": { "type": "string" },
+      "recommendedNotHelpfullTitle": { "type": "string" },
+      "recommendedAnswerTitle": { "type": "string" },
+      "recommendedAnswerText": { "type": "string" },
+      "recommendedAnswerButtonBackToHome": { "type": "string" },
+      "successSendRecommendedTitle": { "type": "string" },
+      "successSendRecommendedText": { "type": "string" },
+      "sendToSystemMember": { "type": "string" },
+      "sendOnMail": { "type": "string" }
     }
   },
   "layout": [
@@ -1082,6 +1127,65 @@
         }
       ]
     },
+
+    {
+      "type": "section",
+      "title": "Impressum",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "impressumHeaderTitle" },
+            { "key": "impressumLastModificationDate" },
+            { "key": "impressumLastModificationDateValue" },
+            { "key": "impressumShow" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "impressumIntroductionTitle" }, {}, {}, {}]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "impressumIntroductionText", "type": "textarea" }]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "impressumItems",
+              "type": "array",
+              "expandable": true,
+              "expanded": false,
+              "items": [
+                {
+                  "type": "div",
+                  "items": [
+                    {
+                      "key": "impressumItems[].title"
+                    },
+                    {
+                      "key": "impressumItems[].text",
+                      "type": "textarea"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
     {
       "type": "section",
       "title": "Feed",
@@ -1224,7 +1328,7 @@
           "items": [
             { "key": "profileUpdateCover" },
             { "key": "profileSendMessage" },
-            { "key": "profileFollow" },
+            { "key": "profileRecommended" },
             { "key": "profileAbout" }
           ]
         },
@@ -1837,12 +1941,117 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
+          "items": [{ "key": "footerCopyright" }, {}]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Recommended",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
           "items": [
-            { "key": "footerCopyright" },
-            { }
+            { "key": "recommendedTitle" },
+            { "key": "recommendedText" },
+            { "key": "recommendedSendRecommended" },
+            { "key": "recommendedOr" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "recommendedSendRecommendedByMail" },
+            { "key": "recommendedMailFormTitle" },
+            { "key": "recommendedTooltip" }
+          ]
+        },
+
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "recommendedHelpfullTitle" },
+            { "key": "recommendedNotHelpfullTitle" }
+          ]
+        },
+
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "recommendedAnswerTitle" },
+            { "key": "recommendedAnswerText" },
+            { "key": "recommendedAnswerButtonBackToHome" }
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Recommended for mail",
+          "expandable": true,
+          "expanded": false,
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "recommendedBCITitle" },
+                { "key": "recommendedHelpful" },
+                { "key": "recommendedNotHelpful" },
+                { "key": "recommendedSubject" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [{ "key": "recommendedMessage", "type": "textarea" }]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "recommendedThanksForUsing" },
+                { "key": "recommendedHaveQuestion" },
+                { "key": "recommendedGenerateMail" },
+                { "key": "recommendedCopyright" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "recommendedMemberName" },
+                { "key": "recommendedMemberEmail" },
+                { "key": "recommendedMemberPhone" },
+                { "key": "recommendedWhoRecommendedMember" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "successSendRecommendedTitle" },
+                { "key": "successSendRecommendedText" },
+                { "key": "sendToSystemMember" },
+                { "key": "sendOnMail" }
+              ]
+            }
           ]
         }
       ]
-    }    
+    }
   ]
 }

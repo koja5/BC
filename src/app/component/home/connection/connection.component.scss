@@ -17,11 +17,26 @@
 }
 
 .searchByParams {
-    width: 100%;
+    width: 85%;
     padding: 3px;
     margin: 10px 0px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .italic {
     font-style: italic;
+}
+
+.recommendation {
+    position: absolute;
+    right: 23px;
+    font-size: 22px;
+    top: 6px;
+    color: #5a5a5a;
+    text-align: center;
+}
+
+.send-recommended {
+    font-size: 16px;
 }

@@ -1,4 +1,4 @@
-<div class="py-4" *ngIf="language !== undefined">
+<div class="py-4" *ngIf="language !== undefined" [style.height]="height" style="overflow: auto;">
    <div class="container">
       <div class="row">
          <!-- Main Content -->
@@ -37,15 +37,30 @@
                            <div class="col-md-4" *ngFor="let item of allUsers | connectionPipe:searchTerm">
                               <a>
                                  <div class="border network-item rounded mb-3">
-                                    <div class="p-3 d-flex align-items-center network-item-header"
-                                       (click)="openProfile(item.id)">
-                                       <div class="dropdown-list-image mr-3">
-                                          <img class="rounded-circle"
-                                             src="../../../../assets/img/profile_image/{{item.image}}" alt="">
+                                    <div class="p-3 d-flex align-items-center network-item-header">
+                                       <div (click)="openProfile(item.id)" class="d-flex">
+                                          <div class="dropdown-list-image mr-3">
+                                             <img class="rounded-circle"
+                                                src="../../../../assets/img/profile_image/{{item.image}}" alt="">
+                                          </div>
+                                          <div class="font-weight-bold">
+                                             <h6 class="font-weight-bold text-dark mb-0">{{item.fullname}}</h6>
+                                             <div class="small text-black-50">{{item.profession}}</div>
+                                          </div>
                                        </div>
-                                       <div class="font-weight-bold">
-                                          <h6 class="font-weight-bold text-dark mb-0">{{item.fullname}}</h6>
-                                          <div class="small text-black-50">{{item.profession}}</div>
+                                       <div class="recommendation">
+                                          <!---->
+                                          <span class="send-recommended" [ngClass]="hoverItem === item.id ? 'fa fa-paper-plane' : 'fa fa-paper-plane-o'"
+                                             [title]="language.recommendedTooltip" (mouseenter)="heartHoverIn(item.id)"
+                                             (mouseleave)="heartHoverOut()"
+                                             (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"></span>
+                                          <p style="font-size: 13px; text-align: center;"><span
+                                                *ngIf="item.help !== null"
+                                                style="color: #2bc545;">{{item.help}}</span><span
+                                                style="color: #2bc545;" *ngIf="item.help === null">0</span>/<span
+                                                style="color: red;"
+                                                *ngIf="item.notHelp !== null">{{item.notHelp}}</span><span
+                                                style="color: red;" *ngIf="item.notHelp === null">0</span></p>
                                        </div>
                                     </div>
                                     <div class="border-top border-bottom">
@@ -53,14 +68,16 @@
                                           <p class="looking-offer-title">{{language.profileLooking}}: </p>
                                           <p *ngIf="item.looking" class="looking-offer-text"> &nbsp; {{item.looking}}
                                           </p>
-                                          <p *ngIf="item.looking === null" class="looking-offer-text italic"> &nbsp; {{language.profileNoInfoAboutLooking}}
+                                          <p *ngIf="item.looking === null" class="looking-offer-text italic"> &nbsp;
+                                             {{language.profileNoInfoAboutLooking}}
                                           </p>
                                        </div>
                                        <div class="pl-3 pr-3 pb-2 d-flex align-items-center network-item-header">
                                           <p class="looking-offer-title">{{language.profileOffer}}: </p>
                                           <p *ngIf="item.offer" class="looking-offer-text"> &nbsp; {{item.offer}}
                                           </p>
-                                          <p *ngIf="item.offer === null" class="looking-offer-text italic"> &nbsp; {{language.profileNoInfoAboutOffer}}
+                                          <p *ngIf="item.offer === null" class="looking-offer-text italic"> &nbsp;
+                                             {{language.profileNoInfoAboutOffer}}
                                           </p>
                                        </div>
                                     </div>
@@ -68,7 +85,8 @@
                                        <div class="col-6 pl-3 pl-1">
                                           <button type="button" (click)="openProfile(item.id)"
                                              class="btn btn-outline-primary btn-sm btn-block"> <i
-                                                class="feather-user"></i> {{language.connectionPreviewProfile}}
+                                                class="feather-user"></i>
+                                             {{language.connectionPreviewProfile}}
                                           </button>
                                        </div>
 
@@ -110,14 +128,24 @@
 
 <footer *ngIf="language !== undefined" class="footer">
    <div class="copyright">
-     <span>{{language.footerCopyright}}</span>
+      <span>{{language.footerCopyright}}</span>
    </div>
    <div class="terms-privacy">
-     <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
-       {{language.termsHeaderTitle}}
-     </a>
-     <a routerLink="/privacy-police" target="_blank" style="margin-left: 5px; color: #FFF;">
-       {{language.privacyHeaderTitle}}
-     </a>
+      <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
+         {{language.termsHeaderTitle}}
+      </a>
+      <a routerLink="/privacy-policy" target="_blank"
+         style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
+         {{language.privacyHeaderTitle}}
+      </a>
+      <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
+         {{language.impressumHeaderTitle}}
+      </a>
    </div>
- </footer>
+</footer>
+
+
+<app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
+   [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
+   (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
+</app-recommendation-button>

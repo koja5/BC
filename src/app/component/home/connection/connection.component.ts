@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { ConnectionService } from "src/app/services/connection.service";
 import { Router } from "@angular/router";
 import * as sha1 from "sha1";
@@ -13,10 +13,21 @@ export class ConnectionComponent implements OnInit {
   public allUsers: any;
   public language: any;
   public searchTerm: any;
+  public height: any;
+  public recommendedWindow = false;
+  public hover = "fa fa-heart-o";
+  public recommendedItem: any;
+  public hoverItem: any;
 
   constructor(private service: ConnectionService, private router: Router) {}
 
   ngOnInit() {
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 104;
+    } else {
+      this.height = window.innerHeight - 121;
+    }
+    this.height += "px";
     this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
   }
@@ -53,4 +64,40 @@ export class ConnectionComponent implements OnInit {
     console.log(id);
     this.router.navigate(["/home/main/profile/" + sha1(id.toString())]);
   }
+
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 104;
+    } else {
+      this.height = window.innerHeight - 121;
+    }
+    this.height += "px";
+  }
+
+  recommendedWindowEmitter() {
+    this.recommendedWindow = false;
+    this.recommendedItem = null;
+  }
+
+  heartHoverIn(index) {
+    this.hover = "fa fa-heart";
+    this.hoverItem = index;
+  }
+
+  heartHoverOut() {
+    this.hover = "fa fa-heart-o";
+    this.hoverItem = null;
+  }
+
+  recommended(id, name, email, phone) {
+    this.recommendedItem = {
+      id: id,
+      name: name,
+      email: email,
+      phone: phone
+    };
+    this.recommendedWindow = true;
+  }
+
 }

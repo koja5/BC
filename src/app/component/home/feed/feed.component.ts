@@ -44,6 +44,8 @@ export class FeedComponent implements OnInit {
   public linkClient = window.location.origin;
   public referralLinkCopied = false;
   public previewPost = false;
+  public recommendedWindow = false;
+  public recommendedItem: any;
 
   constructor(
     private service: FeedService,
@@ -357,7 +359,8 @@ export class FeedComponent implements OnInit {
   }
 
   copyLinkInClipboard() {
-    const link = this.linkClient + "/login/join-to/" + this.id + "/null/null/null";
+    const link =
+      this.linkClient + "/login/join-to/" + this.id + "/null/null/null";
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";
@@ -422,5 +425,20 @@ export class FeedComponent implements OnInit {
         );
       });
     }.call(this));
+  }
+
+  recommended(id, name, email, phone) {
+    this.recommendedItem = {
+      id: id,
+      name: name,
+      email: email,
+      phone: phone,
+    };
+    this.recommendedWindow = true;
+  }
+
+  recommendedWindowEmitter() {
+    this.recommendedWindow = false;
+    this.recommendedItem = null;
   }
 }
