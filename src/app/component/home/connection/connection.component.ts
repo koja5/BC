@@ -100,4 +100,9 @@ export class ConnectionComponent implements OnInit {
     this.recommendedWindow = true;
   }
 
+  sendMessageForThisUser(data) {
+    sessionStorage.setItem("message_user", JSON.stringify(data));
+    this.router.navigate(["/home/main/message"]);
+  }
+
 }

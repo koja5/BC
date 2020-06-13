@@ -7,7 +7,8 @@ const Schema = mongo.Schema;
 // const url = 'mongodb://appprodu_appproduction_prod:CJr4eUqWg33tT97mxPFx@vps.app-production.eu:42526/management_mongodb'
 // const url = "mongodb://78.47.206.131:27017/management_mongo?gssapiServiceName=mongodb";
 // const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
-const url = "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
+const url =
+  "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
 const mysql = require("mysql");
@@ -336,6 +337,8 @@ var mergePostWithUsers = (posts, res) => {
                       user_id: comm.user_id,
                       image: user.image,
                       name: user.fullname,
+                      image: userComm.image,
+                      name: userComm.fullname,
                       date: comm.date,
                       comment: comm.comment,
                     };
@@ -357,6 +360,17 @@ var mergePostWithUsers = (posts, res) => {
                   }
                 }
               }
+              /*for (like of post.likes) {
+                if (sha1(user.id.toString()) === like.user_id) {
+                  var itemLike = {
+                    _id: like._id,
+                    user_id: like.user_id,
+                    image: user.image,
+                    name: user.fullname
+                  };
+                  likesArray.push(itemLike);
+                }
+              }*/
               console.log(likesArray);
 
               const item = {
@@ -368,7 +382,7 @@ var mergePostWithUsers = (posts, res) => {
                 sid: post.sid,
                 date: post.date,
                 post: post.post,
-                likes: likesArray,
+                likes: post.likes,
                 recomment: recommentArray,
               };
               arrayPosts.push(item);
@@ -515,6 +529,206 @@ router.post("/commentPost", function (req, res, next) {
         }
       );
   });
+});
+
+router.post("/createMessage", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo.collection("messages").insertOne(req.body, function (err, result) {
+      console.log("Item inserted!" + result);
+      if (err) {
+        throw err;
+      } else {
+        res.send(result["ops"][0]["_id"]);
+      }
+    });
+  });
+});
+
+var mergeMessageWithUsers = (messages, id, res) => {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var arrayMessages = [];
+    conn.query("SELECT * from users", function (err, rows) {
+      conn.release();
+      if (!err) {
+        console.log(rows);
+        for (let mess of messages) {
+          var receiveId = null;
+          if (mess["sender1"] !== id) {
+            receiveId = mess["sender1"];
+          } else {
+            receiveId = mess["sender2"];
+          }
+          for (let user of rows) {
+            if (sha1(user.id.toString()) == receiveId) {
+              var messageItem = {
+                _id: mess._id,
+                receiveId: receiveId,
+                name: user.fullname,
+                image: user.image,
+                profession: user.profession,
+                message:
+                  mess.messages.length > 0
+                    ? mess.messages[mess.messages.length - 1]
+                    : [],
+                not_seen: mess.not_seen,
+              };
+              arrayMessages.push(messageItem);
+            }
+          }
+        }
+        console.log(arrayMessages);
+        res.json(arrayMessages);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+      }
+    });
+  });
+};
+
+router.get("/getAllMessagesForUser/:id", function (req, res, next) {
+  let id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .find({
+        $or: [
+          {
+            sender1: id,
+          },
+          { sender2: id },
+        ],
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        // res.json(rows);
+        console.log(rows);
+        mergeMessageWithUsers(rows, id, res);
+        // res.json(arrayResponse);
+        db.close();
+      });
+  });
+});
+
+router.get("/getMessageForSelectedUser/:id", function (req, res, next) {
+  let id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .find({
+        _id: ObjectId(id),
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        console.log(rows);
+        res.json(rows[0].messages);
+        // mergeMessageWithUsers(rows, id, res);
+        // res.json(arrayResponse);
+        db.close();
+      });
+  });
+});
+
+router.post("/getOrCreate", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .find({
+        $or: [
+          {
+            sender1: req.body.sender1,
+            sender2: req.body.sender2,
+          },
+          {
+            sender1: req.body.sender2,
+            sender2: req.body.sender1,
+          },
+        ],
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        if (rows.length !== 0) {
+          const response = {
+            info: "get",
+            messages: rows,
+          };
+          res.json(response);
+          db.close();
+        } else {
+          dbo
+            .collection("messages")
+            .insertOne(req.body, function (err, result) {
+              console.log("Item inserted!" + result);
+              if (err) {
+                throw err;
+              } else {
+                const response = {
+                  info: "create",
+                  id: result["ops"][0]._id,
+                };
+                res.send(response);
+              }
+            });
+        }
+      });
+  });
+});
+
+router.post("/pushNewMessage", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    console.log(req.body);
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .updateOne(
+        { _id: ObjectId(req.body._id) },
+        {
+          $push: { messages: req.body.message },
+          $set: { not_seen: req.body.receiveId },
+        },
+        function (err, rows) {
+          if (err) throw err;
+          res.json(201);
+        }
+      );
+  });
+});
+
+router.post("/updateSeen", function (req, res, next) {
+  mongo.connect(url, function (err, db, res) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("messages")
+      .updateOne(
+        { _id: ObjectId(req.body._id) },
+        { $set: { not_seen: req.body.not_seen } },
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+  });
+  res.json({ code: 201 });
 });
 
 module.exports = router;

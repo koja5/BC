@@ -9,6 +9,7 @@ export class MessageService {
   public newFullname = new Subject<any>();
   public userInfo = new Subject<null>();
   public navigationItemFeed = new Subject<null>();
+  public messageForThisUser = new Subject<any>();
 
   constructor() {}
 
@@ -34,5 +35,13 @@ export class MessageService {
 
   getNavigationItemFeed() {
     return this.navigationItemFeed.asObservable();
+  }
+
+  sendMessageForThisUser(data) {
+    this.messageForThisUser.next(data);
+  }
+
+  getMessageForThisUser() {
+    return this.messageForThisUser.asObservable();
   }
 }

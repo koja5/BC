@@ -26,7 +26,7 @@
               <p class="mb-0 text-muted"> {{data.profession}} </p>
             </div>
             <div class="profile-right ml-auto">
-              <button type="button" class="btn btn-light mr-2"> <i class="fa fa-envelope"></i>
+              <button type="button" class="btn btn-light mr-2" (click)="sendMessageForThisUser()"> <i class="fa fa-envelope"></i>
                 {{language.profileSendMessage}}
               </button>
               <button type="button" class="btn btn-primary mr-2"

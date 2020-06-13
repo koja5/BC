@@ -220,21 +220,55 @@ app.set("port", port);
  */
 const server = http.createServer(app);
 
-const io = socketIO(server);
+/* SOCKET START */
 
-let numberOfOnlineUsers = 0;
+var io = require("socket.io").listen(server);
 
 io.on("connection", (socket) => {
-  numberOfOnlineUsers++;
-  socket.on("/", (numberOfOnlineUsers) => {
-    socket.emit("numberOfOnlineUsers", numberOfOnlineUsers);
+  console.log("new connection made.");
+
+  socket.on("join", function (data) {
+    //joining
+    socket.join(data.room);
+
+    console.log(data.sender_id + "joined the room : " + data.room);
+
+    socket.broadcast.to(data.room).emit("new user joined", {
+      sender_id: data.sender_id,
+      message: "has joined this room.",
+    });
   });
 
-  socket.on("disconnect", () => {
-    numberOfOnlineUsers--;
-    socket.emit("numberOfOnlineUsers", numberOfOnlineUsers);
+  socket.on("leave", function (data) {
+    console.log(data.sender_id + "left the room : " + data.room);
+
+    socket.broadcast.to(data.room).emit("left room", {
+      sender_id: data.sender_id,
+      message: "has left this room.",
+    });
+
+    socket.leave(data.room);
+  });
+
+  socket.on("message", function (data) {
+    console.log(data);
+
+    io.in(data.room).emit("new message", {
+      sender_id: data.sender_id,
+      message: data.message,
+      fullname: data.fullname,
+      image: data.image,
+      date: data.date,
+      not_seen: data.not_seen,
+    });
+
+    io.in(data.not_seen).emit("notification", {
+      text: "notifikacija!!!",
+    });
   });
 });
+
+/* SOCKET END */
 
 /**
  * Listen on provided port, on all network interfaces.

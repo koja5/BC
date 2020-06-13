@@ -49,8 +49,8 @@ export class ProfileComponent implements OnInit {
   public windowHeight: any;
   public windowWidth: any;
   public owner = false;
-  public url = "http://localhost:3000/upload";
-  // public url = "http://78.47.206.131:" + location.port + "/upload";
+  // public url = "http://localhost:3000/upload";
+  public url = "http://78.47.206.131:" + location.port + "/upload";
   public allExperience: any;
   public allEducation: any;
   public lookingOffer: any;
@@ -69,6 +69,7 @@ export class ProfileComponent implements OnInit {
   constructor(
     private service: ProfileService,
     public route: ActivatedRoute,
+    private router: Router,
     private message: MessageService,
     public http: HttpClient,
     public domSanitizer: DomSanitizer,
@@ -322,5 +323,10 @@ export class ProfileComponent implements OnInit {
 
   promoWindowEmitter() {
     this.promoWindow = false;
+  }
+
+  sendMessageForThisUser() {
+    sessionStorage.setItem("message_user", JSON.stringify(this.data));
+    this.router.navigate(["/home/main/message"]);
   }
 }

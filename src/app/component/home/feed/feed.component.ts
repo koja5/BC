@@ -163,6 +163,7 @@ export class FeedComponent implements OnInit {
         return new Date(b["date"]).getTime() - new Date(a["date"]).getTime();
       });
       this.loading = false;
+      console.log(this.allPosts);
     });
   }
 
