@@ -90,6 +90,9 @@ export class PremiumComponent implements OnInit {
     this.data.premiumRegardsEnd = this.language.premiumRegardsEnd;
     this.data.premiumConfirmMailBCISignature = this.language.premiumConfirmMailBCISignature;
     this.data.premiumMessage = this.language.premiumMessage;
+    this.data.premiumItemPrice = this.language.premiumItemPrice;
+    this.data.premiumItemCount = this.language.premiumItemCount;
+    this.data.premiumItemTotal = this.language.premiumItemTotal;
   }
 
   finishBuyRedirect() {

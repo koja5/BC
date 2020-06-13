@@ -954,3 +954,32 @@ pre {
 .notHelpfullColor {
   color: red;
 }
+
+mat-video .videoplayer {
+    height: 250px !important;
+}
+
+
+.profile-img-container {
+    position: relative;
+}
+
+.profile-img-container .change-icon i {
+    position: absolute;
+    top: 35%;
+    left: 48%;
+    padding: 50px;
+    transform: translate(-45%, -45%);
+    display: none;
+    color: #0B6794;
+}
+
+.profile-img-container:hover img {
+    opacity: 0.8;    
+    background: #f2f2f2;
+}
+
+.profile-img-container:hover .change-icon i {
+    display: block;
+    z-index: 500;
+}

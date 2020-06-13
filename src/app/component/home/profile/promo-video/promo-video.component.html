@@ -1,0 +1,29 @@
+<kendo-window [title]="" *ngIf="promoWindow" [height]="windowHeight ? windowHeight : 420"
+  [width]="windowWidth ? windowWidth : 500" (close)="closeWindow()">
+  <div class="loader4 loading promoVideoLoader" *ngIf="loadVideo"></div>
+  <div *ngIf="video">
+    <div>
+      <label for="upload-promo" class="cover-photo-update">
+        <i class="fa fa-camera-retro"></i> Change
+      </label>
+      <input id="upload-promo" type="file" (change)="fileChange($event)" ng2FileSelect [uploader]="uploaderPromo" />
+    </div>
+    <mat-video src="./assets/img/promo_video/{{video}}" [autoplay]="true" [preload]="true"></mat-video>
+    <div *ngIf="owner">
+      <label for="upload-promo" class="btn btn-outline-danger btn-sm pl-4 pr-4 mt-4">
+        <span class="fa fa-upload"></span> {{language.promoChangePromoVideo}}
+      </label>
+      <input id="upload-promo" type="file" (change)="fileChange($event)" ng2FileSelect [uploader]="uploaderPromo" />
+    </div>
+  </div>
+  <div *ngIf="video === null || video === undefined" class="no-have-promo">
+    <span class="fa fa-exclamation-circle notification-info"></span>
+    <p>{{language.promoNoHavePromoVideo}}</p>
+    <div>
+      <label for="upload-promo" class="btn btn-outline-danger btn-sm pl-4 pr-4">
+        <span class="fa fa-upload"></span> {{language.promoUploadPromoVideo}}
+      </label>
+      <input id="upload-promo" type="file" (change)="fileChange($event)" ng2FileSelect [uploader]="uploaderPromo" />
+    </div>
+  </div>
+</kendo-window>

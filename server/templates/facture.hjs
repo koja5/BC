@@ -231,11 +231,11 @@
                                             </td>
                                             <td
                                                 style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;">
-                                                <small>€690,00</small></td>
+                                                <small>{{premiumItemPrice}}</small></td>
                                             <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #646a6e;  line-height: 18px;  vertical-align: top; padding:10px 0;"
-                                                align="center">1</td>
+                                                align="center">{{premiumItemCount}}</td>
                                             <td style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #1e2b33;  line-height: 18px;  vertical-align: top; padding:10px 0;"
-                                                align="right">€690,00</td>
+                                                align="right">{{premiumItemTotal}}</td>
                                         </tr>
                                         <tr>
                                             <td height="1" colspan="4" style="border-bottom:1px solid #e4e4e4"></td>
@@ -276,7 +276,7 @@
                                             </td>
                                             <td
                                                 style="font-size: 12px; font-family: 'Open Sans', sans-serif; color: #000; line-height: 22px; vertical-align: top; text-align:right; ">
-                                                <strong>€690,00</strong>
+                                                <strong>{{premiumItemTotal}}</strong>
                                             </td>
                                         </tr>
                                     </tbody>

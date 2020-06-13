@@ -29,9 +29,12 @@
               <button type="button" class="btn btn-light mr-2"> <i class="fa fa-envelope"></i>
                 {{language.profileSendMessage}}
               </button>
-              <button type="button" class="btn btn-primary"
+              <button type="button" class="btn btn-primary mr-2"
                 (click)="recommended(data.id, data.fullname, data.email, data.phoneNumber)"> <i
                   class="fa fa-paper-plane"></i> {{language.profileRecommended}}
+              </button>
+              <button *ngIf="data.promo || owner" type="button" class="btn btn-secondary" (click)="openPromoVideo()"> <i
+                  class="fa fa-film"></i> {{language.promoButton}}
               </button>
             </div>
           </div>
@@ -293,13 +296,13 @@
         </main>
         <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
           <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
-            <div class="pt-5 pl-5 pr-5 pb-3">
+            <div class="pt-5 pl-5 pr-5 pb-3 profile-img-container">
 
               <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid"
+              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid rounded-circle"
                 alt="Responsive image">
-              <div *ngIf="owner"> <label for="file-upload-profile" class="custom-file-upload">
-                  <i class="fa fa-cloud-upload"></i> {{language.profileUpdateProfileImage}}
+              <div *ngIf="owner"><label for="file-upload-profile" class="change-icon">
+                  <i class="fa fa-upload  fa-3x" style="top: 53% !important;"></i>
                 </label>
                 <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
                   [uploader]="uploader" />
@@ -307,12 +310,14 @@
             </div>
             <div class="d-flex" style="border-top: 1px solid #eaebec;">
               <div class="col-6 border-right p-3">
-                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="recommendationStatus.helpfull">{{recommendationStatus.helpfull}}</h6>
+                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="recommendationStatus.helpfull">
+                  {{recommendationStatus.helpfull}}</h6>
                 <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="!recommendationStatus.helpfull">0</h6>
                 <p class="mb-0 small helpfullColor">{{language.recommendedHelpfullTitle}}</p>
               </div>
               <div class="col-6 p-3">
-                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="recommendationStatus.notHelpfull">{{recommendationStatus.notHelpfull}}</h6>
+                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="recommendationStatus.notHelpfull">
+                  {{recommendationStatus.notHelpfull}}</h6>
                 <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="!recommendationStatus.notHelpfull">0</h6>
                 <p class="mb-0 small notHelpfullColor">{{language.recommendedNotHelpfullTitle}}</p>
               </div>
@@ -366,7 +371,10 @@
       <span>{{language.footerCopyright}}</span>
     </div>
     <div class="terms-privacy">
-      <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
+      <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
+        {{language.aboutFooter}}
+      </a>
+      <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
         {{language.termsHeaderTitle}}
       </a>
       <a routerLink="/privacy-policy" target="_blank"
@@ -412,4 +420,7 @@
     [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
     (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
   </app-recommendation-button>
+
+  <app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="id" [owner]="owner" [video]="data.promo"
+    (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 </div>

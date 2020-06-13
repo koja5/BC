@@ -272,7 +272,10 @@ router.post("/sendFacture", function(req, res) {
       email: req.body.email,
       phone: req.body.phone,
       mobile1: req.body.mobile1,
-      mobile2: req.body.mobile2
+      mobile2: req.body.mobile2,
+      premiumItemPrice: req.body.premiumItemPrice,
+      premiumItemCount: req.body.premiumItemCount,
+      premiumItemTotal: req.body.premiumItemTotal
     })
   };
 
@@ -294,6 +297,7 @@ router.post("/sendRecommended", function(req, res) {
   );
   var recommendedLink =
   link + "recommendedCount/" + req.body.recommendedId;
+  var recommendedMemberProfileLink = linkClient + 'home/main/profile/' + sha1(req.body.recommendedId.toString());
   var compiledTemplate = hogan.compile(confirmTemplate);
 
   var mailOptions = {
@@ -317,6 +321,8 @@ router.post("/sendRecommended", function(req, res) {
       recommendedMemberEmail: req.body.language.recommendedMemberEmail,
       recommendedMemberPhone: req.body.language.recommendedMemberPhone,
       recommendedWhoRecommendedMember: req.body.language.recommendedWhoRecommendedMember,
+      recommendedMemberShowProfile: req.body.language.recommendedMemberShowProfile,
+      recommendedMemberProfileLink: recommendedMemberProfileLink,
       helpfullCount: recommendedLink + "/1",
       notHelpfullCount: recommendedLink + "/0"
     })

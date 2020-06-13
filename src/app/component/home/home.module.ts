@@ -22,6 +22,9 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-file-upload';
 import { ConnectionFilterPipe } from './connection/connection.pipe';
 import { RecommendationButtonComponent } from './recommendation-button/recommendation-button.component';
+import { PromoVideoComponent } from './profile/promo-video/promo-video.component';
+import { MatVideoModule } from 'mat-video';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +40,9 @@ import { RecommendationButtonComponent } from './recommendation-button/recommend
     FindConnectionComponent,
     ContactComponent,
     ConnectionFilterPipe,
-    RecommendationButtonComponent
+    RecommendationButtonComponent,
+    PromoVideoComponent,
+    AboutUsComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +54,8 @@ import { RecommendationButtonComponent } from './recommendation-button/recommend
     ImageCropperModule,
     DropDownsModule,
     ButtonsModule,
-    FileUploadModule
+    FileUploadModule,
+    MatVideoModule
   ]
 })
 export class HomeModule { }

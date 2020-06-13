@@ -19,7 +19,8 @@ import { HelpService } from "src/app/services/help.service";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { EditProfileService } from "src/app/services/edit-profile.service";
-import { RecommendationModel } from 'src/app/models/recommendation-model';
+import { RecommendationModel } from "src/app/models/recommendation-model";
+import { ToastrService } from "ngx-toastr";
 
 @Component({
   selector: "app-profile",
@@ -48,8 +49,8 @@ export class ProfileComponent implements OnInit {
   public windowHeight: any;
   public windowWidth: any;
   public owner = false;
-  // public url = "http://localhost:3000/upload";
-  public url = "http://78.47.206.131:" + location.port + "/upload";
+  public url = "http://localhost:3000/upload";
+  // public url = "http://78.47.206.131:" + location.port + "/upload";
   public allExperience: any;
   public allEducation: any;
   public lookingOffer: any;
@@ -61,6 +62,9 @@ export class ProfileComponent implements OnInit {
   public recommendedItem: any;
   public recommendedWindow = false;
   public recommendationStatus = new RecommendationModel();
+  public promoWindow = false;
+  public maxFileImageSize = 1 * 1024 * 1024;
+  public maxFileCoverSize = 1 * 1024 * 1024;
 
   constructor(
     private service: ProfileService,
@@ -69,7 +73,8 @@ export class ProfileComponent implements OnInit {
     public http: HttpClient,
     public domSanitizer: DomSanitizer,
     public helpService: HelpService,
-    public editProfileService: EditProfileService
+    public editProfileService: EditProfileService,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit() {
@@ -94,7 +99,6 @@ export class ProfileComponent implements OnInit {
   initialization() {
     this.service.getUserInfoSHA1(this.id).subscribe((data) => {
       this.data = data[0];
-      console.log(this.data);
       if (
         sha1(data[0].id.toString()) === localStorage.getItem("id") ||
         this.user.type === sha1(0)
@@ -105,6 +109,7 @@ export class ProfileComponent implements OnInit {
 
     this.uploader = new FileUploader({
       url: this.url,
+      maxFileSize: 1 * 1024 * 1024,
     });
 
     this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
@@ -187,9 +192,9 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    this.service.getRecommendation(this.id).subscribe(data => {
-      for(let i = 0; i < data["length"]; i++) {
-        if(data[i].status === 1) {
+    this.service.getRecommendation(this.id).subscribe((data) => {
+      for (let i = 0; i < data["length"]; i++) {
+        if (data[i].status === 1) {
           this.recommendationStatus.helpfull = data[i].count;
         } else {
           this.recommendationStatus.notHelpfull = data[i].count;
@@ -199,17 +204,31 @@ export class ProfileComponent implements OnInit {
   }
 
   fileChangeEventProfile(event: any): void {
-    this.imageChangedEvent = event;
-    this.changeImage = true;
-    this.showCropper = true;
-    this.typeOfUpload = "img";
+    if (event.target.files[0].size <= this.maxFileImageSize) {
+      this.imageChangedEvent = event;
+      this.changeImage = true;
+      this.showCropper = true;
+      this.typeOfUpload = "img";
+    } else {
+      this.toastr.error(this.language.adminMaxFileImage, "", {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      });
+    }
   }
 
   fileChangeEventCover(event: any): void {
-    this.imageChangedEvent = event;
-    this.changeImageCover = true;
-    this.showCropper = true;
-    this.typeOfUpload = "cover";
+    if (event.target.files[0].size <= this.maxFileCoverSize) {
+      this.imageChangedEvent = event;
+      this.changeImageCover = true;
+      this.showCropper = true;
+      this.typeOfUpload = "cover";
+    } else {
+      this.toastr.error(this.language.adminMaxFileCover, "", {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      });
+    }
   }
 
   imageCropped(event: ImageCroppedEvent) {
@@ -295,5 +314,13 @@ export class ProfileComponent implements OnInit {
   recommendedWindowEmitter() {
     this.recommendedWindow = false;
     this.recommendedItem = null;
+  }
+
+  openPromoVideo() {
+    this.promoWindow = true;
+  }
+
+  promoWindowEmitter() {
+    this.promoWindow = false;
   }
 }

@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   public selectedUser: any;
   public language: any;
   public height: any;
+  public showFeedItem = false;
 
   constructor(
     private router: Router,
@@ -35,6 +36,7 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(window.location.pathname);
     this.height = window.innerHeight - 81;
     this.height += "px";
     this.id = localStorage.getItem("id");
@@ -45,6 +47,12 @@ export class HomeComponent implements OnInit {
     this.message.getUserInfo().subscribe((data) => {
       this.initialization();
     });
+
+    this.message.getNavigationItemFeed().subscribe(
+      data => {
+        this.showFeedItem = true;
+      }
+    );
   }
 
   initialization() {

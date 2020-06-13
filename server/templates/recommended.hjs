@@ -46,7 +46,13 @@
             <p><b>{{recommendedMemberPhone}}:</b> {{recommendedPhone}}</p>
           </div>
 
-          
+          <div style="text-align: center;">
+            <a href="{{recommendedMemberProfileLink}}" style="cursor: pointer; text-decoration: initial;"><button
+                class="text-white text-sm tracking-wide rounded w-full"
+                style="background: #00B2EC;box-sizing: inherit;border-width: 0;border-style: solid;border-color: #dae1e7;font-family: inherit;font-size: .875rem;line-height: 1.15;margin: 0;overflow: visible;text-transform: none;-webkit-appearance: button;padding: 1rem;cursor: pointer;border-radius: .25rem;/* margin-top: 2rem; *//* margin-bottom: 2rem; */color: #fff;letter-spacing: .05em;width: 35%;">
+                <span class="fa fa-thumbs-up"></span> {{recommendedMemberShowProfile}}</button></a>
+          </div>
+
           <div style="margin: 35px 0px 0px;">
             <span><b>{{recommendedWhoRecommendedMember}}:</b> {{whoRecommended}}</span>
           </div>

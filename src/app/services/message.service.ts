@@ -1,16 +1,16 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/Observable';
-import { Subject } from 'rxjs/Subject';
+import { Injectable } from "@angular/core";
+import { Observable } from "rxjs/Observable";
+import { Subject } from "rxjs/Subject";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class MessageService {
-
   public newFullname = new Subject<any>();
   public userInfo = new Subject<null>();
+  public navigationItemFeed = new Subject<null>();
 
-  constructor() { }
+  constructor() {}
 
   sendNewFullname() {
     this.newFullname.next();
@@ -26,5 +26,13 @@ export class MessageService {
 
   getUserInfo() {
     return this.userInfo.asObservable();
+  }
+
+  sendNavigationItemFeed() {
+    this.navigationItemFeed.next();
+  }
+
+  getNavigationItemFeed() {
+    return this.navigationItemFeed.asObservable();
   }
 }

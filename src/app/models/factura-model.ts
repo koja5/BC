@@ -28,4 +28,7 @@ export class FacturaModel {
     premiumRegardsEnd: string;
     premiumConfirmMailBCISignature?: string;
     premiumMessage: string;
+    premiumItemPrice: string;
+    premiumItemCount: string;
+    premiumItemTotal: string;
 }

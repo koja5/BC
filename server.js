@@ -67,9 +67,6 @@ app.post("/upload", function (req, res) {
       const file = req.file.originalname.split("-");
       console.log(req.file);
       if (file[1] === "img") {
-        /*conn.query(
-          "update users set img = ? where sha1(id) = ?",
-          [req.file.buffer, file[0]],*/
         conn.query(
           "update users set image = ? where sha1(id) = ?",
           [req.file.filename, file[0]],
@@ -80,7 +77,7 @@ app.post("/upload", function (req, res) {
                 response = {
                   name: req.file.filename,
                   type: "img",
-                  info: true
+                  info: true,
                 };
                 res.json(response);
               } else {
@@ -102,7 +99,7 @@ app.post("/upload", function (req, res) {
                 response = {
                   name: req.file.filename,
                   type: "cover",
-                  info: true
+                  info: true,
                 };
                 res.json(response);
               } else {
@@ -114,6 +111,62 @@ app.post("/upload", function (req, res) {
           }
         );
       }
+      conn.on("error", function (err) {
+        console.log("[mysql error]", err);
+      });
+    });
+  });
+});
+
+var storagePromo = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./src/assets/img/promo_video/");
+  },
+  filename: function (req, file, cb) {
+    var datetimestamp = Date.now();
+    cb(null, file.fieldname + "-" + datetimestamp + ".mp4");
+  },
+});
+
+var uploadPromo = multer({
+  //multer settings
+  storage: storagePromo,
+}).single("file");
+
+app.post("/uploadPromo", function (req, res) {
+  uploadPromo(req, res, function (err) {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+        return;
+      }
+      var response = {};
+      const file = req.file.originalname.split("-");
+      console.log(req.file);
+      conn.query(
+        "update users set promo = ? where sha1(id) = ?",
+        [req.file.filename, file[0]],
+        function (err, rows) {
+          conn.release();
+          if (!err) {
+            if (!err) {
+              response = {
+                name: req.file.filename,
+                type: "mp4",
+                info: true,
+              };
+              res.json(response);
+            } else {
+              res.json(err);
+            }
+          } else {
+            res.json(err);
+          }
+        }
+      );
       conn.on("error", function (err) {
         console.log("[mysql error]", err);
       });

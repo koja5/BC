@@ -608,7 +608,7 @@ router.get("/getOtherConnections/:id", function (req, res, next) {
               .length;
             console.log(countLevel);
             conn.query(
-              "SELECT * from users where active = 1 and sid != '" +
+              "SELECT u.*, lo.looking, lo.offer, rTrue.help, rFalse.notHelp from users u left join lookingOffer lo on sha1(u.id) = lo.id_user left join (SELECT id_user, count(*) as help from recommendation where status = 1 group by id_user)rTrue on rTrue.id_user = sha1(u.id) left join (SELECT id_user, count(*) as notHelp from recommendation where status = 0 group by id_user)rFalse on rFalse.id_user = sha1(u.id) where active = 1 and sid != '" +
                 rows[0].sid +
                 "' and sid like '%" +
                 directorId +

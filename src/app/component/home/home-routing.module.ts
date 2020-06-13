@@ -9,6 +9,7 @@ import { MyProfileComponent } from './profile/my-profile/my-profile.component';
 import { PremiumComponent } from './premium/premium.component';
 import { ConnectionComponent } from './connection/connection.component';
 import { ContactComponent } from './contact/contact.component';
+import { AboutUsComponent } from './about-us/about-us.component';
 
 const routes: Routes = [
   {
@@ -52,6 +53,10 @@ const routes: Routes = [
       {
         path: 'contact',
         component: ContactComponent
+      },
+      {
+        path: 'about-us',
+        component: AboutUsComponent
       }
     ]
   }

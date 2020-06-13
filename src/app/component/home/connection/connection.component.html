@@ -45,7 +45,7 @@
                                           </div>
                                           <div class="font-weight-bold">
                                              <h6 class="font-weight-bold text-dark mb-0">{{item.fullname}}</h6>
-                                             <div class="small text-black-50">{{item.profession}}</div>
+                                             <div class="small text-black-50" style="width: 90%">{{item.profession}}</div>
                                           </div>
                                        </div>
                                        <div class="recommendation">
@@ -104,21 +104,6 @@
                         </div>
                      </div>
                   </div>
-                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                     <div class="p-3 w-100">
-                        <h6>Soon in next free update</h6>
-                     </div>
-                  </div>
-                  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                     <div class="p-3 w-100">
-                        <h6>Soon in next free update</h6>
-                     </div>
-                  </div>
-                  <div class="tab-pane fade" id="type" role="tabpanel" aria-labelledby="type-tab">
-                     <div class="p-3 w-100">
-                        <h6>Soon in next free update</h6>
-                     </div>
-                  </div>
                </div>
             </div>
          </main>
@@ -129,19 +114,22 @@
 <footer *ngIf="language !== undefined" class="footer">
    <div class="copyright">
       <span>{{language.footerCopyright}}</span>
-   </div>
-   <div class="terms-privacy">
-      <a routerLink="/terms" target="_blank" style="border-right: 1px solid; color: #FFF;">
-         {{language.termsHeaderTitle}}
+    </div>
+    <div class="terms-privacy">
+      <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
+        {{language.aboutFooter}}
+      </a>
+      <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
+        {{language.termsHeaderTitle}}
       </a>
       <a routerLink="/privacy-policy" target="_blank"
-         style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
-         {{language.privacyHeaderTitle}}
+        style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
+        {{language.privacyHeaderTitle}}
       </a>
       <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
-         {{language.impressumHeaderTitle}}
+        {{language.impressumHeaderTitle}}
       </a>
-   </div>
+    </div>
 </footer>
 
 

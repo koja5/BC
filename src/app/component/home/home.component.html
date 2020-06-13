@@ -44,6 +44,10 @@
           </div>
         </li>
         <li class="nav-item">
+          <a *ngIf="showFeedItem" class="nav-link" routerLink="/home/main/feed" (click)="showFeedItem=false"><i
+              class="fa fa-home mr-2"></i><span class="d-none d-lg-inline">{{language.feedNavigationMenu}}</span></a>
+        </li>
+        <li class="nav-item">
           <a *ngIf="superadminInd" class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
               class="d-none d-lg-inline">{{language.feedDashboard}}</span></a>
         </li>

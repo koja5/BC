@@ -97,6 +97,9 @@
       "adminErrorCreateText": { "type": "string" },
       "adminDeleteTitle": { "type": "string" },
       "adminDeleteText": { "type": "string" },
+      "adminMaxFileImage": { "type": "string" },
+      "adminMaxFileCover": { "type": "string" },
+      "adminMaxFilePromoVideo": { "type": "string" },
       "premiumTitleHeader": { "type": "string" },
       "premiumTitleCard": { "type": "string" },
       "premiumCurrency": { "type": "string" },
@@ -152,6 +155,9 @@
       "premiumRegardsEnd": { "type": "string" },
       "premiumConfirmMailBCISignature": { "type": "string" },
       "premiumMessage": { "type": "string" },
+      "premiumItemPrice": { "type": "string" },
+      "premiumItemCount": { "type": "string" },
+      "premiumItemTotal": { "type": "string" },
       "ok": { "type": "string" },
       "contectTitleHeader": { "type": "string" },
       "contectTextHeader": { "type": "string" },
@@ -255,6 +261,7 @@
       "feedSendInviteToMail": { "type": "string" },
       "feedSearch": { "type": "string" },
       "feedDashboard": { "type": "string" },
+      "feedNavigationMenu": { "type": "string" },
       "feedMyAccount": { "type": "string" },
       "feedEdit": { "type": "string" },
       "feedLogout": { "type": "string" },
@@ -327,6 +334,7 @@
       "profileNoInfoBankAccount": { "type": "string" },
       "profileNoUser": { "type": "string" },
       "connectionMyOwnList": { "type": "string" },
+      "connectionallYourConnections": { "type": "string" },
       "connectionOtherConnection": { "type": "string" },
       "connectionSendMessage": { "type": "string" },
       "connectionFollow": { "type": "string" },
@@ -484,7 +492,85 @@
       "successSendRecommendedTitle": { "type": "string" },
       "successSendRecommendedText": { "type": "string" },
       "sendToSystemMember": { "type": "string" },
-      "sendOnMail": { "type": "string" }
+      "sendOnMail": { "type": "string" },
+      "recommendedMemberShowProfile": { "type": "string" },
+      "promoButton": { "type": "string" },
+      "promoNoHavePromoVideo": { "type": "string" },
+      "promoUploadPromoVideo": { "type": "string" },
+      "promoChangePromoVideo": { "type": "string" },
+      "aboutFooter": { "type": "string" },
+      "aboutTitle": { "type": "string" },
+      "aboutContactUs": { "type": "string" },
+      "aboutPrice": { "type": "string" },
+      "aboutText": { "type": "string" },
+      "aboutCardFirstIcon": { "type": "string" },
+      "aboutCardFirstTitle": { "type": "string" },
+      "aboutCardFirstText": { "type": "string" },
+      "aboutCardSecondIcon": { "type": "string" },
+      "aboutCardSecondTitle": { "type": "string" },
+      "aboutCardSecondText": { "type": "string" },
+      "aboutCardThreeIcon": { "type": "string" },
+      "aboutCardThreeTitle": { "type": "string" },
+      "aboutCardThreeText": { "type": "string" },
+      "aboutCardFourIcon": { "type": "string" },
+      "aboutCardFourTitle": { "type": "string" },
+      "aboutCardFourText": { "type": "string" },
+      "aboutAboutUsTitle": { "type": "string" },
+      "aboutAboutUsText": { "type": "string" },
+      "aboutAboutUsItems": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" }
+          }
+        }
+      },
+      "aboutAboutUsTitle2": { "type": "string" },
+      "aboutAboutUsText2": { "type": "string" },
+      "aboutAboutUsItems2": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" }
+          }
+        }
+      },
+      "aboutContactTitle": { "type": "string" },
+      "aboutContactText": { "type": "string" },
+      "aboutContactButton": { "type": "string" },
+      "aboutFeaturesTitle": { "type": "string" },
+      "aboutFeaturesText": { "type": "string" },
+      "aboutFeaturesCardOneIcon": { "type": "string" },
+      "aboutFeaturesCardOneTitle": { "type": "string" },
+      "aboutFeaturesCardOneText": { "type": "string" },
+      "aboutFeaturesCardTwoIcon": { "type": "string" },
+      "aboutFeaturesCardTwoTitle": { "type": "string" },
+      "aboutFeaturesCardTwoText": { "type": "string" },
+      "aboutFeaturesCardThreeIcon": { "type": "string" },
+      "aboutFeaturesCardThreeTitle": { "type": "string" },
+      "aboutFeaturesCardThreeText": { "type": "string" },
+      "aboutFeaturesCardFourIcon": { "type": "string" },
+      "aboutFeaturesCardFourTitle": { "type": "string" },
+      "aboutFeaturesCardFourText": { "type": "string" },
+      "aboutFeaturesCardFiveIcon": { "type": "string" },
+      "aboutFeaturesCardFiveTitle": { "type": "string" },
+      "aboutFeaturesCardFiveText": { "type": "string" },
+      "aboutFeaturesCardSixIcon": { "type": "string" },
+      "aboutFeaturesCardSixTitle": { "type": "string" },
+      "aboutFeaturesCardSixText": { "type": "string" },
+      "aboutProcessTitle": { "type": "string" },
+      "aboutProcessText": { "type": "string" },
+      "aboutProcessFirstIcon": { "type": "string" },
+      "aboutProcessFirstTitle": { "type": "string" },
+      "aboutProcessFirstText": { "type": "string" },
+      "aboutProcessSecondIcon": { "type": "string" },
+      "aboutProcessSecondTitle": { "type": "string" },
+      "aboutProcessSecondText": { "type": "string" },
+      "aboutProcessThreeIcon": { "type": "string" },
+      "aboutProcessThreeTitle": { "type": "string" },
+      "aboutProcessThreeText": { "type": "string" }
     }
   },
   "layout": [
@@ -773,6 +859,17 @@
             { "key": "noInfo" },
             {}
           ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "adminMaxFileImage" },
+            { "key": "adminMaxFileCover" },
+            { "key": "adminMaxFilePromoVideo" },
+            {}
+          ]
         }
       ]
     },
@@ -914,6 +1011,16 @@
             { "key": "premiumRegardsEnd" },
             { "key": "premiumMessage" },
             { "key": "premiumConfirmMailBCISignature" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "premiumItemPrice" },
+            { "key": "premiumItemCount" },
+            { "key": "premiumItemTotal" }
           ]
         },
         {
@@ -1312,6 +1419,12 @@
             { "key": "feedEnterFirstname" },
             { "key": "feedEnterLastname" }
           ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "feedNavigationMenu" }, {}, {}, {}]
         }
       ]
     },
@@ -2047,6 +2160,314 @@
                 { "key": "successSendRecommendedText" },
                 { "key": "sendToSystemMember" },
                 { "key": "sendOnMail" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [{ "key": "recommendedMemberShowProfile" }, {}, {}, {}]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Promo",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "promoButton" },
+            { "key": "promoNoHavePromoVideo" },
+            { "key": "promoUploadPromoVideo" },
+            { "key": "promoChangePromoVideo" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "About us",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "aboutTitle" },
+            { "key": "aboutText" },
+            { "key": "aboutFooter" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "aboutContactUs" }, { "key": "aboutPrice" }]
+        },
+        {
+          "type": "section",
+          "title": "Card",
+          "expandable": true,
+          "expanded": false,
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutCardFirstIcon" },
+                { "key": "aboutCardFirstTitle" },
+                { "key": "aboutCardFirstText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "" },
+                { "key": "aboutCardSecondIcon" },
+                { "key": "aboutCardSecondTitle" },
+                { "key": "aboutCardSecondText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutCardThreeIcon" },
+                { "key": "aboutCardThreeTitle" },
+                { "key": "aboutCardThreeText" },
+                { "key": "" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutCardFourIcon" },
+                { "key": "aboutCardFourTitle" },
+                { "key": "aboutCardFourText" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "title": "About details",
+          "expandable": true,
+          "expanded": false,
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutAboutUsTitle" },
+                { "key": "aboutAboutUsText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                {
+                  "key": "aboutAboutUsItems",
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "div",
+                      "displayFlex": true,
+                      "flex-direction": "row",
+                      "items": [
+                        {
+                          "key": "aboutAboutUsItems[].text",
+                          "flex": "1 1 50px"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutAboutUsTitle2" },
+                { "key": "aboutAboutUsText2" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                {
+                  "key": "aboutAboutUsItems2",
+                  "type": "array",
+                  "items": [
+                    {
+                      "type": "div",
+                      "displayFlex": true,
+                      "flex-direction": "row",
+                      "items": [
+                        {
+                          "key": "aboutAboutUsItems2[].text",
+                          "flex": "1 1 50px"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "aboutContactTitle" },
+            { "key": "aboutContactText" },
+            { "key": "aboutContactButton" }
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Features",
+          "expandable": true,
+          "expanded": false,
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesTitle" },
+                { "key": "aboutFeaturesText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesCardOneIcon" },
+                { "key": "aboutFeaturesCardOneTitle" },
+                { "key": "aboutFeaturesCardOneText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesCardTwoIcon" },
+                { "key": "aboutFeaturesCardTwoTitle" },
+                { "key": "aboutFeaturesCardTwoText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesCardThreeIcon" },
+                { "key": "aboutFeaturesCardThreeTitle" },
+                { "key": "aboutFeaturesCardThreeText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesCardFourIcon" },
+                { "key": "aboutFeaturesCardFourTitle" },
+                { "key": "aboutFeaturesCardFourText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesCardFiveIcon" },
+                { "key": "aboutFeaturesCardFiveTitle" },
+                { "key": "aboutFeaturesCardFiveText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutFeaturesCardSixIcon" },
+                { "key": "aboutFeaturesCardSixTitle" },
+                { "key": "aboutFeaturesCardSixText" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "section",
+          "title": "Work process",
+          "expandable": true,
+          "expanded": false,
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutProcessTitle" },
+                { "key": "aboutProcessText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutProcessFirstIcon" },
+                { "key": "aboutProcessFirstTitle" },
+                { "key": "aboutProcessFirstText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutProcessSecondIcon" },
+                { "key": "aboutProcessSecondTitle" },
+                { "key": "aboutProcessSecondText" }
+              ]
+            },
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "aboutProcessThreeIcon" },
+                { "key": "aboutProcessThreeTitle" },
+                { "key": "aboutProcessThreeText" }
               ]
             }
           ]

@@ -9,6 +9,9 @@ import * as sha1 from "sha1";
 import { ProfileService } from "src/app/services/profile.service";
 import { ToastrService } from "ngx-toastr";
 import $ from "jquery";
+import { FileUploader, FileItem } from "ng2-file-upload";
+import { ImageCroppedEvent } from "ngx-image-cropper";
+import { MessageService } from 'src/app/services/message.service';
 
 @Component({
   selector: "app-feed",
@@ -46,13 +49,25 @@ export class FeedComponent implements OnInit {
   public previewPost = false;
   public recommendedWindow = false;
   public recommendedItem: any;
+  public height: any;
+  public imageChangedEvent: any = "";
+  public changeImage = false;
+  public showCropper = false;
+  public typeOfUpload: any;
+  public maxFileImageSize = 1 * 1024 * 1024;
+  // public url = "http://localhost:3000/upload";
+  public url = "http://78.47.206.131:" + location.port + "/upload";
+  public uploader: FileUploader;
+  public croppedImage: any = "";
+  public loadImage = false;
 
   constructor(
     private service: FeedService,
     private helpService: HelpService,
     private router: Router,
     private profileService: ProfileService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private message: MessageService
   ) {}
 
   ngOnInit() {
@@ -62,17 +77,15 @@ export class FeedComponent implements OnInit {
     }
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
-    /*if (this.user.type === sha1(0)) {
-      this.userType = 0;
-    } else if (this.user.type === sha1(1)) {
-      this.userType = 1;
-    } else if (this.user.type === sha1(2)) {
-      this.userType = 2;
-    } else if (this.user.type === sha1(3)) {
-      this.userType = 3;
-    }*/
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 104;
+    } else {
+      this.height = window.innerHeight - 121;
+    }
+    this.height += "px";
     this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
+    this.uploadInitialization();
     this.backOnTop();
   }
 
@@ -90,6 +103,52 @@ export class FeedComponent implements OnInit {
     this.service.getPeopleYouMightKnow().subscribe((data: []) => {
       this.peopleYouMightKnowList = data;
     });
+  }
+
+  uploadInitialization() {
+    this.uploader = new FileUploader({
+      url: this.url,
+      maxFileSize: 1 * 1024 * 1024,
+    });
+
+    this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
+      console.log(fileItem);
+      const date: number = new Date().getTime();
+      const file = new File([this.croppedImage], "1.PNG", {
+        type: "image/png",
+        lastModified: date,
+      });
+      if (this.typeOfUpload === "img") {
+        this.imageData = this.croppedImage;
+      }
+      fileItem = new FileItem(this.uploader, file, {});
+      console.log(fileItem);
+      form.append("description", fileItem.file["description"]);
+      form.append(
+        "date",
+        fileItem.file.lastModifiedDate !== undefined
+          ? fileItem.file.lastModifiedDate
+          : new Date()
+      );
+      form.append("customer_id", this.data.id);
+    };
+    this.uploader.onCompleteItem = (
+      item: any,
+      response: any,
+      status: any,
+      headers: any
+    ) => {
+      console.log(JSON.parse(response));
+      const respon = JSON.parse(response);
+      if (respon["info"]) {
+        if (respon["type"] === "img") {
+          this.data.image = respon["name"];
+        } else {
+          this.data.cover = respon["name"];
+        }
+      }
+      this.loadImage = false;
+    };
   }
 
   getAllPostForUser(id, sid) {
@@ -348,6 +407,13 @@ export class FeedComponent implements OnInit {
       this.windowWidth = null;
       this.windowHeight = null;
     }
+
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 104;
+    } else {
+      this.height = window.innerHeight - 121;
+    }
+    this.height += "px";
   }
 
   getImageFromBlob(image) {
@@ -440,5 +506,69 @@ export class FeedComponent implements OnInit {
   recommendedWindowEmitter() {
     this.recommendedWindow = false;
     this.recommendedItem = null;
+  }
+
+  fileChangeEventProfile(event: any): void {
+    if (event.target.files[0].size <= this.maxFileImageSize) {
+      this.imageChangedEvent = event;
+      this.changeImage = true;
+      this.showCropper = true;
+      this.typeOfUpload = "img";
+    } else {
+      this.toastr.error(this.language.adminMaxFileImage, "", {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      });
+    }
+  }
+
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+  }
+  imageLoaded() {
+    // show cropper
+    this.showCropper = false;
+  }
+  cropperReady() {
+    /*this.service.uploadImage(this.croppedImage).subscribe((data) => {
+      console.log(data);
+    });*/
+  }
+  loadImageFailed() {
+    // show message
+  }
+
+  public save() {
+    this.loadImage = true;
+    const date: number = new Date().getTime();
+    // Put the blob into the fileBits array of the File constructor
+    const myFile = this.dataURItoBlob(this.croppedImage);
+    const file = new File(
+      [myFile],
+      this.id.toString() + "-" + this.typeOfUpload,
+      {
+        type: "image/png",
+        lastModified: date,
+      }
+    );
+    console.log(file);
+    const fileItem = new FileItem(this.uploader, file, { itemAlias: "1" });
+    console.log(fileItem);
+    this.uploader.queue = [];
+    this.uploader.queue.push(fileItem);
+    fileItem.upload();
+    this.changeImage = false;
+    this.message.sendUserInfo();
+  }
+
+  dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(",")[1]);
+    var array = [];
+    for (var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+      type: "image/jpg",
+    });
   }
 }

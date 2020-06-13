@@ -33,7 +33,7 @@ export class RecommendationButtonComponent implements OnInit {
   public contactFormWindow = false;
   public recommendationData = new InviteModel();
   public me: any;
-  public recommendationSelection = 'system-member';
+  public recommendationSelection = "system-member";
 
   constructor(
     private loginService: LoginService,
@@ -141,6 +141,7 @@ export class RecommendationButtonComponent implements OnInit {
       recommendedMemberPhone: this.language.recommendedMemberPhone,
       recommendedWhoRecommendedMember: this.language
         .recommendedWhoRecommendedMember,
+      recommendedMemberShowProfile: this.language.recommendedMemberShowProfile,
     };
 
     return language;
@@ -194,6 +195,7 @@ export class RecommendationButtonComponent implements OnInit {
       recommendedMemberPhone: this.language.recommendedMemberPhone,
       recommendedWhoRecommendedMember: this.language
         .recommendedWhoRecommendedMember,
+      recommendedMemberProfileLink: this.language.recommendedMemberShowProfile,
     };
 
     return language;
