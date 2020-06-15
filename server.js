@@ -1,4 +1,5 @@
 // Get dependencies
+const compression = require('compression')
 const express = require("express");
 const path = require("path");
 const http = require("http");
@@ -204,6 +205,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api", api);
 app.use("/api", mail);
 app.use("/api", mongo);
+app.use(compression())
 
 // Catch all other routes and return the index file
 app.get("*", (req, res) => {
