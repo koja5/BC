@@ -302,7 +302,7 @@
               <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid rounded-circle"
                 alt="Responsive image">
               <div *ngIf="owner"><label for="file-upload-profile" class="change-icon">
-                  <i class="fa fa-upload  fa-3x" style="top: 53% !important;"></i>
+                  <i class="fa fa-upload  fa-3x" style="top: 50% !important;"></i>
                 </label>
                 <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
                   [uploader]="uploader" />
@@ -365,28 +365,28 @@
       </div>
     </div>
   </div>
-
-  <footer class="footer">
-    <div class="copyright">
-      <span>{{language.footerCopyright}}</span>
-    </div>
-    <div class="terms-privacy">
-      <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
-        {{language.aboutFooter}}
-      </a>
-      <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
-        {{language.termsHeaderTitle}}
-      </a>
-      <a routerLink="/privacy-policy" target="_blank"
-        style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
-        {{language.privacyHeaderTitle}}
-      </a>
-      <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
-        {{language.impressumHeaderTitle}}
-      </a>
-    </div>
-  </footer>
 </div>
+
+<footer class="footer">
+  <div class="copyright">
+    <span>{{language.footerCopyright}}</span>
+  </div>
+  <div class="terms-privacy">
+    <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
+      {{language.aboutFooter}}
+    </a>
+    <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
+      {{language.termsHeaderTitle}}
+    </a>
+    <a routerLink="/privacy-policy" target="_blank"
+      style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
+      {{language.privacyHeaderTitle}}
+    </a>
+    <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
+      {{language.impressumHeaderTitle}}
+    </a>
+  </div>
+</footer>
 
 
 <div *ngIf="uploader !== undefined" style="text-align: center;">

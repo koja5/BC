@@ -13,6 +13,5 @@ export class AboutUsComponent implements OnInit {
 
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
-    this.message.sendNavigationItemFeed();
   }
 }

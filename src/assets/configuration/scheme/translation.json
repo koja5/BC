@@ -570,7 +570,11 @@
       "aboutProcessSecondText": { "type": "string" },
       "aboutProcessThreeIcon": { "type": "string" },
       "aboutProcessThreeTitle": { "type": "string" },
-      "aboutProcessThreeText": { "type": "string" }
+      "aboutProcessThreeText": { "type": "string" },
+      "messageMessageCenter": { "type": "string" },
+      "messageReadMoreMessage": { "type": "string" },
+      "messageSearchMember": { "type": "string" },
+      "messageWriteMessage": { "type": "string" }
     }
   },
   "layout": [
@@ -2337,7 +2341,6 @@
             }
           ]
         },
-
         {
           "type": "div",
           "display": "flex",
@@ -2470,6 +2473,25 @@
                 { "key": "aboutProcessThreeText" }
               ]
             }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Chat",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "messageMessageCenter" },
+            { "key": "messageReadMoreMessage" },
+            { "key": "messageSearchMember" },
+            { "key": "messageWriteMessage" }
           ]
         }
       ]

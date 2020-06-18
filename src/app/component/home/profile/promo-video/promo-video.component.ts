@@ -25,11 +25,11 @@ export class PromoVideoComponent implements OnInit {
   public windowWidth: any;
   public language: any;
   public uploaderPromo: FileUploader;
-  public url = "http://localhost:3000/uploadPromo";
-  // public url = "http://78.47.206.131:" + location.port + "/uploadPromo";
+  // public url = "http://localhost:3000/uploadPromo";
+  public url = "http://78.47.206.131:" + location.port + "/uploadPromo";
   public imageChangedEvent: any;
   public loadVideo = false;
-  public maxFilePromoVideo = 3 * 1024 * 1024;
+  public maxFilePromoVideo = 50 * 1024 * 1024;
 
   constructor(private toastr: ToastrService) {}
 

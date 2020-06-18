@@ -23,6 +23,7 @@ var connection = mysql.createPool({
   database: "business_circle",
 });
 
+app.use(compression())
 //for upload image
 app.use(function (req, res, next) {
   //allow cross origin requests
@@ -205,7 +206,6 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api", api);
 app.use("/api", mail);
 app.use("/api", mongo);
-app.use(compression())
 
 // Catch all other routes and return the index file
 app.get("*", (req, res) => {

@@ -7,9 +7,12 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class MessageChatService {
+// public url = "http://localhost:3000/uploadPromo";
+public url = "http://78.47.206.131:" + location.port;
+
   constructor(private http: HttpClient) {}
 
-  private socket = io("http://localhost:3000");
+  private socket = io(this.url);
 
   joinRoom(data) {
     this.socket.emit("join", data);

@@ -19,7 +19,7 @@ import { FindConnectionComponent } from './find-connection/find-connection.compo
 import { ContactComponent } from './contact/contact.component';
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 import { ButtonsModule } from '@progress/kendo-angular-buttons';
-import { FileSelectDirective, FileDropDirective, FileUploadModule } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { ConnectionFilterPipe } from './connection/connection.pipe';
 import { RecommendationButtonComponent } from './recommendation-button/recommendation-button.component';
 import { PromoVideoComponent } from './profile/promo-video/promo-video.component';

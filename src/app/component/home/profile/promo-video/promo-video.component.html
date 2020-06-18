@@ -19,7 +19,7 @@
   <div *ngIf="video === null || video === undefined" class="no-have-promo">
     <span class="fa fa-exclamation-circle notification-info"></span>
     <p>{{language.promoNoHavePromoVideo}}</p>
-    <div>
+    <div *ngIf="owner">
       <label for="upload-promo" class="btn btn-outline-danger btn-sm pl-4 pr-4">
         <span class="fa fa-upload"></span> {{language.promoUploadPromoVideo}}
       </label>

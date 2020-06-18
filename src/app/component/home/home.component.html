@@ -44,7 +44,7 @@
           </div>
         </li>
         <li class="nav-item">
-          <a *ngIf="showFeedItem" class="nav-link" routerLink="/home/main/feed" (click)="showFeedItem=false"><i
+          <a class="nav-link" routerLink="/home/main/feed" (click)="showFeedItem=false"><i
               class="fa fa-home mr-2"></i><span class="d-none d-lg-inline">{{language.feedNavigationMenu}}</span></a>
         </li>
         <li class="nav-item">
@@ -61,7 +61,7 @@
           <!-- Dropdown - Alerts -->
           <div class="dropdown-list dropdown-menu dropdown-menu-right shadow-sm {{messageCenter}}">
             <h6 class="dropdown-header">
-              Message Center
+              {{language.messageMessageCenter}}
             </h6>
             <div class="message-notification-container">
 
@@ -80,7 +80,7 @@
               </a>
             </div>
             <a class="dropdown-item text-center small text-gray-500" routerLink="/home/main/message"
-              (click)="messageCenter = ''">Read More Messages</a>
+              (click)="messageCenter = ''">{{language.messageReadMoreMessage}}</a>
           </div>
         </li>
         <li class="nav-item dropdown no-arrow ml-1 osahan-profile-dropdown {{dropDownProfile}}"

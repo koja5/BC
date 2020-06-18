@@ -43,7 +43,7 @@
     height: 80px;
     position: absolute;
     bottom: 12px;
-    width: 90% !important;
+    width: 90%;
 }
 
 .k-combobox {
@@ -60,6 +60,20 @@
 }
 
 .message-container {
-    height: 360px;
+    height: 345px;
     overflow: auto;
+}
+
+.userInfoMobile {
+    width: 80%;
+}
+
+.removeWindow {
+    width: 20%;
+    text-align: end;
+}
+
+.removeWindow span {
+    font-size: 18px;
+    color: #0b6794;
 }

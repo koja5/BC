@@ -25,7 +25,6 @@ export class HomeComponent implements OnInit {
   public selectedUser: any;
   public language: any;
   public height: any;
-  public showFeedItem = false;
   public messageCenter = "";
   public allMessages: any;
   public newMessageCounter = 0;
@@ -53,9 +52,6 @@ export class HomeComponent implements OnInit {
       this.initialization();
     });
 
-    this.message.getNavigationItemFeed().subscribe((data) => {
-      this.showFeedItem = true;
-    });
     this.messageService.newMessageReceived().subscribe((data) => {
       console.log(data);
       if (data.not_seen === this.id) {

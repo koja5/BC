@@ -11,7 +11,8 @@ import { ToastrService } from "ngx-toastr";
 import $ from "jquery";
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { ImageCroppedEvent } from "ngx-image-cropper";
-import { MessageService } from 'src/app/services/message.service';
+import { MessageService } from "src/app/services/message.service";
+import { UserModel } from "src/app/models/user-model";
 
 @Component({
   selector: "app-feed",
@@ -25,6 +26,7 @@ export class FeedComponent implements OnInit {
   public allPosts = [];
   public allPostsT = [];
   public selectedProcessOption = -1;
+  public selectedFeedConnectionsOptions = -1;
   public likePostIndex = -1;
   public postLikes = false;
   public allLikesForPost: any;
@@ -55,11 +57,13 @@ export class FeedComponent implements OnInit {
   public showCropper = false;
   public typeOfUpload: any;
   public maxFileImageSize = 1 * 1024 * 1024;
-  public url = "http://localhost:3000/upload";
-  // public url = "http://78.47.206.131:" + location.port + "/upload";
+  // public url = "http://localhost:3000/upload";
+  public url = "http://78.47.206.131:" + location.port + "/upload";
   public uploader: FileUploader;
   public croppedImage: any = "";
   public loadImage = false;
+  public promoWindow = false;
+  public selectedMember = new UserModel();
 
   constructor(
     private service: FeedService,
@@ -261,6 +265,14 @@ export class FeedComponent implements OnInit {
       this.selectedProcessOption = id;
     } else {
       this.selectedProcessOption = -1;
+    }
+  }
+
+  showHideFeedConnections(id) {
+    if (this.selectedFeedConnectionsOptions === -1) {
+      this.selectedFeedConnectionsOptions = id;
+    } else {
+      this.selectedFeedConnectionsOptions = -1;
     }
   }
 
@@ -502,6 +514,7 @@ export class FeedComponent implements OnInit {
       phone: phone,
     };
     this.recommendedWindow = true;
+    this.selectedFeedConnectionsOptions = -1;
   }
 
   recommendedWindowEmitter() {
@@ -571,5 +584,20 @@ export class FeedComponent implements OnInit {
     return new Blob([new Uint8Array(array)], {
       type: "image/jpg",
     });
+  }
+
+  openPromoVideo(item) {
+    this.selectedMember = item;
+    this.promoWindow = true;
+    this.selectedFeedConnectionsOptions = -1;
+  }
+
+  promoWindowEmitter() {
+    this.promoWindow = false;
+  }
+
+  sendMessageForThisUser(data) {
+    sessionStorage.setItem("message_user", JSON.stringify(data));
+    this.router.navigate(["/home/main/message"]);
   }
 }

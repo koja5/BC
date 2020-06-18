@@ -49,8 +49,8 @@ export class ProfileComponent implements OnInit {
   public windowHeight: any;
   public windowWidth: any;
   public owner = false;
-  public url = "http://localhost:3000/upload";
-  // public url = "http://78.47.206.131:" + location.port + "/upload";
+  // public url = "http://localhost:3000/upload";
+  public url = "http://78.47.206.131:" + location.port + "/upload";
   public allExperience: any;
   public allEducation: any;
   public lookingOffer: any;
@@ -59,6 +59,7 @@ export class ProfileComponent implements OnInit {
   public selectedTab = "profile";
   public user: any;
   public height: any;
+  public heightContainer: any;
   public recommendedItem: any;
   public recommendedWindow = false;
   public recommendationStatus = new RecommendationModel();
@@ -85,11 +86,14 @@ export class ProfileComponent implements OnInit {
     this.initialization();
 
     if (window.innerWidth > 1000) {
-      this.height = window.innerHeight - 55;
+      this.height = window.innerHeight - 104;
+      this.heightContainer = this.height - 148;
     } else {
-      this.height = window.innerHeight - 72;
+      this.height = window.innerHeight - 121;
+      this.heightContainer = this.height - 148;
     }
     this.height += "px";
+    this.heightContainer += "px";
 
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
@@ -291,11 +295,14 @@ export class ProfileComponent implements OnInit {
     }
 
     if (window.innerWidth > 1000) {
-      this.height = window.innerHeight - 55;
+      this.height = window.innerHeight - 104;
+      this.heightContainer = this.height - 148;
     } else {
-      this.height = window.innerHeight - 72;
+      this.height = window.innerHeight - 121;
+      this.heightContainer = this.height - 148;
     }
     this.height += "px";
+    this.heightContainer += "px";
   }
 
   changeTab(tab) {

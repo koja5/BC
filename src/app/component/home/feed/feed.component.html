@@ -395,10 +395,27 @@
                   )
                 </div>
               </div>
-              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+              <!-- <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
                   (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
                     class="fa fa-paper-plane" title="{{language.recommendedTooltip}}"></i></button>
+              </span> -->
+
+              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+                  (click)="showHideFeedConnections(item.id)">
+                  <i class="fa fa-ellipsis-v removePost"></i>
+                </button>
               </span>
+              <div class="postOptions" [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'"
+                style="right: 25px !important; margin-top: 80px !important; width: 135px !important;">
+                <ul class="connectionOptions">
+                  <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
+                      class="fa fa-paper-plane"></i> {{language.recommendedTooltip}}</li>
+                  <li (click)="openPromoVideo(item)"><i class="fa fa-film"></i> {{language.promoButton}}</li>
+                  <li (click)="sendMessageForThisUser(item)"><i class="fa fa-comments-o"></i>
+                    {{language.connectionSendMessage}}</li>
+                </ul>
+              </div>
+
             </div>
           </div>
         </div>
@@ -648,5 +665,8 @@
   [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
   (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
 </app-recommendation-button>
+
+<app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="selectedMember.id" [owner]="false"
+  [video]="selectedMember.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 
 <div class='back-to-top hidden-xs' id='back-to-top' title='Back to top'><i class='fa fa-chevron-up'></i></div>

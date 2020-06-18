@@ -29,14 +29,6 @@ export class MessageService {
     return this.userInfo.asObservable();
   }
 
-  sendNavigationItemFeed() {
-    this.navigationItemFeed.next();
-  }
-
-  getNavigationItemFeed() {
-    return this.navigationItemFeed.asObservable();
-  }
-
   sendMessageForThisUser(data) {
     this.messageForThisUser.next(data);
   }

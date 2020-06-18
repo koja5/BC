@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener } from "@angular/core";
 import { ConnectionService } from "src/app/services/connection.service";
 import { Router } from "@angular/router";
 import * as sha1 from "sha1";
+import { UserModel } from 'src/app/models/user-model';
 
 @Component({
   selector: "app-connection",
@@ -18,6 +19,8 @@ export class ConnectionComponent implements OnInit {
   public hover = "fa fa-heart-o";
   public recommendedItem: any;
   public hoverItem: any;
+  public promoWindow = false;
+  public selectedMember = new UserModel();
 
   constructor(private service: ConnectionService, private router: Router) {}
 
@@ -95,7 +98,7 @@ export class ConnectionComponent implements OnInit {
       id: id,
       name: name,
       email: email,
-      phone: phone
+      phone: phone,
     };
     this.recommendedWindow = true;
   }
@@ -105,4 +108,12 @@ export class ConnectionComponent implements OnInit {
     this.router.navigate(["/home/main/message"]);
   }
 
+  openPromoVideo(item) {
+    this.selectedMember = item;
+    this.promoWindow = true;
+  }
+
+  promoWindowEmitter() {
+    this.promoWindow = false;
+  }
 }

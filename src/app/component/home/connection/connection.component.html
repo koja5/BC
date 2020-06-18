@@ -45,12 +45,15 @@
                                           </div>
                                           <div class="font-weight-bold">
                                              <h6 class="font-weight-bold text-dark mb-0">{{item.fullname}}</h6>
-                                             <div class="small text-black-50" style="width: 90%">{{item.profession}}</div>
+                                             <div class="small text-black-50 profession-member"
+                                                title="{{item.profession}}">{{item.profession}}
+                                             </div>
                                           </div>
                                        </div>
                                        <div class="recommendation">
                                           <!---->
-                                          <span class="send-recommended" [ngClass]="hoverItem === item.id ? 'fa fa-paper-plane' : 'fa fa-paper-plane-o'"
+                                          <span class="send-recommended"
+                                             [ngClass]="hoverItem === item.id ? 'fa fa-paper-plane' : 'fa fa-paper-plane-o'"
                                              [title]="language.recommendedTooltip" (mouseenter)="heartHoverIn(item.id)"
                                              (mouseleave)="heartHoverOut()"
                                              (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"></span>
@@ -82,7 +85,7 @@
                                        </div>
                                     </div>
                                     <div class="network-item-footer py-3 d-flex text-center">
-                                       <div class="col-6 pl-3 pl-1">
+                                       <div class="col-4 pl-3 pl-1">
                                           <button type="button" (click)="openProfile(item.id)"
                                              class="btn btn-outline-primary btn-sm btn-block"> <i
                                                 class="feather-user"></i>
@@ -90,9 +93,17 @@
                                           </button>
                                        </div>
 
-                                       <div class="col-6 pr-3 pr-1">
-                                          <button type="button" class="btn btn-primary btn-sm btn-block" (click)="sendMessageForThisUser(item)">
-                                             {{language.connectionSendMessage}} </button>
+                                       <div class="col-4 pr-3 pr-1">
+                                          <button type="button" class="btn btn-secondary btn-sm btn-block"
+                                             (click)="openPromoVideo(item)" style="height: 100%;">
+                                             <i class="fa fa-film"></i> {{language.promoButton}} </button>
+                                       </div>
+
+                                       <div class="col-4 pr-3 pr-1">
+                                          <button type="button" class="btn btn-primary btn-sm btn-block"
+                                             (click)="sendMessageForThisUser(item)">
+                                             <i class="fa fa-comments-o"></i> {{language.connectionSendMessage}}
+                                          </button>
                                        </div>
                                        <!-- <button type="button" class="btn btn-primary btn-sm btn-block"
                                           style="width: auto; margin: auto;">
@@ -114,22 +125,22 @@
 <footer *ngIf="language !== undefined" class="footer">
    <div class="copyright">
       <span>{{language.footerCopyright}}</span>
-    </div>
-    <div class="terms-privacy">
+   </div>
+   <div class="terms-privacy">
       <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
-        {{language.aboutFooter}}
+         {{language.aboutFooter}}
       </a>
       <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
-        {{language.termsHeaderTitle}}
+         {{language.termsHeaderTitle}}
       </a>
       <a routerLink="/privacy-policy" target="_blank"
-        style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
-        {{language.privacyHeaderTitle}}
+         style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
+         {{language.privacyHeaderTitle}}
       </a>
       <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
-        {{language.impressumHeaderTitle}}
+         {{language.impressumHeaderTitle}}
       </a>
-    </div>
+   </div>
 </footer>
 
 
@@ -137,3 +148,6 @@
    [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
    (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
 </app-recommendation-button>
+
+<app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="selectedMember.id" [owner]="false"
+   [video]="selectedMember.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>

@@ -27,6 +27,9 @@ export class MessageComponent implements OnInit {
   public userList: any;
   public selectedUser: any;
   public room: any;
+  public language: any;
+  public height: any;
+  public loading = false;
 
   constructor(
     private service: MessageChatService,
@@ -56,15 +59,21 @@ export class MessageComponent implements OnInit {
     });
   }
 
-
   ngOnInit() {
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
       this.mobile = true;
     }
+    if (window.innerWidth > 992) {
+      this.height = window.innerHeight - 173;
+    } else {
+      this.height = window.innerHeight - 189;
+    }
+    this.height += "px";
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
+    this.language = JSON.parse(localStorage.getItem("language"));
     this.messageData = null;
     this.initilization();
     // this.join();
@@ -77,6 +86,7 @@ export class MessageComponent implements OnInit {
     });
 
     this.getMessageItem();
+    this.autoScroll();
   }
 
   getMessageItem() {
@@ -120,28 +130,66 @@ export class MessageComponent implements OnInit {
   }
 
   sendMessage() {
-    const data = {
-      _id: this.room,
-      message: {
+    if (this.messageText !== "\n") {
+      const data = {
+        _id: this.room,
+        message: {
+          sender_id: this.id,
+          message: this.messageText,
+          date: new Date(),
+        },
+        receiveId: this.selectUserForComunication.receiveId,
+      };
+      this.service.pushNewMessage(data).subscribe((data) => {
+        console.log(data);
+      });
+      this.service.sendMessage({
         sender_id: this.id,
+        room: this.room,
         message: this.messageText,
+        name: this.user.fullname,
+        image: this.user.image,
         date: new Date(),
-      },
-      receiveId: this.selectUserForComunication.receiveId,
-    };
-    this.service.pushNewMessage(data).subscribe((data) => {
-      console.log(data);
-    });
-    this.service.sendMessage({
-      sender_id: this.id,
-      room: this.room,
-      message: this.messageText,
-      name: this.user.fullname,
-      image: this.user.image,
-      date: new Date(),
-      not_seen: this.selectUserForComunication.receiveId,
-    });
-    this.messageText = "";
+        not_seen: this.selectUserForComunication.receiveId,
+      });
+      this.messageText = "";
+      this.autoScroll();
+    } else {
+      this.messageText = "";
+    }
+  }
+
+  autoScroll() {
+    /*window.setInterval(function () {
+      var elem = document.getElementById("chat-container");
+      if (elem) {
+        elem.scrollTop = elem.scrollHeight;
+      }
+    }, 100);*/
+
+    var elem = document.getElementById("chat-container");
+    var atbottom = this.scrollAtBottom(elem);
+    var isWebkit = "WebkitAppearance" in document.documentElement.style;
+    var isEdge = "-ms-accelerator" in document.documentElement.style;
+    var tempCounter = 6;
+    if (atbottom) {
+      this.updateScroll(elem);
+    }
+  }
+
+  updateScroll(el) {
+    setTimeout(() => {
+      var elem = document.getElementById("chat-container");
+      if (elem) {
+        elem.scrollTop = elem.scrollHeight + 20;
+      }
+    }, 20);
+  }
+  scrollAtBottom(el) {
+    if (el) {
+      return el.scrollTop + 5 >= el.scrollHeight - el.offsetHeight;
+    }
+    return false;
   }
 
   clickOnTextArea() {
@@ -155,6 +203,7 @@ export class MessageComponent implements OnInit {
     this.selectedMessage = id;
     this.room = id;
     this.join(id);
+    this.loading = true;
     this.service.getMessageForSelectedUser(id).subscribe((data) => {
       console.log(data);
       this.selectUserForComunication = {
@@ -177,6 +226,8 @@ export class MessageComponent implements OnInit {
           console.log(data);
         });
       }
+      this.updateScroll(null);
+      this.loading = false;
     });
   }
 
@@ -192,6 +243,12 @@ export class MessageComponent implements OnInit {
       this.mobile = false;
     }
     this.messageWindow = false;
+    if (window.innerWidth > 992) {
+      this.height = window.innerHeight - 173;
+    } else {
+      this.height = window.innerHeight - 223;
+    }
+    this.height += "px";
   }
 
   onValueChange(event) {
@@ -251,6 +308,12 @@ export class MessageComponent implements OnInit {
         profession: user.profession,
         image: user.image,
       };
+      if (this.mobile) {
+        this.messageWindow = true;
+      }
+      setTimeout(() => {
+        this.updateScroll(null);
+      }, 50);
     });
   }
 }
