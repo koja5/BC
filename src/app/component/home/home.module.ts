@@ -25,6 +25,9 @@ import { RecommendationButtonComponent } from './recommendation-button/recommend
 import { PromoVideoComponent } from './profile/promo-video/promo-video.component';
 import { MatVideoModule } from 'mat-video';
 import { AboutUsComponent } from './about-us/about-us.component';
+import { EventsComponent } from './events/events.component';
+import { LifeEventComponent } from './events/life-event/life-event.component';
+import { LifeEventDetailsComponent } from './events/life-event/life-event-details/life-event-details.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,10 @@ import { AboutUsComponent } from './about-us/about-us.component';
     ConnectionFilterPipe,
     RecommendationButtonComponent,
     PromoVideoComponent,
-    AboutUsComponent
+    AboutUsComponent,
+    EventsComponent,
+    LifeEventComponent,
+    LifeEventDetailsComponent
   ],
   imports: [
     CommonModule,
