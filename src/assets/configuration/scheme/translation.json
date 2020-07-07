@@ -100,6 +100,7 @@
       "adminMaxFileImage": { "type": "string" },
       "adminMaxFileCover": { "type": "string" },
       "adminMaxFilePromoVideo": { "type": "string" },
+      "event": { "type": "string" },
       "premiumTitleHeader": { "type": "string" },
       "premiumTitleCard": { "type": "string" },
       "premiumCurrency": { "type": "string" },
@@ -245,6 +246,7 @@
       "feedShowAll": { "type": "string" },
       "feedNoProfessionInfo": { "type": "string" },
       "feedConnections": { "type": "string" },
+      "feedEvents": { "type": "string" },
       "feedViews": { "type": "string" },
       "feedViewMyProfile": { "type": "string" },
       "feedYourConnections": { "type": "string" },
@@ -574,7 +576,50 @@
       "messageMessageCenter": { "type": "string" },
       "messageReadMoreMessage": { "type": "string" },
       "messageSearchMember": { "type": "string" },
-      "messageWriteMessage": { "type": "string" }
+      "messageWriteMessage": { "type": "string" },
+      "lifeEventDetailsBasicInfo": { "type": "string" },
+      "lifeEventDetailsDate": { "type": "string" },
+      "lifeEventDetailsTime": { "type": "string" },
+      "lifeEventDetailsEvent": { "type": "string" },
+      "lifeEventDetailsLifeEvent": { "type": "string" },
+      "lifeEventDetailsOrganizer": { "type": "string" },
+      "lifeEventDetailsMaximumNumber": { "type": "string" },
+      "lifeEventDetailsAboutEvent": { "type": "string" },
+      "lifeEventDetailsLocation": { "type": "string" },
+      "lifeEventDetailsNameOfLocation": { "type": "string" },
+      "lifeEventDetailsZip": { "type": "string" },
+      "lifeEventDetailsStreat": { "type": "string" },
+      "lifeEventDetailsSimilar": { "type": "string" },
+      "lifeEventDetailsEdit": { "type": "string" },
+      "lifeEventDetailsCopy": { "type": "string" },
+      "lifeEventDetailsSignIn": { "type": "string" },
+      "lifeEventDetailsRegistered": { "type": "string" },
+      "lifeEventDetailsOwner": { "type": "string" },
+      "lifeEventDetailsSignInButton": { "type": "string" },
+      "lifeEventDetailsRegisteredButton": { "type": "string" },
+      "lifeEventDetailsMemberGoing": { "type": "string" },
+      "lifeEventDetailsFreeSpace": { "type": "string" },
+      "lifeEventEditTitle": { "type": "string" },
+      "lifeEventEditText": { "type": "string" },
+      "lifeEventEditSave": { "type": "string" },
+      "lifeEventEditPreview": { "type": "string" },
+      "lifeEventEditLocationTitle": { "type": "string" },
+      "lifeEventEditLocationText": { "type": "string" },
+      "lifeEventAllEvent": { "type": "string" },
+      "lifeEventMyEvent": { "type": "string" },
+      "lifeEventAll": { "type": "string" },
+      "lifeEventLife": { "type": "string" },
+      "lifeEventVirtual": { "type": "string" },
+      "lifeEventShowInfo": { "type": "string" },
+      "lifeEventCreateTitle": { "type": "string" },
+      "lifeEventCreateText": { "type": "string" },
+      "lifeEventCreateButton": { "type": "string" },
+      "lifeEventCreateLifeEvent": { "type": "string" },
+      "lifeEventCreateLiveStreaming": { "type": "string" },
+      "lifeEventTypeCreateTitle": { "type": "string" },
+      "lifeEventTypeCreateName": { "type": "string" },
+      "lifeEventTypeCreateDescription": { "type": "string" },
+      "lifeEventTypeCreateDuration": { "type": "string" }
     }
   },
   "layout": [
@@ -872,7 +917,7 @@
             { "key": "adminMaxFileImage" },
             { "key": "adminMaxFileCover" },
             { "key": "adminMaxFilePromoVideo" },
-            {}
+            { "key": "event" }
           ]
         }
       ]
@@ -1428,7 +1473,12 @@
           "type": "div",
           "display": "flex",
           "flex-direction": "row",
-          "items": [{ "key": "feedNavigationMenu" }, {}, {}, {}]
+          "items": [
+            { "key": "feedNavigationMenu" },
+            { "key": "feedEvents" },
+            {},
+            {}
+          ]
         }
       ]
     },
@@ -2492,6 +2542,135 @@
             { "key": "messageReadMoreMessage" },
             { "key": "messageSearchMember" },
             { "key": "messageWriteMessage" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Life Event Details",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventDetailsBasicInfo" },
+            { "key": "lifeEventDetailsDate" },
+            { "key": "lifeEventDetailsTime" },
+            { "key": "lifeEventDetailsEvent" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventDetailsOrganizer" },
+            { "key": "lifeEventDetailsMaximumNumber" },
+            { "key": "lifeEventDetailsAboutEvent" },
+            { "key": "lifeEventDetailsLocation" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventDetailsNameOfLocation" },
+            { "key": "lifeEventDetailsZip" },
+            { "key": "lifeEventDetailsStreat" },
+            { "key": "lifeEventDetailsSimilar" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventDetailsEdit" },
+            { "key": "lifeEventDetailsCopy" },
+            { "key": "lifeEventDetailsSignIn" },
+            { }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventDetailsRegistered" },
+            { "key": "lifeEventDetailsLifeEvent" },
+            { "key": "lifeEventDetailsOwner" },
+            { "key": "lifeEventDetailsSignInButton" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventDetailsRegisteredButton" },
+            { "key": "lifeEventDetailsMemberGoing" },
+            { "key": "lifeEventDetailsFreeSpace" },
+            { "key": "lifeEventEditTitle" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventEditText" },
+            { "key": "lifeEventEditSave" },
+            { "key": "lifeEventEditPreview" },
+            { "key": "lifeEventEditLocationTitle" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventEditLocationText" },
+            { "key": "lifeEventAllEvent" },
+            { "key": "lifeEventMyEvent" },
+            { "key": "lifeEventAll" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventLife" },
+            { "key": "lifeEventVirtual" },
+            { "key": "lifeEventShowInfo" },
+            { "key": "lifeEventCreateTitle" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventCreateText" },
+            { "key": "lifeEventCreateButton" },
+            { "key": "lifeEventCreateLifeEvent" },
+            { "key": "lifeEventCreateLiveStreaming" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventTypeCreateTitle" },
+            { "key": "lifeEventTypeCreateName" },
+            { "key": "lifeEventTypeCreateDescription" },
+            { "key": "lifeEventTypeCreateDuration" }
           ]
         }
       ]

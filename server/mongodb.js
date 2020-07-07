@@ -323,8 +323,6 @@ var mergePostWithUsers = (posts, res) => {
     conn.query("SELECT * from users", function (err, rows) {
       conn.release();
       if (!err) {
-        console.log("------------------------");
-        console.log(rows);
         for (let user of rows) {
           for (let post of posts) {
             if (sha1(user.id.toString()) === post.user_id) {
@@ -698,19 +696,17 @@ router.post("/pushNewMessage", function (req, res, next) {
     if (err) throw err;
     console.log(req.body);
     var dbo = db.db(database_name);
-    dbo
-      .collection("messages")
-      .updateOne(
-        { _id: ObjectId(req.body._id) },
-        {
-          $push: { messages: req.body.message },
-          $set: { not_seen: req.body.receiveId },
-        },
-        function (err, rows) {
-          if (err) throw err;
-          res.json(201);
-        }
-      );
+    dbo.collection("messages").updateOne(
+      { _id: ObjectId(req.body._id) },
+      {
+        $push: { messages: req.body.message },
+        $set: { not_seen: req.body.receiveId },
+      },
+      function (err, rows) {
+        if (err) throw err;
+        res.json(201);
+      }
+    );
   });
 });
 
@@ -729,6 +725,244 @@ router.post("/updateSeen", function (req, res, next) {
       );
   });
   res.json({ code: 201 });
+});
+
+router.post("/createLifeEvent", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo.collection("life_event").insertOne(req.body, function (err, result) {
+      if (err) {
+        throw err;
+      } else {
+        const response = {
+          create: true,
+          id: result["ops"][0]._id,
+        };
+        res.send(response);
+      }
+    });
+  });
+});
+
+router.get("/getLifeEvent/:id", function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("life_event")
+      .findOne({ _id: ObjectId(id) }, function (err, rows) {
+        if (err) throw err;
+        res.json(rows);
+      });
+  });
+});
+
+router.get("/getAllEvents/:user", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("life_event")
+      .find()
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        const events = {
+          data: rows,
+          user: req.params.user,
+        };
+        checkEventStatusForCurrentUser(events, res);
+        // res.json(rows);
+      });
+  });
+});
+
+var checkEventStatusForCurrentUser = (events, res) => {
+  for (let i = 0; i < events.data.length; i++) {
+    if (events.data[i].id_user === events.user) {
+      events.data[i]["eventStatus"] = 0;
+    } else {
+      let registered = 1;
+      for (let j = 0; j < events.data[i].signIn.length; j++) {
+        console.log(events.data[i].signIn[j].user_id + "    dsadasdas");
+        if (events.data[i].signIn[j].user_id === events.user) {
+          events.data[i]["eventStatus"] = 1;
+          registered = 0;
+          break;
+        }
+      }
+      if (registered) {
+        events.data[i]["eventStatus"] = 2;
+      }
+    }
+  }
+  res.json(events.data);
+};
+
+router.get("/getMyEvents/:id", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("life_event")
+      .find({
+        id_user: req.params.id,
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        res.json(rows);
+      });
+  });
+});
+
+router.get("/getEventsByEventType/:type", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("life_event")
+      .find({
+        eventType: req.params.type,
+      })
+      .toArray(function (err, rows) {
+        if (err) throw err;
+        res.json(rows);
+      });
+  });
+});
+
+router.post("/updateEvents", function (req, res, next) {
+  mongo.connect(url, function (err, db, res) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo.collection("life_event").updateOne(
+      { _id: ObjectId(req.body._id) },
+      {
+        $set: {
+          id_user: req.body.id_user,
+          date: req.body.date,
+          time: req.body.time,
+          event: req.body.event,
+          comment: req.body.comment,
+          organizer: req.body.organizer,
+          attendees: req.body.attendees,
+          eventType: req.body.eventType,
+          nameOfLocation: req.body.nameOfLocation,
+          location: req.body.location,
+          zip: req.body.zip,
+          street: req.body.street,
+        },
+      },
+      function (err, res) {
+        if (err) throw err;
+      }
+    );
+  });
+  res.json(true);
+});
+
+/* status code
+0 - owner
+1 - sign in
+2 - unsign in
+*/
+router.post("/checkEventStatusForUser", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("life_event")
+      .findOne(
+        { _id: ObjectId(req.body._id), id_user: req.body.id_user },
+        function (err, rows) {
+          if (err) throw err;
+          console.log(rows);
+          if (rows) {
+            res.json(0);
+          } else {
+            dbo.collection("life_event").findOne(
+              {
+                _id: ObjectId(req.body._id),
+                signIn: { $elemMatch: { user_id: req.body.id_user } },
+              },
+              function (err, rows) {
+                if (err) throw err;
+                if (rows === null || rows.length === 0) {
+                  res.json(2);
+                } else {
+                  res.json(1);
+                }
+              }
+            );
+          }
+        }
+      );
+  });
+});
+
+router.get("/deleteEvent/:id", function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo.collection("life_event").deleteOne(
+      {
+        _id: ObjectId(id),
+      },
+      function (err, rows) {
+        if (err) throw err;
+        res.json(true);
+      }
+    );
+  });
+});
+
+router.post("/signInForEvent", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo.collection("life_event").findOne(
+      {
+        _id: ObjectId(req.body.id),
+        signIn: { $elemMatch: { user_id: req.body.user_id } },
+      },
+      function (err, rows) {
+        if (err) throw err;
+        console.log(rows);
+        if (rows === null || rows.length === 0) {
+          dbo
+            .collection("life_event")
+            .updateOne(
+              { _id: ObjectId(req.body.id) },
+              { $push: { signIn: { user_id: req.body.user_id } } },
+              function (err, rows) {
+                if (err) throw err;
+                res.json(1);
+              }
+            );
+        } else {
+          const unSignIn = rows.user_id;
+          dbo.collection("life_event").updateOne(
+            {
+              _id: ObjectId(req.body.id),
+            },
+            {
+              $pull: {
+                signIn: { user_id: req.body.user_id },
+              },
+            },
+            function (err, rows) {
+              if (err) throw err;
+              res.json(2);
+            }
+          );
+        }
+      }
+    );
+  });
 });
 
 module.exports = router;

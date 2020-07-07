@@ -81,12 +81,7 @@ export class FeedComponent implements OnInit {
     }
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
-    if (window.innerWidth > 1000) {
-      this.height = window.innerHeight - 104;
-    } else {
-      this.height = window.innerHeight - 121;
-    }
-    this.height += "px";
+    
     this.language = JSON.parse(localStorage.getItem("language"));
     this.initialization();
     this.uploadInitialization();
@@ -419,14 +414,7 @@ export class FeedComponent implements OnInit {
     } else {
       this.windowWidth = null;
       this.windowHeight = null;
-    }
-
-    if (window.innerWidth > 1000) {
-      this.height = window.innerHeight - 104;
-    } else {
-      this.height = window.innerHeight - 121;
-    }
-    this.height += "px";
+    }    
   }
 
   getImageFromBlob(image) {

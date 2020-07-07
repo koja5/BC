@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, HostListener } from "@angular/core";
 import { Router } from "@angular/router";
 import { CookieService } from "ng2-cookies";
 import { MessageService } from "src/app/services/message.service";
@@ -41,7 +41,11 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     console.log(window.location.pathname);
-    this.height = window.innerHeight - 81;
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 104;
+    } else {
+      this.height = window.innerHeight - 121;
+    }
     this.height += "px";
     this.id = localStorage.getItem("id");
     this.language = JSON.parse(localStorage.getItem("language"));
@@ -66,7 +70,6 @@ export class HomeComponent implements OnInit {
     this.getAllMessageForUser();
   }
 
-  
   playAudio() {
     let audio = new Audio();
     audio.src = "../../../assets/message_sound.mp3";
@@ -166,5 +169,15 @@ export class HomeComponent implements OnInit {
     sessionStorage.setItem("message_item", JSON.stringify(data));
     this.router.navigate(["/home/main/message"]);
     this.messageCenter = "";
+  }
+
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    if (window.innerWidth > 1000) {
+      this.height = window.innerHeight - 104;
+    } else {
+      this.height = window.innerHeight - 121;
+    }
+    this.height += "px";
   }
 }

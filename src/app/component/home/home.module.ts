@@ -27,7 +27,9 @@ import { MatVideoModule } from 'mat-video';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { EventsComponent } from './events/events.component';
 import { LifeEventComponent } from './events/life-event/life-event.component';
+import { FooterComponent } from './footer/footer.component';
 import { LifeEventDetailsComponent } from './events/life-event/life-event-details/life-event-details.component';
+import { EditEventComponent } from './events/edit-event/edit-event.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,9 @@ import { LifeEventDetailsComponent } from './events/life-event/life-event-detail
     AboutUsComponent,
     EventsComponent,
     LifeEventComponent,
-    LifeEventDetailsComponent
+    LifeEventDetailsComponent,
+    FooterComponent,
+    EditEventComponent
   ],
   imports: [
     CommonModule,

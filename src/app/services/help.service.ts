@@ -6,12 +6,20 @@ import {
   SafeResourceUrl,
   SafeUrl,
 } from "@angular/platform-browser";
+import { ToastrService } from "ngx-toastr";
 
 @Injectable({
   providedIn: "root",
 })
 export class HelpService {
-  constructor(public domSanitizer: DomSanitizer) {}
+  public language: any;
+
+  constructor(
+    public domSanitizer: DomSanitizer,
+    private toastr: ToastrService
+  ) {
+    this.language = JSON.parse(localStorage.getItem("language"));
+  }
 
   getMyDirectorUser(id: number, sid: string) {
     const splitSid = sid.split("-");
@@ -155,5 +163,27 @@ export class HelpService {
       checksum = parseInt(fragment, 10) % 97;
     }
     return checksum;
+  }
+
+  updateSuccessMessage() {
+    this.toastr.success(
+      this.language.adminSuccessUpdateTitle,
+      this.language.adminSuccessUpdateText,
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+
+  updateErrorMessage() {
+    this.toastr.error(
+      this.language.adminErrorUpdateTitle,
+      this.language.adminErrorUpdateText,
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
   }
 }

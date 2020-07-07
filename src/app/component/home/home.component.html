@@ -115,8 +115,9 @@
     </div>
   </nav>
   <div>
-    <div>
+    <div [style.height]="height" style="overflow: auto;">
       <router-outlet></router-outlet>
     </div>
+    <app-footer></app-footer>
   </div>
 </body>

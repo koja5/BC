@@ -113,12 +113,15 @@
                   </div>
                 </li>
 
-                <li class="nav-item"><a (click)="returnActiveNode('task')" routerLink="members" class="nav-link"><i
+                <li class="nav-item"><a (click)="returnActiveNode('members')" routerLink="members" class="nav-link"><i
                       class="fa fa-user"></i><span class="title">{{language.members}}</span></a>
                 </li>
-                <li class="nav-item"><a (click)="returnActiveNode('task')" routerLink="translation" class="nav-link"><i
+                <li class="nav-item"><a (click)="returnActiveNode('translation')" routerLink="translation" class="nav-link"><i
                       class="fa fa-tasks"></i><span class="title">{{language.translation}}</span></a>
                 </li>
+                <li class="nav-item"><a (click)="returnActiveNode('event')" routerLink="event" class="nav-link"><i
+                  class="fa fa-calendar"></i><span class="title">{{language.event}}</span></a>
+            </li>
 
               </ul>
             </perfect-scrollbar>

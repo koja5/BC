@@ -1,3 +1,167 @@
-<p>
-  life-event-details works!
-</p>
+<div class="loader4 loading" *ngIf="data === undefined"></div>
+
+<div *ngIf="data && language">
+  <div class="profile-cover text-center">
+    <img class="img-fluid event-cover" src="./assets/img/events_cover.jpg" alt="">
+  </div>
+  <div class="bg-white shadow-sm border-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="d-flex align-items-center py-3">
+            <div class="profile-left">
+              <h5 class="font-weight-bold text-dark mb-1 mt-0">{{data.event}}</h5>
+              <p class="mb-0 text-muted"> <i class="feather-map-pin"></i> {{data.location}} --
+                {{data.date | date: 'dd/MM/yyyy'}} /
+                {{data.time | date: 'HH:mm'}}</p>
+            </div>
+            <div class="profile-right ml-auto" *ngIf="eventStatus == 0"> <button type="button"
+                class="btn btn-primary mr-1" (click)="editEvent()">
+                &nbsp; {{language.lifeEventDetailsEdit}} &nbsp; </button>
+              <!-- <button type="button" class="btn btn-danger" (click)="deleteEventWindow = true"> &nbsp; Delete &nbsp;
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-4">
+    <div class="container">
+      <div class="row">
+        <!-- Main Content -->
+        <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0">{{language.lifeEventDetailsAboutEvent}}</h6>
+            </div>
+            <div class="box-body p-3">
+              <p>
+                {{data.comment}}
+              </p>
+            </div>
+          </div>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0">{{language.lifeEventDetailsLocation}}</h6>
+            </div>
+            <div class="box-body">
+              <table class="table table-borderless mb-0">
+                <tbody>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsNameOfLocation}}</th>
+                    <td class="p-3">{{data.nameOfLocation}}
+                    </td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsLocation}}</th>
+                    <td class="p-3">{{data.location}}</td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsZip}}</th>
+                    <td class="p-3">{{data.zip}}
+                    </td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsStreat}}</th>
+                    <td class="p-3">{{data.street}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+        <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+          <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0">{{language.lifeEventDetailsBasicInfo}}</h6>
+            </div>
+            <div class="p-3 basic-info">
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-calendar-check-o"></span>
+                  {{language.lifeEventDetailsDate}}</p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.date | date: 'dd/MM/yyyy'}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-clock-o"></span> {{language.lifeEventDetailsTime}}</p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.time | date: 'HH:mm'}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-user-circle-o"></span>
+                  {{language.lifeEventDetailsOrganizer}}</p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.organizer}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-users"></span> {{language.lifeEventDetailsMaximumNumber}}
+                </p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.attendees}}</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+        <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+          <button type="button" class="btn btn-lg btn-block btn-default mb-3 owner-button" *ngIf="eventStatus == 0"
+            disabled> <i class="fa fa-check"></i> {{language.lifeEventDetailsOwner}} </button>
+          <button type="button" class="btn btn-lg btn-block btn-sign-in mb-3" *ngIf="eventStatus == 2&&freeSpace"
+            (click)="signIn()"> <i class="fa fa-check"></i> {{language.lifeEventDetailsSignInButton}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed mb-3" *ngIf="eventStatus == 1"
+            (click)="signIn()"> <i class="fa fa-check-circle-o"></i> {{language.lifeEventDetailsRegisteredButton}}
+          </button>
+          <p>{{data.signIn.length}} {{language.lifeEventDetailsMemberGoing}}</p>
+          <p [ngClass]="numberOfFreeSpace == 0 ? 'no-free-space' : ''">{{numberOfFreeSpace}}
+            {{language.lifeEventDetailsFreeSpace}}</p>
+          <!-- <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0">{{language.lifeEventDetailsSimilar}}
+              </h6>
+            </div>
+            <div class="box-body p-3">
+              <a href="job-profile.html">
+                <div class="shadow-sm border rounded bg-white job-item mb-3">
+                  <div class="d-flex align-items-center p-3 job-item-header">
+                    <div class="overflow-hidden mr-2">
+                      <h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
+                      <div class="text-truncate text-primary">Spotify Inc.</div>
+                      <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
+                    </div>
+                    <img class="img-fluid ml-auto" src="img/l3.png" alt="">
+                  </div>
+                  <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+                    <div class="overlap-rounded-circle">
+                      <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                        src="img/p9.png" alt="" data-original-title="Sophia Lee">
+                      <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                        src="img/p10.png" alt="" data-original-title="John Doe">
+                      <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                        src="img/p11.png" alt="" data-original-title="Julia Cox">
+                      <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                        src="img/p12.png" alt="" data-original-title="Robert Cook">
+                    </div>
+                    <span class="font-weight-bold text-muted">18 connections</span>
+                  </div>
+                  <div class="p-3 job-item-footer">
+                    <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div> -->
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="deleteEventWindow" (close)="deleteEventWindow = false"
+  [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
+  <div class="modal-body text-center">
+    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
+    <h3>{{language.areYouSure}}</h3>
+  </div>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="deleteEventWindow = false">{{language.no}}</button>
+    <button kendoButton (click)="deleteEvent('yes')" primary="true">{{language.yes}}</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

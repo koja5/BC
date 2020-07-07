@@ -930,20 +930,20 @@ router.get("/getPeopleYouMightKnow", function (req, res, next) {
       return;
     }
     var id = req.params.id;
-    conn.query("SELECT *, rTrue.help, rFalse.notHelp from users u left join (SELECT id_user, count(*) as help from recommendation where status = 1 group by id_user)rTrue on rTrue.id_user = sha1(u.id) left join (SELECT id_user, count(*) as notHelp from recommendation where status = 0 group by id_user)rFalse on rFalse.id_user = sha1(u.id) order by RAND() limit 5", function (
-      err,
-      rows
-    ) {
-      conn.release();
-      if (!err) {
-        res.json(rows);
-      } else {
-        res.json({
-          code: 100,
-          status: "Error in connection database",
-        });
+    conn.query(
+      "SELECT *, rTrue.help, rFalse.notHelp from users u left join (SELECT id_user, count(*) as help from recommendation where status = 1 group by id_user)rTrue on rTrue.id_user = sha1(u.id) left join (SELECT id_user, count(*) as notHelp from recommendation where status = 0 group by id_user)rFalse on rFalse.id_user = sha1(u.id) order by RAND() limit 5",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+        }
       }
-    });
+    );
   });
 });
 
@@ -1924,15 +1924,184 @@ router.get("/getRecommendation/:id", function (req, res, next) {
     }
     var id = req.params.id;
     console.log(id);
-    conn.query("SELECT status, count(*) as count from recommendation where id_user = '" + req.params.id +  "' group by status", function (err, rows) {
+    conn.query(
+      "SELECT status, count(*) as count from recommendation where id_user = '" +
+        req.params.id +
+        "' group by status",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json(err);
+        }
+      }
+    );
+  });
+});
+
+/* Event start */
+
+router.get("/getEvents", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var id = req.params.id;
+    conn.query("SELECT * from event", function (err, rows) {
       conn.release();
       if (!err) {
         res.json(rows);
       } else {
-        res.json(err);
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
       }
     });
   });
 });
+
+router.get("/getEventById/:name", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var id = req.params.id;
+    conn.query(
+      "SELECT * from event where name = '" + req.params.name + "'",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+        }
+      }
+    );
+  });
+});
+
+router.post("/createEvent", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    console.log(conn);
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+
+    response = {};
+
+    conn.query("insert into event SET ?", req.body, function (err, rows) {
+      conn.release();
+      if (!err) {
+        if (!err) {
+          response.id = rows.insertId;
+          response.success = true;
+        } else {
+          response.success = false;
+        }
+        res.json(response);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+        console.log(err);
+      }
+    });
+    conn.on("error", function (err) {
+      console.log("[mysql error]", err);
+    });
+  });
+});
+
+router.post("/updateEvent", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+
+    var id = req.body.id;
+    conn.query(
+      "update event SET ? where id = '" + id + "'",
+      req.body,
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          if (!err) {
+            response = true;
+          } else {
+            response = false;
+          }
+          res.json(response);
+        } else {
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+          console.log(err);
+        }
+      }
+    );
+    conn.on("error", function (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    });
+  });
+});
+
+router.get("/deleteEvent/:id", (req, res, next) => {
+  try {
+    connection.getConnection(function (err, conn) {
+      if (err) {
+        console.error("SQL Connection error: ", err);
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+        return next(err);
+      } else {
+        conn.query(
+          "delete from event where id = '" + req.params.id + "'",
+          function (err, rows, fields) {
+            conn.release();
+            if (err) {
+              res.send(err);
+            } else {
+              res.send(true);
+            }
+          }
+        );
+      }
+    });
+  } catch (ex) {
+    console.error("Internal error: " + ex);
+    return next(ex);
+  }
+});
+
+/* Event END */
 
 module.exports = router;

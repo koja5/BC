@@ -1,0 +1,45 @@
+{
+  "type": "event",
+  "new": {
+    "open": "modal"
+  },
+  "columns": [
+    {
+      "type": "button",
+      "action": "edit-event",
+      "class": "k-preview",
+      "icon": "k-icon k-i-edit",
+      "method": "updateEvent",
+      "width": 80
+    },
+    {
+      "type": "button",
+      "action": "delete",
+      "class": "k-preview",
+      "icon": "k-icon k-i-delete",
+      "method": "deleteEvent",
+      "param": "id",
+      "width": 80
+    },
+    {
+      "type": "data",
+      "title": "name",
+      "field": "name",
+      "width": 120
+    },
+    {
+      "type": "data",
+      "title": "duration",
+      "field": "duration",
+      "width": 220
+    },
+    {
+      "type": "data",
+      "title": "description",
+      "field": "description",
+      "width": 120
+    }
+  ],
+  "exportPdfName": "Event.pdf",
+  "exportExcelName": "Event.xlsx"
+}

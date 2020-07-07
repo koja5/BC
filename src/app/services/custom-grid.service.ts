@@ -27,4 +27,8 @@ export class CustomGridService {
   getDirectors() {
     return this.http.get("/api/getDirectors").map((res) => res);
   }
+
+  deleteEvent(id) {
+    return this.http.get("/api/deleteEvent/" + id).map((res) => res);
+  }
 }

@@ -21,8 +21,9 @@
         </kendo-textbox-container>
       </div>
       <div style="float: right; padding-right: 30px; padding-top: 14px;">
-        <button *ngIf="gridConfiguration.new.open === 'modal'" kendoButton [icon]="'add'" (click)="newMember()"
-          [primary]="true" class="addButton">{{language.createData}}</button>
+        <button *ngIf="gridConfiguration.new.open === 'modal'" kendoButton [icon]="'add'"
+          (click)="openModal(gridConfiguration.type)" [primary]="true"
+          class="addButton">{{language.createData}}</button>
         <button *ngIf="gridConfiguration.new.open === 'page'" kendoButton [icon]="'add'"
           [routerLink]="gridConfiguration.new.link" [primary]="true" class="addButton">{{language.createData}}</button>
         <div class="dropdown-grid">
@@ -53,6 +54,9 @@
 
         <div *ngIf="item.action === 'edit-member'">
           <button kendoButton [icon]="item.icon" class='{{item.class}}' (click)="editMember(dataItem)"></button>
+        </div>
+        <div *ngIf="item.action === 'edit-event'">
+          <button kendoButton [icon]="item.icon" class='{{item.class}}' (click)="editEvent(dataItem)"></button>
         </div>
 
         <div *ngIf="item.action === 'delete'">
@@ -136,8 +140,8 @@
       <div class="form-group">
         <div class="row">
           <div class="text-center vd_info-parent col-md-4 col-xs-12">
-            <img alt="example image" style="width: 190px; height: 190px;" src="../../../../assets/img/profile_image/{{member.image}}"
-              class="rounded-circle">
+            <img alt="example image" style="width: 190px; height: 190px;"
+              src="../../../../assets/img/profile_image/{{member.image}}" class="rounded-circle">
             <h4 class="font-semibold name-member">{{member.firstname}} {{member.lastname}}</h4>
           </div>
           <div class="col-md-8 col-xs-12">
@@ -468,6 +472,34 @@
       <div class="form-group" style="text-align: center; margin-top: 15px;">
         <button kendoButton [primary]="true" [primary]="true" class="form-button"
           type="submit">{{language.updateData}}</button>
+      </div>
+    </form>
+  </kendo-window>
+
+  <kendo-window title="{{language.lifeEventTypeCreateTitle}}" *ngIf="eventWindow" (close)="eventWindow = false"
+    [width]="windowWidth ? windowWidth : 520" [height]="windowHeight ? windowHeight : 360">
+    <form (ngSubmit)="sendAction(operationMode, create)" class="row">
+      <div class="col-sm-9 mb-2">
+        <label id="positionLabel" class="form-label">{{language.lifeEventTypeCreateName}}</label>
+        <div class="input-group">
+          <input class="form-control" [(ngModel)]="create.name" name="name">
+        </div>
+      </div>
+      <div class="col-sm-3 mb-2">
+        <label id="positionLabel" class="form-label">{{language.lifeEventTypeCreateDuration}}</label>
+        <div class="input-group">
+          <input class="form-control" [(ngModel)]="create.duration" name="duration">
+        </div>
+      </div>
+      <div class="col-sm-12 mb-2">
+        <label id="positionLabel" class="form-label">{{language.lifeEventTypeCreateDescription}}</label>
+        <div class="input-group">
+          <textarea class="form-control" rows="4" [(ngModel)]="create.description" name="description"></textarea>
+        </div>
+      </div>
+      <div class="form-group" style="margin: auto;">
+        <button kendoButton [primary]="true" [primary]="true" class="form-button"
+          type="submit">{{operationMode === 'add' ? language.createData : language.updateData}}</button>
       </div>
     </form>
   </kendo-window>

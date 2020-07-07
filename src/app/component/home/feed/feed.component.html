@@ -1,6 +1,6 @@
 <!-- <app-content-placeholder></app-content-placeholder> -->
 
-<div [style.height]="height" style="overflow: auto;">
+<div>
   <div class="container py-4" *ngIf="language !== undefined">
     <div class="row" *ngIf="data !== undefined">
       <!-- Main Content -->
@@ -319,18 +319,23 @@
             <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
             <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
           </div>
-          <div class="d-flex">
-            <div class="col-12 border-right p-3" routerLink="/home/main/connection" style="cursor: pointer;">
-              <p class="mb-0 text-black-50 small">{{language.feedConnections}}</p>
-            </div>
-            <!-- <div class="col-6 p-3">
-            <h6 class="font-weight-bold text-dark mb-1">85</h6>
-            <p class="mb-0 text-black-50 small">{{language.feedViews}}</p>
-          </div> -->
-          </div>
           <div class="overflow-hidden border-top">
             <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> {{language.feedViewMyProfile}}
             </a>
+          </div>
+        </div>
+        <div class="box mb-3 feed-links">
+          <div class="d-flex mb-2">
+            <div class="col-12 feed-pages" routerLink="/home/main/connection" style="cursor: pointer;">
+              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/connections.png">
+                {{language.feedConnections}}</p>
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="col-12 feed-pages" routerLink="/home/main/event/all" style="cursor: pointer;">
+              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/events.png">
+                {{language.feedEvents}}</p>
+            </div>
           </div>
         </div>
         <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center" *ngIf="userType !== 2">
@@ -541,28 +546,6 @@
     </div>
   </div>
 </div>
-
-
-<footer *ngIf="language !== undefined" class="footer">
-  <div class="copyright">
-    <span>{{language.footerCopyright}}</span>
-  </div>
-  <div class="terms-privacy">
-    <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
-      {{language.aboutFooter}}
-    </a>
-    <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
-      {{language.termsHeaderTitle}}
-    </a>
-    <a routerLink="/privacy-policy" target="_blank"
-      style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
-      {{language.privacyHeaderTitle}}
-    </a>
-    <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
-      {{language.impressumHeaderTitle}}
-    </a>
-  </div>
-</footer>
 
 <kendo-window [title]="language.feedPostLikes" *ngIf="postLikes" [width]="windowWidth ? windowWidth : 410"
   [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">

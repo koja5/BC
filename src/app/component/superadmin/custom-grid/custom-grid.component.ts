@@ -4,6 +4,8 @@ import {
   ViewChild,
   HostListener,
   Input,
+  Output,
+  EventEmitter,
 } from "@angular/core";
 import {
   process,
@@ -42,6 +44,8 @@ import { ChangePasswordModel } from "src/app/models/change-password-model";
 export class CustomGridComponent implements OnInit {
   @Input() data: any;
   @Input() gridConfiguration: any;
+  @Input() create: any;
+  @Output() sendEventEmitter = new EventEmitter<any>();
 
   // @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   public customer = false;
@@ -124,6 +128,7 @@ export class CustomGridComponent implements OnInit {
   public changePasswordWindow = false;
   public changePasswordData = new ChangePasswordModel();
   public passwordIsNotEqual = false;
+  public eventWindow = false;
 
   constructor(
     private router: Router,
@@ -371,11 +376,27 @@ export class CustomGridComponent implements OnInit {
     this.selectedTab = "profile";
   }
 
+  editEvent(dataItem) {
+    this.create = dataItem;
+    this.eventWindow = true;
+    this.operationMode = "edit";
+  }
+
   convertToDate(date) {
     if (date) {
       return new Date(date);
     }
     return null;
+  }
+
+  openModal(type) {
+    if (type === "event") {
+      this.eventWindow = true;
+      this.operationMode = "add";
+    }
+    if (type === "member") {
+      this.newMember();
+    }
   }
 
   newMember() {
@@ -683,5 +704,13 @@ export class CustomGridComponent implements OnInit {
         this.changePasswordWindow = false;
       });
     }
+  }
+
+  sendAction(operation, data) {
+    const actionData = {
+      operation: operation,
+      data: data,
+    };
+    this.sendEventEmitter.next(actionData);
   }
 }
