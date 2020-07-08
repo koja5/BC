@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LifeEventService } from "src/app/services/life-event.service";
+import { ProfileService } from "src/app/services/profile.service";
 
 @Component({
   selector: "app-life-event-details",
@@ -16,11 +17,13 @@ export class LifeEventDetailsComponent implements OnInit {
   public deleteEventWindow = false;
   public freeSpace = true;
   public numberOfFreeSpace: number;
+  public organizator: any;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: LifeEventService
+    private service: LifeEventService,
+    private profileService: ProfileService
   ) {}
 
   ngOnInit() {
@@ -39,6 +42,7 @@ export class LifeEventDetailsComponent implements OnInit {
           id_user: localStorage.getItem("id"),
         });
         this.checkFreeSpace();
+        this.getOrganizatorProfile(data["id_user"]);
       });
     }
   }
@@ -93,5 +97,12 @@ export class LifeEventDetailsComponent implements OnInit {
     } else {
       this.freeSpace = false;
     }
+  }
+
+  getOrganizatorProfile(id) {
+    this.profileService.getUserInfoSHA1(id).subscribe((data) => {
+      this.organizator = data[0];
+      console.log(this.organizator);
+    });
   }
 }

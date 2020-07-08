@@ -599,6 +599,7 @@
       "lifeEventDetailsRegisteredButton": { "type": "string" },
       "lifeEventDetailsMemberGoing": { "type": "string" },
       "lifeEventDetailsFreeSpace": { "type": "string" },
+      "lifeEventDetailsBackToEvent": { "type": "string" },
       "lifeEventEditTitle": { "type": "string" },
       "lifeEventEditText": { "type": "string" },
       "lifeEventEditSave": { "type": "string" },
@@ -613,13 +614,17 @@
       "lifeEventShowInfo": { "type": "string" },
       "lifeEventCreateTitle": { "type": "string" },
       "lifeEventCreateText": { "type": "string" },
+      "lifeEventInviteFriend": { "type": "string" },
+      "lifeEventCopyLink": { "type": "string" },
       "lifeEventCreateButton": { "type": "string" },
       "lifeEventCreateLifeEvent": { "type": "string" },
       "lifeEventCreateLiveStreaming": { "type": "string" },
       "lifeEventTypeCreateTitle": { "type": "string" },
       "lifeEventTypeCreateName": { "type": "string" },
       "lifeEventTypeCreateDescription": { "type": "string" },
-      "lifeEventTypeCreateDuration": { "type": "string" }
+      "lifeEventTypeCreateDuration": { "type": "string" },
+      "lifeEventDetailsShowProfil": { "type": "string" },
+      "lifeEventDetailsGoingWithFriends": { "type": "string" }
     }
   },
   "layout": [
@@ -2593,7 +2598,7 @@
             { "key": "lifeEventDetailsEdit" },
             { "key": "lifeEventDetailsCopy" },
             { "key": "lifeEventDetailsSignIn" },
-            { }
+            {}
           ]
         },
         {
@@ -2615,7 +2620,8 @@
             { "key": "lifeEventDetailsRegisteredButton" },
             { "key": "lifeEventDetailsMemberGoing" },
             { "key": "lifeEventDetailsFreeSpace" },
-            { "key": "lifeEventEditTitle" }
+            { "key": "lifeEventEditTitle" },
+            { "key": "lifeEventDetailsBackToEvent" }
           ]
         },
         {
@@ -2671,6 +2677,17 @@
             { "key": "lifeEventTypeCreateName" },
             { "key": "lifeEventTypeCreateDescription" },
             { "key": "lifeEventTypeCreateDuration" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventCopyLink" },
+            { "key": "lifeEventInviteFriend" },
+            { "key": "lifeEventDetailsShowProfil" },
+            { "key": "lifeEventDetailsGoingWithFriends" }
           ]
         }
       ]

@@ -82,7 +82,13 @@
                     <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
-                    <input type="text" class="form-control" name="organizer" [(ngModel)]="data.organizer">
+                    <kendo-combobox *ngIf="organizators"
+                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
+                      [data]="organizators" [valuePrimitive]="true" [textField]="'fullname'" [valueField]="'id'"
+                      (selectionChange)="selectOrganizator($event)" (filterChange)="searchOrganizator($event)"
+                      [filterable]="true" [loading]="organizatorLoading" [(ngModel)]="data.id_user"
+                      class="col-xs-12 noPadding" name="event">
+                    </kendo-combobox>
                   </div>
                 </div>
               </div>
@@ -161,8 +167,8 @@
   </div>
 </div>
 
-<kendo-window *ngIf="showPreview" (close)="showPreview = false"
-  [width]="windowWidth ? windowWidth : 1100" [height]="windowHeight ? windowHeight : 700">
+<kendo-window *ngIf="showPreview" (close)="showPreview = false" [width]="windowWidth ? windowWidth : 1100"
+  [height]="windowHeight ? windowHeight : 700">
 
   <app-life-event-details [data]="data"></app-life-event-details>
 </kendo-window>

@@ -2,6 +2,8 @@
 
 <div *ngIf="data && language">
   <div class="profile-cover text-center">
+    <button class="btn btn-danger back-to-event" routerLink="/home/main/event/all"><span
+        class="fa fa-arrow-left"></span> {{language.lifeEventDetailsBackToEvent}}</button>
     <img class="img-fluid event-cover" src="./assets/img/events_cover.jpg" alt="">
   </div>
   <div class="bg-white shadow-sm border-bottom">
@@ -33,7 +35,7 @@
         <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
           <div class="box shadow-sm border rounded bg-white mb-3">
             <div class="box-title border-bottom p-3">
-              <h6 class="m-0">{{language.lifeEventDetailsAboutEvent}}</h6>
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsAboutEvent}}</h6>
             </div>
             <div class="box-body p-3">
               <p>
@@ -43,7 +45,7 @@
           </div>
           <div class="box shadow-sm border rounded bg-white mb-3">
             <div class="box-title border-bottom p-3">
-              <h6 class="m-0">{{language.lifeEventDetailsLocation}}</h6>
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsLocation}}</h6>
             </div>
             <div class="box-body">
               <table class="table table-borderless mb-0">
@@ -72,9 +74,9 @@
           </div>
         </main>
         <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-          <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
+          <div class="box mb-3 shadow-sm border rounded bg-white profile-box">
             <div class="box-title border-bottom p-3">
-              <h6 class="m-0">{{language.lifeEventDetailsBasicInfo}}</h6>
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsBasicInfo}}</h6>
             </div>
             <div class="p-3 basic-info">
               <div class="d-flex align-items-top mb-2">
@@ -87,15 +89,28 @@
                 <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.time | date: 'HH:mm'}}</p>
               </div>
               <div class="d-flex align-items-top mb-2">
-                <p class="mb-0 text-muted"><span class="fa fa-user-circle-o"></span>
-                  {{language.lifeEventDetailsOrganizer}}</p>
-                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.organizer}}</p>
-              </div>
-              <div class="d-flex align-items-top mb-2">
                 <p class="mb-0 text-muted"><span class="fa fa-users"></span> {{language.lifeEventDetailsMaximumNumber}}
                 </p>
                 <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.attendees}}</p>
               </div>
+            </div>
+          </div>
+
+          <div class="box mb-3 shadow-sm border rounded bg-white profile-box">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsOrganizer}}</h6>
+            </div>
+            <div class="p-3 basic-info row" *ngIf="organizator">
+              <div _ngcontent-dvd-c7="" class="dropdown-list-image col-sm-3"><img alt="Responsive image"
+                  class="img-fluid rounded-circle" src="/assets/img/profile_image/{{organizator.image}}"></div>
+              <div class="font-weight-bold col-sm-9">
+                <div class="text-truncate"><a>{{organizator.fullname}}</a></div>
+                <div class="small text-gray-500">{{organizator.profession}}</div>
+                <div class="small text-gray-500" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</div>
+              </div>
+            </div>
+            <div class="overflow-hidden border-top text-center"><a class="font-weight-bold p-3 d-block"
+                routerLink="/home/main/profile/{{data.id_user}}"> {{language.lifeEventDetailsShowProfil}} </a>
             </div>
           </div>
         </aside>
@@ -106,11 +121,31 @@
             (click)="signIn()"> <i class="fa fa-check"></i> {{language.lifeEventDetailsSignInButton}}
           </button>
           <button type="button" class="btn btn-lg btn-block btn-signed mb-3" *ngIf="eventStatus == 1"
-            (click)="signIn()"> <i class="fa fa-check-circle-o"></i> {{language.lifeEventDetailsRegisteredButton}}
+            (click)="signIn()">
+            <i class="fa fa-check-circle-o"></i> {{language.lifeEventDetailsRegisteredButton}}
           </button>
-          <p>{{data.signIn.length}} {{language.lifeEventDetailsMemberGoing}}</p>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsGoingWithFriends}}</h6>
+            </div>
+            <div class="row border-bottom pt-3 pb-3">
+              <div class="col-sm-6" style="text-align: center; font-weight: bold;">
+                <h5 class="number-of-going">{{data.signIn.length}}</h5>
+                <h6>{{language.lifeEventDetailsMemberGoing}}</h6>
+              </div>
+              <div class="col-sm-6" style="text-align: center; font-weight: bold;">
+                <h5 class="number-of-going">{{numberOfFreeSpace}}</h5>
+                <h6>{{language.lifeEventDetailsFreeSpace}}</h6>
+              </div>
+            </div>
+            <div class="box-title p-3" style="text-align: center;">
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" title="This option will be available soon"> 
+               {{language.lifeEventInviteFriend}} </button>
+            </div>
+          </div>
+          <!-- <p>{{data.signIn.length}} {{language.lifeEventDetailsMemberGoing}}</p>
           <p [ngClass]="numberOfFreeSpace == 0 ? 'no-free-space' : ''">{{numberOfFreeSpace}}
-            {{language.lifeEventDetailsFreeSpace}}</p>
+            {{language.lifeEventDetailsFreeSpace}}</p> -->
           <!-- <div class="box shadow-sm border rounded bg-white mb-3">
             <div class="box-title border-bottom p-3">
               <h6 class="m-0">{{language.lifeEventDetailsSimilar}}

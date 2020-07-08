@@ -21,7 +21,9 @@ export class LifeEventService {
   }
 
   checkEventStatusForUser(data) {
-    return this.http.post("/api/checkEventStatusForUser", data).map((res) => res);
+    return this.http
+      .post("/api/checkEventStatusForUser", data)
+      .map((res) => res);
   }
 
   deleteEvent(id) {
@@ -30,5 +32,9 @@ export class LifeEventService {
 
   signInForEvent(data) {
     return this.http.post("/api/signInForEvent", data).map((res) => res);
+  }
+
+  searchOrganizator(data) {
+    return this.http.post("/api/searchOrganizator", data).map((res) => res);
   }
 }

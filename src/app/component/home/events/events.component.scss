@@ -61,5 +61,51 @@
     top: 13px;
     right: 21px;
     color: green;
-    font-size: 27;
+    font-size: 22px;
+}
+
+.btn-show-info {
+    color: #000;
+    background-color: #bbbbbb;
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.btn-show-info:hover {
+    background: #8e8c8c;
+}
+
+.eventShareOptions {
+    position: absolute;
+    right: 22px;
+    z-index: 10000;
+    /* border: 1px solid; */
+    padding: 5px;
+    box-shadow: 1px 2px 7px 3px lightgrey;
+    border-radius: 2px;
+    background: #fff;
+    width: 110px;
+    right: 25px !important;
+    margin-top: 42px !important;
+    width: 70%;
+}
+
+.eventShareOptions ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.eventShareOptions ul li {
+    cursor: pointer;
+    font-size: 17px;
+    padding: 8px;
+}
+
+.show {
+    display: block;
+}
+
+.hide {
+    display: none;
 }

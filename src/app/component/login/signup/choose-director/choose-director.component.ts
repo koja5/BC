@@ -118,7 +118,6 @@ export class ChooseDirectorComponent implements OnInit {
   }
 
   searchDirector(event) {
-    console.log(event);
     if (event !== "" && event.length > 2) {
       this.directorLoading = true;
       const searchFilter = {

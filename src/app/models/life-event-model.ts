@@ -1,5 +1,5 @@
 export class LifeEventModel {
-  id_user?: string;
+  id_user?: any;
   date?: Date;
   time?: Date;
   event?: string;

@@ -2102,6 +2102,42 @@ router.get("/deleteEvent/:id", (req, res, next) => {
   }
 });
 
+router.post("/searchOrganizator", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    console.log(req.body);
+    conn.query(
+      "SELECT * from users where active = 1 and (fullname like '%" +
+        req.body.filter +
+        "%' or email like '%" +
+        req.body.filter +
+        "%')",
+      function (err, rows) {
+        conn.release();
+        if (!err) {
+          res.json(rows);
+        } else {
+          res.json(null);
+        }
+      }
+    );
+
+    conn.on("error", function (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    });
+  });
+});
+
 /* Event END */
 
 module.exports = router;
