@@ -101,9 +101,9 @@
               <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsOrganizer}}</h6>
             </div>
             <div class="p-3 basic-info row" *ngIf="organizator">
-              <div _ngcontent-dvd-c7="" class="dropdown-list-image col-sm-3"><img alt="Responsive image"
+              <div _ngcontent-dvd-c7="" class="dropdown-list-image col-2"><img alt="Responsive image"
                   class="img-fluid rounded-circle" src="/assets/img/profile_image/{{organizator.image}}"></div>
-              <div class="font-weight-bold col-sm-9">
+              <div class="font-weight-bold col-10">
                 <div class="text-truncate"><a>{{organizator.fullname}}</a></div>
                 <div class="small text-gray-500">{{organizator.profession}}</div>
                 <div class="small text-gray-500" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</div>
@@ -129,11 +129,11 @@
               <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsGoingWithFriends}}</h6>
             </div>
             <div class="row border-bottom pt-3 pb-3">
-              <div class="col-sm-6" style="text-align: center; font-weight: bold;">
+              <div class="col-6" style="text-align: center; font-weight: bold;">
                 <h5 class="number-of-going">{{data.signIn.length}}</h5>
                 <h6>{{language.lifeEventDetailsMemberGoing}}</h6>
               </div>
-              <div class="col-sm-6" style="text-align: center; font-weight: bold;">
+              <div class="col-6" style="text-align: center; font-weight: bold;">
                 <h5 class="number-of-going">{{numberOfFreeSpace}}</h5>
                 <h6>{{language.lifeEventDetailsFreeSpace}}</h6>
               </div>

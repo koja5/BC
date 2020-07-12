@@ -51,12 +51,12 @@
                         <p class="title">{{item.event}}</p>
                         <p class="location">{{item.nameOfLocation}}</p>
                         <div class="row">
-                          <button class="btn btn-show-info btn-lg btn-block col-sm-9" type="button"
+                          <button class="btn btn-show-info btn-lg btn-block col-9" type="button"
                             (click)="openEvent(item.eventType, item._id)"><i class="fa fa-info-circle"></i>
                             {{language.lifeEventShowInfo}}
                           </button>
-                          <div class="col-sm-1"></div>
-                          <button class="btn btn-show-info btn-lg btn-block col-sm-2" type="button"
+                          <div class="col-1"></div>
+                          <button class="btn btn-show-info btn-lg btn-block col-2" type="button"
                             (click)="shareEvent(item._id)"><i class="fa fa-share"></i>
                           </button>
                           <div class="eventShareOptions" [ngClass]="eventShareShowHide === item._id ? 'show' : 'hide'">
