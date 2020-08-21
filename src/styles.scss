@@ -442,6 +442,17 @@ a {
   color: #d3ac2b;
   border-color: #d3ac2b;
 }
+
+.btn-gold {
+  color: #ffffff;
+  background-color: #d3ac2b;
+  border-color: #d3ac2b;
+}
+
+.btn-gold:hover {
+  color: #ffffff;
+}
+
 .btn-outline-gold:hover {
   color: #ffffff;
   background-color: #d3ac2b;
@@ -1074,4 +1085,36 @@ mat-video .videoplayer {
 .profile-img-container:hover .change-icon i {
   display: block;
   z-index: 500;
+}
+
+.margin-auto {
+  margin: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.list-user-profile {
+  list-style: none;
+  padding-left: 0px;
+}
+
+.list-user-profile li {
+  margin-bottom: 6px;
+}
+
+.list-user-profile li img {
+  width: 47px;
+  height: 47px;
+}
+
+.list-user-profile li span {
+  margin-left: 7px;
+  cursor: pointer;
+  color: #4e95e0;
+}
+
+.list-user-profile li span:hover {
+  text-decoration: underline;
 }

@@ -37,4 +37,16 @@ export class LifeEventService {
   searchOrganizator(data) {
     return this.http.post("/api/searchOrganizator", data).map((res) => res);
   }
+
+  sendInviteForEvent(data) {
+    return this.http.post("/api/sendInviteForEvent", data).map((res) => res);
+  }
+
+  sendReminderForEvent(data) {
+    return this.http.post("/api/sendReminderForEvent", data).map((res) => res);
+  }
+
+  getSignInForLifeEvent(id) {
+    return this.http.get("/api/getSignInForLifeEvent/" + id).map((res) => res);
+  }
 }

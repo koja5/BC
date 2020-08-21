@@ -623,8 +623,36 @@
       "lifeEventTypeCreateName": { "type": "string" },
       "lifeEventTypeCreateDescription": { "type": "string" },
       "lifeEventTypeCreateDuration": { "type": "string" },
+      "lifeEventTypeCreateActiveMember": { "type": "string" },
       "lifeEventDetailsShowProfil": { "type": "string" },
-      "lifeEventDetailsGoingWithFriends": { "type": "string" }
+      "lifeEventDetailsGoingWithFriends": { "type": "string" },
+      "inviteFriendsForEventSubject": { "type": "string" },
+      "inviteFriendsForEventRegardsFirst": { "type": "string" },
+      "inviteFriendsForEventMessage": { "type": "string" },
+      "inviteFriendsForEventShowEventDetails": { "type": "string" },
+      "inviteFriendsForEventThanksForUsing": { "type": "string" },
+      "inviteFriendsForEventHaveQuestion": { "type": "string" },
+      "inviteFriendsForEventGenerateMail": { "type": "string" },
+      "inviteFriendsForEventCopyright": { "type": "string" },
+      "inviteFriendsForEventInviteSend": { "type": "string" },
+      "inviteFriendsForEventSearchFriends": { "type": "string" },
+      "inviteFriendsForEventSelectAllFriends": { "type": "string" },
+      "inviteFriendsForEventSuccessSendText": { "type": "string" },
+      "reminderFriendsForEventSubject": { "type": "string" },
+      "reminderFriendsForEventRegardsFirst": { "type": "string" },
+      "reminderFriendsForEventMessage": { "type": "string" },
+      "reminderFriendsForEventShowEventDetails": { "type": "string" },
+      "reminderFriendsForEventThanksForUsing": { "type": "string" },
+      "reminderFriendsForEventHaveQuestion": { "type": "string" },
+      "reminderFriendsForEventGenerateMail": { "type": "string" },
+      "reminderFriendsForEventCopyright": { "type": "string" },
+      "reminderFriendsForEventSend": { "type": "string" },
+      "reminderFriendsForEventSearchFriends": { "type": "string" },
+      "reminderFriendsForEventSelectAllFriends": { "type": "string" },
+      "reminderFriendsForEventSuccessSendText": { "type": "string" },
+      "reminderFriendsForEventSelectAllGoingFriends": { "type": "string" },
+      "reminderFriendsForEventSendReminder": { "type": "string" },
+      "reminderFriendsForEventSearchGoingFriends": { "type": "string" }
     }
   },
   "layout": [
@@ -2688,6 +2716,118 @@
             { "key": "lifeEventInviteFriend" },
             { "key": "lifeEventDetailsShowProfil" },
             { "key": "lifeEventDetailsGoingWithFriends" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [{ "key": "lifeEventTypeCreateActiveMember" }, {}, {}, {}]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Send invite for event",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inviteFriendsForEventSubject" },
+            { "key": "inviteFriendsForEventRegardsFirst" },
+            { "key": "inviteFriendsForEventShowEventDetails" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inviteFriendsForEventMessage", "type": "textarea" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inviteFriendsForEventThanksForUsing" },
+            { "key": "inviteFriendsForEventHaveQuestion" },
+            { "key": "inviteFriendsForEventGenerateMail" },
+            { "key": "inviteFriendsForEventCopyright" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "inviteFriendsForEventInviteSend" },
+            { "key": "inviteFriendsForEventSearchFriends" },
+            { "key": "inviteFriendsForEventSelectAllFriends" },
+            { "key": "inviteFriendsForEventSuccessSendText" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Send reminder for event",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "reminderFriendsForEventSubject" },
+            { "key": "reminderFriendsForEventRegardsFirst" },
+            { "key": "reminderFriendsForEventShowEventDetails" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "reminderFriendsForEventMessage", "type": "textarea" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "reminderFriendsForEventThanksForUsing" },
+            { "key": "reminderFriendsForEventHaveQuestion" },
+            { "key": "reminderFriendsForEventGenerateMail" },
+            { "key": "reminderFriendsForEventCopyright" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "reminderFriendsForEventSend" },
+            { "key": "reminderFriendsForEventSearchFriends" },
+            { "key": "reminderFriendsForEventSelectAllFriends" },
+            { "key": "reminderFriendsForEventSuccessSendText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "reminderFriendsForEventSelectAllGoingFriends" },
+            { "key": "reminderFriendsForEventSendReminder" },
+            { "key": "reminderFriendsForEventSearchGoingFriends" }
           ]
         }
       ]

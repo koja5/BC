@@ -46,3 +46,20 @@
     margin: 0px;
     font-weight: bold;
 }
+
+.friend-list {
+    max-height: 100px;
+    overflow: auto;
+    display: block;
+}
+
+.number-container {
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.show-number-going:hover {
+    border-radius: 8px;
+    background: #eaeaea;
+}

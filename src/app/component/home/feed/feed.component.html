@@ -549,7 +549,7 @@
 
 <kendo-window [title]="language.feedPostLikes" *ngIf="postLikes" [width]="windowWidth ? windowWidth : 410"
   [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">
-  <ul class="listUserLikes">
+  <ul class="list-user-profile">
     <li *ngFor="let item of allLikesForPost">
       <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfileWithoutSHA1(item.user_id)">
         {{item.name}} </span>

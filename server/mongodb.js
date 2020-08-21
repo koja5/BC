@@ -760,6 +760,55 @@ router.get("/getLifeEvent/:id", function (req, res, next) {
   });
 });
 
+var getFullSignInUsersData = (data, res) => {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var arrayMessages = [];
+    conn.query("SELECT * from users", function (err, rows) {
+      conn.release();
+      if (!err) {
+        console.log(rows);
+        for (let item of data) {
+          for (let user of rows) {
+            if (sha1(user.id.toString()) == item.user_id) {
+              arrayMessages.push(user);
+            }
+          }
+        }
+        console.log(arrayMessages);
+        res.json(arrayMessages);
+      } else {
+        res.json({
+          code: 100,
+          status: "Error in connection database",
+        });
+      }
+    });
+  });
+};
+
+router.get("/getSignInForLifeEvent/:id", function (req, res, next) {
+  const id = req.params.id;
+  console.log(id);
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    dbo
+      .collection("life_event")
+      .findOne({ _id: ObjectId(id) }, function (err, rows) {
+        if (err) throw err;
+        console.log(rows);
+        getFullSignInUsersData(rows.signIn, res);
+      });
+  });
+});
+
 router.get("/getAllEvents/:user", function (req, res, next) {
   mongo.connect(url, function (err, db) {
     if (err) throw err;

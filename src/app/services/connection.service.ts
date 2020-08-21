@@ -15,4 +15,8 @@ export class ConnectionService {
   getOtherConnections(id) {
     return this.http.get("/api/getOtherConnections/" + id).map((res) => res);
   }
+
+  getAllMyConnections(id) {
+    return this.http.get("/api/getAllMyConnections/" + id).map((res) => res);
+  }
 }

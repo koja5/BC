@@ -80,29 +80,6 @@
     text-decoration: underline;
 }
 
-.listUserLikes {
-    list-style: none;
-    padding-left: 0px;
-}
-
-.listUserLikes li {
-    margin-bottom: 6px;
-}
-
-.listUserLikes li img {
-    width: 47px;
-}
-
-.listUserLikes li span {
-    margin-left: 7px;
-    cursor: pointer;
-    color: #4e95e0;
-}
-
-.listUserLikes li span:hover {
-    text-decoration: underline;
-}
-
 .comment-input-container {
     border-top: 1px solid #eaebec !important;
     width: 100%;

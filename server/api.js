@@ -642,6 +642,69 @@ router.get("/getOtherConnections/:id", function (req, res, next) {
   });
 });
 
+//get all my friends
+
+router.get("/getAllMyConnections/:id", function (req, res, next) {
+  connection.getConnection(function (err, conn) {
+    if (err) {
+      res.json({
+        code: 100,
+        status: "Error in connection database",
+      });
+      return;
+    }
+    var id = req.params.id;
+    console.log(id);
+    conn.query(
+      "SELECT sid, id from users where active = 1 and sha1(id) = '" + id + "'",
+      function (err, rows) {
+        if (!err) {
+          console.log(rows);
+          if (rows.length === 0) {
+            conn.release();
+            res.json(rows);
+          } else {
+            var directorId = rows[0].sid.split(rows[0].id)[0];
+            var countLevel = (rows[0].sid.match(new RegExp("-", "g")) || [])
+              .length;
+            console.log(countLevel);
+            conn.query(
+              "SELECT * from users where (active = 1 and sid != '" +
+                rows[0].sid +
+                "' and sid like '%" +
+                directorId +
+                "%' and length(sid) - length(replace(sid, '-', '')) = '" +
+                countLevel +
+                "') or (active = 1 and sid like '%" +
+                directorId +
+                "%')",
+              function (err, rows) {
+                console.log(rows);
+                conn.release();
+                if (!err) {
+                  res.json(rows);
+                } else {
+                  console.log(err);
+                  res.json({
+                    code: 100,
+                    status: "Error in connection database",
+                  });
+                }
+              }
+            );
+          }
+        } else {
+          conn.release();
+          res.json({
+            code: 100,
+            status: "Error in connection database",
+          });
+        }
+      }
+    );
+  });
+});
+
 // automatically set active on 1 and don't want to send confirm mail
 router.post("/joinTo", (req, res, next) => {
   try {
