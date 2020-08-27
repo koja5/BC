@@ -1,0 +1,174 @@
+<div class="container py-4" *ngIf="language">
+  <div class="row">
+    <main class="col-md-8" style="margin: auto;">
+      <div class="border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3 row">
+          <div class="col-md-8">
+            <h6 class="m-0">{{language.lifeEventEditTitle}}</h6>
+            <p class="mb-0 mt-0 small">{{language.lifeEventEditText}}
+            </p>
+          </div>
+          <div class="col-md-4" style="text-align: end;">
+            <a class="font-weight-bold btn btn-primary rounded save-event mr-2" (click)="saveChanges()">
+             <span class="fa fa-floppy-o"></span> {{language.lifeEventEditSave}}
+            </a>
+            <button class="btn btn-success" (click)="showPreview = true"> <span class="fa fa-eye"></span> {{language.lifeEventEditPreview}}</button>
+          </div>
+        </div>
+        <div class="box-body p-3">
+          <form class="js-validate" novalidate="novalidate">
+            <div class="row">
+              <div class="col-sm-4 mb-2">
+                <div class="js-form-message">
+                  <label id="phoneNumberLabel" class="form-label">
+                    {{language.lifeEventDetailsDate}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <kendo-datepicker name="date" [(ngModel)]="data.date" style="display: contents;">
+                    </kendo-datepicker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.lifeEventDetailsTime}}
+                  </label>
+                  <div class="form-group">
+                    <kendo-timepicker [(value)]="data.time" style="width: auto;"></kendo-timepicker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-4 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.lifeEventDetailsEvent}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <kendo-combobox
+                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
+                      [data]="events" [valuePrimitive]="true" [textField]="'name'" [valueField]="'name'"
+                      (selectionChange)="selectEvent($event)" [(ngModel)]="data.event" class="col-xs-12 noPadding"
+                      name="event">
+                    </kendo-combobox>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-12 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.lifeEventDetailsAboutEvent}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.comment"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-sm-9 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.lifeEventDetailsOrganizer}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <kendo-combobox *ngIf="organizators"
+                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
+                      [data]="organizators" [valuePrimitive]="true" [textField]="'fullname'" [valueField]="'id'"
+                      (selectionChange)="selectOrganizator($event)" (filterChange)="searchOrganizator($event)"
+                      [filterable]="true" [loading]="organizatorLoading" [(ngModel)]="data.id_user"
+                      class="col-xs-12 noPadding" name="event">
+                    </kendo-combobox>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.lifeEventDetailsMaximumNumber}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <input type="number" class="form-control" name="attendees" [(ngModel)]="data.attendees">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="mb-3 text-right">
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.lifeEventEditLocationTitle}}</h6>
+          <p class="mb-0 mt-0 small">{{language.lifeEventEditLocationText}}
+          </p>
+        </div>
+        <div class="box-body p-3">
+          <div class="row">
+            <div class="col-sm-6 mb-2">
+              <div class="js-form-message">
+                <label id="nameLabel" class="form-label">
+                  {{language.lifeEventDetailsNameOfLocation}}
+                </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="nameOfLocation" [(ngModel)]="data.nameOfLocation">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-2">
+              <div class="js-form-message">
+                <label id="nameLabel" class="form-label">
+                  {{language.lifeEventDetailsLocation}}
+                </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="location" [(ngModel)]="data.location">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-6 mb-2">
+              <div class="js-form-message">
+                <label id="nameLabel" class="form-label">
+                  {{language.lifeEventDetailsZip}}
+                </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="zip" [(ngModel)]="data.zip">
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6 mb-2">
+              <div class="js-form-message">
+                <label id="nameLabel" class="form-label">
+                  {{language.lifeEventDetailsStreat}}
+                </label>
+                <div class="form-group">
+                  <input type="text" class="form-control" name="street" [(ngModel)]="data.street">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<kendo-window *ngIf="showPreview" (close)="showPreview = false" [width]="windowWidth ? windowWidth : 1100"
+  [height]="windowHeight ? windowHeight : 700">
+
+  <app-life-event-details [data]="data"></app-life-event-details>
+</kendo-window>

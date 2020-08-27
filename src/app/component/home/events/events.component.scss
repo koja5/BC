@@ -66,13 +66,13 @@
 
 .btn-show-info {
     color: #000;
-    background-color: #bbbbbb;
+    background-color: #dadada;
     font-weight: bold;
     font-size: 15px;
 }
 
 .btn-show-info:hover {
-    background: #8e8c8c;
+    background: #b7b4b4;
 }
 
 .eventShareOptions {
@@ -108,4 +108,75 @@
 
 .hide {
     display: none;
+}
+
+.date-ribbon {
+    position: absolute;
+    top: 1px;
+    right: 2em;
+    background: #FE453E;
+    color: #fff;
+    padding: 0.2em 1em;
+    padding-bottom: 0;
+    border-radius: 0;
+}
+
+.date-ribbon::before, .date-ribbon::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    
+    width: 50%;
+    height: 30px;
+}
+
+.date-ribbon::before {
+    left: 0;
+    border-left:solid 2em #FE453E;
+    border-top: solid 15px #FE453E;
+    border-bottom: solid 15px transparent;
+    border-right: solid 2em transparent;
+    }
+
+.date-ribbon::after {
+    right: 0;
+    border-right:solid 2em #FE453E;
+    border-top: solid 15px #FE453E;
+    border-bottom: solid 15px transparent;
+    border-left: solid 2em transparent;
+}
+
+.date-ribbon h2 {
+    font-weight: 500;
+    font-size: 1.15em;
+    letter-spacing: 0.07em;
+    text-align: center;
+}
+
+.date-ribbon h1 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 2.45em;
+    margin-top: -0.09em;
+    line-height: 1em;
+}
+
+.type-of-event-life {
+    position: absolute;
+    top: 6px;
+    left: 15px;
+    border-radius: 5px;
+    background: #fe453e;
+    padding: 0px 9px;
+    color: #fff;
+}
+
+.type-of-event-virtual {
+    position: absolute;
+    top: 6px;
+    left: 15px;
+    border-radius: 5px;
+    background: #22bf27;
+    padding: 0px 9px;
+    color: #fff;
 }

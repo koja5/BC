@@ -1,10 +1,12 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { LifeEventModel } from "src/app/models/life-event-model";
 import { EventService } from "src/app/services/parameters/event.service";
-import { LifeEventService } from "src/app/services/life-event.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ProfileService } from "src/app/services/profile.service";
 import * as sha1 from "sha1";
+import { LifeEventService } from "src/app/services/life-event.service";
+import { VirtualEventModel } from "src/app/models/virtual-event-model";
+import { EditEventService } from "src/app/services/edit-event.service";
 
 @Component({
   selector: "app-edit-event",
@@ -13,28 +15,27 @@ import * as sha1 from "sha1";
 })
 export class EditEventComponent implements OnInit {
   public language: any;
-  public data = new LifeEventModel();
+  public data: any;
   public showPreview = false;
   public windowHeight: any;
   public windowWidth: any;
   public events: any;
+  public type: any;
   public id: any;
   public organizators: any;
   public organizatorLoading = false;
 
   constructor(
     private service: EventService,
-    private lifeEventService: LifeEventService,
-    private router: Router,
     private route: ActivatedRoute,
-    private profile: ProfileService
+    private lifeEventService: LifeEventService,
+    private editEventService: EditEventService
   ) {}
 
   ngOnInit() {
     this.windowWidth = window.innerWidth - 80;
     this.windowHeight = window.innerHeight - 120;
     this.language = JSON.parse(localStorage.getItem("language"));
-    this.data.id_user = localStorage.getItem("id");
     this.initialization();
   }
 
@@ -43,31 +44,18 @@ export class EditEventComponent implements OnInit {
       this.events = data;
     });
 
-    this.id = this.route.snapshot.params.type;
-    this.data.signIn = [];
-    if (this.id !== "life") {
-      this.lifeEventService.getLifeEvent(this.id).subscribe((data) => {
-        this.profile.getUserInfoSHA1(data["id_user"]).subscribe((data) => {
-          this.organizators = data;
-          this.organizators[0].id = sha1(this.organizators[0].id.toString());
-        });
-        this.data = data;
-        this.convertToNeededType();
-        // this.getEventsByName(this.data.event);
-      });
-    } else {
-      this.profile
-        .getUserInfoSHA1(localStorage.getItem("id"))
-        .subscribe((data) => {
-          this.organizators = data;
-          this.organizators[0].id = sha1(this.organizators[0].id.toString());
-        });
-    }
+    this.type = this.route.snapshot.params.type;
+    this.id = this.route.snapshot.params.id;
+    this.data = this.generateModel(this.type);
+    this.data.id_user = localStorage.getItem("id");
   }
 
-  convertToNeededType() {
-    this.data.date = new Date(this.data.date);
-    this.data.time = new Date(this.data.time);
+  generateModel(type) {
+    if (type === "life") {
+      return new LifeEventModel();
+    } else if (type === "virtual") {
+      return new VirtualEventModel();
+    }
   }
 
   getEventsByName(name) {
@@ -87,43 +75,13 @@ export class EditEventComponent implements OnInit {
     }
   }
 
-  selectedEvent(event) {
+  selectEvent(event) {
     console.log(event);
     if (event) {
       this.data.event = event.name;
       this.data.attendees = event.duration;
     } else {
       this.data.event = null;
-    }
-  }
-
-  saveChanges() {
-    if (this.id === "life") {
-      if (Number.isInteger(this.data.id_user)) {
-        this.data.id_user = sha1(this.data.id_user.toString());
-      }
-      this.data.eventType = 1;
-      this.data.signIn = [];
-      this.lifeEventService.createLifeEvent(this.data).subscribe((data) => {
-        console.log(data);
-        if (data["create"]) {
-          this.router.navigate([
-            "/home/main/event/life-event-details/" + data["id"],
-          ]);
-        }
-      });
-    } else {
-      if (Number.isInteger(this.data.id_user)) {
-        this.data.id_user = sha1(this.data.id_user.toString());
-      }
-      this.lifeEventService.updateEvents(this.data).subscribe((data) => {
-        console.log(data);
-        if (data) {
-          this.router.navigate([
-            "/home/main/event/life-event-details/" + this.id,
-          ]);
-        }
-      });
     }
   }
 
@@ -141,7 +99,7 @@ export class EditEventComponent implements OnInit {
       const searchFilter = {
         filter: event,
       };
-      this.lifeEventService
+      this.editEventService
         .searchOrganizator(searchFilter)
         .subscribe((val: []) => {
           this.organizators = val.sort((a, b) =>

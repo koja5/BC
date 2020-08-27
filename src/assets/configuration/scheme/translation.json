@@ -618,7 +618,11 @@
       "lifeEventCopyLink": { "type": "string" },
       "lifeEventCreateButton": { "type": "string" },
       "lifeEventCreateLifeEvent": { "type": "string" },
+      "lifeEventCreateLifeEventTitle": { "type": "string" },
+      "lifeEventCreateLifeEventText": { "type": "string" },
       "lifeEventCreateLiveStreaming": { "type": "string" },
+      "lifeEventCreateLiveStreamingTitle": { "type": "string" },
+      "lifeEventCreateLiveStreamingText": { "type": "string" },
       "lifeEventTypeCreateTitle": { "type": "string" },
       "lifeEventTypeCreateName": { "type": "string" },
       "lifeEventTypeCreateDescription": { "type": "string" },
@@ -652,7 +656,37 @@
       "reminderFriendsForEventSuccessSendText": { "type": "string" },
       "reminderFriendsForEventSelectAllGoingFriends": { "type": "string" },
       "reminderFriendsForEventSendReminder": { "type": "string" },
-      "reminderFriendsForEventSearchGoingFriends": { "type": "string" }
+      "reminderFriendsForEventSearchGoingFriends": { "type": "string" },
+      "virtualEventEditTitle": { "type": "string" },
+      "virtualEventEditText": { "type": "string" },
+      "virtualEventEditSave": { "type": "string" },
+      "virtualEventEditPreview": { "type": "string" },
+      "virtualEventEditLocationTitle": { "type": "string" },
+      "virtualEventEditLocationText": { "type": "string" },
+      "virtualEventDetailsDate": { "type": "string" },
+      "virtualEventDetailsTime": { "type": "string" },
+      "virtualEventDetailsEvent": { "type": "string" },
+      "virtualEventDetailsvirtualEvent": { "type": "string" },
+      "virtualEventDetailsOrganizer": { "type": "string" },
+      "virtualEventDetailsMaximumNumber": { "type": "string" },
+      "virtualEventDetailsAboutEvent": { "type": "string" },
+      "virtualEventDetailsLocation": { "type": "string" },
+      "virtualEventDetailsNameOfLocation": { "type": "string" },
+      "virtualEventSpeakersTitle": { "type": "string" },
+      "virtualEventSpeakersText": { "type": "string" },
+      "virtualEventListenersTitle": { "type": "string" },
+      "virtualEventListenersText": { "type": "string" },
+      "virtualEventDetailsSpekers": { "type": "string" },
+      "virtualEventDetailsListeners": { "type": "string" },
+      "months": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "properties": {
+            "text": { "type": "string" }
+          }
+        }
+      }
     }
   },
   "layout": [
@@ -2693,7 +2727,18 @@
             { "key": "lifeEventCreateText" },
             { "key": "lifeEventCreateButton" },
             { "key": "lifeEventCreateLifeEvent" },
-            { "key": "lifeEventCreateLiveStreaming" }
+            { "key": "lifeEventCreateLifeEventTitle" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "lifeEventCreateLifeEventText" },
+            { "key": "lifeEventCreateLiveStreaming" },
+            { "key": "lifeEventCreateLiveStreamingTitle" },
+            { "key": "lifeEventCreateLiveStreamingText" }
           ]
         },
         {
@@ -2723,6 +2768,65 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [{ "key": "lifeEventTypeCreateActiveMember" }, {}, {}, {}]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Virtual Event",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventEditTitle" },
+            { "key": "virtualEventEditText" },
+            { "key": "virtualEventEditSave" },
+            { "key": "virtualEventEditPreview" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventDetailsDate" },
+            { "key": "virtualEventDetailsTime" },
+            { "key": "virtualEventDetailsEvent" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventDetailsOrganizer" },
+            { "key": "virtualEventDetailsMaximumNumber" },
+            { "key": "virtualEventDetailsAboutEvent" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventSpeakersTitle" },
+            { "key": "virtualEventSpeakersText" },
+            { "key": "virtualEventListenersTitle" },
+            { "key": "virtualEventListenersText" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventDetailsSpekers" },
+            { "key": "virtualEventDetailsListeners" }
+          ]
         }
       ]
     },
@@ -2828,6 +2932,38 @@
             { "key": "reminderFriendsForEventSelectAllGoingFriends" },
             { "key": "reminderFriendsForEventSendReminder" },
             { "key": "reminderFriendsForEventSearchGoingFriends" }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Months",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "months",
+              "type": "array",
+              "items": [
+                {
+                  "type": "div",
+                  "displayFlex": true,
+                  "flex-direction": "row",
+                  "items": [
+                    {
+                      "key": "months[].text",
+                      "flex": "1 1 50px"
+                    }
+                  ]
+                }
+              ]
+            }
           ]
         }
       ]

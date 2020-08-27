@@ -5,6 +5,8 @@ import { ProfileService } from "src/app/services/profile.service";
 import { ConnectionService } from "src/app/services/connection.service";
 import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
+import { HelpService } from "src/app/services/help.service";
+import { EditEventService } from 'src/app/services/edit-event.service';
 
 @Component({
   selector: "app-life-event-details",
@@ -36,7 +38,9 @@ export class LifeEventDetailsComponent implements OnInit {
     private service: LifeEventService,
     private profileService: ProfileService,
     private connectionService: ConnectionService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private helpService: HelpService,
+    private editEventService: EditEventService
   ) {}
 
   ngOnInit() {
@@ -48,7 +52,7 @@ export class LifeEventDetailsComponent implements OnInit {
   initialization() {
     this.id = this.route.snapshot.params.id;
     if (this.id) {
-      this.service.getLifeEvent(this.id).subscribe((data) => {
+      this.editEventService.getEventData(this.id).subscribe((data) => {
         this.data = data;
         this.checkEventStatusForUser({
           _id: this.data._id,
@@ -67,14 +71,17 @@ export class LifeEventDetailsComponent implements OnInit {
   }
 
   editEvent() {
-    this.router.navigate(["home/main/event/edit-event/" + this.data._id]);
+    this.router.navigate(["home/main/event/edit-event/life/" + this.data._id]);
   }
 
   deleteEvent(answer) {
     if (answer === "yes") {
-      this.service.deleteEvent(this.data._id).subscribe((data) => {
+      this.editEventService.deleteEventData(this.data._id).subscribe((data) => {
         if (data) {
-          // this.router.navigate(["/home/main/event/all"]);
+          this.helpService.deleteSuccessMessage();
+          this.router.navigate(["/home/main/event/all"]);
+        } else {
+          this.helpService.deleteErrorMessage();
         }
       });
     }

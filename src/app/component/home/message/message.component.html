@@ -1,6 +1,7 @@
 <div *ngIf="language&&!messageWindow">
   <!-- Main Content -->
-  <main class="col col-xl-12 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12" style="padding: 0px !important;">
+  <main class="col col-xl-12 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
+    style="padding: 0px !important;">
     <div class="box shadow-sm rounded bg-white osahan-chat">
       <!-- <h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3">Messaging</h5> -->
       <div class="row m-0">
@@ -99,7 +100,7 @@
           </div>
           <div class="loader4 loading" *ngIf="loading"></div>
           <div *ngIf="!loading" id="chat-container"
-            class="osahan-chat-box p-3 border-top border-bottom bg-light hidden-xs">
+            class="osahan-chat-box p-3 border-top border-bottom bg-light hidden-xs" style.height="{{heighMessage}}">
             <div [ngClass]="mobile === true ? 'message-container' : ''">
 
               <div *ngFor="let item of messageArray">
@@ -154,26 +155,6 @@
         </div>
       </div>
     </div>
-    <footer *ngIf="language !== undefined" class="footer">
-      <div class="copyright">
-        <span>{{language.footerCopyright}}</span>
-      </div>
-      <div class="terms-privacy">
-        <a routerLink="/home/main/about-us" style="border-right: 1px solid; color: #FFF;">
-          {{language.aboutFooter}}
-        </a>
-        <a routerLink="/terms" target="_blank" style="margin-left: 2px; border-right: 1px solid; color: #FFF;">
-          {{language.termsHeaderTitle}}
-        </a>
-        <a routerLink="/privacy-policy" target="_blank"
-          style="margin-left: 2px; color: #FFF;border-right: 1px solid; color: #FFF;">
-          {{language.privacyHeaderTitle}}
-        </a>
-        <a routerLink="/impressum" target="_blank" style="margin-left: 2px; color: #FFF;">
-          {{language.impressumHeaderTitle}}
-        </a>
-      </div>
-    </footer>
   </main>
 </div>
 <div *ngIf="messageWindow&&selectUserForComunication" style.height="{{windowHeight}}" style.width="{{windowWidth}}">

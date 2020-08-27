@@ -30,6 +30,8 @@ import { LifeEventComponent } from './events/life-event/life-event.component';
 import { FooterComponent } from './footer/footer.component';
 import { LifeEventDetailsComponent } from './events/life-event/life-event-details/life-event-details.component';
 import { EditEventComponent } from './events/edit-event/edit-event.component';
+import { LifeComponent } from './events/edit-event/life/life.component';
+import { VirtualComponent } from './events/edit-event/virtual/virtual.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +54,9 @@ import { EditEventComponent } from './events/edit-event/edit-event.component';
     LifeEventComponent,
     LifeEventDetailsComponent,
     FooterComponent,
-    EditEventComponent
+    EditEventComponent,
+    LifeComponent,
+    VirtualComponent
   ],
   imports: [
     CommonModule,

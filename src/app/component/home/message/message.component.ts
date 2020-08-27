@@ -29,6 +29,7 @@ export class MessageComponent implements OnInit {
   public room: any;
   public language: any;
   public height: any;
+  public heighMessage: any;
   public loading = false;
 
   constructor(
@@ -70,6 +71,8 @@ export class MessageComponent implements OnInit {
     } else {
       this.height = window.innerHeight - 189;
     }
+    this.heighMessage = this.height - 114;
+    this.heighMessage += 'px';
     this.height += "px";
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));

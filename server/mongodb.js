@@ -7,8 +7,8 @@ const Schema = mongo.Schema;
 // const url = 'mongodb://appprodu_appproduction_prod:CJr4eUqWg33tT97mxPFx@vps.app-production.eu:42526/management_mongodb'
 // const url = "mongodb://78.47.206.131:27017/management_mongo?gssapiServiceName=mongodb";
 // const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
-const url =
-  "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
+// const url = "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
+const url = "mongodb://clinic_node:ClinicNode#2019@localhost:27017/business_circle_mongodb?authSource=admin";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
 const mysql = require("mysql");
@@ -727,11 +727,11 @@ router.post("/updateSeen", function (req, res, next) {
   res.json({ code: 201 });
 });
 
-router.post("/createLifeEvent", function (req, res, next) {
+router.post("/createEventData", function (req, res, next) {
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("life_event").insertOne(req.body, function (err, result) {
+    dbo.collection("events").insertOne(req.body, function (err, result) {
       if (err) {
         throw err;
       } else {
@@ -745,14 +745,14 @@ router.post("/createLifeEvent", function (req, res, next) {
   });
 });
 
-router.get("/getLifeEvent/:id", function (req, res, next) {
+router.get("/getEventData/:id", function (req, res, next) {
   const id = req.params.id;
   console.log(id);
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
-      .collection("life_event")
+      .collection("events")
       .findOne({ _id: ObjectId(id) }, function (err, rows) {
         if (err) throw err;
         res.json(rows);
@@ -800,7 +800,7 @@ router.get("/getSignInForLifeEvent/:id", function (req, res, next) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
-      .collection("life_event")
+      .collection("events")
       .findOne({ _id: ObjectId(id) }, function (err, rows) {
         if (err) throw err;
         console.log(rows);
@@ -814,7 +814,7 @@ router.get("/getAllEvents/:user", function (req, res, next) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
-      .collection("life_event")
+      .collection("events")
       .find()
       .toArray(function (err, rows) {
         if (err) throw err;
@@ -855,7 +855,7 @@ router.get("/getMyEvents/:id", function (req, res, next) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
-      .collection("life_event")
+      .collection("events")
       .find({
         id_user: req.params.id,
       })
@@ -871,7 +871,7 @@ router.get("/getEventsByEventType/:type", function (req, res, next) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
-      .collection("life_event")
+      .collection("events")
       .find({
         eventType: req.params.type,
       })
@@ -882,11 +882,11 @@ router.get("/getEventsByEventType/:type", function (req, res, next) {
   });
 });
 
-router.post("/updateEvents", function (req, res, next) {
+router.post("/updateEventData", function (req, res, next) {
   mongo.connect(url, function (err, db, res) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("life_event").updateOne(
+    dbo.collection("events").updateOne(
       { _id: ObjectId(req.body._id) },
       {
         $set: {
@@ -922,7 +922,7 @@ router.post("/checkEventStatusForUser", function (req, res, next) {
     if (err) throw err;
     var dbo = db.db(database_name);
     dbo
-      .collection("life_event")
+      .collection("events")
       .findOne(
         { _id: ObjectId(req.body._id), id_user: req.body.id_user },
         function (err, rows) {
@@ -931,7 +931,7 @@ router.post("/checkEventStatusForUser", function (req, res, next) {
           if (rows) {
             res.json(0);
           } else {
-            dbo.collection("life_event").findOne(
+            dbo.collection("events").findOne(
               {
                 _id: ObjectId(req.body._id),
                 signIn: { $elemMatch: { user_id: req.body.id_user } },
@@ -951,13 +951,13 @@ router.post("/checkEventStatusForUser", function (req, res, next) {
   });
 });
 
-router.get("/deleteEvent/:id", function (req, res, next) {
+router.get("/deleteEventData/:id", function (req, res, next) {
   const id = req.params.id;
-  console.log(id);
+  console.log("ID: " + id);
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("life_event").deleteOne(
+    dbo.collection("events").deleteOne(
       {
         _id: ObjectId(id),
       },
@@ -973,7 +973,7 @@ router.post("/signInForEvent", function (req, res, next) {
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("life_event").findOne(
+    dbo.collection("events").findOne(
       {
         _id: ObjectId(req.body.id),
         signIn: { $elemMatch: { user_id: req.body.user_id } },
@@ -983,7 +983,7 @@ router.post("/signInForEvent", function (req, res, next) {
         console.log(rows);
         if (rows === null || rows.length === 0) {
           dbo
-            .collection("life_event")
+            .collection("events")
             .updateOne(
               { _id: ObjectId(req.body.id) },
               { $push: { signIn: { user_id: req.body.user_id } } },
@@ -994,7 +994,7 @@ router.post("/signInForEvent", function (req, res, next) {
             );
         } else {
           const unSignIn = rows.user_id;
-          dbo.collection("life_event").updateOne(
+          dbo.collection("events").updateOne(
             {
               _id: ObjectId(req.body.id),
             },

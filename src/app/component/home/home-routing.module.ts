@@ -67,7 +67,7 @@ const routes: Routes = [
           { path: "", redirectTo: "all", pathMatch: "full" },
           { path: "all", component: EventsComponent },
           { path: "life-event-details/:id", component: LifeEventDetailsComponent },
-          { path: "edit-event/:type", component: EditEventComponent }
+          { path: "edit-event/:type/:id", component: EditEventComponent }
         ],
       },
 

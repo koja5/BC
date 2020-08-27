@@ -38,14 +38,19 @@
                   (click)="selectEventTypeShow('life')">{{language.lifeEventLife}}</button>
                 <button type="button" class="btn btn-sm mr-1"
                   [ngClass]="eventType === 'virtual' ? 'btn-outline-primary' : 'btn-outline-secondary'"
-                  (click)="selectEventTypeShow('virtual')" disabled
-                  style="cursor: not-allowed;">{{language.lifeEventVirtual}}</button>
+                  (click)="selectEventTypeShow('virtual')">{{language.lifeEventVirtual}}</button>
               </div>
               <div class="p-3 border-top">
                 <div class="row">
                   <div class="col-md-6 mt-3" *ngFor="let item of data">
                     <div class="event-container">
+                      <p class="type-of-event-life" *ngIf="item.eventType === 1">{{language.lifeEventLife}}</p>
+                      <p class="type-of-event-virtual" *ngIf="item.eventType === 2">{{language.lifeEventLife}}</p>
                       <img src="../../../../assets/img/events_cover.jpg" class="no-photo-event">
+                      <div class="date-ribbon">
+                        <h2>{{months[getNumberOfMonth(item.date)].text}}</h2>
+                        <h1>{{item.date | date: 'dd' }}</h1>
+                      </div>
                       <div class="event-content">
                         <p class="time">{{item.date | date: 'dd/MM/yyyy' }}, {{item.time | date: 'HH:mm'}}</p>
                         <p class="title">{{item.event}}</p>
@@ -123,17 +128,26 @@
       </aside>
     </div>
   </div>
-  <kendo-window *ngIf="createEventWindow" [width]="windowWidth ? windowWidth : 480"
-    [height]="windowHeight ? windowHeight : 265" (close)="createEventWindow = false">
+  <kendo-window *ngIf="createEventWindow" [width]="windowWidth ? windowWidth : 800"
+    [height]="windowHeight ? windowHeight : 450" (close)="createEventWindow = false">
     <div class="row" style="text-align: center;">
       <div class="col-md-6 col-sm-12 event event-life">
-        <img src="/assets/img/life_event.png" style="width: 72px; display: inherit; margin: auto">
+        <img src="/assets/img/life_event.png" style="width: 220px; display: inherit; margin: auto">
+        <div>
+          <h3>{{language.lifeEventCreateLifeEventTitle}}</h3>
+          <h6>{{language.lifeEventCreateLifeEventText}}</h6>
+        </div>
         <button class="btn btn-danger"
-          routerLink="/home/main/event/edit-event/life">{{language.lifeEventCreateLifeEvent}}</button>
+          routerLink="/home/main/event/edit-event/life/create">{{language.lifeEventCreateLifeEvent}}</button>
       </div>
       <div class="col-md-6 col-sm-12 event event-virtual">
-        <img src="/assets/img/live_streaming.png" style="width: 72px">
-        <button class="btn btn-danger">{{language.lifeEventCreateLiveStreaming}}</button>
+        <img src="/assets/img/live_streaming.png" style="width: 326px">
+        <div>
+          <h3>{{language.lifeEventCreateLiveStreamingTitle}}</h3>
+          <h6>{{language.lifeEventCreateLiveStreamingText}}</h6>
+        </div>
+        <button class="btn btn-danger"
+          routerLink="/home/main/event/edit-event/virtual/create">{{language.lifeEventCreateLiveStreaming}}</button>
       </div>
     </div>
   </kendo-window>

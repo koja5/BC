@@ -165,6 +165,28 @@ export class HelpService {
     return checksum;
   }
 
+  createSuccessMessage() {
+    this.toastr.success(
+      this.language.adminSuccessCreateTitle,
+      this.language.adminSuccessCreateText,
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+
+  createErrorMessage() {
+    this.toastr.error(
+      this.language.adminErrorCreateTitle,
+      this.language.adminErrorCreateText,
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+
   updateSuccessMessage() {
     this.toastr.success(
       this.language.adminSuccessUpdateTitle,
@@ -180,6 +202,28 @@ export class HelpService {
     this.toastr.error(
       this.language.adminErrorUpdateTitle,
       this.language.adminErrorUpdateText,
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+
+  deleteSuccessMessage() {
+    this.toastr.success(
+      this.language.adminDeleteTitle,
+      this.language.adminDeleteText,
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+
+  deleteErrorMessage() {
+    this.toastr.error(
+      this.language.adminDeleteTitle,
+      this.language.adminDeleteText,
       {
         timeOut: 7000,
         positionClass: "toast-bottom-right",

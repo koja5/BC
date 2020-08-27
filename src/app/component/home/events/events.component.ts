@@ -15,8 +15,10 @@ export class EventsComponent implements OnInit {
   public myOrAllEvent = "all";
   public eventType = "all";
   public data: any;
+  public allData: any;
   public language: any;
   public eventShareShowHide = -1;
+  public months: any;
 
   constructor(
     private service: EventAllService,
@@ -26,6 +28,7 @@ export class EventsComponent implements OnInit {
 
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
+    this.months = this.language.months;
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
@@ -63,13 +66,16 @@ export class EventsComponent implements OnInit {
     if (type === "all") {
       this.getAllEvent();
     } else if (type === "life") {
-      this.data = this.data.filter((x) => x.eventType === 1);
+      this.data = this.allData.filter((x) => x.eventType === 1);
+    } else if (type === "virtual") {
+      this.data = this.allData.filter((x) => x.eventType === 2);
     }
   }
 
   getAllEvent() {
     this.service.getAllEvents(localStorage.getItem("id")).subscribe((data) => {
       this.data = data;
+      this.allData = data;
     });
   }
 
@@ -124,5 +130,9 @@ export class EventsComponent implements OnInit {
       positionClass: "toast-bottom-right",
     });
     this.eventShareShowHide = -1;
+  }
+
+  getNumberOfMonth(data) {
+    return new Date(data).getMonth();
   }
 }
