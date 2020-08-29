@@ -43,40 +43,9 @@
               <div class="p-3 border-top">
                 <div class="row">
                   <div class="col-md-6 mt-3" *ngFor="let item of data">
-                    <div class="event-container">
-                      <p class="type-of-event-life" *ngIf="item.eventType === 1">{{language.lifeEventLife}}</p>
-                      <p class="type-of-event-virtual" *ngIf="item.eventType === 2">{{language.lifeEventLife}}</p>
-                      <img src="../../../../assets/img/events_cover.jpg" class="no-photo-event">
-                      <div class="date-ribbon">
-                        <h2>{{months[getNumberOfMonth(item.date)].text}}</h2>
-                        <h1>{{item.date | date: 'dd' }}</h1>
-                      </div>
-                      <div class="event-content">
-                        <p class="time">{{item.date | date: 'dd/MM/yyyy' }}, {{item.time | date: 'HH:mm'}}</p>
-                        <p class="title">{{item.event}}</p>
-                        <p class="location">{{item.nameOfLocation}}</p>
-                        <div class="row">
-                          <button class="btn btn-show-info btn-sm col-9 mr-2 ml-2" type="button"
-                            (click)="openEvent(item.eventType, item._id)"><i class="fa fa-info-circle"></i>
-                            {{language.lifeEventShowInfo}}
-                          </button>
-                          <button class="btn btn-show-info btn-lg btn-block col-2" type="button"
-                            (click)="shareEvent(item._id)"><i class="fa fa-share"></i>
-                          </button>
-                          <div class="eventShareOptions" [ngClass]="eventShareShowHide === item._id ? 'show' : 'hide'">
-                            <ul class="connectionOptions">
-                              <!-- <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
-                                  class="fa fa-paper-plane" title="This function will be available soon!"></i>
-                                {{language.lifeEventInviteFriend}}</li> -->
-                              <li (click)="copyLinkToClipboard(item._id)"><i class="fa fa-clone"></i>
-                                {{language.lifeEventCopyLink}}</li>
-                            </ul>
-                          </div>
-                        </div>
-                        <span class="fa fa-check-circle signed-icon" *ngIf="item.eventStatus === 1"
-                          title="{{language.lifeEventDetailsRegisteredButton}}"></span>
-                      </div>
-                    </div>
+                    <app-life-event *ngIf="item.eventType === 1" [item]="item" [language]="language" [months]="months[getNumberOfMonth(item.date)].text" [eventShareShowHide]="eventShareShowHide" (eventShareEmitter)="shareEvent($event)" (copyLinkEmitter)="copyLinkToClipboard($event)"></app-life-event>
+                    <app-virtual-event *ngIf="item.eventType === 2" [item]="item" [language]="language" [months]="months[getNumberOfMonth(item.date)].text" [eventShareShowHide]="eventShareShowHide" (eventShareEmitter)="shareEvent($event)" (copyLinkEmitter)="copyLinkToClipboard($event)"></app-virtual-event>
+                    
                     <!-- <div class="border job-item mb-3">
                       <div class="d-flex align-items-center job-item-header">
                         <img src="../../../../assets/img/no-photo-cover_copy.png" class="no-photo-event">

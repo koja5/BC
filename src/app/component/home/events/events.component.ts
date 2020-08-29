@@ -91,12 +91,6 @@ export class EventsComponent implements OnInit {
     });
   }
 
-  openEvent(type, id) {
-    if (type === 1) {
-      this.router.navigate(["/home/main/event/life-event-details/" + id]);
-    }
-  }
-
   shareEvent(id) {
     if (this.eventShareShowHide === -1) {
       this.eventShareShowHide = id;
@@ -105,15 +99,15 @@ export class EventsComponent implements OnInit {
     }
   }
 
-  copyLinkToClipboard(id) {
+  copyLinkToClipboard(event) {
     const link =
       window.location.protocol +
       "//" +
       window.location.hostname +
       ":" +
       window.location.port +
-      "/home/main/event/life-event-details/" +
-      id;
+      "/home/main/event/" + event.type + "-event-details/" +
+      event.id;
     const selBox = document.createElement("textarea");
     selBox.style.position = "fixed";
     selBox.style.left = "0";

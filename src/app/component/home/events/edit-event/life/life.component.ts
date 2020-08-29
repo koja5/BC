@@ -4,7 +4,7 @@ import { ProfileService } from "src/app/services/profile.service";
 import * as sha1 from "sha1";
 import { Router } from "@angular/router";
 import { HelpService } from "src/app/services/help.service";
-import { EditEventService } from 'src/app/services/edit-event.service';
+import { EditEventService } from "src/app/services/edit-event.service";
 
 @Component({
   selector: "app-life",
@@ -43,6 +43,7 @@ export class LifeComponent implements OnInit {
         this.profile.getUserInfoSHA1(data["id_user"]).subscribe((data) => {
           this.organizators = data;
           this.organizators[0].id = sha1(this.organizators[0].id.toString());
+          this.data.organizer = this.organizators[0].fullname;
         });
         this.data = data;
         this.convertToNeededType();
@@ -53,6 +54,7 @@ export class LifeComponent implements OnInit {
         .subscribe((data) => {
           this.organizators = data;
           this.organizators[0].id = sha1(this.organizators[0].id.toString());
+          this.data.organizer = this.organizators[0].fullname;
         });
     }
   }
@@ -103,7 +105,8 @@ export class LifeComponent implements OnInit {
   }
 
   selectOrganizator(event) {
-    this.selectOrganizatorEmitter.emit(event);
+    // this.selectOrganizatorEmitter.emit(event);
+    this.data.organizer = event.fullname;
   }
 
   selectEvent(event) {

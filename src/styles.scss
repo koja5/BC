@@ -1118,3 +1118,256 @@ mat-video .videoplayer {
 .list-user-profile li span:hover {
   text-decoration: underline;
 }
+
+/* EVENT START */
+
+@media (max-width: 768px) {
+  .event-life {
+      border-bottom: 1px solid lightgray;
+  }
+}
+
+@media (min-width: 768px) {
+  .event-life {
+      border-right: 1px solid lightgray;
+  }
+}
+
+.event span,
+.event h4 {
+  color: #888da8;
+}
+
+.event span {
+  font-size: 45px;
+  margin-bottom: 10px;
+}
+
+.event button {
+  margin-top: 7px;
+}
+
+.event-container {
+  border: 1px solid lightgray;
+  border-radius: 8px;
+  box-shadow: 0px 3px 7px 0px grey;
+}
+
+.no-photo-event {
+  width: 100%;
+  height: 120px;
+}
+
+.time {
+  color: red;
+  font-size: 15px;
+  margin: 0px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+  margin: 0px;
+}
+
+.location {
+  font-size: 19px;
+}
+
+.event-content {
+  padding: 20px;
+}
+
+.signed-icon {
+  position: absolute;
+  top: 13px;
+  right: 21px;
+  color: green;
+  font-size: 22px;
+}
+
+.btn-show-info {
+  color: #000;
+  background-color: #dadada;
+  font-weight: bold;
+  font-size: 15px;
+}
+
+.btn-show-info:hover {
+  background: #b7b4b4;
+}
+
+.eventShareOptions {
+  position: absolute;
+  right: 22px;
+  z-index: 10000;
+  /* border: 1px solid; */
+  padding: 5px;
+  box-shadow: 1px 2px 7px 3px lightgrey;
+  border-radius: 2px;
+  background: #fff;
+  width: 110px;
+  right: 25px !important;
+  margin-top: 42px !important;
+  width: 70%;
+}
+
+.eventShareOptions ul {
+  list-style: none;
+  padding: 0px;
+  margin: 0px;
+}
+
+.eventShareOptions ul li {
+  cursor: pointer;
+  font-size: 17px;
+  padding: 8px;
+}
+
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
+}
+
+.date-ribbon {
+  position: absolute;
+  top: 1px;
+  right: 2em;
+  background: #FE453E;
+  color: #fff;
+  padding: 0.2em 1em;
+  padding-bottom: 0;
+  border-radius: 0;
+}
+
+.date-ribbon::before, .date-ribbon::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  
+  width: 50%;
+  height: 30px;
+}
+
+.date-ribbon::before {
+  left: 0;
+  border-left:solid 2em #FE453E;
+  border-top: solid 15px #FE453E;
+  border-bottom: solid 15px transparent;
+  border-right: solid 2em transparent;
+  }
+
+.date-ribbon::after {
+  right: 0;
+  border-right:solid 2em #FE453E;
+  border-top: solid 15px #FE453E;
+  border-bottom: solid 15px transparent;
+  border-left: solid 2em transparent;
+}
+
+.date-ribbon h2 {
+  font-weight: 500;
+  font-size: 1.15em;
+  letter-spacing: 0.07em;
+  text-align: center;
+}
+
+.date-ribbon h1 {
+  text-align: center;
+  font-weight: 400;
+  font-size: 2.45em;
+  margin-top: -0.09em;
+  line-height: 1em;
+}
+
+.type-of-event-life {
+  position: absolute;
+  top: 6px;
+  left: 15px;
+  border-radius: 5px;
+  background: #fe453e;
+  padding: 0px 9px;
+  color: #fff;
+}
+
+.type-of-event-virtual {
+  position: absolute;
+  top: 6px;
+  left: 15px;
+  border-radius: 5px;
+  background: #22bf27;
+  padding: 0px 9px;
+  color: #fff;
+}
+
+.event-cover {
+  height: 300px;
+  width: 100%;
+}
+
+.basic-info span {
+  color: #0b6794;
+  font-weight: bold;
+}
+
+.btn-sign-in:hover {
+  color: #fff;
+  background-color: #64d140;
+  border-color: #64d140;
+}
+
+.btn-signed {
+  color: #fff;
+  background-color: #64d140;
+  border-color: #64d140;
+}
+
+.btn-sign-in {
+  color: #64d140;
+  border-color: #64d140;
+}
+
+.no-free-space {
+  color: red;
+  font-weight: bold;
+}
+
+.owner-button {
+  color: green;
+  font-weight: bold;
+}
+
+.back-to-event {
+  position: absolute;
+  margin: 25px 25px;
+  background: #0b6794;
+  border: none;
+}
+
+.number-of-going {
+  margin: 0px;
+  font-weight: bold;
+}
+
+.friend-list {
+  max-height: 100px;
+  overflow: auto;
+  display: block;
+}
+
+.number-container {
+  text-align: center;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.show-number-going:hover {
+  border-radius: 8px;
+  background: #eaeaea;
+}
+
+/* EVENT END */

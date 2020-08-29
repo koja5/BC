@@ -88,6 +88,7 @@ export class EditEventComponent implements OnInit {
   selectOrganizator(event) {
     if (event) {
       this.data.id_user = sha1(event.id.toString());
+      this.data.organizer = event.fullname;
     } else {
       this.data.id_user = null;
     }

@@ -32,6 +32,9 @@ import { LifeEventDetailsComponent } from './events/life-event/life-event-detail
 import { EditEventComponent } from './events/edit-event/edit-event.component';
 import { LifeComponent } from './events/edit-event/life/life.component';
 import { VirtualComponent } from './events/edit-event/virtual/virtual.component';
+import { VirtualEventComponent } from './events/virtual-event/virtual-event.component';
+import { VirtualEventDetailsComponent } from './events/virtual-event/virtual-event-details/virtual-event-details.component';
+import { RoomComponent } from './room/room.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +59,10 @@ import { VirtualComponent } from './events/edit-event/virtual/virtual.component'
     FooterComponent,
     EditEventComponent,
     LifeComponent,
-    VirtualComponent
+    VirtualComponent,
+    VirtualEventComponent,
+    VirtualEventDetailsComponent,
+    RoomComponent
   ],
   imports: [
     CommonModule,

@@ -8,7 +8,8 @@ const Schema = mongo.Schema;
 // const url = "mongodb://78.47.206.131:27017/management_mongo?gssapiServiceName=mongodb";
 // const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
 // const url = "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
-const url = "mongodb://clinic_node:ClinicNode#2019@localhost:27017/business_circle_mongodb?authSource=admin";
+const url =
+  "mongodb://clinic_node:ClinicNode#2019@localhost:27017/business_circle_mongodb?authSource=admin";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
 const mysql = require("mysql");
@@ -886,28 +887,51 @@ router.post("/updateEventData", function (req, res, next) {
   mongo.connect(url, function (err, db, res) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    dbo.collection("events").updateOne(
-      { _id: ObjectId(req.body._id) },
-      {
-        $set: {
-          id_user: req.body.id_user,
-          date: req.body.date,
-          time: req.body.time,
-          event: req.body.event,
-          comment: req.body.comment,
-          organizer: req.body.organizer,
-          attendees: req.body.attendees,
-          eventType: req.body.eventType,
-          nameOfLocation: req.body.nameOfLocation,
-          location: req.body.location,
-          zip: req.body.zip,
-          street: req.body.street,
+    if (req.body.eventType === 1) {
+      dbo.collection("events").updateOne(
+        { _id: ObjectId(req.body._id) },
+        {
+          $set: {
+            id_user: req.body.id_user,
+            date: req.body.date,
+            time: req.body.time,
+            event: req.body.event,
+            comment: req.body.comment,
+            organizer: req.body.organizer,
+            attendees: req.body.attendees,
+            eventType: req.body.eventType,
+            nameOfLocation: req.body.nameOfLocation,
+            location: req.body.location,
+            zip: req.body.zip,
+            street: req.body.street,
+          },
         },
-      },
-      function (err, res) {
-        if (err) throw err;
-      }
-    );
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+    } else {
+      dbo.collection("events").updateOne(
+        { _id: ObjectId(req.body._id) },
+        {
+          $set: {
+            id_user: req.body.id_user,
+            date: req.body.date,
+            time: req.body.time,
+            event: req.body.event,
+            comment: req.body.comment,
+            organizer: req.body.organizer,
+            attendees: req.body.attendees,
+            eventType: req.body.eventType,
+            speakers: req.body.speakers,
+            listeners: req.body.listeners
+          },
+        },
+        function (err, res) {
+          if (err) throw err;
+        }
+      );
+    }
   });
   res.json(true);
 });

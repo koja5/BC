@@ -13,6 +13,8 @@ import { AboutUsComponent } from "./about-us/about-us.component";
 import { EventsComponent } from "./events/events.component";
 import { LifeEventDetailsComponent } from './events/life-event/life-event-details/life-event-details.component';
 import { EditEventComponent } from './events/edit-event/edit-event.component';
+import { VirtualEventDetailsComponent } from './events/virtual-event/virtual-event-details/virtual-event-details.component';
+import { RoomComponent } from './room/room.component';
 
 const routes: Routes = [
   {
@@ -62,14 +64,19 @@ const routes: Routes = [
         component: AboutUsComponent,
       },
       {
+        path: "room/:id",
+        component: RoomComponent
+      },
+      {
         path: "event",
         children: [
           { path: "", redirectTo: "all", pathMatch: "full" },
           { path: "all", component: EventsComponent },
           { path: "life-event-details/:id", component: LifeEventDetailsComponent },
+          { path: "virtual-event-details/:id", component: VirtualEventDetailsComponent },
           { path: "edit-event/:type/:id", component: EditEventComponent }
         ],
-      },
+      }
 
     ],
   },

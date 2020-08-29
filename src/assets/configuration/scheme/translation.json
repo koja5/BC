@@ -674,10 +674,26 @@
       "virtualEventDetailsNameOfLocation": { "type": "string" },
       "virtualEventSpeakersTitle": { "type": "string" },
       "virtualEventSpeakersText": { "type": "string" },
+      "virtualEventNoSpeakers": { "type": "string" },
       "virtualEventListenersTitle": { "type": "string" },
       "virtualEventListenersText": { "type": "string" },
+      "virtualEventNoListeners": { "type": "string" },
       "virtualEventDetailsSpekers": { "type": "string" },
       "virtualEventDetailsListeners": { "type": "string" },
+      "virtualEventDetailsBasicInfo": { "type": "string" },
+      "virtualEventDetailsSimilar": { "type": "string" },
+      "virtualEventDetailsEdit": { "type": "string" },
+      "virtualEventDetailsCopy": { "type": "string" },
+      "virtualEventDetailsOwner": { "type": "string" },
+      "virtualEventDetailsMemberGoing": { "type": "string" },
+      "virtualEventDetailsFreeSpace": { "type": "string" },
+      "virtualEventDetailsBackToEvent": { "type": "string" },
+      "virtualEventShowInfo": { "type": "string" },
+      "virtualEventCopyLink": { "type": "string" },
+      "virtualEventInviteFriend": { "type": "string" },
+      "virtualEventDetailsNumberOfMembers": { "type": "string" },
+      "virtualEventDetailsShowProfil": { "type": "string" },
+      "virtualEventDetailsGoToVideoRoom": { "type": "string" },
       "months": {
         "type": "array",
         "items": {
@@ -686,7 +702,14 @@
             "text": { "type": "string" }
           }
         }
-      }
+      },
+      "chatRoomMute": { "type": "string" },
+      "chatRoomStopVideo": { "type": "string" },
+      "chatRoomSecurity": { "type": "string" },
+      "chatRoomParticipants": { "type": "string" },
+      "chatRoomChat": { "type": "string" },
+      "chatRoomLeaveRoom": { "type": "string" },
+      "chatRoomTypeMessage": { "type": "string" }
     }
   },
   "layout": [
@@ -2615,7 +2638,7 @@
     },
     {
       "type": "section",
-      "title": "Life Event Details",
+      "title": "Life Event",
       "expandable": true,
       "expanded": false,
       "items": [
@@ -2825,7 +2848,53 @@
           "flex-direction": "row",
           "items": [
             { "key": "virtualEventDetailsSpekers" },
-            { "key": "virtualEventDetailsListeners" }
+            { "key": "virtualEventDetailsListeners" },
+            { "key": "virtualEventNoSpeakers" },
+            { "key": "virtualEventNoListeners" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventDetailsBasicInfo" },
+            { "key": "virtualEventDetailsSimilar" },
+            { "key": "virtualEventDetailsEdit" },
+            { "key": "virtualEventDetailsCopy" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventDetailsOwner" },
+            { "key": "virtualEventDetailsMemberGoing" },
+            { "key": "virtualEventDetailsFreeSpace" },
+            { "key": "virtualEventDetailsBackToEvent" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventShowInfo" },
+            { "key": "virtualEventCopyLink" },
+            { "key": "virtualEventInviteFriend" },
+            { "key": "virtualEventDetailsNumberOfMembers" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "virtualEventDetailsShowProfil" },
+            { "key": "virtualEventDetailsGoToVideoRoom" },
+            {},
+            {}
           ]
         }
       ]
@@ -2962,6 +3031,50 @@
                     }
                   ]
                 }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Chat room",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "chatRoomMute" },
+                { "key": "chatRoomStopVideo" },
+                { "key": "chatRoomSecurity" },
+                { "key": "chatRoomParticipants" }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "type": "div",
+              "display": "flex",
+              "flex-direction": "row",
+              "items": [
+                { "key": "chatRoomChat" },
+                { "key": "chatRoomLeaveRoom" },
+                { "key": "chatRoomTypeMessage" },
+                {}
               ]
             }
           ]

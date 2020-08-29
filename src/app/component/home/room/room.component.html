@@ -1,0 +1,67 @@
+<div class="main">
+  <div class="main-left">
+    <div class="main-videos">
+      <div id="video-grid">
+        <video class="border border-danger w-100 h-100" #myVideo muted>
+        </video>
+      </div>
+    </div>
+    <div class="main-controls">
+      <div class="main-controls-block">
+        <div onclick="muteUnmute()" class="main-controls-button main-mute_button">
+          <i class="fa fa-microphone"></i>
+          <span>Mute</span>
+        </div>
+        <div onclick="playStop()" class="main-controls-button main-video_button">
+          <i class="fa fa-camera"></i>
+          <span>Stop Video</span>
+        </div>
+      </div>
+      <div class="main-controls-block">
+        <div class="main-controls-button">
+          <i class="fa fa-shield"></i>
+          <span>Security</span>
+        </div>
+        <div class="main-controls-button">
+          <i class="fa fa-user"></i>
+          <span>Participants</span>
+        </div>
+        <div class="main-controls-button">
+          <i class="fa fa-comment"></i>
+          <span>Chat</span>
+        </div>
+      </div>
+      <div class="main-controls-block">
+        <div class="main-controls-button" (click)="windowLeaveMeeting = true">
+          <span class="leave_meeting">Leave Meeting</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-right">
+    <div class="main-header">
+      <h6>Chat</h6>
+    </div>
+    <div class="main-chat_window">
+      <ul class="messages">
+
+      </ul>
+
+    </div>
+    <div class="main-message_container">
+      <input id="chat_message" type="text" placeholder="Type message here...">
+    </div>
+  </div>
+</div>
+
+<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="windowLeaveMeeting" (close)="windowLeaveMeeting = false"
+  [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
+  <div class="modal-body text-center">
+    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
+    <h3>{{language.areYouSure}}</h3>
+  </div>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="windowLeaveMeeting = false">{{language.no}}</button>
+    <button kendoButton (click)="leaveMeetingAnswer('yes')" primary="true">{{language.yes}}</button>
+  </kendo-dialog-actions>
+</kendo-dialog>

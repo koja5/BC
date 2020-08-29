@@ -120,7 +120,7 @@
                 <div class="form-group">
                   <kendo-multiselect [data]="allMyConnectionSpeakers" [filterable]="true" [(ngModel)]="data.speakers"
                     [valueField]="'id'" [textField]="'fullname'" [autoClose]="false"
-                    [placeholder]="language.inviteFriendsForEventSearchFriends" (filterChange)="handleFilterSpeakers($event)"
+                    [placeholder]="language.inviteFriendsForEventSearchFriends" (valueChange)="speakersChange($event)" (filterChange)="handleFilterSpeakers($event)"
                     class="friend-list">
                     <ng-template kendoMultiSelectItemTemplate let-dataItem>
                       <input type="checkbox" class="k-checkbox" [checked]="isItemSelectedSpeakers(dataItem.id)">

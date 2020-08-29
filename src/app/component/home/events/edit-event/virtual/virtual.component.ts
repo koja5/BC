@@ -52,6 +52,7 @@ export class VirtualComponent implements OnInit {
         this.profile.getUserInfoSHA1(data["id_user"]).subscribe((data) => {
           this.organizators = data;
           this.organizators[0].id = sha1(this.organizators[0].id.toString());
+          this.data.organizer = this.organizators[0].fullname;
         });
         this.data = data;
         this.convertToNeededType();
@@ -62,6 +63,7 @@ export class VirtualComponent implements OnInit {
         .subscribe((data) => {
           this.organizators = data;
           this.organizators[0].id = sha1(this.organizators[0].id.toString());
+          this.data.organizer = this.organizators[0].fullname;
         });
     }
   }
@@ -75,7 +77,7 @@ export class VirtualComponent implements OnInit {
         console.log(data);
         if (data) {
           this.helpService.updateSuccessMessage();
-          this.router.navigate(["/home/main/event/all"]);
+          this.router.navigate(["/home/main/event/virtual-event-details/" + this.data._id]);
         } else {
           this.helpService.updateErrorMessage();
         }
@@ -124,6 +126,11 @@ export class VirtualComponent implements OnInit {
     return this.data.speakers.some((item) => item.id === itemText);
   }
 
+  speakersChange(event) {
+    console.log(event);
+    this.data.speakers = event;
+  }
+
   isItemSelectedListeners(itemText: string): boolean {
     return this.data.listeners.some((item) => item.id === itemText);
   }
@@ -138,7 +145,8 @@ export class VirtualComponent implements OnInit {
   }
 
   selectOrganizator(event) {
-    this.selectOrganizatorEmitter.emit(event);
+    // this.selectOrganizatorEmitter.emit(event);
+    this.data.organizer = event.fullname;
   }
 
   selectEvent(event) {
