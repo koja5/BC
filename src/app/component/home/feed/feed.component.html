@@ -410,8 +410,7 @@
                   <i class="fa fa-ellipsis-v removePost"></i>
                 </button>
               </span>
-              <div class="postOptions" [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'"
-                style="right: 25px !important; margin-top: 80px !important; width: 135px !important;">
+              <div class="postOptions" [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'">
                 <ul class="connectionOptions">
                   <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
                       class="fa fa-paper-plane"></i> {{language.recommendedTooltip}}</li>

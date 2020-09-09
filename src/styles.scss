@@ -562,6 +562,19 @@ small {
     width: 100%;
   }
 }
+
+@media (max-width: 992px) {
+  .event-cover {
+    height: 175px;
+  }
+}
+
+@media (min-width: 993px) {
+  .event-cover {
+    height: 300px;
+  }
+}
+
 /* End Mobile Media */
 
 /* LOADING START */
@@ -1123,13 +1136,13 @@ mat-video .videoplayer {
 
 @media (max-width: 768px) {
   .event-life {
-      border-bottom: 1px solid lightgray;
+    border-bottom: 1px solid lightgray;
   }
 }
 
 @media (min-width: 768px) {
   .event-life {
-      border-right: 1px solid lightgray;
+    border-right: 1px solid lightgray;
   }
 }
 
@@ -1237,34 +1250,35 @@ mat-video .videoplayer {
   position: absolute;
   top: 1px;
   right: 2em;
-  background: #FE453E;
+  background: #fe453e;
   color: #fff;
   padding: 0.2em 1em;
   padding-bottom: 0;
   border-radius: 0;
 }
 
-.date-ribbon::before, .date-ribbon::after {
-  content: '';
+.date-ribbon::before,
+.date-ribbon::after {
+  content: "";
   position: absolute;
   top: 100%;
-  
+
   width: 50%;
   height: 30px;
 }
 
 .date-ribbon::before {
   left: 0;
-  border-left:solid 2em #FE453E;
-  border-top: solid 15px #FE453E;
+  border-left: solid 2em #fe453e;
+  border-top: solid 15px #fe453e;
   border-bottom: solid 15px transparent;
   border-right: solid 2em transparent;
-  }
+}
 
 .date-ribbon::after {
   right: 0;
-  border-right:solid 2em #FE453E;
-  border-top: solid 15px #FE453E;
+  border-right: solid 2em #fe453e;
+  border-top: solid 15px #fe453e;
   border-bottom: solid 15px transparent;
   border-left: solid 2em transparent;
 }
@@ -1305,7 +1319,6 @@ mat-video .videoplayer {
 }
 
 .event-cover {
-  height: 300px;
   width: 100%;
 }
 

@@ -1,4 +1,4 @@
-ng build --environment prod --aot --sourcemaps false --extract-css true 
+ng build
 $time = (Get-Date).ToString("dd_MM_yyyy_H_m")
 $day = (Get-Date).ToString("dd_MM_yyyy")
 If(!(test-path C:\Users\Aleksandar\Desktop\Koja\Builds\$day))

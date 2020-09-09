@@ -26,6 +26,7 @@ export class VirtualComponent implements OnInit {
   public allMyConnectionSpeakers: any;
   public allMyConnectionListeners: any;
   public currentLoadData: any;
+  public showPreview = false;
 
   constructor(
     private connectionService: ConnectionService,

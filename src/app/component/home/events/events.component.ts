@@ -29,7 +29,7 @@ export class EventsComponent implements OnInit {
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
     this.months = this.language.months;
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 992) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     }
@@ -42,7 +42,7 @@ export class EventsComponent implements OnInit {
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
-    if (window.innerWidth < 768) {
+    if (window.innerWidth < 992) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     } else {

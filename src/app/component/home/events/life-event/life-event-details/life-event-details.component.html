@@ -1,7 +1,7 @@
 <div class="loader4 loading" *ngIf="data === undefined"></div>
 
 <div *ngIf="data && language">
-  <div class="profile-cover text-center">
+  <div class="profile-cover text-center" style="position: relative;">
     <button class="btn btn-danger back-to-event" routerLink="/home/main/event/all"><span
         class="fa fa-arrow-left"></span> {{language.lifeEventDetailsBackToEvent}}</button>
     <img class="img-fluid event-cover" src="./assets/img/events_cover.jpg" alt="">

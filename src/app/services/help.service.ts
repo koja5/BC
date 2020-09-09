@@ -7,6 +7,7 @@ import {
   SafeUrl,
 } from "@angular/platform-browser";
 import { ToastrService } from "ngx-toastr";
+import * as sha1 from "sha1";
 
 @Injectable({
   providedIn: "root",
@@ -229,5 +230,9 @@ export class HelpService {
         positionClass: "toast-bottom-right",
       }
     );
+  }
+
+  convertToSHA(data) {
+    return sha1(data.toString());
   }
 }

@@ -1,7 +1,7 @@
 <div class="loader4 loading" *ngIf="data === undefined"></div>
 
 <div *ngIf="data && language">
-  <div class="profile-cover text-center">
+  <div class="profile-cover text-center" style="position: relative;">
     <button class="btn btn-danger back-to-event" routerLink="/home/main/event/all"><span
         class="fa fa-arrow-left"></span> {{language.virtualEventDetailsBackToEvent}}</button>
     <img class="img-fluid event-cover" src="./assets/img/virtual_cover.jpg" alt="">
@@ -55,7 +55,7 @@
               <h6 class="m-0 font-weight-bold">{{language.virtualEventSpeakersTitle}}</h6>
             </div>
             <div class="box-body row">
-              <div class="col-md-4 col-sm-6" *ngFor="let item of data.speakers">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.speakers">
                 <div class="our-team">
                   <div class="pic">
                     <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
@@ -82,7 +82,7 @@
               <h6 class="m-0 font-weight-bold">{{language.virtualEventListenersTitle}}</h6>
             </div>
             <div class="box-body row">
-              <div class="col-md-4 col-sm-6" *ngFor="let item of data.listeners">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.listeners">
                 <div class="our-team">
                   <div class="pic">
                     <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">

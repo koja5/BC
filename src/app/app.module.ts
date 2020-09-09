@@ -47,7 +47,7 @@ import { NotFoundComponent } from "./component/templates/not-found/not-found.com
     ToastrModule.forRoot(),
     LoadingBarRouterModule,
     LayoutModule,
-    SplitterModule,
+    SplitterModule
   ],
   providers: [
     LoggedGuard,

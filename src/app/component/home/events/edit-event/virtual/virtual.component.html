@@ -171,9 +171,3 @@
     </main>
   </div>
 </div>
-
-<kendo-window *ngIf="showPreview" (close)="showPreview = false" [width]="windowWidth ? windowWidth : 1100"
-  [height]="windowHeight ? windowHeight : 700">
-
-  <app-life-event-details [data]="data"></app-life-event-details>
-</kendo-window>

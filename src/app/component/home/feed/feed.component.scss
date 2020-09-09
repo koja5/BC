@@ -21,14 +21,15 @@
 
 .postOptions {
     position: absolute;
-    right: 22px;
     z-index: 10000;
     /* border: 1px solid; */
     padding: 5px;
     box-shadow: 1px 2px 7px 3px lightgrey;
     border-radius: 2px;
     background: #fff;
-    width: 110px;
+    right: 25px !important; 
+    margin-top: 160px !important; 
+    width: 135px !important;
 }
 
 .postOptions ul {

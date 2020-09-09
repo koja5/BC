@@ -22,6 +22,7 @@ export class LifeComponent implements OnInit {
   @Output() searchOrganizatorEmitter = new EventEmitter<any>();
   @Output() selectOrganizatorEmitter = new EventEmitter<any>();
   @Output() selectEventEmitter = new EventEmitter<any>();
+  public showPreview = false;
 
   constructor(
     private lifeEventService: LifeEventService,

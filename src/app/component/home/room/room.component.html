@@ -2,66 +2,71 @@
   <div class="main-left">
     <div class="main-videos">
       <div id="video-grid">
-        <video class="border border-danger w-100 h-100" #myVideo muted>
-        </video>
+        <!-- <video class="border border-danger w-100 h-100" #myVideo muted>
+        </video> -->
+        <video *ngFor="let item of otherStream" [srcObject]="item" autoplay class="embed-responsive-item"
+          style="width: 50%;"></video>
       </div>
     </div>
     <div class="main-controls">
       <div class="main-controls-block">
-        <div onclick="muteUnmute()" class="main-controls-button main-mute_button">
+        <div (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button">
           <i class="fa fa-microphone"></i>
-          <span>Mute</span>
+          <span>{{language.chatRoomMute}}</span>
         </div>
-        <div onclick="playStop()" class="main-controls-button main-video_button">
+        <div (click)="enableDisableVideo()" class="main-controls-button main-video_button">
           <i class="fa fa-camera"></i>
-          <span>Stop Video</span>
+          <span>{{language.chatRoomStopVideo}}</span>
         </div>
       </div>
       <div class="main-controls-block">
         <div class="main-controls-button">
           <i class="fa fa-shield"></i>
-          <span>Security</span>
+          <span>{{language.chatRoomSecurity}}</span>
         </div>
         <div class="main-controls-button">
           <i class="fa fa-user"></i>
-          <span>Participants</span>
+          <span>{{language.chatRoomParticipants}}</span>
         </div>
         <div class="main-controls-button">
           <i class="fa fa-comment"></i>
-          <span>Chat</span>
+          <span>{{language.chatRoomChat}}</span>
         </div>
       </div>
       <div class="main-controls-block">
         <div class="main-controls-button" (click)="windowLeaveMeeting = true">
-          <span class="leave_meeting">Leave Meeting</span>
+          <span class="leave_meeting">{{language.chatRoomLeaveRoom}}</span>
         </div>
       </div>
     </div>
   </div>
   <div class="main-right">
     <div class="main-header">
-      <h6>Chat</h6>
+      <h6>{{language.chatRoomChat}}</h6>
     </div>
     <div class="main-chat_window">
       <ul class="messages">
-
+        <li *ngFor="let item of messages" class="item-message">
+          <span class="item-name">{{item.senderId}}</span>
+          <span>{{item.message}}</span>
+        </li>
       </ul>
 
     </div>
     <div class="main-message_container">
-      <input id="chat_message" type="text" placeholder="Type message here...">
+      <input id="chat_message" type="text" [(ngModel)]="chatMessage" placeholder="{{language.chatRoomTypeMessage}}"
+        (keyup.enter)="sendMessage()">
     </div>
   </div>
+  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="windowLeaveMeeting" (close)="windowLeaveMeeting = false"
+    [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
+    <div class="modal-body text-center">
+      <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
+      <h3>{{language.areYouSure}}</h3>
+    </div>
+    <kendo-dialog-actions>
+      <button kendoButton (click)="windowLeaveMeeting = false">{{language.no}}</button>
+      <button kendoButton (click)="leaveMeetingAnswer('yes')" primary="true">{{language.yes}}</button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
 </div>
-
-<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="windowLeaveMeeting" (close)="windowLeaveMeeting = false"
-  [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
-  <div class="modal-body text-center">
-    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-    <h3>{{language.areYouSure}}</h3>
-  </div>
-  <kendo-dialog-actions>
-    <button kendoButton (click)="windowLeaveMeeting = false">{{language.no}}</button>
-    <button kendoButton (click)="leaveMeetingAnswer('yes')" primary="true">{{language.yes}}</button>
-  </kendo-dialog-actions>
-</kendo-dialog>

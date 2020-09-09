@@ -1,5 +1,5 @@
 // Get dependencies
-const compression = require('compression')
+const compression = require("compression");
 const express = require("express");
 const path = require("path");
 const http = require("http");
@@ -10,6 +10,7 @@ const api = require("./server/api");
 const mongo = require("./server/mongodb");
 const morgan = require("morgan");
 const mail = require("./server/mailAPI");
+// const conference = required("./server/conference");
 const app = express();
 const socketIO = require("socket.io");
 const multer = require("multer");
@@ -23,7 +24,7 @@ var connection = mysql.createPool({
   database: "business_circle",
 });
 
-app.use(compression())
+app.use(compression());
 //for upload image
 app.use(function (req, res, next) {
   //allow cross origin requests
@@ -206,6 +207,7 @@ app.use(express.static(path.join(__dirname, "dist")));
 app.use("/api", api);
 app.use("/api", mail);
 app.use("/api", mongo);
+// app.use("/", conference);
 
 // Catch all other routes and return the index file
 app.get("*", (req, res) => {
@@ -268,6 +270,97 @@ io.on("connection", (socket) => {
       text: "notifikacija!!!",
     });
   });
+
+  /* ROOM */
+
+  socket.on("room_join_request", (payload) => {
+    socket.join(payload.roomName, (err) => {
+      if (!err) {
+        io.in(payload.roomName).clients((err, clients) => {
+          if (!err) {
+            io.in(payload.roomName).emit("room_users", clients);
+          }
+        });
+      }
+    });
+  });
+
+  socket.on("room_join_request_broadcast", (payload) => {
+    socket.join(payload.roomName, (err) => {
+      if (!err) {
+        io.in(payload.roomName).clients((err, clients) => {
+          if (!err) {
+            console.log(clients);
+            if (clients.length === 1) {
+              firstUser[payload.roomName] = clients[0];
+              io.in(payload.roomName).emit(
+                "first_user",
+                firstUser[payload.roomName]
+              );
+            } else {
+              /*if(otherUsers[payload.roomName]) {
+                                otherUsers[payload.roomName] = socket.id;
+                            } else {
+                                otherUsers[payload.roomName].push(socket.id);
+                            }*/
+              io.in(payload.roomName).emit("listen_user", clients);
+            }
+          }
+        });
+      }
+    });
+  });
+
+  socket.on("startConnection", (payload) => {
+    console.log("Listen ID is: " + payload.listenId);
+    socket.broadcast.emit("startConnection", { listenId: payload.listenId });
+  });
+
+  socket.on("callFirst", (payload) => {
+    console.log("Listen ID is: " + payload.listenId);
+    socket.broadcast.emit("callFirst", { listenId: payload.listenId });
+  });
+
+  socket.on("signal", (data) => {
+    console.log("-----------SIGNAL---------");
+    console.log(data);
+    socket.broadcast.emit("signal", data);
+    // io.to(data.listenId).emit("signal", data.signal);
+  });
+
+  socket.on("callFirstUser", (payload) => {
+    console.log("calleee " + payload.calleeId);
+    io.to(payload.calleeId).emit("listenerUserOn", {
+      signalData: payload.signalData,
+      callerId: payload.callerId,
+    });
+  });
+
+  socket.on("offer_signal", (payload) => {
+    io.to(payload.calleeId).emit("offer", {
+      signalData: payload.signalData,
+      callerId: payload.callerId,
+    });
+  });
+
+  socket.on("answer_signal", (payload) => {
+    console.log("answer signal " + payload.callerId);
+    io.to(payload.callerId).emit("answer", {
+      signalData: payload.signalData,
+      calleeId: socket.id,
+    });
+  });
+
+  socket.on("send_message", (payload) => {
+    console.log(payload);
+    io.in(payload.roomId).emit("receive_message", payload);
+  });
+
+  socket.on("disconnect", () => {
+    io.emit("room_left", { type: "disconnected", socketId: socket.id });
+  });
+
+  /* ROOM END */
 });
 
 /* SOCKET END */
