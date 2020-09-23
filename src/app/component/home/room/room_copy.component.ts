@@ -58,8 +58,8 @@ import {
       private editEventService: EditEventService,
       private helpService: HelpService
     ) {
-      this.socket = io.connect(this.link);
-      // this.socket = io.connect("http://localhost:3000");
+      // this.socket = io.connect(this.link);
+      this.socket = io.connect("http://localhost:3000");
     }
   
     ngOnInit(): void {

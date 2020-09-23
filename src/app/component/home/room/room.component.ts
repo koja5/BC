@@ -58,8 +58,8 @@ export class RoomComponent implements OnInit {
     private editEventService: EditEventService,
     private helpService: HelpService
   ) {
-    this.socket = io.connect(this.link);
-    // this.socket = io.connect("http://localhost:3000");
+    // this.socket = io.connect(this.link);
+    this.socket = io.connect("http://localhost:3000");
   }
 
   ngOnInit(): void {
@@ -213,7 +213,12 @@ export class RoomComponent implements OnInit {
         });
       });
     });
+    // ovde dva puta salje isti signal
     this.socket.on("signal", (data) => {
+      /*if (broadcaster) broadcaster.destroy();
+      broadcaster = new SimplePeer({ initiator: true, stream: stream });*/
+      console.log('Prihvatam signal');
+      console.log(data);
       broadcaster.signal(data);
     });
   };

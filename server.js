@@ -312,9 +312,19 @@ io.on("connection", (socket) => {
   });
 
   socket.on("startConnection", (payload) => {
-    console.log("Listen ID is: " + payload.listenId);
-    socket.broadcast.emit("startConnection", { listenId: payload.listenId });
+    console.log("Start Connection: " + payload.roomName);
+    // socket.broadcast.emit("startConnection", { listenId: payload.listenId });
+    io.to(payload.roomName).emit("sendEventToSpeakers", {
+      from: payload.from
+    });
   });
+
+  socket.on("sendEventToListeners", (payload) => {
+    io.on(payload.to).emit("getEventFromSpeakers", {
+      signal: payload.signal,
+      from: payload.from
+    })
+  })
 
   socket.on("callFirst", (payload) => {
     console.log("Listen ID is: " + payload.listenId);
@@ -342,6 +352,22 @@ io.on("connection", (socket) => {
       callerId: payload.callerId,
     });
   });
+
+  socket.on("sendInitialSignal", (payload) => {
+    console.log("Send initial signal " + payload.to);
+    io.to(payload.to).emit("getInitialSignal", {
+      signal: payload.signal,
+      from: payload.from,
+    });
+  });
+
+  socket.on("sendAnswerToInitial", (payload) => {
+    console.log("Send answer to initial " + payload.to);
+    io.to(payload.to).emit("getAnswerToInitial", {
+      signal: payload.signal,
+      from: payload.from
+    })
+  })
 
   socket.on("answer_signal", (payload) => {
     console.log("answer signal " + payload.callerId);

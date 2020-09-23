@@ -7,13 +7,13 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class MessageChatService {
-  private url =
+  /*private url =
     window.location.protocol +
     "//" +
     window.location.hostname +
     ":" +
-    window.location.port;
-  // public url = "http://localhost:3000";
+    window.location.port;*/
+  public url = "http://localhost:3000";
 
   constructor(private http: HttpClient) {}
 

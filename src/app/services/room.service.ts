@@ -19,13 +19,13 @@ export class RoomService {
   }
 
   constructor() {
-    this.socket = io.connect(this.link);
-    // this.socket = io.connect("http://localhost:3000");
+    // this.socket = io.connect(this.link);
+    this.socket = io.connect("http://localhost:3000");
   }
 
   connect() {
-    this.socket = io.connect(this.link);
-    // this.socket = io.connect("http://localhost:3000");
+    // this.socket = io.connect(this.link);
+    this.socket = io.connect("http://localhost:3000");
   }
 
   private listen(channel: string, fn: Function) {
