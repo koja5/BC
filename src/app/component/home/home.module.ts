@@ -35,6 +35,8 @@ import { VirtualComponent } from './events/edit-event/virtual/virtual.component'
 import { VirtualEventComponent } from './events/virtual-event/virtual-event.component';
 import { VirtualEventDetailsComponent } from './events/virtual-event/virtual-event-details/virtual-event-details.component';
 import { RoomComponent } from './room/room.component';
+import { WebcamModule } from 'ngx-webcam';
+import { TakeCameraComponent } from './take-camera/take-camera.component';
 
 @NgModule({
   declarations: [
@@ -62,7 +64,8 @@ import { RoomComponent } from './room/room.component';
     VirtualComponent,
     VirtualEventComponent,
     VirtualEventDetailsComponent,
-    RoomComponent
+    RoomComponent,
+    TakeCameraComponent
   ],
   imports: [
     CommonModule,
@@ -75,7 +78,8 @@ import { RoomComponent } from './room/room.component';
     DropDownsModule,
     ButtonsModule,
     FileUploadModule,
-    MatVideoModule
+    MatVideoModule,
+    WebcamModule
   ]
 })
 export class HomeModule { }

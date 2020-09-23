@@ -49,8 +49,8 @@ export class ProfileComponent implements OnInit {
   public windowHeight: any;
   public windowWidth: any;
   public owner = false;
-  // public url = "http://localhost:3000/upload";
-  public url = "http://78.47.206.131:" + location.port + "/upload";
+  public url = "http://localhost:3000/upload";
+  // public url = "http://78.47.206.131:" + location.port + "/upload";
   public allExperience: any;
   public allEducation: any;
   public lookingOffer: any;
@@ -66,6 +66,7 @@ export class ProfileComponent implements OnInit {
   public promoWindow = false;
   public maxFileImageSize = 1 * 1024 * 1024;
   public maxFileCoverSize = 1 * 1024 * 1024;
+  public uploadProfileWindow = false;
 
   constructor(
     private service: ProfileService,

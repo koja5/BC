@@ -26,7 +26,8 @@
               <p class="mb-0 text-muted"> {{data.profession}} </p>
             </div>
             <div class="profile-right ml-auto">
-              <button type="button" class="btn btn-light mr-2" (click)="sendMessageForThisUser()"> <i class="fa fa-envelope"></i>
+              <button type="button" class="btn btn-light mr-2" (click)="sendMessageForThisUser()"> <i
+                  class="fa fa-envelope"></i>
                 {{language.profileSendMessage}}
               </button>
               <button type="button" class="btn btn-primary mr-2"
@@ -299,13 +300,12 @@
             <div class="pt-5 pl-5 pr-5 pb-3 profile-img-container">
 
               <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid rounded-circle"
-                alt="Responsive image">
-              <div *ngIf="owner"><label for="file-upload-profile" class="change-icon">
+              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''"
+                class="img-fluid rounded-circle" alt="Responsive image">
+              <div *ngIf="owner"><label class="change-icon"
+                  (click)="uploadProfileWindow = true">
                   <i class="fa fa-upload  fa-3x" style="top: 50% !important;"></i>
                 </label>
-                <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
-                  [uploader]="uploader" />
               </div>
             </div>
             <div class="d-flex" style="border-top: 1px solid #eaebec;">
@@ -403,3 +403,23 @@
   <app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="id" [owner]="owner" [video]="data.promo"
     (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 </div>
+
+<kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="uploadProfileWindow"
+  (close)="uploadProfileWindow = false" [width]="windowWidth ? windowWidth : 550"
+  [height]="windowHeight ? windowHeight : 400">
+  <div class="text-center">
+    <img src="./assets/img/upload_profile.png" class="mb-3" style="width: 85%">
+    <div class="row text-center">
+      <div class="col-6">
+        <button class="btn btn-primary"><label for="file-upload-profile" class="change-icon mb-0">
+            <i class="fa fa-plus"></i> Dodaj novu sliku
+          </label>
+          <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
+            [uploader]="uploader" /></button>
+      </div>
+      <div class="col-6">
+        <button class="btn btn-light"><i class="fa fa-camera"></i> Napravi fotografiju</button>
+      </div>
+    </div>
+  </div>
+</kendo-window>
