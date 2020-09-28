@@ -67,6 +67,7 @@ export class ProfileComponent implements OnInit {
   public maxFileImageSize = 1 * 1024 * 1024;
   public maxFileCoverSize = 1 * 1024 * 1024;
   public uploadProfileWindow = false;
+  public takeACameraWindow = false;
 
   constructor(
     private service: ProfileService,
@@ -214,6 +215,7 @@ export class ProfileComponent implements OnInit {
       this.imageChangedEvent = event;
       this.changeImage = true;
       this.showCropper = true;
+      this.uploadProfileWindow = false;
       this.typeOfUpload = "img";
     } else {
       this.toastr.error(this.language.adminMaxFileImage, "", {
@@ -336,5 +338,22 @@ export class ProfileComponent implements OnInit {
   sendMessageForThisUser() {
     sessionStorage.setItem("message_user", JSON.stringify(this.data));
     this.router.navigate(["/home/main/message"]);
+  }
+
+  takeASnapshotEmitter(event) {
+    console.log(event);
+    this.croppedImage = event["_imageAsDataUrl"];
+    this.save();
+    this.takeACameraWindow = false;
+  }
+
+  showPopupForChangeProfilePicture() {
+    this.uploadProfileWindow = true;
+    this.typeOfUpload = "img";
+  }
+
+  showPopupForChangeCoverPicture() {
+    this.uploadProfileWindow = true;
+    this.typeOfUpload = "cover";
   }
 }

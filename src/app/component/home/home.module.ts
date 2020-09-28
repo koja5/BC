@@ -37,6 +37,7 @@ import { VirtualEventDetailsComponent } from './events/virtual-event/virtual-eve
 import { RoomComponent } from './room/room.component';
 import { WebcamModule } from 'ngx-webcam';
 import { TakeCameraComponent } from './take-camera/take-camera.component';
+import { RecordVideoComponent } from './record-video/record-video.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { TakeCameraComponent } from './take-camera/take-camera.component';
     VirtualEventComponent,
     VirtualEventDetailsComponent,
     RoomComponent,
-    TakeCameraComponent
+    TakeCameraComponent,
+    RecordVideoComponent
   ],
   imports: [
     CommonModule,

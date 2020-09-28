@@ -1,0 +1,4 @@
+<video #videoPreview controls autoplay playsinline></video>
+
+<button *ngIf="!recording" class="btn btn-success" id="btn-start-recording" (click)="startRecording()"><span class="fa fa-film"></span> Start Recording</button>
+<button *ngIf="recording" class="btn btn-danger" id="btn-stop-recording" (click)="stopRecording()"><span class="fa fa-stop"></span> Stop Recording</button>

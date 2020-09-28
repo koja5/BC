@@ -3,11 +3,11 @@
 <div *ngIf="data !== undefined && language !== undefined">
   <div class="profile-cover text-center">
     <div *ngIf="owner" style="position: relative;">
-      <label for="file-upload-cover" class="cover-photo-update">
+      <label class="cover-photo-update" (click)="showPopupForChangeCoverPicture()">
         <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
       </label>
-      <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
-        [uploader]="uploader" />
+      <!-- <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
+        [uploader]="uploader" /> -->
     </div>
     <div class="loader4 imageLoader" *ngIf="loadImage"></div>
     <!-- <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
@@ -302,8 +302,7 @@
               <div class="loader4 imageLoader" *ngIf="loadImage"></div>
               <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''"
                 class="img-fluid rounded-circle" alt="Responsive image">
-              <div *ngIf="owner"><label class="change-icon"
-                  (click)="uploadProfileWindow = true">
+              <div *ngIf="owner"><label class="change-icon" (click)="showPopupForChangeProfilePicture()">
                   <i class="fa fa-upload  fa-3x" style="top: 50% !important;"></i>
                 </label>
               </div>
@@ -369,7 +368,7 @@
 
 
 <div *ngIf="uploader !== undefined" style="text-align: center;">
-  <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false"
+  <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false; uploadProfileWindow = true"
     [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 400">
 
     <div class="loader4 imageLoader" *ngIf="showCropper"></div>
@@ -382,7 +381,7 @@
     </button>
   </kendo-window>
 
-  <kendo-window title="{{language.profileUpdateCover}}" *ngIf="changeImageCover" (close)="changeImageCover = false"
+  <kendo-window title="{{language.profileUpdateCover}}" *ngIf="changeImageCover" (close)="changeImageCover = false; uploadProfileWindow = true"
     [width]="windowWidth ? windowWidth : 600" [height]="windowHeight ? windowHeight : 400">
 
     <div class="loader4 imageLoader" *ngIf="showCropper"></div>
@@ -411,15 +410,26 @@
     <img src="./assets/img/upload_profile.png" class="mb-3" style="width: 85%">
     <div class="row text-center">
       <div class="col-6">
-        <button class="btn btn-primary"><label for="file-upload-profile" class="change-icon mb-0">
+        <button class="btn btn-primary"><label for="file-upload-profile" class="change-icon mb-0" style="cursor: pointer;">
             <i class="fa fa-plus"></i> Dodaj novu sliku
           </label>
           <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
             [uploader]="uploader" /></button>
       </div>
       <div class="col-6">
-        <button class="btn btn-light"><i class="fa fa-camera"></i> Napravi fotografiju</button>
+        <button class="btn btn-light" (click)="takeACameraWindow = true; uploadProfileWindow = false;"><i class="fa fa-camera"></i> Napravi
+          fotografiju</button>
       </div>
     </div>
+  </div>
+</kendo-window>
+
+<kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="takeACameraWindow"
+  (close)="takeACameraWindow = false; uploadProfileWindow = true" [width]="windowWidth ? windowWidth : 595"
+  [height]="windowHeight ? windowHeight : 440">
+  <div class="text-center">
+    <app-take-camera [width]="windowWidth ? windowWidth : 595" [height]="windowHeight ? windowHeight : 440"
+      (takeASnapshotEmitter)="takeASnapshotEmitter($event)">
+    </app-take-camera>
   </div>
 </kendo-window>

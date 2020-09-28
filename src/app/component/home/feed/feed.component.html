@@ -310,11 +310,11 @@
             <div class="loader4 imageLoaderFeed" *ngIf="loadImage"></div>
             <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
               alt="Responsive image">
-            <label for="file-upload-profile" class="change-icon">
+            <!-- <label for="file-upload-profile" class="change-icon">
               <i class="fa fa-upload  fa-2x"></i>
             </label>
             <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
-              [uploader]="uploader" />
+              [uploader]="uploader" /> -->
             <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
             <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
             <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
