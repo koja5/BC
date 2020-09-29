@@ -5,8 +5,8 @@
       [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
       (initError)="handleInitError($event)"></webcam>
     <br />
-    <button class="actionBtn" (click)="triggerSnapshot();">Take A Snapshot</button>
-    <button class="actionBtn" (click)="toggleWebcam();">Toggle Webcam</button>
+    <button class="btn btn-success" (click)="triggerSnapshot();">{{language?.profileTakeASnapshot}}</button>
+    <button class="btn btn-default" (click)="toggleWebcam();">{{language?.profileTakeASnapshotRotation}}</button>
     <br />
     <button *ngIf="multipleWebcamsAvailable" class="actionBtn" (click)="showNextWebcam(true);">Next
       Webcam</button>
@@ -16,8 +16,8 @@
 <div>
   <div class="snapshot" *ngIf="webcamImage">
     <img [src]="webcamImage.imageAsDataUrl" [height]="height - 140" [width]="width - 100" />
-    <button class="actionBtn" (click)="saveImage()">Save image</button>
-    <button class="actionBtn" (click)="takeANew()">Take a new</button>
+    <button class="btn btn-info" (click)="saveImage()">{{language?.profileTakeASnapshotSave}}</button>
+    <button class="btn btn-success" (click)="takeANew()">{{language?.profileTakeASnapshotNewShot}}</button>
   </div>
 </div>
 <!-- 

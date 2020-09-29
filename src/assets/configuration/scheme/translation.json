@@ -277,6 +277,12 @@
       "feedCopiedLinkInClipboard": { "type": "string" },
       "feedCopiedLinkButton": { "type": "string" },
       "profileUpdateCover": { "type": "string" },
+      "profileTakePhotoWithCamera": { "type": "string" },
+      "profileAddImage": { "type": "string" },
+      "profileTakeASnapshot": { "type": "string" },
+      "profileTakeASnapshotRotation": { "type": "string" },
+      "profileTakeASnapshotNewShot": { "type": "string" },
+      "profileTakeASnapshotSave": { "type": "string" },
       "profileUpdateProfileImage": { "type": "string" },
       "profileSendMessage": { "type": "string" },
       "profileRecommended": { "type": "string" },
@@ -500,6 +506,10 @@
       "promoNoHavePromoVideo": { "type": "string" },
       "promoUploadPromoVideo": { "type": "string" },
       "promoChangePromoVideo": { "type": "string" },
+      "promoRecordPromoVideo": { "type": "string" },
+      "promoRecordPromoVideoStart": { "type": "string" },
+      "promoRecordPromoVideoStop": { "type": "string" },
+      "promoRecordPromoVideoSave": { "type": "string" },
       "aboutFooter": { "type": "string" },
       "aboutTitle": { "type": "string" },
       "aboutContactUs": { "type": "string" },
@@ -1597,7 +1607,20 @@
             { "key": "profileUpdate" },
             { "key": "profileOverview" },
             { "key": "profileUpdateProfileImage" },
-            {}
+            { "key": "profileTakePhotoWithCamera" },
+            { "key": "profileAddImage" }
+          ]
+        },
+
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "profileTakeASnapshot" },
+            { "key": "profileTakeASnapshotRotation" },
+            { "key": "profileTakeASnapshotNewShot" },
+            { "key": "profileTakeASnapshotSave" }
           ]
         },
         {
@@ -2331,6 +2354,17 @@
             { "key": "promoNoHavePromoVideo" },
             { "key": "promoUploadPromoVideo" },
             { "key": "promoChangePromoVideo" }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            { "key": "promoRecordPromoVideo" },
+            { "key": "promoRecordPromoVideoStart" },
+            { "key": "promoRecordPromoVideoStop" },
+            { "key": "promoRecordPromoVideoSave" }
           ]
         }
       ]

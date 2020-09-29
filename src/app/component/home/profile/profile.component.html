@@ -411,14 +411,13 @@
     <div class="row text-center">
       <div class="col-6">
         <button class="btn btn-primary"><label for="file-upload-profile" class="change-icon mb-0" style="cursor: pointer;">
-            <i class="fa fa-plus"></i> Dodaj novu sliku
+            <i class="fa fa-plus"></i> {{language.profileAddImage}}
           </label>
           <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
             [uploader]="uploader" /></button>
       </div>
       <div class="col-6">
-        <button class="btn btn-light" (click)="takeACameraWindow = true; uploadProfileWindow = false;"><i class="fa fa-camera"></i> Napravi
-          fotografiju</button>
+        <button class="btn btn-light" (click)="takeACameraWindow = true; uploadProfileWindow = false;"><i class="fa fa-camera"></i> {{language.profileTakePhotoWithCamera}}</button>
       </div>
     </div>
   </div>

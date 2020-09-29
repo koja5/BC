@@ -8,6 +8,7 @@ import {
 } from "@angular/core";
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { ToastrService } from 'ngx-toastr';
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-promo-video",
@@ -25,13 +26,13 @@ export class PromoVideoComponent implements OnInit {
   public windowWidth: any;
   public language: any;
   public uploaderPromo: FileUploader;
-  // public url = "http://localhost:3000/uploadPromo";
-  public url = "http://78.47.206.131:" + location.port + "/uploadPromo";
+  public url = "http://localhost:3000/uploadPromo";
+  // public url = "http://78.47.206.131:" + location.port + "/uploadPromo";
   public imageChangedEvent: any;
   public loadVideo = false;
   public maxFilePromoVideo = 50 * 1024 * 1024;
 
-  constructor(private toastr: ToastrService) {}
+  constructor(private toastr: ToastrService, private helpService: HelpService) {}
 
   ngOnInit() {
     if (window.innerWidth < 768) {
@@ -75,6 +76,7 @@ export class PromoVideoComponent implements OnInit {
       const respon = JSON.parse(response);
       if (respon["info"]) {
         this.video = respon["name"];
+        this.helpService.createSuccessMessage();
       }
       this.loadVideo = false;
     };
@@ -136,4 +138,10 @@ export class PromoVideoComponent implements OnInit {
       type: "video/mp4",
     });
   }
+
+  saveRecordVideoEmitter(event) {
+    this.imageChangedEvent = event;
+    this.uploadVideo()
+  }
+  
 }

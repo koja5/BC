@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, Input } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter, Output } from "@angular/core";
 import * as RecordRTC from "recordrtc";
 
 @Component({
@@ -7,9 +7,9 @@ import * as RecordRTC from "recordrtc";
   styleUrls: ["./record-video.component.scss"],
 })
 export class RecordVideoComponent implements OnInit {
-
   @Input() width: any;
   @Input() height: any;
+  @Output() saveRecordVideoEmitter = new EventEmitter<any>();
 
   public disabled: any;
   public recording = false;
@@ -27,24 +27,50 @@ export class RecordVideoComponent implements OnInit {
     console.log(this.video);
     let width = this.width - 100;
     let height = this.height - 140;
-    this.video.nativeElement.style.width = width.toString() + 'px';
-    this.video.nativeElement.style.height = height.toString() + 'px';
+    this.video.nativeElement.style.width = width.toString() + "px";
+    this.video.nativeElement.style.height = height.toString() + "px";
   }
 
   startRecording() {
     this.disabled = true;
     this.recording = !this.recording;
-    this.captureCamera();
+    this.captureCamera((camera) => {
+      this.video.nativeElement.muted = true;
+      this.video.nativeElement.volume = 0;
+      this.video.nativeElement.srcObject = camera;
+
+      this.recorder = RecordRTC(camera, {
+        type: "video",
+      });
+
+      this.recorder.startRecording();
+
+      // release camera on stopRecording
+      this.recorder.camera = camera;
+    });
   }
 
   stopRecording() {
     this.disabled = true;
     this.recording = !this.recording;
-    this.recorder.stopRecording();
-    this.stopRecordingCallback();
+    this.recorder.stopRecording(() => {
+      this.stopRecordingCallback();
+    });
   }
 
-  captureCamera() {
+  captureCamera(callback) {
+    navigator.mediaDevices
+      .getUserMedia({ audio: true, video: true })
+      .then(function (camera) {
+        callback(camera);
+      })
+      .catch(function (error) {
+        alert("Unable to capture your camera. Please check console logs.");
+        console.error(error);
+      });
+  }
+
+  /*captureCamera() {
     navigator.mediaDevices
       .getUserMedia({ audio: true, video: {
         width: this.width - 100,
@@ -69,17 +95,28 @@ export class RecordVideoComponent implements OnInit {
         alert("Unable to capture your camera. Please check console logs.");
         console.error(error);
       });
-  }
+  }*/
 
   stopRecordingCallback() {
     this.video.nativeElement.src = null;
     this.video.nativeElement.srcObject = null;
     this.video.nativeElement.muted = false;
     this.video.nativeElement.volume = 1;
-    this.video.nativeElement.src = window.URL.createObjectURL(this.recorder.camera);
+    this.video.nativeElement.src = window.URL.createObjectURL(
+      this.recorder.getBlob()
+    );
 
+    /*this.recorder.camera.stop();
+    this.recorder.destroy();
+    this.recorder = null;*/
+  }
+
+  saveRecordVideo() {
+    let video = this.recorder.getBlob();
+    video['name'] = 'Recording video';
     this.recorder.camera.stop();
     this.recorder.destroy();
     this.recorder = null;
+    this.saveRecordVideoEmitter.emit(video);
   }
 }
