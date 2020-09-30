@@ -1,5 +1,14 @@
-import { Component, OnInit, ViewChild, ElementRef, Input, EventEmitter, Output } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  Input,
+  EventEmitter,
+  Output,
+} from "@angular/core";
 import * as RecordRTC from "recordrtc";
+import { WebcamUtil } from "ngx-webcam";
 
 @Component({
   selector: "app-record-video",
@@ -14,6 +23,8 @@ export class RecordVideoComponent implements OnInit {
   public disabled: any;
   public recording = false;
   public recorder: any;
+  public multipleWebcamsAvailable = false;
+  public previewVideo = true;
   @ViewChild("videoPreview")
   video: ElementRef<HTMLVideoElement>;
 
@@ -24,20 +35,25 @@ export class RecordVideoComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.video);
-    let width = this.width - 100;
-    let height = this.height - 140;
-    this.video.nativeElement.style.width = width.toString() + "px";
-    this.video.nativeElement.style.height = height.toString() + "px";
+    WebcamUtil.getAvailableVideoInputs().then(
+      (mediaDevices: MediaDeviceInfo[]) => {
+        this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
+      }
+    );
+    this.width = this.width - 100;
+    this.height = this.height - 140;
   }
 
   startRecording() {
     this.disabled = true;
+    this.previewVideo = false;
     this.recording = !this.recording;
     this.captureCamera((camera) => {
       this.video.nativeElement.muted = true;
       this.video.nativeElement.volume = 0;
       this.video.nativeElement.srcObject = camera;
+      this.video.nativeElement.style.width = this.width.toString() + "px";
+      this.video.nativeElement.style.height = this.height.toString() + "px";
 
       this.recorder = RecordRTC(camera, {
         type: "video",
@@ -52,7 +68,6 @@ export class RecordVideoComponent implements OnInit {
 
   stopRecording() {
     this.disabled = true;
-    this.recording = !this.recording;
     this.recorder.stopRecording(() => {
       this.stopRecordingCallback();
     });
@@ -106,6 +121,8 @@ export class RecordVideoComponent implements OnInit {
       this.recorder.getBlob()
     );
 
+    this.recording = !this.recording;
+
     /*this.recorder.camera.stop();
     this.recorder.destroy();
     this.recorder = null;*/
@@ -113,10 +130,16 @@ export class RecordVideoComponent implements OnInit {
 
   saveRecordVideo() {
     let video = this.recorder.getBlob();
-    video['name'] = 'Recording video';
+    video["name"] = "Recording video";
     this.recorder.camera.stop();
     this.recorder.destroy();
     this.recorder = null;
     this.saveRecordVideoEmitter.emit(video);
+  }
+
+  createNew() {
+    this.video = null;
+    this.previewVideo = true;
+    this.recording = false;
   }
 }

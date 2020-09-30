@@ -27,6 +27,7 @@ export class VirtualComponent implements OnInit {
   public allMyConnectionListeners: any;
   public currentLoadData: any;
   public showPreview = false;
+  public organizer: any;
 
   constructor(
     private connectionService: ConnectionService,
@@ -78,7 +79,9 @@ export class VirtualComponent implements OnInit {
         console.log(data);
         if (data) {
           this.helpService.updateSuccessMessage();
-          this.router.navigate(["/home/main/event/virtual-event-details/" + this.data._id]);
+          this.router.navigate([
+            "/home/main/event/virtual-event-details/" + this.data._id,
+          ]);
         } else {
           this.helpService.updateErrorMessage();
         }
@@ -98,6 +101,23 @@ export class VirtualComponent implements OnInit {
           this.helpService.createErrorMessage();
         }
       });
+    }
+  }
+
+  addOrganizatorToSpeakers(event) {
+    this.data.speakers.push(event);
+  }
+
+  removeOrganizatorFromSpeakers(id_user) {
+    let index = -1;
+    for (let i = 0; i < this.data.speakers.length; i++) {
+      if ((sha1(this.data.speakers[i].id.toString()) === id_user) || (this.data.speakers[i].id === id_user)) {
+        index = i;
+        break;
+      }
+    }
+    if (index !== -1) {
+      this.data.speakers.splice(index, 1);
     }
   }
 
@@ -146,8 +166,12 @@ export class VirtualComponent implements OnInit {
   }
 
   selectOrganizator(event) {
-    // this.selectOrganizatorEmitter.emit(event);
-    this.data.organizer = event.fullname;
+    this.removeOrganizatorFromSpeakers(this.data.id_user);
+    if (event) {
+      this.organizer = event;
+      this.data.organizer = event.fullname;
+      this.addOrganizatorToSpeakers(event);
+    }
   }
 
   selectEvent(event) {

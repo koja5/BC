@@ -510,6 +510,7 @@
       "promoRecordPromoVideoStart": { "type": "string" },
       "promoRecordPromoVideoStop": { "type": "string" },
       "promoRecordPromoVideoSave": { "type": "string" },
+      "promoRecordPromoVideoCreateNew": { "type": "string" },
       "aboutFooter": { "type": "string" },
       "aboutTitle": { "type": "string" },
       "aboutContactUs": { "type": "string" },
@@ -2364,7 +2365,8 @@
             { "key": "promoRecordPromoVideo" },
             { "key": "promoRecordPromoVideoStart" },
             { "key": "promoRecordPromoVideoStop" },
-            { "key": "promoRecordPromoVideoSave" }
+            { "key": "promoRecordPromoVideoSave" },
+            { "key": "promoRecordPromoVideoCreateNew" }
           ]
         }
       ]

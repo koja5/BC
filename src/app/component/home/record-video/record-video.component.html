@@ -1,5 +1,7 @@
-<video #videoPreview controls autoplay playsinline></video>
+<video *ngIf="!previewVideo"  #videoPreview controls autoplay playsinline></video>
+<webcam *ngIf="previewVideo" [height]="height" [width]="width"></webcam>
 
-<button *ngIf="!recording" class="btn btn-success" id="btn-start-recording" (click)="startRecording()"><span class="fa fa-film"></span> {{language?.promoRecordPromoVideoStart}}</button>
+<button *ngIf="!recording&&!video" class="btn btn-success" id="btn-start-recording" (click)="startRecording()"><span class="fa fa-film"></span> {{language?.promoRecordPromoVideoStart}}</button>
 <button *ngIf="recording" class="btn btn-danger" id="btn-stop-recording" (click)="stopRecording()"><span class="fa fa-stop"></span> {{language?.promoRecordPromoVideoStop}}</button>
-<button *ngIf="video.nativeElement.src" class="btn btn-info ml-2" (click)="saveRecordVideo()"><span class="fa fa-save"></span> {{language?.promoRecordPromoVideoSave}}</button>
+<button *ngIf="!recording&&video" class="btn btn-success" id="btn-start-recording" (click)="createNew()"><span class="fa fa-file"></span> {{language?.promoRecordPromoVideoCreateNew}}</button>
+<button *ngIf="!recording&&video" class="btn btn-info ml-2" (click)="saveRecordVideo()"><span class="fa fa-save"></span> {{language?.promoRecordPromoVideoSave}}</button>
