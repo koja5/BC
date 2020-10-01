@@ -886,6 +886,7 @@ router.get("/getEventsByEventType/:type", function (req, res, next) {
 router.post("/updateEventData", function (req, res, next) {
   mongo.connect(url, function (err, db, res) {
     if (err) throw err;
+    console.log(req.body);
     var dbo = db.db(database_name);
     if (req.body.eventType === 1) {
       dbo.collection("events").updateOne(
@@ -900,6 +901,7 @@ router.post("/updateEventData", function (req, res, next) {
             organizer: req.body.organizer,
             attendees: req.body.attendees,
             eventType: req.body.eventType,
+            nameOfEvent: req.body.nameOfEvent,
             nameOfLocation: req.body.nameOfLocation,
             location: req.body.location,
             zip: req.body.zip,
@@ -916,6 +918,7 @@ router.post("/updateEventData", function (req, res, next) {
         {
           $set: {
             id_user: req.body.id_user,
+            nameOfEvent: req.body.nameOfEvent,
             date: req.body.date,
             time: req.body.time,
             event: req.body.event,
