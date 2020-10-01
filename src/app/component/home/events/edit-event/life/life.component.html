@@ -10,39 +10,28 @@
           </div>
           <div class="col-md-4" style="text-align: end;">
             <a class="font-weight-bold btn btn-primary rounded save-event mr-2" (click)="saveChanges()">
-             <span class="fa fa-floppy-o"></span> {{language.lifeEventEditSave}}
+              <span class="fa fa-floppy-o"></span> {{language.lifeEventEditSave}}
             </a>
-            <button class="btn btn-success" (click)="showPreview = true"> <span class="fa fa-eye"></span> {{language.lifeEventEditPreview}}</button>
+            <button class="btn btn-success" (click)="showPreview = true"> <span class="fa fa-eye"></span>
+              {{language.lifeEventEditPreview}}</button>
           </div>
         </div>
         <div class="box-body p-3">
           <form class="js-validate" novalidate="novalidate">
             <div class="row">
-              <div class="col-sm-4 mb-2">
+              <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="phoneNumberLabel" class="form-label">
-                    {{language.lifeEventDetailsDate}}
+                    {{language.lifeEventDetailsNameOfEvent}}
                     <!--<span class="text-danger">*</span>-->
                   </label>
                   <div class="form-group">
-                    <kendo-datepicker name="date" [(ngModel)]="data.date" style="display: contents;">
-                    </kendo-datepicker>
+                    <input type="text" class="form-control" name="nameOfEvent" [(ngModel)]="data.nameOfEvent">
                   </div>
                 </div>
               </div>
 
-              <div class="col-sm-4 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.lifeEventDetailsTime}}
-                  </label>
-                  <div class="form-group">
-                    <kendo-timepicker [(value)]="data.time" style="width: auto;"></kendo-timepicker>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-sm-4 mb-2">
+              <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.lifeEventDetailsEvent}}
@@ -55,6 +44,31 @@
                       (selectionChange)="selectEvent($event)" [(ngModel)]="data.event" class="col-xs-12 noPadding"
                       name="event">
                     </kendo-combobox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6 mb-2">
+                <div class="js-form-message">
+                  <label id="phoneNumberLabel" class="form-label">
+                    {{language.lifeEventDetailsDate}}
+                    <!--<span class="text-danger">*</span>-->
+                  </label>
+                  <div class="form-group">
+                    <kendo-datepicker name="date" [(ngModel)]="data.date" style="display: contents;">
+                    </kendo-datepicker>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-6 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.lifeEventDetailsTime}}
+                  </label>
+                  <div class="form-group">
+                    <kendo-timepicker [(value)]="data.time" style="width: 100%;"></kendo-timepicker>
                   </div>
                 </div>
               </div>

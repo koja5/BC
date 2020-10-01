@@ -363,7 +363,7 @@ router.post("/sendInviteForEvent", function (req, res) {
     linkClient + "/home/main/event/life-event-details/" + req.body.event_id;
 
   var inviterProfile = linkClient + "/home/main/profile/" + req.body.inviter_id;
-
+  console.log(req.body);
   for (let i = 0; i < req.body.friends.length; i++) {
     var mailOptions = {
       from: '"BCI" info@app-production.eu',

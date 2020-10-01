@@ -1,5 +1,6 @@
 export class VirtualEventModel {
     id_user?: any;
+    nameEvent?: string;
     date?: Date;
     time?: Date;
     event?: string;
