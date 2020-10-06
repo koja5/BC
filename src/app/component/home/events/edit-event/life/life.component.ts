@@ -5,6 +5,7 @@ import * as sha1 from "sha1";
 import { Router } from "@angular/router";
 import { HelpService } from "src/app/services/help.service";
 import { EditEventService } from "src/app/services/edit-event.service";
+import { ConnectionService } from "src/app/services/connection.service";
 
 @Component({
   selector: "app-life",
@@ -23,13 +24,17 @@ export class LifeComponent implements OnInit {
   @Output() selectOrganizatorEmitter = new EventEmitter<any>();
   @Output() selectEventEmitter = new EventEmitter<any>();
   public showPreview = false;
+  public allMyConnectionSpeakers: any;
+  public allMyConnectionListeners: any;
+  public currentLoadData: any;
 
   constructor(
     private lifeEventService: LifeEventService,
     private router: Router,
     private profile: ProfileService,
     private helpService: HelpService,
-    private editEventService: EditEventService
+    private editEventService: EditEventService,
+    private connectionService: ConnectionService
   ) {}
 
   ngOnInit() {
@@ -38,6 +43,7 @@ export class LifeComponent implements OnInit {
 
   initialization() {
     this.data.signIn = [];
+    this.getAllMyConnection();
 
     if (this.id !== "create") {
       this.editEventService.getEventData(this.id).subscribe((data) => {
@@ -105,12 +111,67 @@ export class LifeComponent implements OnInit {
     this.searchOrganizatorEmitter.emit(event);
   }
 
+  addOrganizatorToSpeakers(event) {
+    this.data.speakers.push(event);
+  }
+
+  removeOrganizatorFromSpeakers(id_user) {
+    let index = -1;
+    for (let i = 0; i < this.data.speakers.length; i++) {
+      if (
+        sha1(this.data.speakers[i].id.toString()) === id_user ||
+        this.data.speakers[i].id === id_user
+      ) {
+        index = i;
+        break;
+      }
+    }
+    if (index !== -1) {
+      this.data.speakers.splice(index, 1);
+    }
+  }
+
   selectOrganizator(event) {
     // this.selectOrganizatorEmitter.emit(event);
     this.data.organizer = event.fullname;
+    this.removeOrganizatorFromSpeakers(this.data.id_user);
+    if (event) {
+      this.data.organizer = event.fullname;
+      this.addOrganizatorToSpeakers(event);
+    }
   }
 
   selectEvent(event) {
     this.selectEventEmitter.emit(event);
+  }
+
+  getAllMyConnection() {
+    this.connectionService
+      .getAllMyConnections(localStorage.getItem("id"))
+      .subscribe((data) => {
+        this.allMyConnectionSpeakers = data;
+        this.allMyConnectionListeners = data;
+        this.currentLoadData = data;
+      });
+  }
+
+  handleFilterSpeakers(value) {
+    this.allMyConnectionSpeakers = this.currentLoadData.filter(
+      (s) => s.fullname.toLowerCase().indexOf(value.toLowerCase()) !== -1
+    );
+  }
+
+  handleFilterListeners(value) {
+    this.allMyConnectionListeners = this.currentLoadData.filter(
+      (s) => s.fullname.toLowerCase().indexOf(value.toLowerCase()) !== -1
+    );
+  }
+
+  isItemSelectedSpeakers(itemText: string): boolean {
+    return this.data.speakers.some((item) => item.id === itemText);
+  }
+
+  isItemSelectedListeners(itemText: string): boolean {
+    return this.data.listeners.some((item) => item.id === itemText);
   }
 }

@@ -906,6 +906,14 @@ router.post("/updateEventData", function (req, res, next) {
             location: req.body.location,
             zip: req.body.zip,
             street: req.body.street,
+            online: req.body.online,
+            numberOfSpeakers: req.body.numberOfSpeakers,
+            numberOfListeners: req.body.numberOfListeners,
+            eventType: req.body.eventType,
+            speakers: req.body.speakers,
+            listeners: req.body.listeners,
+            chargeable: req.body.chargeable,
+            price: req.body.price
           },
         },
         function (err, res) {
@@ -924,10 +932,15 @@ router.post("/updateEventData", function (req, res, next) {
             event: req.body.event,
             comment: req.body.comment,
             organizer: req.body.organizer,
-            attendees: req.body.attendees,
+            numberOfSpeakers: req.body.numberOfSpeakers,
+            numberOfListeners: req.body.numberOfListeners,
             eventType: req.body.eventType,
             speakers: req.body.speakers,
-            listeners: req.body.listeners
+            listeners: req.body.listeners,
+            life: req.body.listeners,
+            attendees: req.body.attendees,
+            chargeable: req.body.chargeable,
+            price: req.body.price
           },
         },
         function (err, res) {
