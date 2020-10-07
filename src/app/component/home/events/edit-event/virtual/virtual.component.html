@@ -84,7 +84,7 @@
             </div>
 
             <div class="row">
-              <div class="col-sm-9 mb-2">
+              <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsOrganizer}}
@@ -104,10 +104,21 @@
               <div class="col-sm-3 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
-                    {{language.virtualEventDetailsMaximumNumber}}
+                    {{language.virtualEventDetailsMaximumNumberOfSpeakers}}
                   </label>
                   <div class="form-group">
-                    <input type="number" class="form-control" name="attendees" [(ngModel)]="data.attendees">
+                    <input type="number" class="form-control" name="speakers" [(ngModel)]="data.numberOfSpeakers">
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-sm-3 mb-2">
+                <div class="js-form-message">
+                  <label id="nameLabel" class="form-label">
+                    {{language.virtualEventDetailsMaximumNumberOfListeners}}
+                  </label>
+                  <div class="form-group">
+                    <input type="number" class="form-control" name="listeners" [(ngModel)]="data.numberOfListeners">
                   </div>
                 </div>
               </div>
@@ -175,6 +186,64 @@
                         </span></label>
                     </ng-template>
                   </kendo-multiselect>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.virtualEventDetailsLifeTitle}}</h6>
+          <p class="mb-0 mt-0 small">{{language.virtualEventDetailsLifeText}}
+          </p>
+        </div>
+        <div class="box-body p-3">
+          <div class="row">
+            <div class="col-sm-12 mb-2">
+              <div class="js-form-message">
+                <input type="checkbox" class="k-checkbox" [(ngModel)]="data.life">
+                <label class="k-checkbox-label"> {{language.virtualEventDetailsLifeQuestionCheckBox}} </label>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="data.life">
+            <div class="col-sm-6 mb-2">
+              <div class="js-form-message">
+                <label id="nameLabel" class="form-label">
+                  {{language.lifeEventDetailsMaximumNumber}}
+                </label>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="attendees" [(ngModel)]="data.attendees">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.eventChargeableTitle}}</h6>
+          <p class="mb-0 mt-0 small">{{language.eventChargeableText}}
+          </p>
+        </div>
+        <div class="box-body p-3">
+          <div class="row">
+            <div class="col-sm-12 mb-2">
+              <div class="js-form-message">
+                <input type="checkbox" class="k-checkbox" [(ngModel)]="data.chargeable">
+                <label class="k-checkbox-label"> {{language.eventChargeableQuestion}} </label>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="data.chargeable">
+            <div class="col-sm-6 mb-2">
+              <div class="js-form-message">
+                <label id="nameLabel" class="form-label">
+                  {{language.eventChargeablePrice}}
+                </label>
+                <div class="form-group">
+                  <input type="number" class="form-control" name="chargeablePrice" [(ngModel)]="data.price">
                 </div>
               </div>
             </div>

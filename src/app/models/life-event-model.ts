@@ -13,4 +13,11 @@ export class LifeEventModel {
   zip?: string;
   street?: string;
   signIn?: any[];
+  online?: boolean;
+  numberOfSpeakers?: number;
+  numberOfListeners?: number;
+  speakers: any[] = [];
+  listeners: any[] = [];
+  chargeable?: boolean;
+  price?: number;
 }

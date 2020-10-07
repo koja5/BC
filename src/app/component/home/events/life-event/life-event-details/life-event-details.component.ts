@@ -6,7 +6,7 @@ import { ConnectionService } from "src/app/services/connection.service";
 import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
 import { HelpService } from "src/app/services/help.service";
-import { EditEventService } from 'src/app/services/edit-event.service';
+import { EditEventService } from "src/app/services/edit-event.service";
 
 @Component({
   selector: "app-life-event-details",
@@ -299,6 +299,16 @@ export class LifeEventDetailsComponent implements OnInit {
         this.memberGoingWindow = true;
       }
     });
+  }
+
+  showSpeakers() {
+    this.memberGoingList = this.data.speakers;
+    this.memberGoingWindow = true;
+  }
+
+  showListeners() {
+    this.memberGoingList = this.data.listeners;
+    this.memberGoingWindow = true;
   }
 
   openProfile(id) {

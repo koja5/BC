@@ -76,6 +76,58 @@
               </table>
             </div>
           </div>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.virtualEventSpeakersTitle}}</h6>
+            </div>
+            <div class="box-body row">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.speakers">
+                <div class="our-team">
+                  <div class="pic">
+                    <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
+                  </div>
+                  <div class="content">
+                    <ul class="social">
+                      <li><a (click)="openProfile(item.id)" class="fa fa-user"></a></li>
+                    </ul>
+                    <h3 class="title">{{item.fullname}}</h3>
+                    <span class="post" *ngIf="item.profession">{{item.profession}}</span>
+                    <span class="post" *ngIf="!item.profession">{{language.feedNoProfessionInfo}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="data.speakers&&data.speakers.length === 0" class="no-speakers">
+                <span class="fa fa-microphone-slash"></span>
+                <h5>{{language.virtualEventNoSpeakers}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.virtualEventListenersTitle}}</h6>
+            </div>
+            <div class="box-body row">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.listeners">
+                <div class="our-team">
+                  <div class="pic">
+                    <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
+                  </div>
+                  <div class="content">
+                    <ul class="social">
+                      <li><a (click)="openProfile(item.id)" class="fa fa-user"></a></li>
+                    </ul>
+                    <h3 class="title">{{item.fullname}}</h3>
+                    <span class="post" *ngIf="item.profession">{{item.profession}}</span>
+                    <span class="post" *ngIf="!item.profession">{{language.feedNoProfessionInfo}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="data.listeners&&data.listeners.length === 0" class="no-speakers">
+                <span class="fa fa-headphones"></span>
+                <h5>{{language.virtualEventNoListeners}}</h5>
+              </div>
+            </div>
+          </div>
         </main>
         <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
           <div class="box mb-3 shadow-sm border rounded bg-white profile-box">
@@ -96,6 +148,12 @@
                 <p class="mb-0 text-muted"><span class="fa fa-users"></span> {{language.lifeEventDetailsMaximumNumber}}
                 </p>
                 <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.attendees}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2" *ngIf="data.price">
+                <p class="mb-0 text-muted"><span class="fa fa-money" style="color: green !important;"></span>
+                  {{language.eventChargeablePrice}}
+                </p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.price}}€</p>
               </div>
             </div>
           </div>
@@ -142,6 +200,46 @@
               <div class="col-6 number-container">
                 <h5 class="number-of-going">{{numberOfFreeSpace}}</h5>
                 <h6>{{language.lifeEventDetailsFreeSpace}}</h6>
+              </div>
+            </div>
+            <div class="box-title p-3" style="text-align: center;">
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button"
+                (click)="openInviteFriendsWindow()"> <span class="fa fa-envelope"></span>
+                {{language.lifeEventInviteFriend}} </button>
+            </div>
+          </div>
+
+          <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="data.online">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventEditLocationOnlineTitle}}</h6>
+            </div>
+            <div class="row border-bottom pt-3 pb-3">
+              <div class="col-6 number-container" (click)="showSpeakers()">
+                <div class="show-number-going">
+                  <div>
+                    <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersTotal}}"
+                      style="display: inline; color: #1a5ca0;">
+                      <span *ngIf="!data.numberOfSpeakers" class="fa fa-link"></span>
+                      <span *ngIf="data.numberOfSpeakers">{{data.numberOfSpeakers.length}}</span>
+                    </h5> /
+                    <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersGoing}}"
+                      style="display: inline; color: green;">
+                      {{data.speakers.length}}</h5>
+                  </div>
+                  <h6>{{language.lifeEventEditLocationVirtualSpeakers}}</h6>
+                </div>
+              </div>
+              <div class="col-6 number-container" (click)="showListeners()">
+                <div>
+                  <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersTotal}}"
+                    style="display: inline; color: #1a5ca0;">
+                    <span *ngIf="!data.numberOfListeners" class="fa fa-link"></span>
+                    <span *ngIf="data.numberOfListeners">{{data.numberOfListeners.length}}</span></h5> /
+                  <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersGoing}}"
+                    style="display: inline; color: green;">
+                    {{data.listeners.length}}</h5>
+                </div>
+                <h6>{{language.lifeEventEditLocationVirtualListeners}}</h6>
               </div>
             </div>
             <div class="box-title p-3" style="text-align: center;">
