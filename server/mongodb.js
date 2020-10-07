@@ -8,8 +8,8 @@ const Schema = mongo.Schema;
 // const url = "mongodb://78.47.206.131:27017/management_mongo?gssapiServiceName=mongodb";
 // const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
 // const url = "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
-const url =
-  "mongodb://clinic_node:ClinicNode#2019@localhost:27017/business_circle_mongodb?authSource=admin";
+// const url = "mongodb://clinic_node:ClinicNode#2019@localhost:27017/business_circle_mongodb?authSource=admin";
+const url = "mongodb+srv://clinic_node:1234@cluster0.54i4v.mongodb.net/test?authSource=admin&replicaSet=atlas-8om2st-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
 const mysql = require("mysql");
