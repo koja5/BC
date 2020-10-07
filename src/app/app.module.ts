@@ -25,6 +25,7 @@ import { MaintenceComponent } from './component/templates/maintence/maintence.co
 import { ImpressumComponent } from './component/templates/impressum/impressum.component';
 import { RecommendedAnswerComponent } from './component/templates/recommended-answer/recommended-answer.component';
 import { NotFoundComponent } from "./component/templates/not-found/not-found.component";
+import { SuccessComponent } from './component/templates/success/success.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { NotFoundComponent } from "./component/templates/not-found/not-found.com
     TermsComponent,
     MaintenceComponent,
     ImpressumComponent,
-    RecommendedAnswerComponent
+    RecommendedAnswerComponent,
+    SuccessComponent
   ],
   imports: [
     BrowserModule,

@@ -7,7 +7,7 @@ import "rxjs/add/operator/map";
 })
 export class EditEventService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createEventData(data) {
     return this.http.post("/api/createEventData", data).map((res) => res);
@@ -27,6 +27,14 @@ export class EditEventService {
 
   searchOrganizator(data) {
     return this.http.post("/api/searchOrganizator", data).map((res) => res);
+  }
+
+  signInVirtualParticipant(data) {
+    return this.http.post("/api/signInVirtualParticipant", data).map((res) => res);
+  }
+
+  pushNewParticipant(data) {
+    return this.http.post("/api/pushNewParticipant", data).map((res) => res);
   }
 
 }

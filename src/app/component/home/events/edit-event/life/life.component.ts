@@ -27,6 +27,7 @@ export class LifeComponent implements OnInit {
   public allMyConnectionSpeakers: any;
   public allMyConnectionListeners: any;
   public currentLoadData: any;
+  public showWhoConfirmInvite = false;
 
   constructor(
     private lifeEventService: LifeEventService,
@@ -35,7 +36,7 @@ export class LifeComponent implements OnInit {
     private helpService: HelpService,
     private editEventService: EditEventService,
     private connectionService: ConnectionService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initialization();

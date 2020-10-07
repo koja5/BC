@@ -186,6 +186,21 @@
             (click)="signIn()">
             <i class="fa fa-check-circle-o"></i> {{language.lifeEventDetailsRegisteredButton}}
           </button>
+          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual mb-3" *ngIf="registerLikeSpeaker === 1"
+            (click)="signInVirtualParticipant('speaker')">
+            <i class="fa fa-check"></i> {{language.signInLikeVirtualSpeaker}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed-virtual mb-3" *ngIf="registerLikeSpeaker === 2">
+            <i class="fa fa-check-circle-o"></i> {{language.signedInLikeVirtualSpeaker}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual-listener mb-3"
+            *ngIf="registerLikeListener === 1" (click)="signInVirtualParticipant('listener')">
+            <i class="fa fa-check"></i> {{language.signInLikeVirtualListener}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed-virtual-listener mb-3"
+            *ngIf="registerLikeListener === 2">
+            <i class="fa fa-check-circle-o"></i> {{language.signedInLikeVirtualListener}}
+          </button>
           <div class="box shadow-sm border rounded bg-white mb-3">
             <div class="box-title border-bottom p-3">
               <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsGoingWithFriends}}</h6>
@@ -214,27 +229,27 @@
               <h6 class="m-0 font-weight-bold">{{language.lifeEventEditLocationOnlineTitle}}</h6>
             </div>
             <div class="row border-bottom pt-3 pb-3">
-              <div class="col-6 number-container" (click)="showSpeakers()">
+              <div class="col-6 number-container" (click)="showSpeakersConfirm()">
                 <div class="show-number-going">
                   <div>
                     <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersTotal}}"
                       style="display: inline; color: #1a5ca0;">
                       <span *ngIf="!data.numberOfSpeakers" class="fa fa-link"></span>
-                      <span *ngIf="data.numberOfSpeakers">{{data.numberOfSpeakers.length}}</span>
+                      <span *ngIf="data.numberOfSpeakers">{{data.numberOfSpeakers}}</span>
                     </h5> /
                     <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersGoing}}"
                       style="display: inline; color: green;">
-                      {{data.speakers.length}}</h5>
+                      {{data.speakersConfirm.length}}</h5>
                   </div>
                   <h6>{{language.lifeEventEditLocationVirtualSpeakers}}</h6>
                 </div>
               </div>
-              <div class="col-6 number-container" (click)="showListeners()">
+              <div class="col-6 number-container" (click)="showListenersConfirm()">
                 <div>
                   <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersTotal}}"
                     style="display: inline; color: #1a5ca0;">
                     <span *ngIf="!data.numberOfListeners" class="fa fa-link"></span>
-                    <span *ngIf="data.numberOfListeners">{{data.numberOfListeners.length}}</span></h5> /
+                    <span *ngIf="data.numberOfListeners">{{data.numberOfListeners}}</span></h5> /
                   <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersGoing}}"
                     style="display: inline; color: green;">
                     {{data.listeners.length}}</h5>
@@ -244,7 +259,7 @@
             </div>
             <div class="box-title p-3" style="text-align: center;">
               <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button"
-                (click)="openInviteFriendsWindow()"> <span class="fa fa-envelope"></span>
+                (click)="openInviteVirtualParticipantWindow()"> <span class="fa fa-envelope"></span>
                 {{language.lifeEventInviteFriend}} </button>
             </div>
           </div>
@@ -318,6 +333,83 @@
       (click)="sendReminderForSelectedFriends()"> <span class="fa fa-envelope"></span>
       {{language.reminderFriendsForEventSendReminder}}
     </button>
+  </div>
+</kendo-window>
+
+<kendo-window [title]="language.recommendedTitle + ' ' + name" *ngIf="inviteVirtualParticipantWindow"
+  [height]="windowHeight ? windowHeight : 420" [width]="windowWidth ? windowWidth : 500"
+  (close)="inviteVirtualParticipantWindow = false">
+  <div class="container register">
+    <div class="row">
+      <div class="register-right">
+        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+          <li class="member-switch">
+            <a class="nav-link" [ngClass]="typeOfVirtualParticipant === 'speakers' ? 'active': ''"
+              (click)="typeOfVirtualParticipant = 'speakers'">{{language.inviteVirtualParticipantSpeaker}}</a>
+          </li>
+          <li class="member-switch">
+            <a class="nav-link" [ngClass]="typeOfVirtualParticipant === 'listeners' ? 'active': ''"
+              (click)="typeOfVirtualParticipant = 'listeners'">{{language.inviteVirtualParticipantListener}}</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" *ngIf="typeOfVirtualParticipant === 'speakers'"
+            style="padding-top: 25px;">
+
+            <div class="selected-form">
+              <div style="width: 100%;">
+                <kendo-combobox [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedSpeakers"
+                  [valueField]="'id'" [textField]="'fullname'"
+                  [placeholder]="language.reminderFriendsForEventSearchGoingFriends"
+                  (filterChange)="handleFilter($event)" class="friend-list" style="margin-bottom:
+                  15px;">
+                  <ng-template kendoComboBoxItemTemplate let-dataItem>
+                    <p style="height: 45px !important;">
+                      <img style="width: 40px; margin-right: 10px;" class="rounded-circle"
+                        src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                      <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                    </p>
+                  </ng-template>
+                </kendo-combobox>
+                <textarea class="form-control" [(ngModel)]="inviteVirtualParticipantWindowMessage" rows="7" name="text"
+                  placeholder="{{inviteVirtualParticipantWindowMessage}}"></textarea>
+              </div>
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" style="
+    margin-top: 7px; width: auto;" (click)="sendInviteForSelectedVirtualParticipant('speakers')">
+                {{language.inviteVirtualParticipantSpeaker}}
+              </button>
+            </div>
+          </div>
+          <div class="tab-pane fade show active" *ngIf="typeOfVirtualParticipant === 'listeners'"
+            style="padding-top: 25px;">
+            <div class="selected-form">
+              <div style="width: 100%;">
+                <kendo-combobox [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedListeners"
+                  [valueField]="'id'" [textField]="'fullname'"
+                  [placeholder]="language.reminderFriendsForEventSearchGoingFriends"
+                  (filterChange)="handleFilter($event)" class="friend-list" style="margin-bottom:
+                  15px;">
+                  <ng-template kendoComboBoxItemTemplate let-dataItem>
+                    <p style="height: 45px !important;">
+                      <img style="width: 40px; margin-right: 10px;" class="rounded-circle"
+                        src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                      <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                    </p>
+                  </ng-template>
+                </kendo-combobox>
+                <textarea class="form-control" [(ngModel)]="inviteVirtualParticipantWindowMessage" rows="7" name="text"
+                  placeholder="{{inviteVirtualParticipantWindowMessage}}"></textarea>
+              </div>
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" style="
+    margin-top: 7px; width: auto;" (click)="sendInviteForSelectedVirtualParticipant('listeners')">
+                {{language.inviteVirtualParticipantListener}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </kendo-window>
 

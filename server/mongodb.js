@@ -1054,4 +1054,81 @@ router.post("/signInForEvent", function (req, res, next) {
   });
 });
 
+router.post("/signInVirtualParticipant", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    if (req.body.type === 'speaker') {
+      dbo
+        .collection("events")
+        .updateOne(
+          { _id: ObjectId(req.body.id) },
+          { $pull: { speakers: { id: req.body.participant.id } } },
+          function (err, result) {
+            if (err) throw err;
+            dbo
+              .collection("events")
+              .updateOne(
+                { _id: ObjectId(req.body.id) },
+                { $push: { speakersConfirm: req.body.participant } },
+                function (err, result) {
+                  if (err) throw err;
+
+                  res.json(true);
+                }
+              );
+          }
+        );
+    } else {
+      dbo
+        .collection("events")
+        .updateOne(
+          { _id: ObjectId(req.body.id) },
+          { $pull: { listeners: { id: req.body.participant.id } } },
+          { $push: { listenersConfirm: req.body.participant } },
+          function (err, result) {
+            if (err) throw err;
+            res.json(true);
+          }
+        );
+    }
+  });
+});
+
+router.post("/pushNewParticipant", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    if (req.body.type === 'speakers') {
+      dbo
+        .collection("events")
+        .updateOne(
+          { _id: ObjectId(req.body.id) },
+          { $push: { speakers: req.body.participant } },
+          function (err, result) {
+            if (err) throw err;
+            const response = {
+              info: 201
+            };
+            res.json(response);
+          }
+        );
+    } else {
+      dbo
+        .collection("events")
+        .updateOne(
+          { _id: ObjectId(req.body.id) },
+          { $push: { listeners: req.body.participant } },
+          function (err, result) {
+            if (err) throw err;
+            const response = {
+              info: 201
+            };
+            res.json(response);
+          }
+        );
+    }
+  });
+});
+
 module.exports = router;

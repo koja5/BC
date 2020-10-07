@@ -1721,7 +1721,13 @@
       "lifeEventEditLocationVirtualSpeakers": {
         "type": "string"
       },
+      "virtualSpeakersConfirm": {
+        "type": "string"
+      },
       "lifeEventEditLocationVirtualListeners": {
+        "type": "string"
+      },
+      "virtualListenersConfirm": {
         "type": "string"
       },
       "lifeEventEditLocationVirtualSpeakersTotal": {
@@ -2060,6 +2066,69 @@
         "type": "string"
       },
       "chatRoomTypeMessage": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantSpeaker": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantListener": {
+        "type": "string"
+      },
+      "signInLikeVirtualSpeaker": {
+        "type": "string"
+      },
+      "signInLikeVirtualListener": {
+        "type": "string"
+      },
+      "signedInLikeVirtualSpeaker": {
+        "type": "string"
+      },
+      "signedInLikeVirtualListener": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantSpeakerForEventSubject": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantListenerForEventSubject": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventRegardsFirst": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantSpeakerForEventMessage": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantListenerForEventMessage": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventShowEventDetails": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventThanksForUsing": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventHaveQuestion": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventGenerateMail": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventCopyright": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventInviteSend": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventSearchFriends": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventSelectAllFriends": {
+        "type": "string"
+      },
+      "inviteVirtualParticipantForEventSuccessSendText": {
+        "type": "string"
+      },
+      "eventQuestionForConfirmInvite": {
         "type": "string"
       }
     }
@@ -5346,9 +5415,15 @@
             {
               "key": "lifeEventTypeCreateActiveMember"
             },
-            { "key": "lifeEventEditLocationVirtualSpeakers" },
-            { "key": "lifeEventEditLocationVirtualListeners" },
-            { "key": "lifeEventEditLocationOnlineTitle" }
+            {
+              "key": "lifeEventEditLocationVirtualSpeakers"
+            },
+            {
+              "key": "lifeEventEditLocationVirtualListeners"
+            },
+            {
+              "key": "lifeEventEditLocationOnlineTitle"
+            }
           ]
         },
         {
@@ -5359,9 +5434,15 @@
             {
               "key": "lifeEventEditLocationVirtualSpeakersTotal"
             },
-            { "key": "lifeEventEditLocationVirtualSpeakersGoing" },
-            { "key": "lifeEventEditLocationVirtualListenersTotal" },
-            { "key": "lifeEventEditLocationVirtualListenersGoing" }
+            {
+              "key": "lifeEventEditLocationVirtualSpeakersGoing"
+            },
+            {
+              "key": "lifeEventEditLocationVirtualListenersTotal"
+            },
+            {
+              "key": "lifeEventEditLocationVirtualListenersGoing"
+            }
           ]
         },
         {
@@ -5372,9 +5453,30 @@
             {
               "key": "eventChargeableTitle"
             },
-            { "key": "eventChargeableText" },
-            { "key": "eventChargeablePrice" },
-            { "key": "eventChargeableQuestion" }
+            {
+              "key": "eventChargeableText"
+            },
+            {
+              "key": "eventChargeablePrice"
+            },
+            {
+              "key": "eventQuestionForConfirmInvite"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "virtualSpeakersConfirm"
+            },
+            {
+              "key": "virtualListenersConfirm"
+            },
+            {},
+            {}
           ]
         }
       ]
@@ -5545,8 +5647,12 @@
             {
               "key": "virtualEventDetailsGoToVideoRoom"
             },
-            { "key": "virtualEventDetailsLifeTitle" },
-            { "key": "virtualEventDetailsLifeText" }
+            {
+              "key": "virtualEventDetailsLifeTitle"
+            },
+            {
+              "key": "virtualEventDetailsLifeText"
+            }
           ]
         },
         {
@@ -5557,10 +5663,18 @@
             {
               "key": "virtualEventDetailsLifeQuestionCheckBox"
             },
-            { "key": "eventChargeableTitle" },
-            { "key": "eventChargeableText" },
-            { "key": "eventChargeablePrice" },
-            { "key": "eventChargeableQuestion" }
+            {
+              "key": "eventChargeableTitle"
+            },
+            {
+              "key": "eventChargeableText"
+            },
+            {
+              "key": "eventChargeablePrice"
+            },
+            {
+              "key": "eventChargeableQuestion"
+            }
           ]
         }
       ]
@@ -5633,6 +5747,128 @@
             },
             {
               "key": "inviteFriendsForEventSuccessSendText"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "section",
+      "title": "Send invite for speakers",
+      "expandable": true,
+      "expanded": false,
+      "items": [
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "inviteVirtualParticipantSpeakerForEventSubject"
+            },
+            {
+              "key": "inviteVirtualParticipantListenerForEventSubject"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventRegardsFirst"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventShowEventDetails"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "inviteVirtualParticipantSpeakerForEventMessage",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "inviteVirtualParticipantListenerForEventMessage",
+              "type": "textarea"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "inviteVirtualParticipantForEventThanksForUsing"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventHaveQuestion"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventGenerateMail"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventCopyright"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "inviteVirtualParticipantForEventInviteSend"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventSearchFriends"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventSelectAllFriends"
+            },
+            {
+              "key": "inviteVirtualParticipantForEventSuccessSendText"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "inviteVirtualParticipantSpeaker"
+            },
+            {
+              "key": "inviteVirtualParticipantListener"
+            },
+            {
+              "key": "signInLikeVirtualListener"
+            },
+            {
+              "key": "signInLikeVirtualSpeaker"
+            }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "signedInLikeVirtualListener"
+            },
+            {
+              "key": "signedInLikeVirtualSpeaker"
+            },
+            {
+              "key": "eventWhoConfirmInvite"
             }
           ]
         }

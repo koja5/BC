@@ -6,7 +6,7 @@ import "rxjs/add/operator/map";
   providedIn: "root",
 })
 export class LifeEventService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   checkEventStatusForUser(data) {
     return this.http
@@ -20,6 +20,10 @@ export class LifeEventService {
 
   sendInviteForEvent(data) {
     return this.http.post("/api/sendInviteForEvent", data).map((res) => res);
+  }
+
+  sendInviteToVirtualParticipantForEvent(data) {
+    return this.http.post("/api/sendInviteToVirtualParticipantForEvent", data).map((res) => res);
   }
 
   sendReminderForEvent(data) {

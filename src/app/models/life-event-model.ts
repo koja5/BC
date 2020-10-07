@@ -17,7 +17,9 @@ export class LifeEventModel {
   numberOfSpeakers?: number;
   numberOfListeners?: number;
   speakers: any[] = [];
+  speakersConfirm: any[] = [];
   listeners: any[] = [];
+  listenersConfirm: any[] = [];
   chargeable?: boolean;
   price?: number;
 }

@@ -407,6 +407,59 @@ router.post("/sendInviteForEvent", function (req, res) {
   }
 });
 
+router.post("/sendInviteToVirtualParticipantForEvent", function (req, res) {
+  var confirmTemplate = fs.readFileSync(
+    "./server/templates/inviteVirtualParticipantForEvent.hjs",
+    "utf-8"
+  );
+  var compiledTemplate = hogan.compile(confirmTemplate);
+  var inviteLink =
+    linkClient + "/home/main/event/life-event-details/" + req.body.event_id;
+
+  var inviterProfile = linkClient + "/home/main/profile/" + req.body.inviter_id;
+  for (let i = 0; i < req.body.friends.length; i++) {
+    var mailOptions = {
+      from: '"BCI" info@app-production.eu',
+      to: req.body.friends[i].email,
+      subject: req.body.language.inviteVirtualParticipantForEventSubject,
+      html: compiledTemplate.render({
+        inviteVirtualParticipantForEventRegardsFirst:
+          req.body.language.inviteVirtualParticipantForEventRegardsFirst,
+        fullname: req.body.friends[i].fullname,
+        inviteVirtualParticipantForEventMessage:
+          req.body.language.inviteVirtualParticipantForEventMessage,
+        inviteLink: inviteLink,
+        inviterProvile: inviterProfile,
+        inviter_fullname: req.body.inviter_fullname,
+        inviteFriendBCITitle: req.body.language.inviteFriendBCITitle,
+        inviteVirtualParticipantForEventInviteSend:
+          req.body.language.inviteVirtualParticipantForEventInviteSend,
+        inviteVirtualParticipantForEventShowEventDetails:
+          req.body.language.inviteVirtualParticipantForEventShowEventDetails,
+        inviteVirtualParticipantForEventThanksForUsing:
+          req.body.language.inviteVirtualParticipantForEventThanksForUsing,
+        inviteVirtualParticipantForEventHaveQuestion:
+          req.body.language.inviteVirtualParticipantForEventHaveQuestion,
+        inviteVirtualParticipantForEventGenerateMail:
+          req.body.language.inviteVirtualParticipantForEventGenerateMail,
+        inviteVirtualParticipantForEventCopyright:
+          req.body.language.inviteVirtualParticipantForEventCopyright,
+      }),
+    };
+
+    smtpTransport.sendMail(mailOptions, function (error, response) {
+      console.log(response);
+      if (error) {
+        console.log(error);
+        res.end("error");
+      } else {
+        console.log("Message sent: " + response.message);
+        res.end("sent");
+      }
+    });
+  }
+});
+
 router.post("/sendReminderForEvent", function (req, res) {
   var confirmTemplate = fs.readFileSync(
     "./server/templates/reminderFriendsForEvent.hjs",

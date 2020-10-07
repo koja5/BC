@@ -9,8 +9,10 @@ export class VirtualEventModel {
   numberOfSpeakers?: string;
   numberOfListeners?: string;
   eventType?: number;
-  spikers?: any[] = [];
-  listeners?: any[] = [];
+  speakers: any[] = [];
+  speakersConfirm: any[] = [];
+  listeners: any[] = [];
+  listenersConfirm: any[] = [];
   life?: boolean;
   chargeable?: boolean;
   price?: number;

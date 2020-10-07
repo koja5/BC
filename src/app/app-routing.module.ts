@@ -9,6 +9,7 @@ import { TermsComponent } from './component/templates/terms/terms.component';
 import { MaintenceComponent } from './component/templates/maintence/maintence.component';
 import { ImpressumComponent } from './component/templates/impressum/impressum.component';
 import { RecommendedAnswerComponent } from './component/templates/recommended-answer/recommended-answer.component';
+import { SuccessComponent } from './component/templates/success/success.component';
 
 const routes: Routes = [
   {
@@ -45,6 +46,10 @@ const routes: Routes = [
   {
     path: 'recommended-answer',
     component: RecommendedAnswerComponent
+  },
+  {
+    path: 'success',
+    component: SuccessComponent
   },
   {
     path: "**",

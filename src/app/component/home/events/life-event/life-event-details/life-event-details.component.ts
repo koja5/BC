@@ -7,6 +7,7 @@ import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
 import { HelpService } from "src/app/services/help.service";
 import { EditEventService } from "src/app/services/edit-event.service";
+import { type } from 'os';
 
 @Component({
   selector: "app-life-event-details",
@@ -31,6 +32,13 @@ export class LifeEventDetailsComponent implements OnInit {
   public memberGoingList: any;
   public reminderFriendsWindow = false;
   public selectedReminderFriends: any;
+  public inviteVirtualParticipantWindow = false;
+  public inviteVirtualParticipantWindowMessage: any;
+  public typeOfVirtualParticipant = 'speakers';
+  public selectedSpeakers: any;
+  public selectedListeners: any;
+  public registerLikeSpeaker = 0;
+  public registerLikeListener = 0;
 
   constructor(
     private route: ActivatedRoute,
@@ -41,7 +49,7 @@ export class LifeEventDetailsComponent implements OnInit {
     private toastr: ToastrService,
     private helpService: HelpService,
     private editEventService: EditEventService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.language = JSON.parse(localStorage.getItem("language"));
@@ -60,6 +68,7 @@ export class LifeEventDetailsComponent implements OnInit {
         });
         this.checkFreeSpace();
         this.getOrganizatorProfile(data["id_user"]);
+        this.checkVirtualParticipant(data);
       });
     }
   }
@@ -136,6 +145,21 @@ export class LifeEventDetailsComponent implements OnInit {
       });
   }
 
+  openInviteVirtualParticipantWindow() {
+    this.inviteVirtualParticipantWindow = true;
+    if (this.typeOfVirtualParticipant === 'speakers') {
+      this.inviteVirtualParticipantWindowMessage = this.language.inviteVirtualParticipantSpeakerForEventMessage;
+    } else {
+      this.inviteVirtualParticipantWindowMessage = this.language.inviteVirtualParticipantListenerForEventMessage;
+    }
+    this.connectionService
+      .getAllMyConnections(localStorage.getItem("id"))
+      .subscribe((data) => {
+        this.allMyConnection = data;
+        this.currentLoadData = data;
+      });
+  }
+
   isItemSelected(itemText: string): boolean {
     return this.selectedInviteFriends.some((item) => item.id === itemText);
   }
@@ -155,7 +179,7 @@ export class LifeEventDetailsComponent implements OnInit {
       inviter_id: localStorage.getItem("id"),
       inviter_fullname: JSON.parse(localStorage.getItem("user"))["fullname"],
       event_id: this.id,
-      friends: this.packFriendList(this.selectedInviteFriends),
+      friends: this.packSelectedMemberToList(this.selectedInviteFriends),
       language: this.packLanguageForInvite(),
     };
 
@@ -171,6 +195,78 @@ export class LifeEventDetailsComponent implements OnInit {
       }
     );
     this.inviteFriendWindow = false;
+  }
+
+  sendInviteForSelectedVirtualParticipant(type) {
+    let customMessage = {};
+    if (type === 'speakers') {
+      customMessage = {
+        subject: this.language.inviteVirtualParticipantSpeakerForEventSubject,
+        message: this.language.inviteVirtualParticipantSpeakerForEventMessage
+      };
+    } else {
+      customMessage = {
+        subject: this.language.inviteVirtualParticipantListenerForEventSubject,
+        message: this.language.inviteVirtualParticipantlistenerForEventMessage
+      }
+    }
+    const data = {
+      inviter_id: localStorage.getItem("id"),
+      inviter_fullname: JSON.parse(localStorage.getItem("user"))["fullname"],
+      event_id: this.id,
+      friends: this.packSelectedMemberToList(type === 'speakers' ? this.selectedSpeakers : this.selectedListeners),
+      language: this.packLanguageForVirtualParticipant(customMessage),
+    };
+
+    if (data.friends) {
+      this.service.sendInviteToVirtualParticipantForEvent(data).subscribe((data) => {
+        console.log(data);
+      });
+      this.toastr.success(
+        this.language.inviteFriendsForEventSuccessSendText,
+        "",
+        {
+          timeOut: 7000,
+          positionClass: "toast-bottom-right",
+        }
+      );
+
+      if (this.isInAList(type, type === 'speakers' ? this.selectedSpeakers : this.selectedListeners)) {
+        const data = {
+          id: this.id,
+          type: type,
+          participant: type === 'speakers' ? this.selectedSpeakers : this.selectedListeners
+        };
+
+        this.editEventService.pushNewParticipant(data).subscribe(
+          data => {
+            console.log(data);
+          }
+        );
+      }
+
+    } else {
+      this.helpService.createErrorMessage();
+    }
+    this.inviteFriendWindow = false;
+  }
+
+  isInAList(type, participant) {
+    if (type === 'speakers') {
+      for (let i = 0; i < this.data.speakers.length; i++) {
+        if (this.data.speakers[i].id === participant.id) {
+          return false;
+        }
+      }
+    } else {
+      for (let i = 0; i < this.data.listeners.length; i++) {
+        if (this.data.listeners[i].id === participant.id) {
+          return false;
+        }
+      }
+    }
+
+    return true;
   }
 
   packLanguageForInvite() {
@@ -194,12 +290,33 @@ export class LifeEventDetailsComponent implements OnInit {
     };
   }
 
+  packLanguageForVirtualParticipant(customMessage) {
+    return {
+      inviteVirtualParticipantForEventRegardsFirst: this.language
+        .inviteVirtualParticipantForEventRegardsFirst,
+      inviteVirtualParticipantForEventMessage: customMessage.message,
+      inviteVirtualParticipantForEventShowEventDetails: this.language
+        .inviteVirtualParticipantForEventShowEventDetails,
+      inviteVirtualParticipantForEventThanksForUsing: this.language
+        .inviteVirtualParticipantForEventThanksForUsing,
+      inviteVirtualParticipantForEventHaveQuestion: this.language
+        .inviteVirtualParticipantForEventHaveQuestion,
+      inviteVirtualParticipantForEventGenerateMail: this.language
+        .inviteVirtualParticipantForEventGenerateMail,
+      inviteVirtualParticipantForEventCopyright: this.language
+        .inviteVirtualParticipantForEventCopyright,
+      inviteVirtualParticipantForEventSubject: customMessage.subject,
+      inviteVirtualParticipantForEventInviteSend: this.language
+        .inviteVirtualParticipantForEventInviteSend,
+    };
+  }
+
   sendReminderForSelectedFriends() {
     const data = {
       inviter_id: localStorage.getItem("id"),
       reminder_fullname: JSON.parse(localStorage.getItem("user"))["fullname"],
       event_id: this.id,
-      friends: this.packFriendList(this.selectedReminderFriends),
+      friends: this.packSelectedMemberToList(this.selectedReminderFriends),
       language: this.packLanguageForReminder(),
     };
 
@@ -239,7 +356,7 @@ export class LifeEventDetailsComponent implements OnInit {
     };
   }
 
-  packFriendList(data) {
+  packSelectedMemberToList(data) {
     let list = [];
     for (let i = 0; i < data.length; i++) {
       const item = {
@@ -301,13 +418,13 @@ export class LifeEventDetailsComponent implements OnInit {
     });
   }
 
-  showSpeakers() {
-    this.memberGoingList = this.data.speakers;
+  showSpeakersConfirm() {
+    this.memberGoingList = this.data.speakersConfirm;
     this.memberGoingWindow = true;
   }
 
-  showListeners() {
-    this.memberGoingList = this.data.listeners;
+  showListenersConfirm() {
+    this.memberGoingList = this.data.listenersConfirm;
     this.memberGoingWindow = true;
   }
 
@@ -324,6 +441,58 @@ export class LifeEventDetailsComponent implements OnInit {
         this.selectedReminderFriends = data;
         this.reminderFriendsWindow = true;
       }
+    });
+  }
+
+  checkVirtualParticipant(data) {
+    for (let i = 0; i < data.speakers.length; i++) {
+      if (sha1(data.speakers[i].id.toString()) === localStorage.getItem("id")) {
+        this.registerLikeSpeaker = 1;
+        break;
+      }
+    }
+    if (this.registerLikeSpeaker !== 1) {
+      for (let i = 0; i < data.speakersConfirm.length; i++) {
+        if (sha1(data.speakersConfirm[i].id.toString()) === localStorage.getItem("id")) {
+          this.registerLikeSpeaker = 2;
+          break;
+        }
+      }
+      if (this.registerLikeSpeaker !== 1 && this.registerLikeSpeaker !== 2) {
+        for (let i = 0; i < data.listeners.length; i++) {
+          if (sha1(data.listeners[i].id.toString()) === localStorage.getItem("id")) {
+            this.registerLikeListener = 1;
+            break;
+          }
+        }
+        if (this.registerLikeListener !== 1) {
+          for (let i = 0; i < data.listenersConfirm.length; i++) {
+            if (sha1(data.listenersConfirm[i].id.toString()) === localStorage.getItem("id")) {
+              this.registerLikeListener = 2;
+              break;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  signInVirtualParticipant(type) {
+    this.profileService.getUserInfoSHA1(localStorage.getItem("id")).subscribe((user) => {
+      const data = {
+        id: this.id,
+        type: type,
+        participant: user[0]
+      };
+      this.editEventService.signInVirtualParticipant(data).subscribe(
+        data => {
+          if (data) {
+            this.helpService.updateSuccessMessage();
+          } else {
+            this.helpService.updateErrorMessage();
+          }
+        }
+      )
     });
   }
 }
