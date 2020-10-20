@@ -9,7 +9,8 @@ const Schema = mongo.Schema;
 // const url = "mongodb://127.0.0.1:27017/?gssapiServiceName=mongodb";
 // const url = "mongodb://admin:1234@localhost:27017/business_circle_mongodb?authSource=admin";
 // const url = "mongodb://clinic_node:ClinicNode#2019@localhost:27017/business_circle_mongodb?authSource=admin";
-const url = "mongodb+srv://clinic_node:1234@cluster0.54i4v.mongodb.net/test?authSource=admin&replicaSet=atlas-8om2st-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true";
+const url =
+  "mongodb+srv://clinic_node:1234@cluster0.54i4v.mongodb.net/test?authSource=admin&replicaSet=atlas-8om2st-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community&ssl=true";
 const database_name = "business_circle_mongodb";
 var ObjectId = require("mongodb").ObjectID;
 const mysql = require("mysql");
@@ -913,7 +914,7 @@ router.post("/updateEventData", function (req, res, next) {
             speakers: req.body.speakers,
             listeners: req.body.listeners,
             chargeable: req.body.chargeable,
-            price: req.body.price
+            price: req.body.price,
           },
         },
         function (err, res) {
@@ -940,7 +941,7 @@ router.post("/updateEventData", function (req, res, next) {
             life: req.body.listeners,
             attendees: req.body.attendees,
             chargeable: req.body.chargeable,
-            price: req.body.price
+            price: req.body.price,
           },
         },
         function (err, res) {
@@ -1058,7 +1059,7 @@ router.post("/signInVirtualParticipant", function (req, res, next) {
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    if (req.body.type === 'speaker') {
+    if (req.body.type === "speaker") {
       dbo
         .collection("events")
         .updateOne(
@@ -1088,7 +1089,17 @@ router.post("/signInVirtualParticipant", function (req, res, next) {
           { $push: { listenersConfirm: req.body.participant } },
           function (err, result) {
             if (err) throw err;
-            res.json(true);
+            dbo
+              .collection("events")
+              .updateOne(
+                { _id: ObjectId(req.body.id) },
+                { $push: { listenersConfirm: req.body.participant } },
+                function (err, result) {
+                  if (err) throw err;
+
+                  res.json(true);
+                }
+              );
           }
         );
     }
@@ -1099,7 +1110,7 @@ router.post("/pushNewParticipant", function (req, res, next) {
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
-    if (req.body.type === 'speakers') {
+    if (req.body.type === "speakers") {
       dbo
         .collection("events")
         .updateOne(
@@ -1108,7 +1119,7 @@ router.post("/pushNewParticipant", function (req, res, next) {
           function (err, result) {
             if (err) throw err;
             const response = {
-              info: 201
+              info: 201,
             };
             res.json(response);
           }
@@ -1122,7 +1133,7 @@ router.post("/pushNewParticipant", function (req, res, next) {
           function (err, result) {
             if (err) throw err;
             const response = {
-              info: 201
+              info: 201,
             };
             res.json(response);
           }

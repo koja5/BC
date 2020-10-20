@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { HelpService } from "src/app/services/help.service";
 import { EditEventService } from "src/app/services/edit-event.service";
 import { ConnectionService } from "src/app/services/connection.service";
+import { PrepareMailService } from "src/app/services/help-services/prepare-mail.service";
 
 @Component({
   selector: "app-life",
@@ -30,13 +31,13 @@ export class LifeComponent implements OnInit {
   public showWhoConfirmInvite = false;
 
   constructor(
-    private lifeEventService: LifeEventService,
     private router: Router,
     private profile: ProfileService,
     private helpService: HelpService,
     private editEventService: EditEventService,
-    private connectionService: ConnectionService
-  ) { }
+    private connectionService: ConnectionService,
+    private prepareMail: PrepareMailService
+  ) {}
 
   ngOnInit() {
     this.initialization();
@@ -79,6 +80,7 @@ export class LifeComponent implements OnInit {
           this.router.navigate([
             "/home/main/event/life-event-details/" + this.id,
           ]);
+          this.sendMailsToVirtualParticipant();
         } else {
           this.helpService.updateErrorMessage();
         }
@@ -96,10 +98,35 @@ export class LifeComponent implements OnInit {
           this.router.navigate([
             "/home/main/event/life-event-details/" + data["id"],
           ]);
+          this.sendMailsToVirtualParticipant();
         } else {
           this.helpService.createErrorMessage();
         }
       });
+    }
+  }
+
+  sendMailsToVirtualParticipant() {
+    if (this.data.speakers && this.data.speakers.length !== 0) {
+      this.prepareMail.sendInviteForSelectedVirtualParticipant(
+        "speakers",
+        this.language,
+        this.id,
+        this.data.speakers,
+        this.data.listeners,
+        this.currentLoadData
+      );
+    }
+
+    if (this.data.listeners && this.data.listeners.length !== 0) {
+      this.prepareMail.sendInviteForSelectedVirtualParticipant(
+        "listeners",
+        this.language,
+        this.id,
+        this.data.speakers,
+        this.data.listeners,
+        this.currentLoadData
+      );
     }
   }
 

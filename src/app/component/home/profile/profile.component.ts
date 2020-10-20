@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
   public windowWidth: any;
   public owner = false;
   public url = "http://localhost:3000/upload";
-  // public url = "http://78.47.206.131:" + location.port + "/upload";
+  // public url = "https://78.47.206.131:" + location.port + "/upload";
   public allExperience: any;
   public allEducation: any;
   public lookingOffer: any;

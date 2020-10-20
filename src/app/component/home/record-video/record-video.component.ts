@@ -25,6 +25,7 @@ export class RecordVideoComponent implements OnInit {
   public recorder: any;
   public multipleWebcamsAvailable = false;
   public previewVideo = true;
+  public language: any;
   @ViewChild("videoPreview")
   video: ElementRef<HTMLVideoElement>;
 
@@ -35,6 +36,7 @@ export class RecordVideoComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.language = JSON.parse(localStorage.getItem("language"));
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;

@@ -66,8 +66,8 @@ export class CustomGridComponent implements OnInit {
   public selectedUser: any;
   public imagePath = "defaultUser";
   public loading = true;
-  // public uploadSaveUrl = 'http://localhost:3000/api/uploadImage'; // should represent an actual API endpoint
-  public uploadSaveUrl = "http://78.47.206.131:8080/uploadImage";
+  public uploadSaveUrl = 'http://localhost:3000/api/uploadImage'; // should represent an actual API endpoint
+  // public uploadSaveUrl = "https://78.47.206.131:8080/uploadImage";
   public uploadRemoveUrl = "removeUrl"; // should represent an actual API endpoint
   // private spread: GC.Spread.Sheets.Workbook;
   // private excelIO;

@@ -2083,6 +2083,9 @@
       "signedInLikeVirtualSpeaker": {
         "type": "string"
       },
+      "eventWhoConfirmInvite": {
+        "type": "string"
+      },
       "signedInLikeVirtualListener": {
         "type": "string"
       },

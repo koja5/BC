@@ -8,6 +8,8 @@ import {
 } from "@angular/platform-browser";
 import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
+import { ProfileService } from "./profile.service";
+import { EditEventService } from "./edit-event.service";
 
 @Injectable({
   providedIn: "root",
@@ -17,7 +19,9 @@ export class HelpService {
 
   constructor(
     public domSanitizer: DomSanitizer,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private profileService: ProfileService,
+    private editEventService: EditEventService
   ) {
     this.language = JSON.parse(localStorage.getItem("language"));
   }
@@ -232,7 +236,153 @@ export class HelpService {
     );
   }
 
+  sendMailSuccess() {
+    this.toastr.success(
+      this.language.inviteFriendsForEventSuccessSendText,
+      "",
+      {
+        timeOut: 7000,
+        positionClass: "toast-bottom-right",
+      }
+    );
+  }
+
   convertToSHA(data) {
     return sha1(data.toString());
+  }
+
+  isSelectedAllFriends(selectedInviteFriends, currentLoadData) {
+    if (
+      selectedInviteFriends &&
+      currentLoadData &&
+      selectedInviteFriends.length !== currentLoadData.length
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  isSelectedAllReminderFriends(selectedReminderFriends, currentLoadData) {
+    if (
+      selectedReminderFriends &&
+      currentLoadData &&
+      selectedReminderFriends.length !== currentLoadData.length
+    ) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  packSelectedMemberToList(data) {
+    let list = [];
+    for (let i = 0; i < data.length; i++) {
+      const item = {
+        fullname: data[i].fullname,
+        email: data[i].email,
+      };
+      list.push(item);
+    }
+    return list;
+  }
+
+  isInAList(propertyArray, data, participant, property) {
+    if (data.hasOwnProperty(propertyArray)) {
+      for (let i = 0; i < data[propertyArray].length; i++) {
+        if (data[propertyArray][i][property] === participant[property]) {
+          return false;
+        }
+      }
+    } else {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i][property] === participant[property]) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
+  checkVirtualParticipant(data, registerLikeSpeaker, registerLikeListener) {
+    for (let i = 0; i < data.speakers.length; i++) {
+      if (sha1(data.speakers[i].id.toString()) === localStorage.getItem("id")) {
+        return {
+          type: "speaker",
+          value: 1,
+        };
+      }
+    }
+    if (registerLikeSpeaker !== 1) {
+      for (let i = 0; i < data.speakersConfirm.length; i++) {
+        if (
+          sha1(data.speakersConfirm[i].id.toString()) ===
+          localStorage.getItem("id")
+        ) {
+          return {
+            type: "speaker",
+            value: 2,
+          };
+        }
+      }
+      if (registerLikeSpeaker !== 1 && registerLikeSpeaker !== 2) {
+        for (let i = 0; i < data.listeners.length; i++) {
+          if (
+            sha1(data.listeners[i].id.toString()) === localStorage.getItem("id")
+          ) {
+            return {
+              type: "listener",
+              value: 1,
+            };
+          }
+        }
+        if (registerLikeListener !== 1) {
+          for (let i = 0; i < data.listenersConfirm.length; i++) {
+            if (
+              sha1(data.listenersConfirm[i].id.toString()) ===
+              localStorage.getItem("id")
+            ) {
+              return {
+                type: "listener",
+                value: 2,
+              };
+            }
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  signInVirtualParticipant(type, id) {
+    this.profileService.getUserInfoSHA1(localStorage.getItem("id")).subscribe(
+      (user) => {
+        const data = {
+          id: id,
+          type: type,
+          participant: user[0],
+        };
+        this.editEventService.signInVirtualParticipant(data).subscribe(
+          (data) => {
+            if (data) {
+              this.updateSuccessMessage();
+              return 2;
+            } else {
+              this.updateErrorMessage();
+              return 0;
+            }
+          },
+          (error) => {
+            console.log(error);
+            return 0;
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+        return 0;
+      }
+    );
+    return 0;
   }
 }

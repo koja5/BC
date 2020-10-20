@@ -18,18 +18,6 @@ export class LifeEventService {
     return this.http.post("/api/signInForEvent", data).map((res) => res);
   }
 
-  sendInviteForEvent(data) {
-    return this.http.post("/api/sendInviteForEvent", data).map((res) => res);
-  }
-
-  sendInviteToVirtualParticipantForEvent(data) {
-    return this.http.post("/api/sendInviteToVirtualParticipantForEvent", data).map((res) => res);
-  }
-
-  sendReminderForEvent(data) {
-    return this.http.post("/api/sendReminderForEvent", data).map((res) => res);
-  }
-
   getSignInForLifeEvent(id) {
     return this.http.get("/api/getSignInForLifeEvent/" + id).map((res) => res);
   }

@@ -27,10 +27,12 @@ export class TakeCameraComponent implements OnInit {
   >();
   public errors: WebcamInitError[] = [];
   public webcamImage: WebcamImage = null;
+  public language: any;
 
   constructor() {}
 
   ngOnInit() {
+    this.language = JSON.parse(localStorage.getItem("language"));
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;

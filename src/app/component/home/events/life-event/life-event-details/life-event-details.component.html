@@ -252,7 +252,7 @@
                     <span *ngIf="data.numberOfListeners">{{data.numberOfListeners}}</span></h5> /
                   <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersGoing}}"
                     style="display: inline; color: green;">
-                    {{data.listeners.length}}</h5>
+                    {{data.listenersConfirm.length}}</h5>
                 </div>
                 <h6>{{language.lifeEventEditLocationVirtualListeners}}</h6>
               </div>
@@ -299,7 +299,7 @@
     </kendo-multiselect>
 
     <div class="full-width mt-3">
-      <input type="checkbox" class="k-checkbox" (click)="selectAllMyFriends()" [checked]="isSelectedAllFriends()">
+      <input type="checkbox" class="k-checkbox" (click)="selectAllMyFriends()" [checked]="helpService.isSelectedAllFriends(selectedInviteFriends, currentLoadData)">
       <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
     </div>
     <button class="btn btn-outline-primary btn-sm pl-4 pr-4 mt-5 margin-auto" type="button"
@@ -326,7 +326,7 @@
 
     <div class="full-width mt-3">
       <input type="checkbox" class="k-checkbox" (click)="selectAllMyReminderFriends()"
-        [checked]="isSelectedAllReminderFriends()">
+        [checked]="helpService.isSelectedAllReminderFriends(selectedReminderFriends, currentLoadData)">
       <label class="pl-2">{{language.reminderFriendsForEventSelectAllGoingFriends}}</label>
     </div>
     <button class="btn btn-outline-primary btn-sm pl-4 pr-4 mt-5 margin-auto" type="button"
