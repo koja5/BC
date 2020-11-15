@@ -183,7 +183,8 @@ export class VirtualEventDetailsComponent implements OnInit {
   }
 
   goToRoom() {
-    this.router.navigate(["/home/main/room/" + this.id]);
+    // this.router.navigate(["/home/main/room/" + this.id, "_blank"]);
+    window.open("/home/main/room/" + this.id, '_blank');
   }
 
   setReminder() {

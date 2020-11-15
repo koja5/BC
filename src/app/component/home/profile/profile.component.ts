@@ -49,8 +49,8 @@ export class ProfileComponent implements OnInit {
   public windowHeight: any;
   public windowWidth: any;
   public owner = false;
-  public url = "http://localhost:3000/upload";
-  // public url = "https://78.47.206.131:" + location.port + "/upload";
+  // public url = "http://localhost:3000/upload";
+  public url = "https://116.203.85.82:" + location.port + "/upload";
   public allExperience: any;
   public allEducation: any;
   public lookingOffer: any;

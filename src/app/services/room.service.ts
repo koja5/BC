@@ -28,13 +28,6 @@ export class RoomService {
     this.socket = io.connect("http://localhost:3000");
   }
 
-  private listen(channel: string, fn: Function) {
-    this.socket.on(channel, fn);
-  }
-
-  private send(chanel: string, message: SignalMessage) {
-    this.socket.emit(chanel, message);
-  }
 
   private sendGlobal(chanel: string, message: any) {
     this.socket.emit(chanel, message);
@@ -42,6 +35,14 @@ export class RoomService {
 
   private listenGlobal(channel: string, data: any) {
     this.socket.on(channel, data);
+  }
+
+  private listen(channel: string, fn: Function) {
+    this.socket.on(channel, fn);
+  }
+
+  private send(chanel: string, message: SignalMessage) {
+    this.socket.emit(chanel, message);
   }
 
   onConnect(fn: () => void) {

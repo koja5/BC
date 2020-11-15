@@ -17,9 +17,9 @@
                 {{data.time | date: 'HH:mm'}}</p>
             </div>
             <div class="profile-right ml-auto">
-              <button type="button" class="btn btn-success mr-1" (click)="goToRoom()">
+              <a class="btn btn-success mr-1" target="_blank" (click)="goToRoom()">
                 &nbsp; <span class="fa fa-object-group"></span> {{language.virtualEventDetailsGoToVideoRoom}} &nbsp;
-              </button>
+              </a>
               <button *ngIf="owner" type="button" class="btn btn-gold mr-1" (click)="setReminder()">
                 &nbsp; <span class="fa fa-bell-o"></span> {{language.reminderFriendsForEventSendReminder}} &nbsp;
               </button>

@@ -57,8 +57,8 @@ export class FeedComponent implements OnInit {
   public showCropper = false;
   public typeOfUpload: any;
   public maxFileImageSize = 1 * 1024 * 1024;
-  public url = "http://localhost:3000/upload";
-  // public url = "https://78.47.206.131:" + location.port + "/upload";
+  // public url = "http://localhost:3000/upload";
+  public url = "https://116.203.85.82:" + location.port + "/upload";
   public uploader: FileUploader;
   public croppedImage: any = "";
   public loadImage = false;

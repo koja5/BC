@@ -16,6 +16,15 @@ const socketIO = require("socket.io");
 const multer = require("multer");
 const mysql = require("mysql");
 const sha1 = require("sha1");
+/*const proxy = require('redbird')({
+  port: 80,
+  secure: false,
+  ssl: {
+      port: 443,
+      key: "./cert/cert_key.key",
+      cert: "./cert/cert_crt.crt",
+  }
+});*/
 
 var connection = mysql.createPool({
   host: "185.178.193.141",
@@ -23,6 +32,8 @@ var connection = mysql.createPool({
   password: "jBa9$6v7",
   database: "business_circle",
 });
+
+// proxy.register("bc-inter.net", "http:/localhost:3000");
 
 app.use(compression());
 //for upload image
@@ -312,19 +323,27 @@ io.on("connection", (socket) => {
   });
 
   socket.on("startConnection", (payload) => {
-    console.log("Start Connection: " + payload.roomName);
-    // socket.broadcast.emit("startConnection", { listenId: payload.listenId });
-    io.to(payload.roomName).emit("sendEventToSpeakers", {
-      from: payload.from
+    console.log("getStartConnection: " + payload.roomName);
+    // socket.broadcast.emit("signalToListener", { listenId: payload.listenId });
+
+    socket.broadcast.emit("getStartConnection", { listenId: payload.listenId });
+  });
+
+  socket.on("sendReceiveConnection", (payload) => {
+    console.log("getReceiveConnection: " + payload.listenId);
+    // socket.broadcast.emit("signalToListener", { listenId: payload.listenId });
+    socket.broadcast.emit("getReceiveConnection", {
+      signal: payload.signal,
+      listenId: payload.listenId,
     });
   });
 
   socket.on("sendEventToListeners", (payload) => {
     io.on(payload.to).emit("getEventFromSpeakers", {
       signal: payload.signal,
-      from: payload.from
-    })
-  })
+      from: payload.from,
+    });
+  });
 
   socket.on("callFirst", (payload) => {
     console.log("Listen ID is: " + payload.listenId);
@@ -365,9 +384,9 @@ io.on("connection", (socket) => {
     console.log("Send answer to initial " + payload.to);
     io.to(payload.to).emit("getAnswerToInitial", {
       signal: payload.signal,
-      from: payload.from
-    })
-  })
+      from: payload.from,
+    });
+  });
 
   socket.on("answer_signal", (payload) => {
     console.log("answer signal " + payload.callerId);
