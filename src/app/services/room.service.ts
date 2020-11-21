@@ -7,24 +7,19 @@ import { SignalData } from "simple-peer";
 })
 export class RoomService {
   private socket: SocketIOClient.Socket;
-  private link =
-    window.location.protocol +
-    "//" +
-    window.location.hostname +
-    ":" +
-    window.location.port;
+  public url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
 
   get socketId() {
     return this.socket.id;
   }
 
   constructor() {
-    // this.socket = io.connect(this.link);
+    // this.socket = io(this.url);
     this.socket = io.connect("http://localhost:3000");
   }
 
   connect() {
-    // this.socket = io.connect(this.link);
+    // this.socket = io(this.url);
     this.socket = io.connect("http://localhost:3000");
   }
 

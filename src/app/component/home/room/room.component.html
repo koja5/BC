@@ -2,10 +2,7 @@
   <div class="main-left">
     <div class="main-videos">
       <div id="video-grid">
-        <!-- <video class="border border-danger w-100 h-100" #myVideo muted>
-        </video> -->
-        <video *ngFor="let item of otherStream" [srcObject]="item" autoplay class="embed-responsive-item"
-          style="width: 50%;"></video>
+        <video *ngFor="let item of otherStream" [srcObject]="item" autoplay class="embed-responsive-item col-6"></video>
       </div>
     </div>
     <div class="main-controls">
@@ -70,3 +67,6 @@
     </kendo-dialog-actions>
   </kendo-dialog>
 </div>
+
+<!-- <video *ngFor="let item of otherStream" [srcObject]="item" autoplay class="embed-responsive-item"
+  style="width: 50%;"></video> -->

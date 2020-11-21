@@ -43,12 +43,12 @@ app.use(function (req, res, next) {
     "Access-Control-Allow-Methods",
     "POST, PUT, OPTIONS, DELETE, GET"
   );
-  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
+  res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
     "Origin, X-Requested-With, Content-Type, Accept"
   );
-  res.header("Access-Control-Allow-Credentials", true);
+  // res.header("Access-Control-Allow-Credentials", true);
   next();
 });
 
@@ -233,14 +233,108 @@ app.set("port", port);
 /**
  * Create HTTP server.
  */
+
+/*let o = {
+  format: "urls",
+};
+
+let bodyString = JSON.stringify(o);
+let https = require("https");
+
+let options = {
+  host: "global.xirsys.net",
+  path: "/_turn/MyFirstApp",
+  method: "PUT",
+  headers: {
+    Authorization:
+      "Basic " +
+      Buffer.from("koja:c932da5a-24cc-11eb-9d1e-0242ac150002").toString(
+        "base64"
+      ),
+    "Content-Type": "application/json",
+    "Content-Length": bodyString.length,
+  },
+};
+let httpreq = https.request(options, function (httpres) {
+  let str = "";
+  httpres.on("data", function (data) {
+    str += data;
+  });
+  httpres.on("error", function (e) {
+    console.log("error: ", e);
+  });
+  httpres.on("end", function () {
+    console.log("ICE List: ", str);
+  });
+});
+httpreq.on("error", function (e) {
+  console.log("request error: ", e);
+});
+httpreq.end();*/
+
 const server = http.createServer(app);
 
 /* SOCKET START */
 
 var io = require("socket.io").listen(server);
+var peers = {};
+io.on("connect", (socket) => {
+  console.log("a client is connected");
+  // console.log(socket);
 
-io.on("connection", (socket) => {
-  console.log("new connection made.");
+  peers[socket.id] = socket;
+
+  // Asking all other clients to setup the peer connection receiver
+  for (let id in peers) {
+    if (id === socket.id) continue;
+    console.log("sending init receive to " + socket.id);
+    peers[id].emit("initReceive", socket.id);
+  }
+
+  /**
+   * relay a peerconnection signal to a specific socket
+   */
+  socket.on("signal", (data) => {
+    console.log("sending signal from " + socket.id + " to ", data);
+    if (!peers[data.socket_id]) return;
+    peers[data.socket_id].emit("signal", {
+      socket_id: socket.id,
+      signal: data.signal,
+    });
+  });
+
+  /**
+   * remove the disconnected peer connection from all other connected clients
+   */
+  /*socket.on("disconnect", () => {
+    console.log("socket disconnected " + socket.id);
+    socket.broadcast.emit("removePeer", socket.id);
+    delete peers[socket.id];
+  });*/
+
+  /**
+   * Send message to client to initiate a connection
+   * The sender has already setup a peer connection receiver
+   */
+  socket.on("initSend", (init_socket_id) => {
+    console.log("INIT SEND by " + socket.id + " for " + init_socket_id);
+    console.log(peers);
+    peers[init_socket_id].emit("initSend1", socket.id);
+  });
+
+  /* SEND AND RECEIVE MESSAGE */
+
+  socket.on("room_join_request", (payload) => {
+    socket.join(payload.roomName, (err) => {
+      if (!err) {
+        io.in(payload.roomName).clients((err, clients) => {
+          if (!err) {
+            io.in(payload.roomName).emit("room_users", clients);
+          }
+        });
+      }
+    });
+  });
 
   socket.on("join", function (data) {
     //joining
@@ -282,128 +376,12 @@ io.on("connection", (socket) => {
     });
   });
 
-  /* ROOM */
-
-  socket.on("room_join_request", (payload) => {
-    socket.join(payload.roomName, (err) => {
-      if (!err) {
-        io.in(payload.roomName).clients((err, clients) => {
-          if (!err) {
-            io.in(payload.roomName).emit("room_users", clients);
-          }
-        });
-      }
-    });
-  });
-
-  socket.on("room_join_request_broadcast", (payload) => {
-    socket.join(payload.roomName, (err) => {
-      if (!err) {
-        io.in(payload.roomName).clients((err, clients) => {
-          if (!err) {
-            console.log(clients);
-            if (clients.length === 1) {
-              firstUser[payload.roomName] = clients[0];
-              io.in(payload.roomName).emit(
-                "first_user",
-                firstUser[payload.roomName]
-              );
-            } else {
-              /*if(otherUsers[payload.roomName]) {
-                                otherUsers[payload.roomName] = socket.id;
-                            } else {
-                                otherUsers[payload.roomName].push(socket.id);
-                            }*/
-              io.in(payload.roomName).emit("listen_user", clients);
-            }
-          }
-        });
-      }
-    });
-  });
-
-  socket.on("startConnection", (payload) => {
-    console.log("getStartConnection: " + payload.roomName);
-    // socket.broadcast.emit("signalToListener", { listenId: payload.listenId });
-
-    socket.broadcast.emit("getStartConnection", { listenId: payload.listenId });
-  });
-
-  socket.on("sendReceiveConnection", (payload) => {
-    console.log("getReceiveConnection: " + payload.listenId);
-    // socket.broadcast.emit("signalToListener", { listenId: payload.listenId });
-    socket.broadcast.emit("getReceiveConnection", {
-      signal: payload.signal,
-      listenId: payload.listenId,
-    });
-  });
-
-  socket.on("sendEventToListeners", (payload) => {
-    io.on(payload.to).emit("getEventFromSpeakers", {
-      signal: payload.signal,
-      from: payload.from,
-    });
-  });
-
-  socket.on("callFirst", (payload) => {
-    console.log("Listen ID is: " + payload.listenId);
-    socket.broadcast.emit("callFirst", { listenId: payload.listenId });
-  });
-
-  socket.on("signal", (data) => {
-    console.log("-----------SIGNAL---------");
-    console.log(data);
-    socket.broadcast.emit("signal", data);
-    // io.to(data.listenId).emit("signal", data.signal);
-  });
-
-  socket.on("callFirstUser", (payload) => {
-    console.log("calleee " + payload.calleeId);
-    io.to(payload.calleeId).emit("listenerUserOn", {
-      signalData: payload.signalData,
-      callerId: payload.callerId,
-    });
-  });
-
-  socket.on("offer_signal", (payload) => {
-    io.to(payload.calleeId).emit("offer", {
-      signalData: payload.signalData,
-      callerId: payload.callerId,
-    });
-  });
-
-  socket.on("sendInitialSignal", (payload) => {
-    console.log("Send initial signal " + payload.to);
-    io.to(payload.to).emit("getInitialSignal", {
-      signal: payload.signal,
-      from: payload.from,
-    });
-  });
-
-  socket.on("sendAnswerToInitial", (payload) => {
-    console.log("Send answer to initial " + payload.to);
-    io.to(payload.to).emit("getAnswerToInitial", {
-      signal: payload.signal,
-      from: payload.from,
-    });
-  });
-
-  socket.on("answer_signal", (payload) => {
-    console.log("answer signal " + payload.callerId);
-    io.to(payload.callerId).emit("answer", {
-      signalData: payload.signalData,
-      calleeId: socket.id,
-    });
-  });
-
   socket.on("send_message", (payload) => {
     console.log(payload);
     io.in(payload.roomId).emit("receive_message", payload);
   });
 
-  socket.on("disconnect", () => {
-    io.emit("room_left", { type: "disconnected", socketId: socket.id });
-  });
+  /* END SEND AND RECEIVE MESSAGE */
 
   /* ROOM END */
 });

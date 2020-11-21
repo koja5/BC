@@ -7,11 +7,12 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
   providedIn: "root",
 })
 export class MessageChatService {
-  // private url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
-  public url = "http://localhost:3000";
+  public url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+  // public url = "http://localhost:3000";
 
   constructor(private http: HttpClient) {}
 
+  // private socket = io.connect(this.url);
   private socket = io(this.url);
 
   joinRoom(data) {

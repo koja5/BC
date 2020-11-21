@@ -45,12 +45,46 @@ export class RoomComponent implements OnInit {
   public myIndex: number;
   private socket: SocketIOClient.Socket;
   public attendee: any;
+  @ViewChild("localVideo")
+  localVideo: ElementRef<HTMLVideoElement>;
   private link =
     window.location.protocol +
     "//" +
     window.location.hostname +
     ":" +
     window.location.port;
+
+  public configuration = {
+    iceServers: [
+      {
+        urls: ["stun:eu-turn3.xirsys.com"],
+      },
+      {
+        username:
+          "SshzFbYDzE17qHmX58sSZrVQjS--IAIUdEq439QvsC0akVkxpJ0YuLkr5oUNXPD0AAAAAF-tBj5rb2ph",
+        credential: "00ca4750-24cd-11eb-932a-0242ac140004",
+        urls: [
+          "turn:eu-turn3.xirsys.com:80?transport=udp",
+          "turn:eu-turn3.xirsys.com:3478?transport=udp",
+          "turn:eu-turn3.xirsys.com:80?transport=tcp",
+          "turn:eu-turn3.xirsys.com:3478?transport=tcp",
+          "turns:eu-turn3.xirsys.com:443?transport=tcp",
+          "turns:eu-turn3.xirsys.com:5349?transport=tcp",
+        ],
+      },
+    ],
+  };
+
+  public constraints = {
+    audio: true,
+    video: true,
+  };
+  public url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+
+  public peers = {};
+  // public videos = document.getElementById("videos");
+  @ViewChildren("videos")
+  videos: QueryList<ElementRef<HTMLVideoElement>>;
 
   constructor(
     private route: ActivatedRoute,
@@ -59,16 +93,24 @@ export class RoomComponent implements OnInit {
     private editEventService: EditEventService,
     private helpService: HelpService
   ) {
-    // this.socket = io.connect(this.link);
-    this.socket = io.connect("http://localhost:3000");
+    // this.socket = io();
+    // this.socket = io.connect("http://localhost:3000");
     this.attendee = new SimplePeer();
+    /*this.constraints.video["facingMode"] = {
+      ideal: "user",
+    };*/
   }
 
   ngOnInit(): void {
+    // this.redirectIfNotHttps();
     this.id = this.route.snapshot.params.id;
     this.roomName = this.route.snapshot.params.id;
     this.language = JSON.parse(localStorage.getItem("language"));
     this.getEventData(this.id);
+    this.initializeMessage();
+  }
+
+  initializeMessage() {
     this.signalingService.connect();
 
     this.signalingService.onConnect(() => {
@@ -83,66 +125,33 @@ export class RoomComponent implements OnInit {
         console.log(data);
         this.messages.push(data);
       });
-      // receive message from chat END
-
-      /*this.signalingService.onRoomLeft((socketId) => {
-        // this.removeDiv();
-        const mitronPeer = this.mitronPeers.find(
-          (mitronPeer) => socketId === mitronPeer.peerId
-        );
-        mitronPeer.peer.destroy();
-        this.mitronPeers = this.mitronPeers.filter((socketId) => {
-          (mitronPeer) => socketId !== mitronPeer.peerId;
-        });
-      });*/
     });
   }
 
+  redirectIfNotHttps() {
+    // redirect if not https
+    if (location.href.substr(0, 5) !== "https")
+      location.href =
+        "https" + location.href.substr(4, location.href.length - 4);
+  }
+
   initializeSpeakers() {
+    // enabling the camera at startup
+    // this.socket = io("http://localhost:3000");
     navigator.mediaDevices
-      .getUserMedia({ video: true, audio: true })
+      .getUserMedia(this.constraints)
       .then((stream) => {
-        // this.otherStream = [];
+        console.log("Received local stream");
+
+        // this.localVideo.nativeElement.srcObject = stream;
         this.otherStream.push(stream);
         this.myIndex = this.otherStream.length - 1;
+        this.localStream = stream;
+        this.socket = io(this.url);
 
-        this.signalingService.connect();
-        this.signalingService.onConnect(() => {
-          console.log("My Socket Id ${this.signalingService.socketId}");
-
-          this.signalingService.requestForJoiningRoom({
-            roomName: this.roomName,
-          });
-
-          this.signalingService.onRoomParticipants((participants) => {
-            console.log(
-              `${this.signalingService.socketId} - On Room Participants`
-            );
-            console.log(participants);
-
-            this.initilizePeersAsCaller(participants, stream);
-          });
-
-          this.signalingService.onOffer((msg) => {
-            this.initilizePeersAsCallee(msg, stream);
-          });
-
-          this.signalingService.onAnswer((msg) => {
-            console.log(
-              `${this.signalingService.socketId} - You got Answer from ${msg.calleeId}`
-            );
-            const mitronPeer = this.mitronPeers.find(
-              (mitronPeer) => mitronPeer.peerId === msg.calleeId
-            );
-            if (!mitronPeer.peer["destroyed"]) {
-              mitronPeer.peer.signal(msg.signalData);
-            }
-          });
-        });
+        this.init();
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((e) => alert(`getusermedia error ${e.name}`));
   }
 
   initilizePeersAsCaller(participants: Array<string>, stream: MediaStream) {
@@ -153,9 +162,8 @@ export class RoomComponent implements OnInit {
     participantsExcludingMe.forEach((peerId) => {
       let peer: SimplePeer.Instance = new SimplePeer({
         initiator: true,
-        reconnectTimer: 100,
-        trickle: false,
-        stream: stream
+        stream: stream,
+        config: this.configuration,
       });
 
       if (this.checkPeerId(peerId)) {
@@ -203,8 +211,8 @@ export class RoomComponent implements OnInit {
 
     const peer: SimplePeer.Instance = new SimplePeer({
       initiator: false,
-      trickle: false,
-      stream
+      stream: stream,
+      config: this.configuration,
     });
 
     peer.on("signal", (signal) => {
@@ -221,21 +229,6 @@ export class RoomComponent implements OnInit {
     if (mitronPeer.peer["_iceComplete"]) {
       mitronPeer.peer.signal(msg.signalData);
     }
-
-    /*peer.on("data", function (data) {
-      let decodedData = new TextDecoder("utf-8").decode(data);
-      let peervideo = document.querySelector("#peerVideo");
-      peervideo.style.filter = decodedData;
-    });*/
-
-    // this.mitronPeers.push({ peerId: msg.callerId, peer: peer });
-    /*setTimeout(() => {
-      const mitronPeer = this.mitronPeers.find(
-        (mitronPeer) => mitronPeer.peerId === msg.callerId
-      );
-      mitronPeer.peer.signal(msg.signalData);
-    }, 50);*/
-    // peer.signal(msg.signalData);
   }
 
   initializeListeners(peerId) {
@@ -456,5 +449,113 @@ export class RoomComponent implements OnInit {
     this.chatMessage = "";
 
     this.signalingService.sendMessage(data);
+  }
+
+  CreateVideo(stream) {
+    this.CreateDiv();
+
+    let video = document.createElement("video");
+    video.id = "peerVideo";
+    video.srcObject = stream;
+    video.setAttribute("class", "embed-responsive-item");
+    document.querySelector("#peerDiv").appendChild(video);
+    video.play();
+    //wait for 1 sec
+
+    video.addEventListener("click", () => {
+      if (video.volume != 0) video.volume = 0;
+      else video.volume = 1;
+    });
+  }
+
+  CreateDiv() {
+    let div = document.createElement("div");
+    div.setAttribute("class", "centered");
+    div.id = "muteText";
+    div.innerHTML = "Click to Mute/Unmute";
+    document.querySelector("#peerDiv").appendChild(div);
+  }
+
+  init() {
+    this.socket.on("initReceive", (socket_id) => {
+      console.log("INIT RECEIVE " + socket_id);
+      this.addPeer(socket_id, false);
+      this.socket.emit("initSend", socket_id);
+    });
+
+    this.socket.on("initSend1", (socket_id) => {
+      console.log("INIT SEND " + socket_id);
+      this.addPeer(socket_id, true);
+    });
+
+    this.socket.on("removePeer", (socket_id) => {
+      console.log("removing peer " + socket_id);
+      this.removePeer(socket_id);
+    });
+
+    this.socket.on("disconnect", () => {
+      console.log("GOT DISCONNECTED");
+      for (let socket_id in this.peers) {
+        this.removePeer(socket_id);
+      }
+    });
+
+    this.socket.on("signal", (data) => {
+      this.peers[data.socket_id].signal(data.signal);
+    });
+  }
+
+  addPeer(socket_id, am_initiator) {
+    this.peers[socket_id] = new SimplePeer({
+      initiator: am_initiator,
+      stream: this.localStream,
+      config: this.configuration,
+    });
+    console.log(this.peers);
+
+    this.peers[socket_id].on("signal", (data) => {
+      this.socket.emit("signal", {
+        signal: data,
+        socket_id: socket_id,
+      });
+    });
+
+    this.peers[socket_id].on("stream", (stream) => {
+      /*let newVid = document.createElement("video");
+      newVid.srcObject = stream;
+      newVid.id = socket_id;
+      newVid.playsinline = false;
+      newVid.autoplay = true;
+      newVid.className = "vid";
+      newVid.onclick = () => this.openPictureMode(newVid);
+      newVid.ontouchstart = (e) => this.openPictureMode(newVid);*/
+      // this.videos.first.nativeElement.childNodes[socket_id] = newVid;
+      // document.getElementById('videos').appendChild = newVid;
+      this.otherStream.push(stream);
+      console.log(this.otherStream);
+    });
+  }
+
+  removePeer(socket_id) {
+    let videoEl = document.getElementById(socket_id);
+    if (videoEl) {
+      const tracks = videoEl.srcObject.getTracks();
+
+      tracks.forEach(function (track) {
+        track.stop();
+      });
+
+      videoEl.srcObject = null;
+      videoEl.parentNode.removeChild(videoEl);
+    }
+    if (this.peers[socket_id]) this.peers[socket_id].destroy();
+    delete this.peers[socket_id];
+  }
+
+  openPictureMode(el) {
+    console.log("opening pip");
+    if (el.disablePictureInPicture) {
+      el.requestPictureInPicture();
+    }
   }
 }
