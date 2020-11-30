@@ -1,12 +1,12 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { LoginService } from "src/app/services/login.service";
 import { MailService } from "../../../../services/mail.service";
 
 @Component({
   selector: "app-choose-director",
   templateUrl: "./choose-director.component.html",
-  styleUrls: ["./choose-director.component.scss"]
+  styleUrls: ["./choose-director.component.scss"],
 })
 export class ChooseDirectorComponent implements OnInit {
   public id: number;
@@ -21,7 +21,8 @@ export class ChooseDirectorComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: LoginService,
-    private mailService: MailService
+    private mailService: MailService,
+    public router: Router
   ) {}
 
   ngOnInit() {
@@ -30,23 +31,53 @@ export class ChooseDirectorComponent implements OnInit {
   }
 
   initialization() {
-    this.service.getUserInfo(this.id).subscribe(data => {
+    this.service.getUserInfo(this.id).subscribe((data) => {
       this.user = data[0];
     });
+    this.getLanguage();
+  }
 
-    this.service.checkCountryLocation().subscribe(data => {
-      this.service
-        .getTranslationByCountryCode(data["countryCode"])
-        .subscribe(language => {
-          if (language !== null) {
-            this.language = language["config"];
-          } else {
-            this.service.getDefaultLanguage().subscribe(language => {
+  getLanguage() {
+    this.language = JSON.parse(localStorage.getItem("language"));
+    /*this.service.checkCountryLocation().subscribe(
+      (data) => {
+        this.service.getTranslationByCountryCode(data["countryCode"]).subscribe(
+          (language) => {
+            if (language !== null) {
               this.language = language["config"];
-            });
+              localStorage.setItem("language", JSON.stringify(this.language));
+            } else {
+              this.service.getDefaultLanguage().subscribe(
+                (language) => {
+                  if (language !== null) {
+                    this.language = language["config"];
+                    localStorage.setItem(
+                      "language",
+                      JSON.stringify(this.language)
+                    );
+                  } else {
+                    this.router.navigate(["/maintence"]);
+                  }
+                },
+                (error) => {
+                  this.router.navigate(["/maintence"]);
+                }
+              );
+            }
+          },
+          (error) => {
+            this.router.navigate(["/maintence"]);
           }
+        );
+      },
+      (error) => {
+        console.log(error);
+        this.service.getDefaultLanguage().subscribe((language) => {
+          this.language = language["config"];
+          localStorage.setItem("language", JSON.stringify(this.language));
         });
-    });
+      }
+    );*/
   }
 
   next(step, line) {
@@ -62,10 +93,10 @@ export class ChooseDirectorComponent implements OnInit {
   doNotHave() {
     const data = {
       sid: 1 + "-" + this.id,
-      id: this.id
+      id: this.id,
     };
 
-    this.service.updateUserSID(data).subscribe(data => {
+    this.service.updateUserSID(data).subscribe((data) => {
       console.log(data);
       if (data) {
         this.step = "done";
@@ -77,10 +108,10 @@ export class ChooseDirectorComponent implements OnInit {
   updateUserSID() {
     const data = {
       sid: this.selectedDirector.sid + "-" + this.id,
-      id: this.id
+      id: this.id,
     };
 
-    this.service.updateUserSID(data).subscribe(data => {
+    this.service.updateUserSID(data).subscribe((data) => {
       console.log(data);
       if (data) {
         this.step = "done";
@@ -95,15 +126,16 @@ export class ChooseDirectorComponent implements OnInit {
       confirmMailBCITitle: this.language.confirmMailBCITitle,
       confirmMailRegardsFirst: this.language.confirmMailRegardsFirst,
       confirmMailMessage: this.language.confirmMailMessage,
-      confirmMailConfirmEmailButton: this.language.confirmMailConfirmEmailButton,
+      confirmMailConfirmEmailButton: this.language
+        .confirmMailConfirmEmailButton,
       confirmMailRegardsEnd: this.language.confirmMailRegardsEnd,
       confirmMailBCISignature: this.language.confirmMailBCISignature,
       confirmMailThanksForUsing: this.language.confirmMailThanksForUsing,
       confirmMailHaveQuestion: this.language.confirmMailHaveQuestion,
       confirmMailGenerateMail: this.language.confirmMailGenerateMail,
-      confirmMailCopyright: this.language.confirmMailCopyright
-    }
-    this.mailService.sendMail(this.user, function() {
+      confirmMailCopyright: this.language.confirmMailCopyright,
+    };
+    this.mailService.sendMail(this.user, function () {
       this.router.navigate(["/login"]);
     });
   }
@@ -121,7 +153,7 @@ export class ChooseDirectorComponent implements OnInit {
     if (event !== "" && event.length > 2) {
       this.directorLoading = true;
       const searchFilter = {
-        filter: event
+        filter: event,
       };
       this.service.searchDirector(searchFilter).subscribe((val: []) => {
         this.directorList = val.sort((a, b) =>

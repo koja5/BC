@@ -122,35 +122,35 @@ router.post("/setUsersFor", function (req, res, next) {
     var dbo = db.db(database_name);
     dbo
       .collection("user_configuration")
-      .findOne({ usersFor: { $elemMatch: { key: item.key } } }, function (
-        err,
-        rows
-      ) {
-        console.log(rows);
-        if (err) throw err;
-        if (rows === null || rows.length === 0) {
-          dbo
-            .collection("user_configuration")
-            .updateOne(
-              { user_id: Number(req.body.user_id) },
-              { $push: { usersFor: item } },
-              function (err, res) {
-                if (err) throw err;
-              }
-            );
-        } else {
-          dbo
-            .collection("user_configuration")
-            .updateOne(
-              { usersFor: { $elemMatch: { key: item.key } } },
-              { $set: { "usersFor.$": item } },
-              function (err, res) {
-                if (err) throw err;
-              }
-            );
+      .findOne(
+        { usersFor: { $elemMatch: { key: item.key } } },
+        function (err, rows) {
+          console.log(rows);
+          if (err) throw err;
+          if (rows === null || rows.length === 0) {
+            dbo
+              .collection("user_configuration")
+              .updateOne(
+                { user_id: Number(req.body.user_id) },
+                { $push: { usersFor: item } },
+                function (err, res) {
+                  if (err) throw err;
+                }
+              );
+          } else {
+            dbo
+              .collection("user_configuration")
+              .updateOne(
+                { usersFor: { $elemMatch: { key: item.key } } },
+                { $set: { "usersFor.$": item } },
+                function (err, res) {
+                  if (err) throw err;
+                }
+              );
+          }
+          res.json(201);
         }
-        res.json(201);
-      });
+      );
   });
 });
 
@@ -762,7 +762,14 @@ router.get("/getEventData/:id", function (req, res, next) {
   });
 });
 
-var getFullSignInUsersData = (data, res) => {
+// moras da menjas ovu metodu, nije optimizovana uopste!!! spakuj speakers-e i spekaersConfigur u isti property samo dodeli razliciti indikator
+var getFullSignInUsersData = (
+  speakers,
+  speakersConfirm,
+  listeners,
+  listenersConfirm,
+  res
+) => {
   connection.getConnection(function (err, conn) {
     if (err) {
       res.json({
@@ -776,9 +783,30 @@ var getFullSignInUsersData = (data, res) => {
       conn.release();
       if (!err) {
         console.log(rows);
-        for (let item of data) {
+        for (let item of speakers) {
           for (let user of rows) {
-            if (sha1(user.id.toString()) == item.user_id) {
+            if (user.id == item.id) {
+              arrayMessages.push(user);
+            }
+          }
+        }
+        for (let item of speakersConfirm) {
+          for (let user of rows) {
+            if (user.id == item.id) {
+              arrayMessages.push(user);
+            }
+          }
+        }
+        for (let item of listeners) {
+          for (let user of rows) {
+            if (user.id == item.id) {
+              arrayMessages.push(user);
+            }
+          }
+        }
+        for (let item of listenersConfirm) {
+          for (let user of rows) {
+            if (user.id == item.id) {
               arrayMessages.push(user);
             }
           }
@@ -797,7 +825,7 @@ var getFullSignInUsersData = (data, res) => {
 
 router.get("/getSignInForLifeEvent/:id", function (req, res, next) {
   const id = req.params.id;
-  console.log(id);
+  console.log("room: " + id);
   mongo.connect(url, function (err, db) {
     if (err) throw err;
     var dbo = db.db(database_name);
@@ -806,7 +834,13 @@ router.get("/getSignInForLifeEvent/:id", function (req, res, next) {
       .findOne({ _id: ObjectId(id) }, function (err, rows) {
         if (err) throw err;
         console.log(rows);
-        getFullSignInUsersData(rows.signIn, res);
+        getFullSignInUsersData(
+          rows.speakers,
+          rows.speakersConfirm,
+          rows.listeners,
+          rows.listenersConfirm,
+          res
+        );
       });
   });
 });

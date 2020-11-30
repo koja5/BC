@@ -17,7 +17,7 @@
         <div class="box-body p-3">
           <form class="js-validate" novalidate="novalidate">
             <div class="row">
-              <div class="col-sm-6 mb-2">
+              <div class="col-sm-12 mb-2">
                 <div class="js-form-message">
                   <label id="phoneNumberLabel" class="form-label">
                     {{language.lifeEventDetailsNameOfEvent}}
@@ -29,7 +29,7 @@
                 </div>
               </div>
 
-              <div class="col-sm-6 mb-2">
+              <!-- <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsEvent}}
@@ -43,7 +43,7 @@
                     </kendo-combobox>
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
             <div class="row">
               <div class="col-sm-6 mb-2">
@@ -154,6 +154,11 @@
                         </span></label>
                     </ng-template>
                   </kendo-multiselect>
+                  <div class="full-width mt-3">
+                    <input type="checkbox" class="k-checkbox" (click)="selectAllForSpeakers()"
+                      [checked]="helpService.isSelectedAllFriends(data.speakers, currentLoadData)">
+                    <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -186,6 +191,11 @@
                         </span></label>
                     </ng-template>
                   </kendo-multiselect>
+                  <div class="full-width mt-3">
+                    <input type="checkbox" class="k-checkbox" (click)="selectAllForListeners()"
+                      [checked]="helpService.isSelectedAllFriends(data.listeners, currentLoadData)">
+                    <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+                  </div>
                 </div>
               </div>
             </div>

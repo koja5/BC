@@ -306,11 +306,11 @@ io.on("connect", (socket) => {
   /**
    * remove the disconnected peer connection from all other connected clients
    */
-  /*socket.on("disconnect", () => {
+  socket.on("disconnect", () => {
     console.log("socket disconnected " + socket.id);
     socket.broadcast.emit("removePeer", socket.id);
     delete peers[socket.id];
-  });*/
+  });
 
   /**
    * Send message to client to initiate a connection

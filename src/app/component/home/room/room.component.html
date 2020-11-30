@@ -2,16 +2,19 @@
   <div class="main-left">
     <div class="main-videos">
       <div id="video-grid">
-        <video *ngFor="let item of otherStream" [srcObject]="item" autoplay class="embed-responsive-item col-6"></video>
+        <video id="local-video" [srcObject]="localStream" autoplay muted="muted" volume="0" class="embed-responsive-item col-xs-6 col-md-4 video-stream">
+        </video>
+        <video *ngFor="let item of otherStream" id="{{item.socket_id}}" [srcObject]="item.stream" autoplay class="embed-responsive-item col-xs-6 col-md-4 video-stream">
+        </video>
       </div>
     </div>
     <div class="main-controls">
       <div class="main-controls-block">
-        <div (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button">
+        <div (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button {{microphoneStatus}}">
           <i class="fa fa-microphone"></i>
           <span class="hidden-xs">{{language.chatRoomMute}}</span>
         </div>
-        <div (click)="enableDisableVideo()" class="main-controls-button main-video_button">
+        <div (click)="enableDisableVideo()" class="main-controls-button main-video_button {{videoStatus}}">
           <i class="fa fa-camera"></i>
           <span class="hidden-xs">{{language.chatRoomStopVideo}}</span>
         </div>
@@ -25,19 +28,19 @@
           <i class="fa fa-user"></i>
           <span class="hidden-xs">{{language.chatRoomParticipants}}</span>
         </div>
-        <div class="main-controls-button">
+        <div class="main-controls-button {{chatStatus}}" (click)="showHideChat()">
           <i class="fa fa-comment"></i>
           <span class="hidden-xs">{{language.chatRoomChat}}</span>
         </div>
       </div>
       <div class="main-controls-block">
-        <div class="main-controls-button" (click)="windowLeaveMeeting = true">
+        <div class="leave_meeting_container" (click)="windowLeaveMeeting = true">
           <span class="leave_meeting">{{language.chatRoomLeaveRoom}}</span>
         </div>
       </div>
     </div>
   </div>
-  <div class="main-right">
+  <div class="main-right" *ngIf="showChat">
     <div class="main-header">
       <h6>{{language.chatRoomChat}}</h6>
     </div>

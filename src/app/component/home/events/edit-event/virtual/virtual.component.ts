@@ -177,4 +177,20 @@ export class VirtualComponent implements OnInit {
   selectEvent(event) {
     this.selectEventEmitter.emit(event);
   }
+
+  selectAllForSpeakers() {
+    if (this.data.speakers.length !== this.currentLoadData.length) {
+      this.data.speakers = this.currentLoadData;
+    } else {
+      this.data.speakers = [];
+    }
+  }
+
+  selectAllForListeners() {
+    if (this.data.listeners.length !== this.currentLoadData.length) {
+      this.data.listeners = this.currentLoadData;
+    } else {
+      this.data.listeners = [];
+    }
+  }
 }

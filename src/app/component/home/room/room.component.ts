@@ -5,6 +5,7 @@ import {
   ViewChildren,
   ElementRef,
   QueryList,
+  HostListener,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import * as SimplePeer from "simple-peer";
@@ -35,6 +36,7 @@ export class RoomComponent implements OnInit {
   public localStream: any;
   public microphoneStatus = "";
   public videoStatus = "";
+  public chatStatus = "";
   public otherStream = [];
   public id: any;
   public windowLeaveMeeting = false;
@@ -45,6 +47,7 @@ export class RoomComponent implements OnInit {
   public myIndex: number;
   private socket: SocketIOClient.Socket;
   public attendee: any;
+  public showChat = true;
   @ViewChild("localVideo")
   localVideo: ElementRef<HTMLVideoElement>;
   private link =
@@ -79,13 +82,21 @@ export class RoomComponent implements OnInit {
     audio: true,
     video: true,
   };
-  public url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
+  public url =
+    window.location.protocol +
+    "//" +
+    window.location.hostname +
+    ":" +
+    window.location.port;
 
   public peers = {};
   // public videos = document.getElementById("videos");
   @ViewChildren("videos")
   videos: QueryList<ElementRef<HTMLVideoElement>>;
-
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    this.checkRezolution();
+  }
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -106,6 +117,7 @@ export class RoomComponent implements OnInit {
     this.id = this.route.snapshot.params.id;
     this.roomName = this.route.snapshot.params.id;
     this.language = JSON.parse(localStorage.getItem("language"));
+    this.checkRezolution();
     this.getEventData(this.id);
     this.initializeMessage();
   }
@@ -135,23 +147,43 @@ export class RoomComponent implements OnInit {
         "https" + location.href.substr(4, location.href.length - 4);
   }
 
+  checkRezolution() {
+    if (window.innerWidth < 768) {
+      this.showChat = false;
+      this.chatStatus = "turn-off";
+    } else {
+      this.showChat = true;
+      this.chatStatus = '';
+    }
+  }
+
   initializeSpeakers() {
     // enabling the camera at startup
-    // this.socket = io("http://localhost:3000");
+
     navigator.mediaDevices
       .getUserMedia(this.constraints)
       .then((stream) => {
         console.log("Received local stream");
 
         // this.localVideo.nativeElement.srcObject = stream;
-        this.otherStream.push(stream);
-        this.myIndex = this.otherStream.length - 1;
+        // stream.getAudioTracks()[0].enabled = false;
+        // this.otherStream.push(stream);
+        // this.myIndex = this.otherStream.length - 1;
         this.localStream = stream;
+        this.mutedAudio();
         this.socket = io(this.url);
+        // this.socket = io("http://localhost:3000");
 
         this.init();
       })
       .catch((e) => alert(`getusermedia error ${e.name}`));
+  }
+
+  mutedAudio() {
+    setTimeout(() => {
+      const muted = document.getElementById("local-video");
+      muted.volume = 0;
+    }, 200);
   }
 
   initilizePeersAsCaller(participants: Array<string>, stream: MediaStream) {
@@ -347,11 +379,16 @@ export class RoomComponent implements OnInit {
   }
 
   enableDisableMicrophone() {
-    for (let index in this.otherStream[this.myIndex].getAudioTracks()) {
+    /*for (let index in this.otherStream[this.myIndex].getAudioTracks()) {
       this.otherStream[this.myIndex].getAudioTracks()[
         index
       ].enabled = !this.otherStream[this.myIndex].getAudioTracks()[index]
         .enabled;
+    }*/
+    for (let index in this.localStream.getAudioTracks()) {
+      this.localStream.getAudioTracks()[
+        index
+      ].enabled = !this.localStream.getAudioTracks()[index].enabled;
     }
     if (this.microphoneStatus) {
       this.microphoneStatus = "";
@@ -361,11 +398,17 @@ export class RoomComponent implements OnInit {
   }
 
   enableDisableVideo() {
-    for (let index in this.otherStream[this.myIndex].getVideoTracks()) {
+    /*for (let index in this.otherStream[this.myIndex].getVideoTracks()) {
       this.otherStream[this.myIndex].getVideoTracks()[
         index
       ].enabled = !this.otherStream[this.myIndex].getVideoTracks()[index]
         .enabled;
+    }*/
+
+    for (let index in this.localStream.getAudioTracks()) {
+      this.localStream.getVideoTracks()[
+        index
+      ].enabled = !this.localStream.getVideoTracks()[index].enabled;
     }
     if (this.videoStatus) {
       this.videoStatus = "";
@@ -428,7 +471,7 @@ export class RoomComponent implements OnInit {
       /*this.router.navigate([
         "home/main/event/virtual-event-details/" + this.id,
       ]);*/
-      window.close();
+      window.open("", "_self").close();
     }
     if (this.myIndex !== null && this.myIndex !== undefined) {
       this.otherStream[this.myIndex].getTracks().forEach(function (track) {
@@ -493,12 +536,12 @@ export class RoomComponent implements OnInit {
       this.removePeer(socket_id);
     });
 
-    this.socket.on("disconnect", () => {
+    /*this.socket.on("disconnect", () => {
       console.log("GOT DISCONNECTED");
       for (let socket_id in this.peers) {
         this.removePeer(socket_id);
       }
-    });
+    });*/
 
     this.socket.on("signal", (data) => {
       this.peers[data.socket_id].signal(data.signal);
@@ -531,7 +574,7 @@ export class RoomComponent implements OnInit {
       newVid.ontouchstart = (e) => this.openPictureMode(newVid);*/
       // this.videos.first.nativeElement.childNodes[socket_id] = newVid;
       // document.getElementById('videos').appendChild = newVid;
-      this.otherStream.push(stream);
+      this.otherStream.push({ stream: stream, socket_id: socket_id });
       console.log(this.otherStream);
     });
   }
@@ -548,7 +591,19 @@ export class RoomComponent implements OnInit {
       videoEl.srcObject = null;
       videoEl.parentNode.removeChild(videoEl);
     }
-    if (this.peers[socket_id]) this.peers[socket_id].destroy();
+    if (this.peers[socket_id]) {
+      for (let i = 0; i < this.otherStream.length; i++) {
+        if (this.otherStream[i].socket_id === socket_id) {
+          const tracks = this.otherStream[i].stream.getTracks();
+          tracks.forEach(function (track) {
+            track.stop();
+          });
+          this.otherStream[i].stream = null;
+          this.otherStream.splice(i, 1);
+        }
+      }
+      this.peers[socket_id].destroy();
+    }
     delete this.peers[socket_id];
   }
 
@@ -556,6 +611,15 @@ export class RoomComponent implements OnInit {
     console.log("opening pip");
     if (el.disablePictureInPicture) {
       el.requestPictureInPicture();
+    }
+  }
+
+  showHideChat() {
+    this.showChat = !this.showChat;
+    if (this.chatStatus) {
+      this.chatStatus = "";
+    } else {
+      this.chatStatus = "turn-off";
     }
   }
 }
