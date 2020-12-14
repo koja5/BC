@@ -3,6 +3,7 @@ import { Modal } from "ngx-modal";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { Router } from "@angular/router";
 import { CookieService } from "ng2-cookies";
+import { HelpService } from 'src/app/services/help.service';
 declare var document: any;
 
 @Component({
@@ -24,7 +25,8 @@ export class DashboardComponent implements OnInit {
   constructor(
     private service: DashboardService,
     private router: Router,
-    private cookie: CookieService
+    private cookie: CookieService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
@@ -34,11 +36,11 @@ export class DashboardComponent implements OnInit {
 
   initialization() {
     if (localStorage.getItem("language") !== null) {
-      this.language = JSON.parse(localStorage.getItem("language"));
+      this.language = this.helpService.getLanguage();
     } else {
       this.service.getTranslationFromFS("english").subscribe(data => {
         console.log(data);
-        localStorage.setItem("language", JSON.stringify(data));
+        this.helpService.setLanguage(data);
         this.language = data["login"];
       });
     }

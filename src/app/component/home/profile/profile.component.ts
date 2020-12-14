@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.user = JSON.parse(localStorage.getItem("user"));
     this.initialization();
 

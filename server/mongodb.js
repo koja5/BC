@@ -765,9 +765,7 @@ router.get("/getEventData/:id", function (req, res, next) {
 // moras da menjas ovu metodu, nije optimizovana uopste!!! spakuj speakers-e i spekaersConfigur u isti property samo dodeli razliciti indikator
 var getFullSignInUsersData = (
   speakers,
-  speakersConfirm,
   listeners,
-  listenersConfirm,
   res
 ) => {
   connection.getConnection(function (err, conn) {
@@ -790,21 +788,7 @@ var getFullSignInUsersData = (
             }
           }
         }
-        for (let item of speakersConfirm) {
-          for (let user of rows) {
-            if (user.id == item.id) {
-              arrayMessages.push(user);
-            }
-          }
-        }
         for (let item of listeners) {
-          for (let user of rows) {
-            if (user.id == item.id) {
-              arrayMessages.push(user);
-            }
-          }
-        }
-        for (let item of listenersConfirm) {
           for (let user of rows) {
             if (user.id == item.id) {
               arrayMessages.push(user);
@@ -836,9 +820,7 @@ router.get("/getSignInForLifeEvent/:id", function (req, res, next) {
         console.log(rows);
         getFullSignInUsersData(
           rows.speakers,
-          rows.speakersConfirm,
           rows.listeners,
-          rows.listenersConfirm,
           res
         );
       });
@@ -949,6 +931,7 @@ router.post("/updateEventData", function (req, res, next) {
             listeners: req.body.listeners,
             chargeable: req.body.chargeable,
             price: req.body.price,
+            isPrivate: req.body.isPrivate,
           },
         },
         function (err, res) {
@@ -976,6 +959,7 @@ router.post("/updateEventData", function (req, res, next) {
             attendees: req.body.attendees,
             chargeable: req.body.chargeable,
             price: req.body.price,
+            isPrivate: req.body.isPrivate,
           },
         },
         function (err, res) {
@@ -1098,42 +1082,57 @@ router.post("/signInVirtualParticipant", function (req, res, next) {
         .collection("events")
         .updateOne(
           { _id: ObjectId(req.body.id) },
-          { $pull: { speakers: { id: req.body.participant.id } } },
+          { $push: { speakers: req.body.participant } },
           function (err, result) {
             if (err) throw err;
-            dbo
-              .collection("events")
-              .updateOne(
-                { _id: ObjectId(req.body.id) },
-                { $push: { speakersConfirm: req.body.participant } },
-                function (err, result) {
-                  if (err) throw err;
 
-                  res.json(true);
-                }
-              );
+            res.json(true);
           }
         );
     } else {
+      dbo.collection("events");
+      dbo
+        .collection("events")
+        .updateOne(
+          { _id: ObjectId(req.body.id) },
+          { $push: { listeners: req.body.participant } },
+          function (err, result) {
+            if (err) throw err;
+
+            res.json(true);
+          }
+        );
+    }
+  });
+});
+
+router.post("/signOutVirtualParticipant", function (req, res, next) {
+  mongo.connect(url, function (err, db) {
+    if (err) throw err;
+    var dbo = db.db(database_name);
+    if (req.body.type === "speaker") {
+      dbo
+        .collection("events")
+        .updateOne(
+          { _id: ObjectId(req.body.id) },
+          { $pull: { speakers: { id: req.body.participant.id } } },
+          function (err, result) {
+            if (err) throw err;
+
+            res.json(true);
+          }
+        );
+    } else {
+      dbo.collection("events");
       dbo
         .collection("events")
         .updateOne(
           { _id: ObjectId(req.body.id) },
           { $pull: { listeners: { id: req.body.participant.id } } },
-          { $push: { listenersConfirm: req.body.participant } },
           function (err, result) {
             if (err) throw err;
-            dbo
-              .collection("events")
-              .updateOne(
-                { _id: ObjectId(req.body.id) },
-                { $push: { listenersConfirm: req.body.participant } },
-                function (err, result) {
-                  if (err) throw err;
 
-                  res.json(true);
-                }
-              );
+            res.json(true);
           }
         );
     }

@@ -16,6 +16,7 @@ export class UserModel {
     activePremiumDate?: Date;
     image?: string;
     birthday?: Date;
+    promo?: any;
     location?: string;
     street?: string;
     zip?: string;

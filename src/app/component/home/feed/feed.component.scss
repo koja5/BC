@@ -19,7 +19,7 @@
     color: #000;
 }
 
-.postOptions {
+.post-options {
     position: absolute;
     z-index: 10000;
     /* border: 1px solid; */
@@ -28,17 +28,20 @@
     border-radius: 2px;
     background: #fff;
     right: 25px !important; 
+}
+
+.connections-options {
     margin-top: 160px !important; 
     width: 135px !important;
 }
 
-.postOptions ul {
+.post-options ul {
     list-style: none;
     padding: 0px;
     margin: 0px;
 }
 
-.postOptions ul li {
+.post-options ul li {
     cursor: pointer;
 }
 

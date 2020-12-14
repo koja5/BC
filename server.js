@@ -322,6 +322,33 @@ io.on("connect", (socket) => {
     peers[init_socket_id].emit("initSend1", socket.id);
   });
 
+  /* LISTENERS */
+
+  socket.on("startConnection", (payload) => {
+    console.log("getStartConnection: " + payload.roomName);
+    // socket.broadcast.emit("signalToListener", { listenId: payload.listenId });
+
+    socket.broadcast.emit("getStartConnection", { listenId: payload.listenId });
+  });
+
+  socket.on("sendReceiveConnection", (payload) => {
+    console.log("getReceiveConnection: " + payload.listenId);
+    // socket.broadcast.emit("signalToListener", { listenId: payload.listenId });
+    socket.broadcast.emit("getReceiveConnection", {
+      signal: payload.signal,
+      listenId: payload.listenId,
+    });
+  });
+
+  socket.on("sendEventToListeners", (payload) => {
+    io.on(payload.to).emit("getEventFromSpeakers", {
+      signal: payload.signal,
+      from: payload.from,
+    });
+  });
+
+  /* END LISTENERS */
+
   /* SEND AND RECEIVE MESSAGE */
 
   socket.on("room_join_request", (payload) => {

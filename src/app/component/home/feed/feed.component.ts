@@ -82,7 +82,7 @@ export class FeedComponent implements OnInit {
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
     
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
     this.uploadInitialization();
     this.backOnTop();

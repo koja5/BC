@@ -7,6 +7,7 @@ import * as sha1 from "sha1";
 import { LifeEventService } from "src/app/services/life-event.service";
 import { VirtualEventModel } from "src/app/models/virtual-event-model";
 import { EditEventService } from "src/app/services/edit-event.service";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-edit-event",
@@ -29,13 +30,14 @@ export class EditEventComponent implements OnInit {
     private service: EventService,
     private route: ActivatedRoute,
     private lifeEventService: LifeEventService,
-    private editEventService: EditEventService
+    private editEventService: EditEventService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
     this.windowWidth = window.innerWidth - 80;
     this.windowHeight = window.innerHeight - 120;
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
   }
 

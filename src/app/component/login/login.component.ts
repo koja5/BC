@@ -6,6 +6,7 @@ import { CookieService } from "ng2-cookies";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { MailService } from "src/app/services/mail.service";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-login",
@@ -31,7 +32,8 @@ export class LoginComponent implements OnInit {
     public router: Router,
     public cookie: CookieService,
     public message: MessageService,
-    public mailService: MailService
+    public mailService: MailService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
@@ -45,16 +47,13 @@ export class LoginComponent implements OnInit {
           (language) => {
             if (language !== null) {
               this.language = language["config"];
-              localStorage.setItem("language", JSON.stringify(this.language));
+              this.helpService.setLanguage(this.language);
             } else {
               this.service.getDefaultLanguage().subscribe(
                 (language) => {
                   if (language !== null) {
                     this.language = language["config"];
-                    localStorage.setItem(
-                      "language",
-                      JSON.stringify(this.language)
-                    );
+                    this.helpService.setLanguage(this.language);
                   } else {
                     this.router.navigate(["/maintence"]);
                   }
@@ -74,7 +73,7 @@ export class LoginComponent implements OnInit {
         console.log(error);
         this.service.getDefaultLanguage().subscribe((language) => {
           this.language = language["config"];
-          localStorage.setItem("language", JSON.stringify(this.language));
+          this.helpService.setLanguage(this.language);
         });
       }
     );

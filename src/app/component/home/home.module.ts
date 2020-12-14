@@ -38,6 +38,7 @@ import { RoomComponent } from './room/room.component';
 import { WebcamModule } from 'ngx-webcam';
 import { TakeCameraComponent } from './take-camera/take-camera.component';
 import { RecordVideoComponent } from './record-video/record-video.component';
+import { PopupComponent } from '../sub-components/popup/popup.component';
 
 @NgModule({
   declarations: [
@@ -67,7 +68,8 @@ import { RecordVideoComponent } from './record-video/record-video.component';
     VirtualEventDetailsComponent,
     RoomComponent,
     TakeCameraComponent,
-    RecordVideoComponent
+    RecordVideoComponent,
+    PopupComponent
   ],
   imports: [
     CommonModule,

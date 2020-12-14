@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { HelpService } from 'src/app/services/help.service';
 import { LoginService } from "src/app/services/login.service";
 import { MailService } from "../../../../services/mail.service";
 
@@ -22,7 +23,8 @@ export class ChooseDirectorComponent implements OnInit {
     private route: ActivatedRoute,
     private service: LoginService,
     private mailService: MailService,
-    public router: Router
+    private router: Router,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
@@ -38,46 +40,7 @@ export class ChooseDirectorComponent implements OnInit {
   }
 
   getLanguage() {
-    this.language = JSON.parse(localStorage.getItem("language"));
-    /*this.service.checkCountryLocation().subscribe(
-      (data) => {
-        this.service.getTranslationByCountryCode(data["countryCode"]).subscribe(
-          (language) => {
-            if (language !== null) {
-              this.language = language["config"];
-              localStorage.setItem("language", JSON.stringify(this.language));
-            } else {
-              this.service.getDefaultLanguage().subscribe(
-                (language) => {
-                  if (language !== null) {
-                    this.language = language["config"];
-                    localStorage.setItem(
-                      "language",
-                      JSON.stringify(this.language)
-                    );
-                  } else {
-                    this.router.navigate(["/maintence"]);
-                  }
-                },
-                (error) => {
-                  this.router.navigate(["/maintence"]);
-                }
-              );
-            }
-          },
-          (error) => {
-            this.router.navigate(["/maintence"]);
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-        this.service.getDefaultLanguage().subscribe((language) => {
-          this.language = language["config"];
-          localStorage.setItem("language", JSON.stringify(this.language));
-        });
-      }
-    );*/
+    this.language = this.helpService.getLanguage();
   }
 
   next(step, line) {

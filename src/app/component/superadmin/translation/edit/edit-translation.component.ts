@@ -3,6 +3,7 @@ import { DashboardService } from "../../../../services/dashboard.service";
 import { TranslationModel } from "src/app/models/translation-model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-edit",
@@ -20,12 +21,13 @@ export class EditTranslationComponent implements OnInit {
     private service: DashboardService,
     public route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
   }
 

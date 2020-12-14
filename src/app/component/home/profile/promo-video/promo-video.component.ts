@@ -40,7 +40,7 @@ export class PromoVideoComponent implements OnInit {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     }
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
 
     this.uploaderPromo = new FileUploader({
       url: this.url,

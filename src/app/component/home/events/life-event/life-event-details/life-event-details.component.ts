@@ -56,7 +56,7 @@ export class LifeEventDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
     console.log(this.data);
   }
@@ -272,11 +272,11 @@ export class LifeEventDetailsComponent implements OnInit {
   }
 
   signInVirtualParticipant(type) {
-    const value = this.helpService.signInVirtualParticipant(type, this.id);
+    /*const value = this.helpService.signInVirtualParticipant(type, this.id);
     if (type === "speakers") {
       this.registerLikeSpeaker = value;
     } else {
       this.registerLikeListener = value;
-    }
+    }*/
   }
 }

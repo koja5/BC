@@ -4,6 +4,7 @@ import { MailService } from "src/app/services/mail.service";
 import { ToastrService } from "ngx-toastr";
 import { Router } from "@angular/router";
 import { ProfileService } from "src/app/services/profile.service";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-contact",
@@ -19,11 +20,12 @@ export class ContactComponent implements OnInit {
     private service: MailService,
     private toastr: ToastrService,
     private router: Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.id = localStorage.getItem("id");
     this.initialization();
   }

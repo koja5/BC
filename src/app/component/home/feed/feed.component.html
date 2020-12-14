@@ -3,6 +3,245 @@
 <div>
   <div class="container py-4" *ngIf="language !== undefined">
     <div class="row" *ngIf="data !== undefined">
+      <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+        <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
+          <div class="py-4 px-3 border-bottom profile-img-container">
+            <div class="loader4 imageLoaderFeed" *ngIf="loadImage"></div>
+            <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
+              alt="Responsive image">
+            <!-- <label for="file-upload-profile" class="change-icon">
+              <i class="fa fa-upload  fa-2x"></i>
+            </label>
+            <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
+              [uploader]="uploader" /> -->
+            <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
+            <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
+            <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
+          </div>
+          <div class="overflow-hidden border-top">
+            <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> {{language.feedViewMyProfile}}
+            </a>
+          </div>
+        </div>
+        <div class="box mb-3 feed-links">
+          <div class="d-flex mb-2">
+            <div class="col-12 feed-pages" routerLink="/home/main/connection" style="cursor: pointer;">
+              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/connections.png">
+                {{language.feedConnections}}</p>
+            </div>
+          </div>
+          <div class="d-flex">
+            <div class="col-12 feed-pages" routerLink="/home/main/event/all" style="cursor: pointer;">
+              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/events.png">
+                {{language.feedEvents}}</p>
+            </div>
+          </div>
+        </div>
+        <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center" *ngIf="userType !== 2">
+          <h6 class="text-dark mt-2">{{language.feedReferralLinkTitle}}</h6>
+          <div class="p-3"><button class="btn btn-referral-link btn-sm pl-4 pr-4" *ngIf="!referralLinkCopied"
+              type="button" (click)="copyLinkInClipboard()"> <span
+                *ngIf="!referralLinkCopied">{{language.feedReferralLinkButton}}</span> </button>
+            <button class="btn btn-referral-link-copied btn-sm pl-4 pr-4" *ngIf="referralLinkCopied" type="button"
+              (click)="copyLinkInClipboard()"> <span>{{language.feedCopiedLinkButton}}</span> </button></div>
+          <p class="ml-1 mr-1 text-muted">{{language.feedReferralLinkText}}</p>
+        </div>
+        <!-- <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">Profile Views</h6>
+        </div>
+        <div class="d-flex text-center">
+          <div class="col-6 border-right py-4 px-2">
+            <h5 class="font-weight-bold text-info mb-1">08 <i class="feather-bar-chart-2"></i></h5>
+            <p class="mb-0 text-black-50 small">last 5 days</p>
+          </div>
+          <div class="col-6 py-4 px-2">
+            <h5 class="font-weight-bold text-success mb-1">+ 43% <i class="feather-bar-chart"></i></h5>
+            <p class="mb-0 text-black-50 small">Since last week</p>
+          </div>
+        </div>
+        <div class="overflow-hidden border-top text-center">
+          <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
+        </div>
+      </div> -->
+        <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
+        <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
+        <div class="p-3 border-bottom">
+          <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
+          <p class="mb-0 text-muted">Looking for talent?</p>
+        </div>
+        <div class="p-3">
+          <button type="button" class="btn btn-outline-primary pl-4 pr-4"> POST A JOB </button>
+        </div>
+      </div> -->
+      </aside>
+      <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+        <div class="box shadow-sm border rounded bg-white mb-3">
+          <div class="box-title border-bottom p-3">
+            <h6 class="m-0">{{language.feedYourConnections}}</h6>
+          </div>
+          <div class="box-body p-3">
+            <div class="d-flex align-items-center osahan-post-header mb-3 people-list"
+              *ngFor="let item of peopleYouMightKnowList">
+              <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
+                <div class="status-indicator bg-success"></div>
+              </div>
+              <div class="font-weight-bold mr-2">
+                <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}
+                </div>
+                <div class="small text-gray-500">{{item.profession}}
+                  (
+                  <span *ngIf="item.help !== null" class="helpfullColor">{{item.help}}</span>
+                  <span *ngIf="item.help === null" class="helpfullColor">0</span> /
+                  <span *ngIf="item.notHelp !== null" class="notHelpfullColor">{{item.notHelp}}</span>
+                  <span *ngIf="item.notHelp === null" class="notHelpfullColor">0</span>
+                  )
+                </div>
+              </div>
+              <!-- <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+                  (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
+                    class="fa fa-paper-plane" title="{{language.recommendedTooltip}}"></i></button>
+              </span> -->
+
+              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+                  (click)="showHideFeedConnections(item.id)">
+                  <i class="fa fa-ellipsis-v removePost"></i>
+                </button>
+              </span>
+              <div class="post-options connections-options"
+                [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'">
+                <ul class="connectionOptions">
+                  <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
+                      class="fa fa-paper-plane"></i> {{language.recommendedTooltip}}</li>
+                  <li (click)="openPromoVideo(item)"><i class="fa fa-film"></i> {{language.promoButton}}</li>
+                  <li (click)="sendMessageForThisUser(item)"><i class="fa fa-comments-o"></i>
+                    {{language.connectionSendMessage}}</li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2">
+          <img src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
+          <div class="p-3 border-bottom">
+            <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
+            <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
+          </div>
+          <div class="p-3">
+            <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium">
+              {{language.feedActivate}}
+            </button>
+          </div>
+        </div>
+        <div class="box shadow-sm mb-3 border rounded bg-white text-center" *ngIf="userType !== 2">
+          <div class="image-overlap-2 pt-4">
+            <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
+              alt="Responsive image">
+            <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}"
+              class="rounded-circle shadow-sm" alt="Responsive image">
+          </div>
+          <div class="p-3 border-bottom">
+            <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
+            <p class="mb-0 text-muted">{{language.feedInviteText}}</p>
+          </div>
+          <div class="p-3">
+            <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+              {{language.feedSendInvite}} </button>
+          </div>
+        </div>
+        <!-- <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.termsHeaderTitle}}</h6>
+        </div>
+        <div class="image-overlap-2 pt-2">
+          <img style="width: 100px;" src="../../../../assets/img/terms-icon.png" class="rounded-circle"
+            alt="Responsive image">
+        </div>
+        <div class="p-3">
+          <a routerLink="/terms" target="_blank"><button type="button" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+              {{language.termsShow}} </button></a>
+        </div>
+      </div>
+      <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">{{language.privacyHeaderTitle}}</h6>
+        </div>
+        <div class="image-overlap-2 pt-2">
+          <img style="width: 75px;" src="../../../../assets/img/privacy-policy.png" class="rounded-circle"
+            alt="Responsive image">
+        </div>
+        <div class="p-3">
+          <a routerLink="/privacy-policy" target="_blank"><button type="button"
+              class="btn btn-outline-primary btn-sm pl-4 pr-4">
+              {{language.privacyShow}} </button></a>
+        </div>
+      </div> -->
+        <!-- <div class="box shadow-sm border rounded bg-white mb-3">
+        <div class="box-title border-bottom p-3">
+          <h6 class="m-0">Jobs
+          </h6>
+        </div>
+        <div class="box-body p-3">
+          <a href="job-profile.html">
+            <div class="shadow-sm border rounded bg-white job-item mb-3">
+              <div class="d-flex align-items-center p-3 job-item-header">
+                <div class="overflow-hidden mr-2">
+                  <h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
+                  <div class="text-truncate text-primary">Spotify Inc.</div>
+                  <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
+                </div>
+                <img class="img-fluid ml-auto" src="../../../assets/img/l3.png" alt="">
+              </div>
+              <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+                <div class="overlap-rounded-circle">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p9.png" alt="" data-original-title="Sophia Lee">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p10.png" alt="" data-original-title="John Doe">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p11.png" alt="" data-original-title="Julia Cox">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p12.png" alt="" data-original-title="Robert Cook">
+                </div>
+                <span class="font-weight-bold text-muted">18 connections</span>
+              </div>
+              <div class="p-3 job-item-footer">
+                <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
+              </div>
+            </div>
+          </a>
+          <a href="job-profile.html">
+            <div class="shadow-sm border rounded bg-white job-item">
+              <div class="d-flex align-items-center p-3 job-item-header">
+                <div class="overflow-hidden mr-2">
+                  <h6 class="font-weight-bold text-dark mb-0 text-truncate">.NET Developer</h6>
+                  <div class="text-truncate text-primary">Invision</div>
+                  <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
+                  </div>
+                </div>
+                <img class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
+              </div>
+              <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
+                <div class="overlap-rounded-circle">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p13.png" alt="" data-original-title="Sophia Lee">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p1.png" alt="" data-original-title="John Doe">
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                    src="../../../assets/img/p3.png" alt="" data-original-title="Robert Cook">
+                </div>
+                <span class="font-weight-bold text-muted">18 connections</span>
+              </div>
+              <div class="p-3 job-item-footer">
+                <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div> -->
+      </aside>
       <!-- Main Content -->
       <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
         <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
@@ -85,7 +324,7 @@
             <div class="ml-auto small">
               <i class="fa fa-ellipsis-h removePost" aria-hidden="true" (click)="showHidePostOption(item._id)"
                 *ngIf="id === item.user_id"></i>
-              <div class="postOptions" [ngClass]="selectedProcessOption === item._id ? 'show' : 'hide'">
+              <div class="post-options" [ngClass]="selectedProcessOption === item._id ? 'show' : 'hide'">
                 <ul>
                   <li (click)="deletePostQuestion(item._id, i)">{{language.feedRemove}}</li>
                 </ul>
@@ -159,7 +398,7 @@
             </div>
             <div class="comment-input">
               <input class="form-control" (keyup.enter)="createComment(item._id, i)" [(ngModel)]="item.newComment"
-                name="comment-{{item._id}}" [id]="item_id" placeholder="{{language.feedEnterYourComment}}" type="text">
+                name="comment-{{item._id}}" [id]="item.id" placeholder="{{language.feedEnterYourComment}}" type="text">
             </div>
           </div>
           <!-- <div class="p-3">
@@ -304,244 +543,7 @@
       </div>
     </div> -->
       </main>
-      <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-        <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
-          <div class="py-4 px-3 border-bottom profile-img-container">
-            <div class="loader4 imageLoaderFeed" *ngIf="loadImage"></div>
-            <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
-              alt="Responsive image">
-            <!-- <label for="file-upload-profile" class="change-icon">
-              <i class="fa fa-upload  fa-2x"></i>
-            </label>
-            <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
-              [uploader]="uploader" /> -->
-            <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
-            <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
-            <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
-          </div>
-          <div class="overflow-hidden border-top">
-            <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> {{language.feedViewMyProfile}}
-            </a>
-          </div>
-        </div>
-        <div class="box mb-3 feed-links">
-          <div class="d-flex mb-2">
-            <div class="col-12 feed-pages" routerLink="/home/main/connection" style="cursor: pointer;">
-              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/connections.png">
-                {{language.feedConnections}}</p>
-            </div>
-          </div>
-          <div class="d-flex">
-            <div class="col-12 feed-pages" routerLink="/home/main/event/all" style="cursor: pointer;">
-              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/events.png">
-                {{language.feedEvents}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center" *ngIf="userType !== 2">
-          <h6 class="text-dark mt-2">{{language.feedReferralLinkTitle}}</h6>
-          <div class="p-3"><button class="btn btn-referral-link btn-sm pl-4 pr-4" *ngIf="!referralLinkCopied"
-              type="button" (click)="copyLinkInClipboard()"> <span
-                *ngIf="!referralLinkCopied">{{language.feedReferralLinkButton}}</span> </button>
-            <button class="btn btn-referral-link-copied btn-sm pl-4 pr-4" *ngIf="referralLinkCopied" type="button"
-              (click)="copyLinkInClipboard()"> <span>{{language.feedCopiedLinkButton}}</span> </button></div>
-          <p class="ml-1 mr-1 text-muted">{{language.feedReferralLinkText}}</p>
-        </div>
-        <!-- <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">Profile Views</h6>
-        </div>
-        <div class="d-flex text-center">
-          <div class="col-6 border-right py-4 px-2">
-            <h5 class="font-weight-bold text-info mb-1">08 <i class="feather-bar-chart-2"></i></h5>
-            <p class="mb-0 text-black-50 small">last 5 days</p>
-          </div>
-          <div class="col-6 py-4 px-2">
-            <h5 class="font-weight-bold text-success mb-1">+ 43% <i class="feather-bar-chart"></i></h5>
-            <p class="mb-0 text-black-50 small">Since last week</p>
-          </div>
-        </div>
-        <div class="overflow-hidden border-top text-center">
-          <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
-        </div>
-      </div> -->
-        <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
-        <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
-        <div class="p-3 border-bottom">
-          <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
-          <p class="mb-0 text-muted">Looking for talent?</p>
-        </div>
-        <div class="p-3">
-          <button type="button" class="btn btn-outline-primary pl-4 pr-4"> POST A JOB </button>
-        </div>
-      </div> -->
-      </aside>
-      <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-        <div class="box shadow-sm border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3">
-            <h6 class="m-0">{{language.feedYourConnections}}</h6>
-          </div>
-          <div class="box-body p-3">
-            <div class="d-flex align-items-center osahan-post-header mb-3 people-list"
-              *ngFor="let item of peopleYouMightKnowList">
-              <div class="dropdown-list-image mr-3">
-                <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
-                <div class="status-indicator bg-success"></div>
-              </div>
-              <div class="font-weight-bold mr-2">
-                <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}
-                </div>
-                <div class="small text-gray-500">{{item.profession}}
-                  (
-                  <span *ngIf="item.help !== null" class="helpfullColor">{{item.help}}</span>
-                  <span *ngIf="item.help === null" class="helpfullColor">0</span> /
-                  <span *ngIf="item.notHelp !== null" class="notHelpfullColor">{{item.notHelp}}</span>
-                  <span *ngIf="item.notHelp === null" class="notHelpfullColor">0</span>
-                  )
-                </div>
-              </div>
-              <!-- <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
-                  (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
-                    class="fa fa-paper-plane" title="{{language.recommendedTooltip}}"></i></button>
-              </span> -->
 
-              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
-                  (click)="showHideFeedConnections(item.id)">
-                  <i class="fa fa-ellipsis-v removePost"></i>
-                </button>
-              </span>
-              <div class="postOptions" [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'">
-                <ul class="connectionOptions">
-                  <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
-                      class="fa fa-paper-plane"></i> {{language.recommendedTooltip}}</li>
-                  <li (click)="openPromoVideo(item)"><i class="fa fa-film"></i> {{language.promoButton}}</li>
-                  <li (click)="sendMessageForThisUser(item)"><i class="fa fa-comments-o"></i>
-                    {{language.connectionSendMessage}}</li>
-                </ul>
-              </div>
-
-            </div>
-          </div>
-        </div>
-        <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2">
-          <img src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
-          <div class="p-3 border-bottom">
-            <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
-            <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
-          </div>
-          <div class="p-3">
-            <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium">
-              {{language.feedActivate}}
-            </button>
-          </div>
-        </div>
-        <div class="box shadow-sm mb-3 border rounded bg-white text-center" *ngIf="userType !== 2">
-          <div class="image-overlap-2 pt-4">
-            <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
-              alt="Responsive image">
-            <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}"
-              class="rounded-circle shadow-sm" alt="Responsive image">
-          </div>
-          <div class="p-3 border-bottom">
-            <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
-            <p class="mb-0 text-muted">{{language.feedInviteText}}</p>
-          </div>
-          <div class="p-3">
-            <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
-              {{language.feedSendInvite}} </button>
-          </div>
-        </div>
-        <!-- <div class="box shadow-sm mb-3 border rounded bg-white text-center">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.termsHeaderTitle}}</h6>
-        </div>
-        <div class="image-overlap-2 pt-2">
-          <img style="width: 100px;" src="../../../../assets/img/terms-icon.png" class="rounded-circle"
-            alt="Responsive image">
-        </div>
-        <div class="p-3">
-          <a routerLink="/terms" target="_blank"><button type="button" class="btn btn-outline-primary btn-sm pl-4 pr-4">
-              {{language.termsShow}} </button></a>
-        </div>
-      </div>
-      <div class="box shadow-sm mb-3 border rounded bg-white text-center">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.privacyHeaderTitle}}</h6>
-        </div>
-        <div class="image-overlap-2 pt-2">
-          <img style="width: 75px;" src="../../../../assets/img/privacy-policy.png" class="rounded-circle"
-            alt="Responsive image">
-        </div>
-        <div class="p-3">
-          <a routerLink="/privacy-policy" target="_blank"><button type="button"
-              class="btn btn-outline-primary btn-sm pl-4 pr-4">
-              {{language.privacyShow}} </button></a>
-        </div>
-      </div> -->
-        <!-- <div class="box shadow-sm border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">Jobs
-          </h6>
-        </div>
-        <div class="box-body p-3">
-          <a href="job-profile.html">
-            <div class="shadow-sm border rounded bg-white job-item mb-3">
-              <div class="d-flex align-items-center p-3 job-item-header">
-                <div class="overflow-hidden mr-2">
-                  <h6 class="font-weight-bold text-dark mb-0 text-truncate">Product Director</h6>
-                  <div class="text-truncate text-primary">Spotify Inc.</div>
-                  <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
-                </div>
-                <img class="img-fluid ml-auto" src="../../../assets/img/l3.png" alt="">
-              </div>
-              <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
-                <div class="overlap-rounded-circle">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p9.png" alt="" data-original-title="Sophia Lee">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p10.png" alt="" data-original-title="John Doe">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p11.png" alt="" data-original-title="Julia Cox">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p12.png" alt="" data-original-title="Robert Cook">
-                </div>
-                <span class="font-weight-bold text-muted">18 connections</span>
-              </div>
-              <div class="p-3 job-item-footer">
-                <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
-              </div>
-            </div>
-          </a>
-          <a href="job-profile.html">
-            <div class="shadow-sm border rounded bg-white job-item">
-              <div class="d-flex align-items-center p-3 job-item-header">
-                <div class="overflow-hidden mr-2">
-                  <h6 class="font-weight-bold text-dark mb-0 text-truncate">.NET Developer</h6>
-                  <div class="text-truncate text-primary">Invision</div>
-                  <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
-                  </div>
-                </div>
-                <img class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
-              </div>
-              <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
-                <div class="overlap-rounded-circle">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p13.png" alt="" data-original-title="Sophia Lee">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p1.png" alt="" data-original-title="John Doe">
-                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
-                    src="../../../assets/img/p3.png" alt="" data-original-title="Robert Cook">
-                </div>
-                <span class="font-weight-bold text-muted">18 connections</span>
-              </div>
-              <div class="p-3 job-item-footer">
-                <small class="text-gray-500"><i class="feather-clock"></i> Posted 3 Days ago</small>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div> -->
-      </aside>
     </div>
   </div>
 </div>

@@ -41,6 +41,12 @@ export class VirtualEventDetailsComponent implements OnInit {
   public registerLikeSpeaker = 0;
   public registerLikeListener = 0;
   public memberGoingWindow = false;
+  public popupInd = false;
+  public popupTitle: any;
+  public popupText: any;
+  public functionNameYes: string;
+  public functionNameNo: string;
+  public userType: string;
 
   constructor(
     private route: ActivatedRoute,
@@ -56,16 +62,19 @@ export class VirtualEventDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
     console.log(this.data);
   }
 
   initialization() {
     this.id = this.route.snapshot.params.id;
+    this.registerLikeSpeaker = 0;
+    this.registerLikeListener = 0;
     if (this.id) {
       this.editEventService.getEventData(this.id).subscribe((data) => {
         this.data = data;
+        console.log(data);
         this.owner = this.checkEventStatusForUser(this.data.id_user);
         this.getOrganizatorProfile(data["id_user"]);
         const virtualParticipant = this.helpService.checkVirtualParticipant(
@@ -184,17 +193,17 @@ export class VirtualEventDetailsComponent implements OnInit {
 
   goToRoom() {
     // this.router.navigate(["/home/main/room/" + this.id, "_blank"]);
-    window.open("/home/main/room/" + this.id, '_blank');
+    window.open("/home/main/room/" + this.id, "_blank");
   }
 
   setReminder() {
+    this.reminderFriendsWindow = true;
     this.service.getSignInForLifeEvent(this.id).subscribe((data) => {
       console.log(data);
       if (data) {
         this.allMyConnection = data;
         this.currentLoadData = data;
         this.selectedReminderFriends = data;
-        this.reminderFriendsWindow = true;
       }
     });
   }
@@ -226,17 +235,103 @@ export class VirtualEventDetailsComponent implements OnInit {
     this.inviteFriendWindow = false;
   }
 
-  showSpeakersConfirm() {
-    this.memberGoingList = this.data.speakersConfirm;
+  showSpeakersGoing() {
+    this.memberGoingList = this.data.speakers;
+    this.memberGoingWindow = true;
+  }
+
+  showListenersGoing() {
+    this.memberGoingList = this.data.listeners;
     this.memberGoingWindow = true;
   }
 
   signInVirtualParticipant(type) {
-    const value = this.helpService.signInVirtualParticipant(type, this.id);
-    if (type === "speakers") {
-      this.registerLikeSpeaker = value;
+    this.signIn(type, this.id);
+  }
+
+  signOutVirtualParticipant(type) {
+    this.signOut(type, this.id);
+  }
+
+  openDialogSignInOutAction(
+    title = false,
+    text = false,
+    functionNameYes,
+    functionNameNo,
+    type
+  ) {
+    this.popupTitle = title;
+    this.popupText = text;
+    this.popupInd = true;
+    this.functionNameYes = functionNameYes;
+    this.functionNameNo = functionNameNo;
+    this.userType = type;
+  }
+
+  OpenDialogEvent(event) {
+    if (event.answer) {
+      if (event.functionNameYes) {
+        this[event.functionNameYes](this.userType);
+      }
     } else {
-      this.registerLikeListener = value;
+      if (event.functionNameNo) {
+        this[event.functionNameNo](this.userType);
+      }
     }
+    this.popupInd = false;
+  }
+
+  signIn(type, id) {
+    this.data = null;
+    this.profileService.getUserInfoSHA1(localStorage.getItem("id")).subscribe(
+      (user) => {
+        const data = {
+          id: id,
+          type: type,
+          participant: user[0],
+        };
+        this.editEventService.signInVirtualParticipant(data).subscribe(
+          (data) => {
+            if (data) {
+              this.helpService.updateSuccessMessage();
+              this.initialization();
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+
+  signOut(type, id) {
+    this.data = null;
+    this.profileService.getUserInfoSHA1(localStorage.getItem("id")).subscribe(
+      (user) => {
+        const data = {
+          id: id,
+          type: type,
+          participant: user[0],
+        };
+        this.editEventService.signOutVirtualParticipant(data).subscribe(
+          (data) => {
+            if (data) {
+              this.helpService.updateSuccessMessage();
+              this.initialization();
+            }
+          },
+          (error) => {
+            console.log(error);
+          }
+        );
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 }

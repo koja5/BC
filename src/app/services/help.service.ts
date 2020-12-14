@@ -354,35 +354,27 @@ export class HelpService {
     return null;
   }
 
-  signInVirtualParticipant(type, id) {
-    this.profileService.getUserInfoSHA1(localStorage.getItem("id")).subscribe(
-      (user) => {
-        const data = {
-          id: id,
-          type: type,
-          participant: user[0],
-        };
-        this.editEventService.signInVirtualParticipant(data).subscribe(
-          (data) => {
-            if (data) {
-              this.updateSuccessMessage();
-              return 2;
-            } else {
-              this.updateErrorMessage();
-              return 0;
-            }
-          },
-          (error) => {
-            console.log(error);
-            return 0;
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-        return 0;
-      }
-    );
-    return 0;
+  setRootPath(path) {
+    sessionStorage.setItem('root-path', path);
+  }
+
+  getRootPath() {
+    return sessionStorage.getItem('room-path');
+  }
+
+  setPreviousPath(path) {
+    sessionStorage.setItem('previous-path', path);
+  }
+
+  getPreviousPath() {
+    return sessionStorage.getItem('previous-path');
+  }
+
+  setLanguage(language) {
+    localStorage.setItem('language', JSON.stringify(language));
+  }
+
+  getLanguage() {
+    return JSON.parse(localStorage.getItem('language'));
   }
 }

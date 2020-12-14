@@ -1,4 +1,4 @@
-<div class="loader4 loading" *ngIf="data === undefined"></div>
+<div class="loader4 loading" *ngIf="!data"></div>
 
 <div *ngIf="data && language">
   <div class="profile-cover text-center" style="position: relative;">
@@ -17,7 +17,7 @@
                 {{data.time | date: 'HH:mm'}}</p>
             </div>
             <div class="profile-right ml-auto">
-              <a class="btn btn-success mr-1" target="_blank" (click)="goToRoom()">
+              <a *ngIf="registerLikeSpeaker || registerLikeListener" class="btn btn-success mr-1" target="_blank" (click)="goToRoom()">
                 &nbsp; <span class="fa fa-object-group"></span> {{language.virtualEventDetailsGoToVideoRoom}} &nbsp;
               </a>
               <button *ngIf="owner" type="button" class="btn btn-gold mr-1" (click)="setReminder()">
@@ -55,7 +55,7 @@
               <h6 class="m-0 font-weight-bold">{{language.virtualEventSpeakersTitle}}</h6>
             </div>
             <div class="box-body row">
-              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.speakersConfirm">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.speakers">
                 <div class="our-team">
                   <div class="pic">
                     <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
@@ -70,7 +70,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="data.speakersConfirm.length === 0" class="no-speakers">
+              <div *ngIf="data.speakers.length === 0" class="no-speakers">
                 <span class="fa fa-microphone-slash"></span>
                 <h5>{{language.virtualEventNoSpeakers}}</h5>
               </div>
@@ -82,7 +82,7 @@
               <h6 class="m-0 font-weight-bold">{{language.virtualEventListenersTitle}}</h6>
             </div>
             <div class="box-body row">
-              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.listenersConfirm">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.listeners">
                 <div class="our-team">
                   <div class="pic">
                     <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
@@ -97,7 +97,7 @@
                   </div>
                 </div>
               </div>
-              <div *ngIf="data.listenersConfirm.length === 0" class="no-speakers">
+              <div *ngIf="data.listeners.length === 0" class="no-speakers">
                 <span class="fa fa-headphones"></span>
                 <h5>{{language.virtualEventNoListeners}}</h5>
               </div>
@@ -153,29 +153,52 @@
           </div>
         </aside>
         <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-          <button type="button" class="btn btn-lg btn-block btn-default mb-3 owner-button" *ngIf="owner" disabled> <i
+          <!-- INFO LABEL -->
+          <button type="button" class="btn btn-lg btn-block btn-default owner-button" *ngIf="owner" disabled> <i
               class="fa fa-check"></i> {{language.virtualEventDetailsOwner}} </button>
-          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual mb-3" *ngIf="registerLikeSpeaker === 1"
-            (click)="signInVirtualParticipant('speaker')">
-            <i class="fa fa-check"></i> {{language.signInLikeVirtualSpeaker}}
-          </button>
-          <button type="button" class="btn btn-lg btn-block btn-signed-virtual mb-3" *ngIf="registerLikeSpeaker === 2">
+          <button type="button" class="btn btn-lg btn-block btn-default" *ngIf="data.isPrivate" disabled> <i
+              class="fa fa-lock"></i> {{language.virtualEventDetailsPrivateInfo}} </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed-virtual" *ngIf="registerLikeSpeaker === 1"
+            disabled>
             <i class="fa fa-check-circle-o"></i> {{language.signedInLikeVirtualSpeaker}}
           </button>
-          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual-listener mb-3"
-            *ngIf="registerLikeListener === 1" (click)="signInVirtualParticipant('listener')">
-            <i class="fa fa-check"></i> {{language.signInLikeVirtualListener}}
-          </button>
-          <button type="button" class="btn btn-lg btn-block btn-signed-virtual-listener mb-3"
-            *ngIf="registerLikeListener === 2">
+          <button type="button" class="btn btn-lg btn-block btn-signed-virtual-listener"
+            *ngIf="registerLikeListener === 1">
             <i class="fa fa-check-circle-o"></i> {{language.signedInLikeVirtualListener}}
           </button>
-          <div class="box shadow-sm border rounded bg-white mb-3">
+          <!-- END INFO LABEL-->
+          <!-- ACTIONS BUTTON -->
+          <!-- SPEAKERS BUTTON -->
+          <button type="button" class="btn btn-lg btn-sign-in-virtual full-width mb-2"
+            *ngIf="registerLikeSpeaker === 0 && registerLikeListener !== 1 && (!data.isPrivate && (data.speakers.length < data.numberOfSpeakers || !data.numberOfSpeakers))"
+            (click)="openDialogSignInOutAction(false, false, 'signInVirtualParticipant', false, 'speaker')">
+            <i class="fa fa-microphone"></i> {{language.signInLikeVirtualSpeaker}}
+          </button>
+          <button type="button" class="btn btn-lg btn-danger full-width mb-2" *ngIf="registerLikeSpeaker === 1"
+            (click)="openDialogSignInOutAction(false, false, 'signOutVirtualParticipant', false, 'speaker')">
+            <i class="fa fa-remove"></i> {{language.signOutLikeVirtualSpeaker}}
+          </button>
+          <!-- END SPEAKERS BUTTON -->
+          <!-- LISTENERS BUTTON-->
+          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual-listener full-width mb-2"
+            *ngIf="registerLikeListener === 0 && registerLikeSpeaker !== 1 && (!data.isPrivate && (data.listeners.length < data.numberOfListeners || !data.numberOfListeners))"
+            (click)="openDialogSignInOutAction(false, false, 'signInVirtualParticipant', false, 'listener')">
+            <i class="fa fa-headphones"></i> {{language.signInLikeVirtualListener}}
+          </button>
+
+          <button type="button" class="btn btn-lg btn-block btn-danger full-width mb-2"
+            *ngIf="registerLikeListener === 1"
+            (click)="openDialogSignInOutAction(false, false, 'signOutVirtualParticipant', false, 'listener')">
+            <i class="fa fa-remove"></i> {{language.signOutLikeVirtualListener}}
+          </button>
+          <!-- END LISTENERS BUTTON -->
+          <!-- END ACTIONS BUTTON-->
+          <div class="box shadow-sm border rounded bg-white mt-3 mb-3">
             <div class="box-title border-bottom p-3">
               <h6 class="m-0 font-weight-bold">{{language.lifeEventEditLocationOnlineTitle}}</h6>
             </div>
             <div class="row border-bottom pt-3 pb-3">
-              <div class="col-6 number-container" (click)="showSpeakersConfirm()">
+              <div class="col-6 number-container" (click)="showSpeakersGoing()">
                 <div class="show-number-going">
                   <div>
                     <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersTotal}}"
@@ -185,12 +208,12 @@
                     </h5> /
                     <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersGoing}}"
                       style="display: inline; color: green;">
-                      {{data.speakersConfirm.length}}</h5>
+                      {{data.speakers.length}}</h5>
                   </div>
                   <h6>{{language.lifeEventEditLocationVirtualSpeakers}}</h6>
                 </div>
               </div>
-              <div class="col-6 number-container" (click)="showListenersConfirm()">
+              <div class="col-6 number-container" (click)="showListenersGoing()">
                 <div>
                   <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersTotal}}"
                     style="display: inline; color: #1a5ca0;">
@@ -198,7 +221,7 @@
                     <span *ngIf="data.numberOfListeners">{{data.numberOfListeners}}</span></h5> /
                   <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersGoing}}"
                     style="display: inline; color: green;">
-                    {{data.listenersConfirm.length}}</h5>
+                    {{data.listeners.length}}</h5>
                 </div>
                 <h6>{{language.lifeEventEditLocationVirtualListeners}}</h6>
               </div>
@@ -245,7 +268,8 @@
     </kendo-multiselect>
 
     <div class="full-width mt-3">
-      <input type="checkbox" class="k-checkbox" (click)="selectAllMyFriends()" [checked]="helpService.isSelectedAllFriends(selectedInviteFriends, currentLoadData)">
+      <input type="checkbox" class="k-checkbox" (click)="selectAllMyFriends()"
+        [checked]="helpService.isSelectedAllFriends(selectedInviteFriends, currentLoadData)">
       <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
     </div>
     <button class="btn btn-outline-primary btn-sm pl-4 pr-4 mt-5 margin-auto" type="button"
@@ -335,7 +359,10 @@
 <kendo-window [title]="language.reminderFriendsForEventSendReminder" *ngIf="reminderFriendsWindow"
   [width]="windowWidth ? windowWidth : 480" [height]="windowHeight ? windowHeight : 325"
   (close)="reminderFriendsWindow = false">
-  <div class="row">
+
+  <div class="loader4 loading" *ngIf="!allMyConnection"></div>
+
+  <div class="row" *ngIf="allMyConnection">
     <kendo-multiselect [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedReminderFriends"
       [valueField]="'id'" [textField]="'fullname'" [autoClose]="false"
       [placeholder]="language.reminderFriendsForEventSearchGoingFriends" (filterChange)="handleFilter($event)"
@@ -371,3 +398,10 @@
     </li>
   </ul>
 </kendo-window>
+
+<!-- POPUP DIALOG -->
+
+<app-popup *ngIf="popupInd" [title]="popupTitle" [ind]="popupInd" [functionNameYes]="functionNameYes"
+  [functionNameNo]="functionNameNo" (answerEmitter)="OpenDialogEvent($event)"></app-popup>
+
+<!-- END POPUP DIALOG -->

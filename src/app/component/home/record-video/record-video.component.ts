@@ -9,6 +9,7 @@ import {
 } from "@angular/core";
 import * as RecordRTC from "recordrtc";
 import { WebcamUtil } from "ngx-webcam";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-record-video",
@@ -29,14 +30,14 @@ export class RecordVideoComponent implements OnInit {
   @ViewChild("videoPreview")
   video: ElementRef<HTMLVideoElement>;
 
-  constructor() {
+  constructor(private helpService: HelpService) {
     /*console.log(document.getElementById("video-preview"));
     console.log(document.querySelector('video'));
     this.video = document.getElementById("video-preview");*/
   }
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;

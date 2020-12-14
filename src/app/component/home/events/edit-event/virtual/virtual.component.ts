@@ -28,12 +28,17 @@ export class VirtualComponent implements OnInit {
   public currentLoadData: any;
   public showPreview = false;
   public organizer: any;
+  public popupInd = false;
+  public popupTitle: any;
+  public popupText: any;
+  public functionNameYes: string;
+  public functionNameNo: string;
 
   constructor(
     private connectionService: ConnectionService,
     private editEventService: EditEventService,
     private profile: ProfileService,
-    private helpService: HelpService,
+    public helpService: HelpService,
     private router: Router
   ) {}
 
@@ -45,7 +50,6 @@ export class VirtualComponent implements OnInit {
     this.data.speakers = [];
     this.data.listeners = [];
     this.getInitialData();
-    this.getAllMyConnection();
   }
 
   getInitialData() {
@@ -58,6 +62,7 @@ export class VirtualComponent implements OnInit {
         });
         this.data = data;
         this.convertToNeededType();
+        this.getAllMyConnection();
       });
     } else {
       this.profile
@@ -67,6 +72,7 @@ export class VirtualComponent implements OnInit {
           this.organizators[0].id = sha1(this.organizators[0].id.toString());
           this.data.organizer = this.organizators[0].fullname;
         });
+      this.getAllMyConnection();
     }
   }
 
@@ -111,7 +117,10 @@ export class VirtualComponent implements OnInit {
   removeOrganizatorFromSpeakers(id_user) {
     let index = -1;
     for (let i = 0; i < this.data.speakers.length; i++) {
-      if ((sha1(this.data.speakers[i].id.toString()) === id_user) || (this.data.speakers[i].id === id_user)) {
+      if (
+        sha1(this.data.speakers[i].id.toString()) === id_user ||
+        this.data.speakers[i].id === id_user
+      ) {
         index = i;
         break;
       }
@@ -125,10 +134,22 @@ export class VirtualComponent implements OnInit {
     this.connectionService
       .getAllMyConnections(localStorage.getItem("id"))
       .subscribe((data) => {
-        this.allMyConnectionSpeakers = data;
-        this.allMyConnectionListeners = data;
+        this.allMyConnectionSpeakers = JSON.parse(JSON.stringify(data));
+        this.allMyConnectionListeners = JSON.parse(JSON.stringify(data));
         this.currentLoadData = data;
+        this.disabledInitialization();
       });
+  }
+
+  disabledInitialization() {
+    this.allMyConnectionSpeakers = this.throwOutFromArray(
+      this.allMyConnectionSpeakers,
+      this.data.listeners
+    );
+    this.allMyConnectionListeners = this.throwOutFromArray(
+      this.allMyConnectionListeners,
+      this.data.speakers
+    );
   }
 
   handleFilterSpeakers(value) {
@@ -150,10 +171,25 @@ export class VirtualComponent implements OnInit {
   speakersChange(event) {
     console.log(event);
     this.data.speakers = event;
+    this.allMyConnectionListeners = this.throwOutFromArray(
+      this.allMyConnectionListeners,
+      event
+    );
+  }
+
+  listenerChange(event) {
+    console.log(event);
+    this.data.listeners = event;
+    this.allMyConnectionSpeakers = this.throwOutFromArray(
+      this.allMyConnectionSpeakers,
+      event
+    );
   }
 
   isItemSelectedListeners(itemText: string): boolean {
-    return this.data.listeners.some((item) => item.id === itemText);
+    return this.data.listeners.some(
+      (item) => item.id === itemText && !item.disabled
+    );
   }
 
   convertToNeededType() {
@@ -179,18 +215,80 @@ export class VirtualComponent implements OnInit {
   }
 
   selectAllForSpeakers() {
-    if (this.data.speakers.length !== this.currentLoadData.length) {
-      this.data.speakers = this.currentLoadData;
+    if (this.data.speakers.length === 0) {
+      for (let i = 0; i < this.allMyConnectionSpeakers.length; i++) {
+        if (!this.allMyConnectionSpeakers[i].disabled) {
+          this.allMyConnectionListeners[i]["disabled"] = true;
+          this.data.speakers.push(this.allMyConnectionSpeakers[i]);
+        }
+      }
     } else {
+      for (let i = 0; i < this.allMyConnectionListeners.length; i++) {
+        this.allMyConnectionListeners[i]["disabled"] = false;
+      }
       this.data.speakers = [];
     }
   }
 
   selectAllForListeners() {
-    if (this.data.listeners.length !== this.currentLoadData.length) {
-      this.data.listeners = this.currentLoadData;
+    if (this.data.listeners.length === 0) {
+      for (let i = 0; i < this.allMyConnectionListeners.length; i++) {
+        if (!this.allMyConnectionListeners[i].disabled) {
+          this.allMyConnectionSpeakers[i]["disabled"] = true;
+          this.data.listeners.push(this.allMyConnectionListeners[i]);
+        }
+      }
     } else {
+      for (let i = 0; i < this.allMyConnectionSpeakers.length; i++) {
+        this.allMyConnectionSpeakers[i]["disabled"] = false;
+      }
       this.data.listeners = [];
     }
+  }
+
+  openDialog(title = false, text = false, functionNameYes, functionNameNo) {
+    this.popupTitle = title;
+    this.popupText = text;
+    this.popupInd = true;
+    this.functionNameYes = functionNameYes;
+    this.functionNameNo = functionNameNo;
+  }
+
+  OpenDialogEvent(event) {
+    if (event.answer) {
+      if (event.functionNameYes) {
+        this[event.functionNameYes]();
+      }
+    } else {
+      if (event.functionNameNo) {
+        this[event.functionNameNo]();
+      }
+    }
+    this.popupInd = false;
+  }
+
+  cancelChanges() {
+    if (this.id !== "create") {
+      this.router.navigate([
+        "/home/main/event/virtual-event-details/" + this.data._id,
+      ]);
+    } else {
+      this.router.navigate(["/home/main/event/all"]);
+    }
+  }
+
+  throwOutFromArray(allData, throwData) {
+    for (let i = 0; i < throwData.length; i++) {
+      for (let j = 0; j < allData.length; j++) {
+        if (throwData[i].id == allData[j].id) {
+          allData[j]["disabled"] = true;
+        }
+      }
+    }
+    return allData;
+  }
+
+  itemDisabled(itemArgs: { dataItem: any; index: number }): boolean {
+    return itemArgs.dataItem.disabled;
   }
 }

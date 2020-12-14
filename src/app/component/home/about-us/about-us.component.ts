@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { HelpService } from 'src/app/services/help.service';
 import { MessageService } from 'src/app/services/message.service';
 
 @Component({
@@ -9,9 +10,9 @@ import { MessageService } from 'src/app/services/message.service';
 export class AboutUsComponent implements OnInit {
   public language: any;
 
-  constructor(private message: MessageService) {}
+  constructor(private helpService: HelpService) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
   }
 }

@@ -3,6 +3,7 @@ import { ConnectionService } from "src/app/services/connection.service";
 import { Router } from "@angular/router";
 import * as sha1 from "sha1";
 import { UserModel } from 'src/app/models/user-model';
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-connection",
@@ -22,7 +23,7 @@ export class ConnectionComponent implements OnInit {
   public promoWindow = false;
   public selectedMember = new UserModel();
 
-  constructor(private service: ConnectionService, private router: Router) {}
+  constructor(private service: ConnectionService, private router: Router, private helpService: HelpService) {}
 
   ngOnInit() {
     if (window.innerWidth > 1000) {
@@ -31,7 +32,7 @@ export class ConnectionComponent implements OnInit {
       this.height = window.innerHeight - 121;
     }
     this.height += "px";
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
   }
 

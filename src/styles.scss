@@ -1352,8 +1352,8 @@ mat-video .videoplayer {
 
 .btn-sign-in-virtual {
   color: #fff;
-  background-color: #cc5633;
-  border-color: #d6491f;
+  background-color: #8e8b8b;
+  border-color: #8e8b8b;
 }
 
 .btn-signed-virtual-listener {
@@ -1362,8 +1362,8 @@ mat-video .videoplayer {
 
 .btn-sign-in-virtual-listener {
   color: #fff;
-  background-color: #ab7f04;
-  border-color: #ab7f04;
+  background-color: #8e8b8b;
+  border-color: #8e8b8b;
 }
 
 
@@ -1422,8 +1422,10 @@ color: #fff;
 margin-bottom: 5px;
 }
 .our-team img{
-width: 100%;
-height: 100%;
+/*width: 100%;
+height: 100%;*/
+  height: 170px;
+  width: 165px;
 }
 .our-team .content{
 background: rgba(0, 0, 0, 0.6);

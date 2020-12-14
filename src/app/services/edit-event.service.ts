@@ -33,6 +33,10 @@ export class EditEventService {
     return this.http.post("/api/signInVirtualParticipant", data).map((res) => res);
   }
 
+  signOutVirtualParticipant(data) {
+    return this.http.post("/api/signOutVirtualParticipant", data).map((res) => res);
+  }
+
   pushNewParticipant(data) {
     return this.http.post("/api/pushNewParticipant", data).map((res) => res);
   }

@@ -1910,6 +1910,12 @@
       "virtualEventEditSave": {
         "type": "string"
       },
+      "virtualEventEditCancel": {
+        "type": "string"
+      },
+      "virtualEventEditPrivateOrNot": {
+        "type": "string"
+      },
       "virtualEventEditPreview": {
         "type": "string"
       },
@@ -2024,6 +2030,9 @@
       "virtualEventDetailsLifeQuestionCheckBox": {
         "type": "string"
       },
+      "virtualEventDetailsPrivateInfo": {
+        "type": "string"
+      },
       "eventChargeableTitle": {
         "type": "string"
       },
@@ -2077,7 +2086,13 @@
       "signInLikeVirtualSpeaker": {
         "type": "string"
       },
+      "signOutLikeVirtualSpeaker": {
+        "type": "string"
+      },
       "signInLikeVirtualListener": {
+        "type": "string"
+      },
+      "signOutLikeVirtualListener": {
         "type": "string"
       },
       "signedInLikeVirtualSpeaker": {
@@ -5505,6 +5520,9 @@
               "key": "virtualEventEditSave"
             },
             {
+              "key": "virtualEventEditCancel"
+            },
+            {
               "key": "virtualEventEditPreview"
             }
           ]
@@ -5514,6 +5532,7 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [
+            { "key": "virtualEventEditPrivateOrNot" },
             {
               "key": "virtualEventDetailsDate"
             },
@@ -5678,6 +5697,19 @@
             {
               "key": "eventChargeableQuestion"
             }
+          ]
+        },
+        {
+          "type": "div",
+          "display": "flex",
+          "flex-direction": "row",
+          "items": [
+            {
+              "key": "virtualEventDetailsPrivateInfo"
+            },
+            {},
+            {},
+            {}
           ]
         }
       ]
@@ -5855,7 +5887,7 @@
               "key": "signInLikeVirtualListener"
             },
             {
-              "key": "signInLikeVirtualSpeaker"
+              "key": "signOutLikeVirtualListener"
             }
           ]
         },
@@ -5864,6 +5896,10 @@
           "display": "flex",
           "flex-direction": "row",
           "items": [
+            {
+              "key": "signInLikeVirtualSpeaker"
+            },
+            { "key": "signOutLikeVirtualSpeaker" },
             {
               "key": "signedInLikeVirtualListener"
             },

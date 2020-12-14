@@ -3,6 +3,7 @@ import { FacturaModel } from "src/app/models/factura-model";
 import { PremiumService } from "src/app/services/premium.service";
 import { ProfileService } from "src/app/services/profile.service";
 import { Router } from "@angular/router";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-premium",
@@ -21,11 +22,12 @@ export class PremiumComponent implements OnInit {
   constructor(
     private service: PremiumService,
     private profileService: ProfileService,
-    private router: Router
+    private router: Router,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.id = localStorage.getItem("id");
   }
 

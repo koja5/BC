@@ -10,6 +10,7 @@ import { LoginService } from "src/app/services/login.service";
 import { InviteModel } from "src/app/models/invite-model";
 import { MailService } from "src/app/services/mail.service";
 import { ToastrService } from "ngx-toastr";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-recommendation-button",
@@ -38,7 +39,8 @@ export class RecommendationButtonComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private mailService: MailService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
@@ -46,7 +48,7 @@ export class RecommendationButtonComponent implements OnInit {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;
     }
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.me = JSON.parse(localStorage.getItem("user"));
     this.recommendationData.message = this.language.recommendedMessage;
   }

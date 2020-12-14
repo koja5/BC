@@ -4,6 +4,7 @@ import { MessageModel } from "src/app/models/message-model";
 import { FindConnectionService } from "src/app/services/find-connection.service";
 import * as sha1 from "sha1";
 import { MessageService } from "src/app/services/message.service";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-message",
@@ -35,7 +36,8 @@ export class MessageComponent implements OnInit {
   constructor(
     private service: MessageChatService,
     private findConnection: FindConnectionService,
-    private message: MessageService
+    private message: MessageService,
+    private helpService: HelpService
   ) {
     this.service
       .newUserJoined()
@@ -76,7 +78,7 @@ export class MessageComponent implements OnInit {
     this.height += "px";
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.messageData = null;
     this.initilization();
     // this.join();

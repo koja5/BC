@@ -146,9 +146,7 @@ export class CustomGridComponent implements OnInit {
     this.height = window.innerHeight - 81;
     this.height += "px";
 
-    if (localStorage.getItem("language") !== null) {
-      this.language = JSON.parse(localStorage.getItem("language"));
-    }
+    this.language = this.helpService.getLanguage();
 
     if (localStorage.getItem("theme") !== null) {
       this.theme = localStorage.getItem("theme");

@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-impressum",
@@ -7,9 +8,9 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ImpressumComponent implements OnInit {
   public language: any;
-  constructor() {}
+  constructor(private helpService: HelpService) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
   }
 }

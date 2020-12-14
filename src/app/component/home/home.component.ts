@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit {
     }
     this.height += "px";
     this.id = localStorage.getItem("id");
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.initialization();
     this.selectedUser = null;
 

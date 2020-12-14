@@ -2,7 +2,7 @@
   <div class="main-left">
     <div class="main-videos">
       <div id="video-grid">
-        <video id="local-video" [srcObject]="localStream" autoplay muted="muted" volume="0" class="embed-responsive-item col-xs-6 col-md-4 video-stream">
+        <video *ngIf="localStream" id="local-video" [srcObject]="localStream" autoplay muted="muted" volume="0" class="embed-responsive-item col-xs-6 col-md-4 video-stream">
         </video>
         <video *ngFor="let item of otherStream" id="{{item.socket_id}}" [srcObject]="item.stream" autoplay class="embed-responsive-item col-xs-6 col-md-4 video-stream">
         </video>
@@ -10,11 +10,11 @@
     </div>
     <div class="main-controls">
       <div class="main-controls-block">
-        <div (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button {{microphoneStatus}}">
+        <div *ngIf="localStream" (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button {{microphoneStatus}}">
           <i class="fa fa-microphone"></i>
           <span class="hidden-xs">{{language.chatRoomMute}}</span>
         </div>
-        <div (click)="enableDisableVideo()" class="main-controls-button main-video_button {{videoStatus}}">
+        <div *ngIf="localStream" (click)="enableDisableVideo()" class="main-controls-button main-video_button {{videoStatus}}">
           <i class="fa fa-camera"></i>
           <span class="hidden-xs">{{language.chatRoomStopVideo}}</span>
         </div>

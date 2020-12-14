@@ -61,7 +61,7 @@ export class EditProfileComponent implements OnInit {
 
   ngOnInit() {
     this.id = localStorage.getItem("id");
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;

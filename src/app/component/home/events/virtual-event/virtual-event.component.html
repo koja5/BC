@@ -1,5 +1,5 @@
 <div class="event-container">
-  <p class="type-of-event-virtual">{{language.lifeEventVirtual}}</p>
+  <p class="type-of-event-virtual">{{language.lifeEventVirtual}} <span *ngIf="item.isPrivate" class="fa fa-lock"></span></p>
   <img src="../../../../assets/img/virtual_cover.jpg" class="no-photo-event">
   <div class="date-ribbon">
     <h2>{{months}}</h2>

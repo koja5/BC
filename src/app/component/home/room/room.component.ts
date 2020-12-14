@@ -67,13 +67,18 @@ export class RoomComponent implements OnInit {
           "SshzFbYDzE17qHmX58sSZrVQjS--IAIUdEq439QvsC0akVkxpJ0YuLkr5oUNXPD0AAAAAF-tBj5rb2ph",
         credential: "00ca4750-24cd-11eb-932a-0242ac140004",
         urls: [
-          "turn:eu-turn3.xirsys.com:80?transport=udp",
-          "turn:eu-turn3.xirsys.com:3478?transport=udp",
+          "turn:eu-turn3.xirsys.com:80",
+          "turn:eu-turn3.xirsys.com:3478",
           "turn:eu-turn3.xirsys.com:80?transport=tcp",
           "turn:eu-turn3.xirsys.com:3478?transport=tcp",
           "turns:eu-turn3.xirsys.com:443?transport=tcp",
           "turns:eu-turn3.xirsys.com:5349?transport=tcp",
         ],
+      },
+      {
+        username: "kojaaa95@gmail.com",
+        credential: "koja1995",
+        urls: ["turn:numb.viagenie.ca:3478?transport=tcp"],
       },
     ],
   };
@@ -116,7 +121,7 @@ export class RoomComponent implements OnInit {
     // this.redirectIfNotHttps();
     this.id = this.route.snapshot.params.id;
     this.roomName = this.route.snapshot.params.id;
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     this.checkRezolution();
     this.getEventData(this.id);
     this.initializeMessage();
@@ -153,30 +158,54 @@ export class RoomComponent implements OnInit {
       this.chatStatus = "turn-off";
     } else {
       this.showChat = true;
-      this.chatStatus = '';
+      this.chatStatus = "";
     }
   }
 
-  initializeSpeakers() {
+  initializeSpeakers(indicator) {
     // enabling the camera at startup
 
-    navigator.mediaDevices
-      .getUserMedia(this.constraints)
-      .then((stream) => {
-        console.log("Received local stream");
+    if (indicator) {
+      navigator.mediaDevices
+        .getUserMedia(this.constraints)
+        .then((stream) => {
+          console.log("Received local stream");
 
-        // this.localVideo.nativeElement.srcObject = stream;
-        // stream.getAudioTracks()[0].enabled = false;
-        // this.otherStream.push(stream);
-        // this.myIndex = this.otherStream.length - 1;
-        this.localStream = stream;
-        this.mutedAudio();
-        this.socket = io(this.url);
-        // this.socket = io("http://localhost:3000");
+          // this.localVideo.nativeElement.srcObject = stream;
+          // stream.getAudioTracks()[0].enabled = false;
+          // this.otherStream.push(stream);
+          // this.myIndex = this.otherStream.length - 1;
+          this.localStream = stream;
+          this.mutedAudio();
+          this.socket = io(this.url);
+          // this.socket = io("http://localhost:3000");
 
-        this.init();
-      })
-      .catch((e) => alert(`getusermedia error ${e.name}`));
+          /*this.socket.on("getStartConnection", (payload) => {
+          console.log(payload);
+          let peer = new SimplePeer({
+            initiator: true,
+            stream: stream,
+          });
+          peer.on("signal", (data) => {
+            this.socket.emit("sendReceiveConnection", {
+              signal: data,
+              listenId: payload.listenId,
+            });
+          });
+          this.socket.on("signalListener", (data) => {
+            peer.signal(data);
+          });
+        });*/
+
+          this.init();
+        })
+        .catch((e) => alert(`getusermedia error ${e.name}`));
+    } else {
+      // this.socket = io("http://localhost:3000");
+      this.socket = io(this.url);
+      this.localStream = false;
+      this.init();
+    }
   }
 
   mutedAudio() {
@@ -229,7 +258,7 @@ export class RoomComponent implements OnInit {
           });
         });
       });
-      this.socket.on("signal", (data) => {
+      this.socket.on("signalListener", (data) => {
         peer.signal(data);
       });
     });
@@ -266,20 +295,30 @@ export class RoomComponent implements OnInit {
   initializeListeners(peerId) {
     console.log(peerId);
 
-    this.attendee.on("signal", (data) => {
-      this.socket.emit("signal", data);
-      // attendee.signal(data.signal);
+    // this.socket = io("http://localhost:3000");
+    this.socket = io(this.url);
+
+    /*this.socket.on("signalListener", (data) => {
+      this.attendee.signal(data);
+      setTimeout(() => {}, 250);
+    });*/
+
+    // Get remote video stream and display it
+    this.attendee.on("stream", (stream) => {
+      console.log(stream);
+      // this.otherStream.push(stream);
+      this.createVideo(stream);
     });
 
     this.socket.on("getReceiveConnection", (data) => {
       console.log("getReceiveConnection");
+      console.log(data);
 
-      // Get remote video stream and display it
-      this.attendee.on("stream", (stream) => {
-        console.log(stream);
-        // this.otherStream.push(stream);
-        this.createVideo(stream);
+      this.attendee.on("signal", (data) => {
+        this.socket.emit("signalListener", data);
+        // attendee.signal(data.signal);
       });
+
       this.attendee.signal(data.signal);
       /*setTimeout(() => {
         this.attendee.signal(data.signal);}, 250);*/
@@ -304,7 +343,7 @@ export class RoomComponent implements OnInit {
           this.helpService.convertToSHA(data["speakers"][i].id) ===
           localStorage.getItem("id")
         ) {
-          this.initializeSpeakers();
+          this.initializeSpeakers(true);
           break;
         }
       }
@@ -313,9 +352,7 @@ export class RoomComponent implements OnInit {
           this.helpService.convertToSHA(data["listeners"][i].id) ===
           localStorage.getItem("id")
         ) {
-          this.initializeListeners(
-            this.helpService.convertToSHA(data["listeners"][i].id)
-          );
+          this.initializeSpeakers(false);
           break;
         }
       }

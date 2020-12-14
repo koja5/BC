@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { Subject, Observable } from "rxjs";
 import { WebcamImage, WebcamInitError, WebcamUtil } from "ngx-webcam";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-take-camera",
@@ -29,10 +30,10 @@ export class TakeCameraComponent implements OnInit {
   public webcamImage: WebcamImage = null;
   public language: any;
 
-  constructor() {}
+  constructor(private helpService: HelpService) {}
 
   ngOnInit() {
-    this.language = JSON.parse(localStorage.getItem("language"));
+    this.language = this.helpService.getLanguage();
     WebcamUtil.getAvailableVideoInputs().then(
       (mediaDevices: MediaDeviceInfo[]) => {
         this.multipleWebcamsAvailable = mediaDevices && mediaDevices.length > 1;
