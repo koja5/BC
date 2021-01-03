@@ -26,6 +26,7 @@ import { ImpressumComponent } from './component/templates/impressum/impressum.co
 import { RecommendedAnswerComponent } from './component/templates/recommended-answer/recommended-answer.component';
 import { NotFoundComponent } from "./component/templates/not-found/not-found.component";
 import { SuccessComponent } from './component/templates/success/success.component';
+import { DymanicElementsModule } from "./component/dynamic-elements/dymanic-elements.module";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,8 @@ import { SuccessComponent } from './component/templates/success/success.componen
     LoadingBarRouterModule,
     LayoutModule,
     SplitterModule,
-    DialogsModule
+    DialogsModule,
+    DymanicElementsModule
   ],
   providers: [
     LoggedGuard,

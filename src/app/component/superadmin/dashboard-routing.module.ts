@@ -5,6 +5,7 @@ import { TranslationComponent } from './translation/translation.component';
 import { MembersComponent } from './members/members.component';
 import { EditTranslationComponent } from './translation/edit/edit-translation.component';
 import { EventComponent } from './parameters/event/event.component';
+import { TodoComponent } from './todo/todo.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,10 @@ const routes: Routes = [
         path: 'event',
         component: EventComponent
       },
+      {
+        path: 'todo',
+        component: TodoComponent
+      }
     ]
   }
 ];
