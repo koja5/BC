@@ -6,11 +6,12 @@ import { CookieService } from "ng2-cookies";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { MailService } from "src/app/services/mail.service";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-login",
   templateUrl: "./login.component.html",
-  styleUrls: ["./login.component.scss"]
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent implements OnInit {
   public currentForm = "login";
@@ -23,13 +24,16 @@ export class LoginComponent implements OnInit {
   public notExistMail = false;
   public notEqualPassword = false;
   public mailSend = false;
+  public agree = false;
+  public notAgree = false;
 
   constructor(
     private service: LoginService,
     public router: Router,
     public cookie: CookieService,
     public message: MessageService,
-    public mailService: MailService
+    public mailService: MailService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
@@ -37,19 +41,42 @@ export class LoginComponent implements OnInit {
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe(data => {
-      this.service
-        .getTranslationByCountryCode(data["countryCode"])
-        .subscribe(language => {
-          if (language !== null) {
-            this.language = language["config"];
-          } else {
-            this.service.getDefaultLanguage().subscribe(language => {
+    this.service.checkCountryLocation().subscribe(
+      (data) => {
+        this.service.getTranslationByCountryCode(data["countryCode"]).subscribe(
+          (language) => {
+            if (language !== null) {
               this.language = language["config"];
-            });
+              this.helpService.setLanguage(this.language);
+            } else {
+              this.service.getDefaultLanguage().subscribe(
+                (language) => {
+                  if (language !== null) {
+                    this.language = language["config"];
+                    this.helpService.setLanguage(this.language);
+                  } else {
+                    this.router.navigate(["/maintence"]);
+                  }
+                },
+                (error) => {
+                  this.router.navigate(["/maintence"]);
+                }
+              );
+            }
+          },
+          (error) => {
+            this.router.navigate(["/maintence"]);
           }
+        );
+      },
+      (error) => {
+        console.log(error);
+        this.service.getDefaultLanguage().subscribe((language) => {
+          this.language = language["config"];
+          this.helpService.setLanguage(this.language);
         });
-    });
+      }
+    );
   }
 
   changeForm(form) {
@@ -58,23 +85,25 @@ export class LoginComponent implements OnInit {
 
   login(form) {
     console.log(this.data);
-    this.service.login(this.data).subscribe(data => {
-      console.log(data);
-      if (data["login"]) {
-        // localStorage.setItem('id', sha1(1));
-        const user = {
-          fullname: data["user"]["fullname"],
-          type: data["user"]["type"],
-          image: data["user"]["image"]
-        };
-        localStorage.setItem("id", sha1(data["user"]["id"].toString()));
-        localStorage.setItem("user", JSON.stringify(user));
-        this.cookie.set("user", data["user"]["type"], 24, "/");
-        this.router.navigate(["home"]);
-      } else {
-        this.notCorrent = true;
-      }
-    });
+    if (this.data.email && this.data.password) {
+      this.service.login(this.data).subscribe((data) => {
+        console.log(data);
+        if (data["login"]) {
+          // localStorage.setItem('id', sha1(1));
+          const user = {
+            fullname: data["user"]["fullname"],
+            type: sha1(data["user"]["type"]),
+            image: data["user"]["image"],
+          };
+          localStorage.setItem("id", sha1(data["user"]["id"].toString()));
+          localStorage.setItem("user", JSON.stringify(user));
+          this.cookie.set("user", sha1(data["user"]["type"]), 24, "/");
+          this.router.navigate(["home"]);
+        } else {
+          this.notCorrent = true;
+        }
+      });
+    }
   }
 
   signup(form) {
@@ -82,8 +111,11 @@ export class LoginComponent implements OnInit {
     this.notEqualPassword = false;
     if (this.data.password !== this.data.confirmPassword) {
       this.notEqualPassword = true;
+    } else if (!this.agree) {
+      this.notAgree = true;
     } else {
-      this.service.signUp(this.data).subscribe(data => {
+      this.notAgree = false;
+      this.service.signUp(this.data).subscribe((data) => {
         console.log(data);
         if (data["success"]) {
           this.router.navigate(["/login/choose-director/" + data["id"]]);
@@ -107,13 +139,27 @@ export class LoginComponent implements OnInit {
   forgotPassword() {
     const thisObject = this;
     if (this.data.email !== "") {
-      this.service.forgotPassword(this.data).subscribe(data => {
+      this.service.forgotPassword(this.data).subscribe((data) => {
         setTimeout(() => {
           console.log(data);
           if (data["exist"]) {
+            thisObject.data["language"] = {
+              forgotMailSubject: this.language.forgotMailSubject,
+              forgotMailBCITitle: this.language.forgotMailBCITitle,
+              forgotMailRegardsFirst: this.language.forgotMailRegardsFirst,
+              forgotMailMessage: this.language.forgotMailMessage,
+              forgotMailConfirmEmailButton: this.language
+                .forgotMailConfirmEmailButton,
+              forgotMailRegardsEnd: this.language.forgotMailRegardsEnd,
+              forgotMailBCISignature: this.language.forgotMailBCISignature,
+              forgotMailThanksForUsing: this.language.forgotMailThanksForUsing,
+              forgotMailHaveQuestion: this.language.forgotMailHaveQuestion,
+              forgotMailGenerateMail: this.language.forgotMailGenerateMail,
+              forgotMailCopyright: this.language.forgotMailCopyright,
+            };
             thisObject.mailService
               .sendForgetMail(thisObject.data)
-              .subscribe(data => {
+              .subscribe((data) => {
                 this.mailSend = true;
               });
           } else {
@@ -123,5 +169,9 @@ export class LoginComponent implements OnInit {
       });
     } else {
     }
+  }
+
+  agreeWithTerms() {
+    this.agree = true;
   }
 }

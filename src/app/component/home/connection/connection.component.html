@@ -1,0 +1,131 @@
+<div class="py-4" *ngIf="language !== undefined">
+   <div class="container">
+      <div class="row">
+         <!-- Main Content -->
+         <main class="col col-xl-12 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+            <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
+               <h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3">{{language.allYourConnections}}</h5>
+               <div class="row border-bottom">
+                  <ul class="nav osahan-line-tab col-md-9" id="myTab" role="tablist">
+                     <li class="nav-item">
+                        <a [ngClass]="selectTab === 'myConnection' ? 'active' : ''" class="nav-link" id="home-tab"
+                           (click)="changeTab('myConnection')">{{language.connectionMyOwnList}}</a>
+                     </li>
+                     <li class="nav-item">
+                        <a [ngClass]="selectTab === 'other' ? 'active' : ''" class="nav-link" id="profile-tab"
+                           (click)="changeTab('other')">{{language.connectionOtherConnection}}</a>
+                     </li>
+                  </ul>
+                  <div class="col-md-3">
+                     <input class="form-control searchByParams" [(ngModel)]="searchTerm"
+                        placeholder="{{language.connectionSearchByDifferentParams}}">
+                  </div>
+               </div>
+               <div class="tab-content" id="myTabContent">
+                  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                     <div class="p-3">
+                        <div class="row">
+                           <div style="height: 250px;" *ngIf="allUsers === undefined">
+                              <div class="loader4 loading"></div>
+                           </div>
+                           <div style="height: 250px; width: 100%;" *ngIf="allUsers&&allUsers.length === 0">
+                              <div style="padding-top: 75px; text-align: center; color: #0B6794">
+                                 <span class="fa fa-street-view" style="font-size: 50px"></span>
+                                 <h5>{{language.profileNoUser}}</h5>
+                              </div>
+                           </div>
+                           <div class="col-md-4" *ngFor="let item of allUsers | connectionPipe:searchTerm">
+                              <a>
+                                 <div class="border network-item rounded mb-3">
+                                    <div class="p-3 d-flex align-items-center network-item-header">
+                                       <div (click)="openProfile(item.id)" class="d-flex">
+                                          <div class="dropdown-list-image mr-3">
+                                             <img class="rounded-circle"
+                                                src="../../../../assets/img/profile_image/{{item.image}}" alt="">
+                                          </div>
+                                          <div class="font-weight-bold">
+                                             <h6 class="font-weight-bold text-dark mb-0">{{item.fullname}}</h6>
+                                             <div class="small text-black-50 profession-member"
+                                                title="{{item.profession}}">{{item.profession}}
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="recommendation">
+                                          <!---->
+                                          <span class="send-recommended"
+                                             [ngClass]="hoverItem === item.id ? 'fa fa-paper-plane' : 'fa fa-paper-plane-o'"
+                                             [title]="language.recommendedTooltip" (mouseenter)="heartHoverIn(item.id)"
+                                             (mouseleave)="heartHoverOut()"
+                                             (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"></span>
+                                          <p style="font-size: 13px; text-align: center;"><span
+                                                *ngIf="item.help !== null"
+                                                style="color: #2bc545;">{{item.help}}</span><span
+                                                style="color: #2bc545;" *ngIf="item.help === null">0</span>/<span
+                                                style="color: red;"
+                                                *ngIf="item.notHelp !== null">{{item.notHelp}}</span><span
+                                                style="color: red;" *ngIf="item.notHelp === null">0</span></p>
+                                       </div>
+                                    </div>
+                                    <div class="border-top border-bottom">
+                                       <div class="pl-3 pr-3 pb-2 pt-2 d-flex align-items-center network-item-header">
+                                          <p class="looking-offer-title">{{language.profileLooking}}: </p>
+                                          <p *ngIf="item.looking" class="looking-offer-text"> &nbsp; {{item.looking}}
+                                          </p>
+                                          <p *ngIf="item.looking === null" class="looking-offer-text italic"> &nbsp;
+                                             {{language.profileNoInfoAboutLooking}}
+                                          </p>
+                                       </div>
+                                       <div class="pl-3 pr-3 pb-2 d-flex align-items-center network-item-header">
+                                          <p class="looking-offer-title">{{language.profileOffer}}: </p>
+                                          <p *ngIf="item.offer" class="looking-offer-text"> &nbsp; {{item.offer}}
+                                          </p>
+                                          <p *ngIf="item.offer === null" class="looking-offer-text italic"> &nbsp;
+                                             {{language.profileNoInfoAboutOffer}}
+                                          </p>
+                                       </div>
+                                    </div>
+                                    <div class="network-item-footer py-3 d-flex text-center">
+                                       <div class="col-4 pl-3 pl-1">
+                                          <button type="button" (click)="openProfile(item.id)"
+                                             class="btn btn-outline-primary btn-sm btn-block"> <i
+                                                class="feather-user"></i>
+                                             {{language.connectionPreviewProfile}}
+                                          </button>
+                                       </div>
+
+                                       <div class="col-4 pr-3 pr-1">
+                                          <button type="button" class="btn btn-secondary btn-sm btn-block"
+                                             (click)="openPromoVideo(item)" style="height: 100%;">
+                                             <i class="fa fa-film"></i> {{language.promoButton}} </button>
+                                       </div>
+
+                                       <div class="col-4 pr-3 pr-1">
+                                          <button type="button" class="btn btn-primary btn-sm btn-block"
+                                             (click)="sendMessageForThisUser(item)">
+                                             <i class="fa fa-comments-o"></i> {{language.connectionSendMessage}}
+                                          </button>
+                                       </div>
+                                       <!-- <button type="button" class="btn btn-primary btn-sm btn-block"
+                                          style="width: auto; margin: auto;">
+                                          {{language.connectionSendMessage}} </button> -->
+                                    </div>
+                                 </div>
+                              </a>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </main>
+      </div>
+   </div>
+</div>
+
+<app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
+   [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
+   (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
+</app-recommendation-button>
+
+<app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="selectedMember.id" [owner]="false"
+   [video]="selectedMember.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>

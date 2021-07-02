@@ -1,0 +1,79 @@
+.receive-message {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 9px;
+    background: #fff;
+}
+
+.receive-message p {
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #000 !important;
+}
+
+.sender-message {
+    border: 1px solid lightgray;
+    border-radius: 15px;
+    padding: 9px;
+    background: #0b6794;
+}
+
+.sender-message p {
+    padding: 0px !important;
+    margin: 0px !important;
+    color: #fff;
+}
+
+.dropdown-list-image img {
+    width: 1.5rem !important;
+    height: 1.5rem !important;
+}
+
+.message-padding-top {
+    padding-top: 5px;
+}
+
+.item-message {
+    cursor: pointer;
+}
+
+.mobile-textarea {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    height: 80px;
+    position: absolute;
+    bottom: 12px;
+    width: 90%;
+}
+
+.k-combobox {
+    border: 1px solid lightgray;
+    border-radius: 4px;
+    padding: 1px 7pxs;
+    padding-left: 35px !important;
+    width: 100% !important;
+}
+
+.message-bold {
+    font-weight: bold;
+    color: #000 !important;
+}
+
+.message-container {
+    height: 345px;
+    overflow: auto;
+}
+
+.userInfoMobile {
+    width: 80%;
+}
+
+.removeWindow {
+    width: 20%;
+    text-align: end;
+}
+
+.removeWindow span {
+    font-size: 18px;
+    color: #0b6794;
+}

@@ -1,0 +1,26 @@
+.upload-image {
+    position: absolute;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    left: 13vh;
+    border-radius: 0px 0px 101px 100px;
+    width: 172px;
+    height: 87px;
+    top: 12%;
+}
+
+.badIBAN {
+    border: 1px solid red;
+}
+
+.change-icon {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 18px;
+    color: #0B6794;
+    cursor: pointer;
+}
+
+.change-icon:hover {
+    color: #1a93cc;
+}

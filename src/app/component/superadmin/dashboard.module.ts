@@ -30,6 +30,9 @@ import {
 } from "ngx-perfect-scrollbar";
 import { ModalModule } from "ngx-modal";
 import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
+import { EventComponent } from './parameters/event/event.component';
+import { TodoComponent } from './todo/todo.component';
+import { DymanicElementsModule } from "../dynamic-elements/dymanic-elements.module";
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
 };
@@ -41,6 +44,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     MembersComponent,
     EditTranslationComponent,
     CustomGridComponent,
+    EventComponent,
+    TodoComponent,
   ],
   imports: [
     CommonModule,
@@ -63,6 +68,7 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ModalModule,
     LayoutModule,
     SplitterModule,
+    DymanicElementsModule
   ],
   providers: [
     CustomGridService,

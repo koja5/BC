@@ -3,5 +3,11 @@
     <div class="circle-core"></div>
   </div>  
 </div> -->
-
-<app-custom-grid *ngIf="data !== undefined && gridConfiguration !== undefined" [data]="data" [gridConfiguration]="gridConfiguration"></app-custom-grid>
+<!-- <div style="height: 100%;">
+  <div class="loader4 loading" *ngIf="data === undefined || gridConfiguration === undefined"></div>
+</div> -->
+<div [style.height]="height" *ngIf="data === undefined || gridConfiguration === undefined">
+  <div class="loader4 loading" style="left: 57% !important;"></div>
+</div>
+<app-custom-grid *ngIf="data !== undefined && gridConfiguration !== undefined" [data]="data"
+  [gridConfiguration]="gridConfiguration"></app-custom-grid>

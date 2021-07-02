@@ -4,6 +4,12 @@ import { NotFoundComponent } from "./component/templates/not-found/not-found.com
 import { LoggedGuard } from "./services/guard/logged-guard.service";
 import { LoginGuard } from './services/guard/login-guard.service';
 import { DashboardGuard } from './services/guard/dashboard-guard.service';
+import { PrivacyPolicyComponent } from './component/templates/privacy-policy/privacy-policy.component';
+import { TermsComponent } from './component/templates/terms/terms.component';
+import { MaintenceComponent } from './component/templates/maintence/maintence.component';
+import { ImpressumComponent } from './component/templates/impressum/impressum.component';
+import { RecommendedAnswerComponent } from './component/templates/recommended-answer/recommended-answer.component';
+import { SuccessComponent } from './component/templates/success/success.component';
 
 const routes: Routes = [
   {
@@ -20,6 +26,30 @@ const routes: Routes = [
     path: "home",
     canActivate: [LoginGuard, DashboardGuard],
     loadChildren: "./component/home/home.module#HomeModule"
+  },
+  {
+    path: 'privacy-policy',
+    component: PrivacyPolicyComponent
+  },
+  {
+    path: 'terms',
+    component: TermsComponent
+  },
+  {
+    path: 'impressum',
+    component: ImpressumComponent
+  },
+  {
+    path: 'maintence',
+    component: MaintenceComponent
+  },
+  {
+    path: 'recommended-answer',
+    component: RecommendedAnswerComponent
+  },
+  {
+    path: 'success',
+    component: SuccessComponent
   },
   {
     path: "**",

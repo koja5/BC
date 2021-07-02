@@ -6,13 +6,13 @@
          style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
          <div class="fxt-intro">
             <div class="sub-title">{{language.welcomeBack}}</div>
-            <h1>BC-Inter</h1>
+            <h1>{{language.bciText}}</h1>
             <p>{{language.welcomeMessage}}</p>
          </div>
       </div>
       <div class="fxt-bg-color">
          <div class="fxt-header">
-            <a href="login-5.html" class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
+            <a class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
             <div class="fxt-page-switcher">
                <a (click)="changeForm('login')" class="switcher-text switcher-text1 active">{{language.signIn}}</a>
                <a (click)="changeForm('signup')" class="switcher-text switcher-text2">{{language.signUp}}</a>
@@ -44,20 +44,6 @@
                </div>
             </form>
          </div>
-         <div class="fxt-footer">
-            <ul class="fxt-socials">
-               <li class="fxt-facebook fxt-transformY-50 fxt-transition-delay-5"><a href="#" title="Facebook"><i
-                        class="fa fa-facebook-f"></i></a></li>
-               <li class="fxt-twitter fxt-transformY-50 fxt-transition-delay-6"><a href="#" title="twitter"><i
-                        class="fa fa-twitter"></i></a></li>
-               <li class="fxt-google fxt-transformY-50 fxt-transition-delay-7"><a href="#" title="google"><i
-                        class="fa fa-google"></i></a></li>
-               <li class="fxt-linkedin fxt-transformY-50 fxt-transition-delay-8"><a href="#" title="linkedin"><i
-                        class="fa fa-linkedin"></i></a></li>
-               <li class="fxt-pinterest fxt-transformY-50 fxt-transition-delay-9"><a href="#" title="pinterest"><i
-                        class="fa fa-pinterest-p"></i></a></li>
-            </ul>
-         </div>
       </div>
    </div>
 
@@ -67,13 +53,13 @@
          style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
          <div class="fxt-intro">
             <div class="sub-title">{{language.welcomeBack}}</div>
-            <h1>BC-Inter</h1>
+            <h1>{{language.bciText}}</h1>
             <p>{{language.welcomeMessage}}</p>
          </div>
       </div>
       <div class="fxt-bg-color">
          <div class="fxt-header">
-            <a href="login-5.html" class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
+            <a class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
             <div class="fxt-page-switcher">
                <a (click)="changeForm('login')" class="switcher-text switcher-text1">{{language.signIn}}</a>
                <a (click)="changeForm('signup')" class="switcher-text switcher-text2 active">{{language.signUp}}</a>
@@ -83,6 +69,7 @@
             <form (ngSubmit)="signup(user)">
                <div class="error-alert" *ngIf="existMail">{{language.existMail}}</div>
                <div class="error-alert" *ngIf="notEqualPassword">{{language.notEqualPassword}}</div>
+               <div class="error-alert" *ngIf="notAgree">{{language.notAgree}}</div>
                <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
                   <input type="text" class="form-control" [(ngModel)]="data.firstname" name="firstname"
                      placeholder="{{language.firstName}}" required="required">
@@ -113,27 +100,16 @@
                <div class="form-group fxt-transformY-50 fxt-transition-delay-4">
                   <div class="fxt-content-between">
                      <button type="submit" class="fxt-btn-fill">{{language.signUp}}</button>
-                     <div class="checkbox">
-                        <input id="checkbox1" type="checkbox">
-                        <label for="checkbox1">{{language.agreeJoin}}</label>
+                     <div style="padding-top: 15px">
+                        <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" />
+                        {{language.signUpAcceptFirst}} <a routerLink="/terms"
+                           target="_blank">{{language.signUpAcceptTerms}}</a> {{language.signUpAcceptEnd}} <a
+                           routerLink="/privacy-policy"
+                           target="_blank">{{language.signUpAcceptCookie}}</a>.
                      </div>
                   </div>
                </div>
             </form>
-         </div>
-         <div class="fxt-footer">
-            <ul class="fxt-socials">
-               <li class="fxt-facebook fxt-transformY-50 fxt-transition-delay-5"><a href="#" title="Facebook"><i
-                        class="fa fa-facebook-f"></i></a></li>
-               <li class="fxt-twitter fxt-transformY-50 fxt-transition-delay-6"><a href="#" title="twitter"><i
-                        class="fa fa-twitter"></i></a></li>
-               <li class="fxt-google fxt-transformY-50 fxt-transition-delay-7"><a href="#" title="google"><i
-                        class="fa fa-google"></i></a></li>
-               <li class="fxt-linkedin fxt-transformY-50 fxt-transition-delay-8"><a href="#" title="linkedin"><i
-                        class="fa fa-linkedin"></i></a></li>
-               <li class="fxt-pinterest fxt-transformY-50 fxt-transition-delay-9"><a href="#" title="pinterest"><i
-                        class="fa fa-pinterest-p"></i></a></li>
-            </ul>
          </div>
       </div>
    </div>
@@ -144,13 +120,13 @@
          style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
          <div class="fxt-intro">
             <div class="sub-title">{{language.welcomeBack}}</div>
-            <h1>BC-Inter</h1>
+            <h1>{{language.bciText}}</h1>
             <p>{{language.welcomeMessage}}</p>
          </div>
       </div>
       <div class="fxt-bg-color">
          <div class="fxt-header">
-            <a href="login-5.html" class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
+            <a class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
             <div class="fxt-page-switcher">
                <a (click)="changeForm('login')" class="switcher-text switcher-text1">{{language.signIn}}</a>
                <a (click)="changeForm('signup')" class="switcher-text switcher-text2">{{language.signUp}}</a>
@@ -168,20 +144,6 @@
                   <button type="submit" class="fxt-btn-fill">{{language.recoveryPassword}}</button>
                </div>
             </form>
-         </div>
-         <div class="fxt-footer">
-            <ul class="fxt-socials">
-               <li class="fxt-facebook fxt-transformY-50 fxt-transition-delay-5"><a href="#" title="Facebook"><i
-                        class="fa fa-facebook-f"></i></a></li>
-               <li class="fxt-twitter fxt-transformY-50 fxt-transition-delay-6"><a href="#" title="twitter"><i
-                        class="fa fa-twitter"></i></a></li>
-               <li class="fxt-google fxt-transformY-50 fxt-transition-delay-7"><a href="#" title="google"><i
-                        class="fa fa-google"></i></a></li>
-               <li class="fxt-linkedin fxt-transformY-50 fxt-transition-delay-8"><a href="#" title="linkedin"><i
-                        class="fa fa-linkedin"></i></a></li>
-               <li class="fxt-pinterest fxt-transformY-50 fxt-transition-delay-9"><a href="#" title="pinterest"><i
-                        class="fa fa-pinterest-p"></i></a></li>
-            </ul>
          </div>
       </div>
    </div>

@@ -1,0 +1,426 @@
+<div class="loader4 loading" *ngIf="data === undefined"></div>
+
+<div *ngIf="data && language">
+  <div class="profile-cover text-center" style="position: relative;">
+    <button class="btn btn-danger back-to-event" routerLink="/home/main/event/all"><span
+        class="fa fa-arrow-left"></span> {{language.lifeEventDetailsBackToEvent}}</button>
+    <img class="img-fluid event-cover" src="./assets/img/events_cover.jpg" alt="">
+  </div>
+  <div class="bg-white shadow-sm border-bottom">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="d-flex align-items-center py-3">
+            <div class="profile-left">
+              <h5 class="font-weight-bold text-dark mb-1 mt-0">{{data.nameOfEvent}}</h5>
+              <p class="mb-0 text-muted"> <i class="feather-map-pin"></i> {{data.location}} --
+                {{data.date | date: 'dd/MM/yyyy'}} /
+                {{data.time | date: 'HH:mm'}}</p>
+            </div>
+            <div class="profile-right ml-auto" *ngIf="eventStatus == 0">
+              <button type="button" class="btn btn-gold mr-1" (click)="setReminder()">
+                &nbsp; <span class="fa fa-bell-o"></span> {{language.reminderFriendsForEventSendReminder}} &nbsp;
+              </button>
+              <button type="button" class="btn btn-primary mr-1" (click)="editEvent()">
+                &nbsp; <span class="fa fa-pencil-square-o"></span> {{language.lifeEventDetailsEdit}} &nbsp; </button>
+              <button type="button" class="btn btn-danger" (click)="deleteEventWindow = true"> &nbsp; <span
+                  class="fa fa-trash"></span> Delete &nbsp;
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="py-4">
+    <div class="container">
+      <div class="row">
+        <!-- Main Content -->
+        <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsAboutEvent}}</h6>
+            </div>
+            <div class="box-body p-3">
+              <p>
+                {{data.comment}}
+              </p>
+            </div>
+          </div>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsLocation}}</h6>
+            </div>
+            <div class="box-body">
+              <table class="table table-borderless mb-0">
+                <tbody>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsNameOfLocation}}</th>
+                    <td class="p-3">{{data.nameOfLocation}}
+                    </td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsLocation}}</th>
+                    <td class="p-3">{{data.location}}</td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsZip}}</th>
+                    <td class="p-3">{{data.zip}}
+                    </td>
+                  </tr>
+                  <tr class="border-bottom">
+                    <th class="p-3">{{language.lifeEventDetailsStreat}}</th>
+                    <td class="p-3">{{data.street}}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.virtualEventSpeakersTitle}}</h6>
+            </div>
+            <div class="box-body row">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.speakers">
+                <div class="our-team">
+                  <div class="pic">
+                    <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
+                  </div>
+                  <div class="content">
+                    <ul class="social">
+                      <li><a (click)="openProfile(item.id)" class="fa fa-user"></a></li>
+                    </ul>
+                    <h3 class="title">{{item.fullname}}</h3>
+                    <span class="post" *ngIf="item.profession">{{item.profession}}</span>
+                    <span class="post" *ngIf="!item.profession">{{language.feedNoProfessionInfo}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="data.speakers&&data.speakers.length === 0" class="no-speakers">
+                <span class="fa fa-microphone-slash"></span>
+                <h5>{{language.virtualEventNoSpeakers}}</h5>
+              </div>
+            </div>
+          </div>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.virtualEventListenersTitle}}</h6>
+            </div>
+            <div class="box-body row">
+              <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.listeners">
+                <div class="our-team">
+                  <div class="pic">
+                    <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
+                  </div>
+                  <div class="content">
+                    <ul class="social">
+                      <li><a (click)="openProfile(item.id)" class="fa fa-user"></a></li>
+                    </ul>
+                    <h3 class="title">{{item.fullname}}</h3>
+                    <span class="post" *ngIf="item.profession">{{item.profession}}</span>
+                    <span class="post" *ngIf="!item.profession">{{language.feedNoProfessionInfo}}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="data.listeners&&data.listeners.length === 0" class="no-speakers">
+                <span class="fa fa-headphones"></span>
+                <h5>{{language.virtualEventNoListeners}}</h5>
+              </div>
+            </div>
+          </div>
+        </main>
+        <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+          <div class="box mb-3 shadow-sm border rounded bg-white profile-box">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsBasicInfo}}</h6>
+            </div>
+            <div class="p-3 basic-info">
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-calendar-check-o"></span>
+                  {{language.lifeEventDetailsDate}}</p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.date | date: 'dd/MM/yyyy'}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-clock-o"></span> {{language.lifeEventDetailsTime}}</p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.time | date: 'HH:mm'}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2">
+                <p class="mb-0 text-muted"><span class="fa fa-users"></span> {{language.lifeEventDetailsMaximumNumber}}
+                </p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.attendees}}</p>
+              </div>
+              <div class="d-flex align-items-top mb-2" *ngIf="data.price">
+                <p class="mb-0 text-muted"><span class="fa fa-money" style="color: green !important;"></span>
+                  {{language.eventChargeablePrice}}
+                </p>
+                <p class="font-weight-bold text-dark mb-0 mt-0 ml-auto">{{data.price}}€</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="box mb-3 shadow-sm border rounded bg-white profile-box">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsOrganizer}}</h6>
+            </div>
+            <div class="p-3 basic-info row" *ngIf="organizator">
+              <div _ngcontent-dvd-c7="" class="dropdown-list-image col-3"><img alt="Responsive image"
+                  class="img-fluid rounded-circle" src="/assets/img/profile_image/{{organizator.image}}"></div>
+              <div class="font-weight-bold col-9">
+                <div class="text-truncate"><a>{{organizator.fullname}}</a></div>
+                <div class="small text-gray-500">{{organizator.profession}}</div>
+                <div class="small text-gray-500" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</div>
+              </div>
+            </div>
+            <div class="overflow-hidden border-top text-center"><a class="font-weight-bold p-3 d-block"
+                routerLink="/home/main/profile/{{data.id_user}}"> {{language.lifeEventDetailsShowProfil}} </a>
+            </div>
+          </div>
+        </aside>
+        <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+          <button type="button" class="btn btn-lg btn-block btn-default mb-3 owner-button" *ngIf="eventStatus == 0"
+            disabled> <i class="fa fa-check"></i> {{language.lifeEventDetailsOwner}} </button>
+          <button type="button" class="btn btn-lg btn-block btn-sign-in mb-3" *ngIf="eventStatus == 2&&freeSpace"
+            (click)="signIn()"> <i class="fa fa-check"></i> {{language.lifeEventDetailsSignInButton}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed mb-3" *ngIf="eventStatus == 1"
+            (click)="signIn()">
+            <i class="fa fa-check-circle-o"></i> {{language.lifeEventDetailsRegisteredButton}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual mb-3" *ngIf="registerLikeSpeaker === 1"
+            (click)="signInVirtualParticipant('speaker')">
+            <i class="fa fa-check"></i> {{language.signInLikeVirtualSpeaker}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed-virtual mb-3" *ngIf="registerLikeSpeaker === 2">
+            <i class="fa fa-check-circle-o"></i> {{language.signedInLikeVirtualSpeaker}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-sign-in-virtual-listener mb-3"
+            *ngIf="registerLikeListener === 1" (click)="signInVirtualParticipant('listener')">
+            <i class="fa fa-check"></i> {{language.signInLikeVirtualListener}}
+          </button>
+          <button type="button" class="btn btn-lg btn-block btn-signed-virtual-listener mb-3"
+            *ngIf="registerLikeListener === 2">
+            <i class="fa fa-check-circle-o"></i> {{language.signedInLikeVirtualListener}}
+          </button>
+          <div class="box shadow-sm border rounded bg-white mb-3">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsGoingWithFriends}}</h6>
+            </div>
+            <div class="row border-bottom pt-3 pb-3">
+              <div class="col-6 number-container" (click)="showGoingList()">
+                <div class="show-number-going">
+                  <h5 class="number-of-going">{{data.signIn.length}}</h5>
+                  <h6>{{language.lifeEventDetailsMemberGoing}}</h6>
+                </div>
+              </div>
+              <div class="col-6 number-container">
+                <h5 class="number-of-going">{{numberOfFreeSpace}}</h5>
+                <h6>{{language.lifeEventDetailsFreeSpace}}</h6>
+              </div>
+            </div>
+            <div class="box-title p-3" style="text-align: center;">
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button"
+                (click)="openInviteFriendsWindow()"> <span class="fa fa-envelope"></span>
+                {{language.lifeEventInviteFriend}} </button>
+            </div>
+          </div>
+
+          <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="data.online">
+            <div class="box-title border-bottom p-3">
+              <h6 class="m-0 font-weight-bold">{{language.lifeEventEditLocationOnlineTitle}}</h6>
+            </div>
+            <div class="row border-bottom pt-3 pb-3">
+              <div class="col-6 number-container" (click)="showSpeakersConfirm()">
+                <div class="show-number-going">
+                  <div>
+                    <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersTotal}}"
+                      style="display: inline; color: #1a5ca0;">
+                      <span *ngIf="!data.numberOfSpeakers" class="fa fa-link"></span>
+                      <span *ngIf="data.numberOfSpeakers">{{data.numberOfSpeakers}}</span>
+                    </h5> /
+                    <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualSpeakersGoing}}"
+                      style="display: inline; color: green;">
+                      {{data.speakersConfirm.length}}</h5>
+                  </div>
+                  <h6>{{language.lifeEventEditLocationVirtualSpeakers}}</h6>
+                </div>
+              </div>
+              <div class="col-6 number-container" (click)="showListenersConfirm()">
+                <div>
+                  <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersTotal}}"
+                    style="display: inline; color: #1a5ca0;">
+                    <span *ngIf="!data.numberOfListeners" class="fa fa-link"></span>
+                    <span *ngIf="data.numberOfListeners">{{data.numberOfListeners}}</span></h5> /
+                  <h5 class="number-of-going" title="{{language.lifeEventEditLocationVirtualListenersGoing}}"
+                    style="display: inline; color: green;">
+                    {{data.listenersConfirm.length}}</h5>
+                </div>
+                <h6>{{language.lifeEventEditLocationVirtualListeners}}</h6>
+              </div>
+            </div>
+            <div class="box-title p-3" style="text-align: center;">
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button"
+                (click)="openInviteVirtualParticipantWindow()"> <span class="fa fa-envelope"></span>
+                {{language.lifeEventInviteFriend}} </button>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="deleteEventWindow" (close)="deleteEventWindow = false"
+  [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
+  <div class="modal-body text-center">
+    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
+    <h3>{{language.areYouSure}}</h3>
+  </div>
+  <kendo-dialog-actions>
+    <button kendoButton (click)="deleteEventWindow = false">{{language.no}}</button>
+    <button kendoButton (click)="deleteEvent('yes')" primary="true">{{language.yes}}</button>
+  </kendo-dialog-actions>
+</kendo-dialog>
+
+<kendo-window [title]="language.lifeEventInviteFriend" *ngIf="inviteFriendWindow"
+  [width]="windowWidth ? windowWidth : 480" [height]="windowHeight ? windowHeight : 325"
+  (close)="inviteFriendWindow = false">
+  <div class="row">
+    <kendo-multiselect [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedInviteFriends"
+      [valueField]="'id'" [textField]="'fullname'" [autoClose]="false"
+      [placeholder]="language.inviteFriendsForEventSearchFriends" (filterChange)="handleFilter($event)"
+      class="friend-list">
+      <ng-template kendoMultiSelectItemTemplate let-dataItem>
+        <input type="checkbox" class="k-checkbox" [checked]="isItemSelected(dataItem.id)">
+        <label class="k-checkbox-label"> <img class="rounded-circle" style="width: 25px; height: 25px"
+            src="./assets/img/profile_image/{{dataItem.image}}"> <span style="padding: 3px"> {{ dataItem.fullname }}
+          </span></label>
+      </ng-template>
+    </kendo-multiselect>
+
+    <div class="full-width mt-3">
+      <input type="checkbox" class="k-checkbox" (click)="selectAllMyFriends()" [checked]="helpService.isSelectedAllFriends(selectedInviteFriends, currentLoadData)">
+      <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+    </div>
+    <button class="btn btn-outline-primary btn-sm pl-4 pr-4 mt-5 margin-auto" type="button"
+      (click)="sendInviteForSelectedFriends()"> <span class="fa fa-envelope"></span> {{language.lifeEventInviteFriend}}
+    </button>
+  </div>
+</kendo-window>
+
+<kendo-window [title]="language.reminderFriendsForEventSendReminder" *ngIf="reminderFriendsWindow"
+  [width]="windowWidth ? windowWidth : 480" [height]="windowHeight ? windowHeight : 325"
+  (close)="reminderFriendsWindow = false">
+  <div class="row">
+    <kendo-multiselect [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedReminderFriends"
+      [valueField]="'id'" [textField]="'fullname'" [autoClose]="false"
+      [placeholder]="language.reminderFriendsForEventSearchGoingFriends" (filterChange)="handleFilter($event)"
+      class="friend-list">
+      <ng-template kendoMultiSelectItemTemplate let-dataItem>
+        <input type="checkbox" class="k-checkbox" [checked]="isItemSelectedReminder(dataItem.id)">
+        <label class="k-checkbox-label"> <img class="rounded-circle" style="width: 25px; height: 25px"
+            src="./assets/img/profile_image/{{dataItem.image}}"> <span style="padding: 3px"> {{ dataItem.fullname }}
+          </span></label>
+      </ng-template>
+    </kendo-multiselect>
+
+    <div class="full-width mt-3">
+      <input type="checkbox" class="k-checkbox" (click)="selectAllMyReminderFriends()"
+        [checked]="helpService.isSelectedAllReminderFriends(selectedReminderFriends, currentLoadData)">
+      <label class="pl-2">{{language.reminderFriendsForEventSelectAllGoingFriends}}</label>
+    </div>
+    <button class="btn btn-outline-primary btn-sm pl-4 pr-4 mt-5 margin-auto" type="button"
+      (click)="sendReminderForSelectedFriends()"> <span class="fa fa-envelope"></span>
+      {{language.reminderFriendsForEventSendReminder}}
+    </button>
+  </div>
+</kendo-window>
+
+<kendo-window [title]="language.recommendedTitle + ' ' + name" *ngIf="inviteVirtualParticipantWindow"
+  [height]="windowHeight ? windowHeight : 420" [width]="windowWidth ? windowWidth : 500"
+  (close)="inviteVirtualParticipantWindow = false">
+  <div class="container register">
+    <div class="row">
+      <div class="register-right">
+        <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+          <li class="member-switch">
+            <a class="nav-link" [ngClass]="typeOfVirtualParticipant === 'speakers' ? 'active': ''"
+              (click)="typeOfVirtualParticipant = 'speakers'">{{language.inviteVirtualParticipantSpeaker}}</a>
+          </li>
+          <li class="member-switch">
+            <a class="nav-link" [ngClass]="typeOfVirtualParticipant === 'listeners' ? 'active': ''"
+              (click)="typeOfVirtualParticipant = 'listeners'">{{language.inviteVirtualParticipantListener}}</a>
+          </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+          <div class="tab-pane fade show active" *ngIf="typeOfVirtualParticipant === 'speakers'"
+            style="padding-top: 25px;">
+
+            <div class="selected-form">
+              <div style="width: 100%;">
+                <kendo-combobox [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedSpeakers"
+                  [valueField]="'id'" [textField]="'fullname'"
+                  [placeholder]="language.reminderFriendsForEventSearchGoingFriends"
+                  (filterChange)="handleFilter($event)" class="friend-list" style="margin-bottom:
+                  15px;">
+                  <ng-template kendoComboBoxItemTemplate let-dataItem>
+                    <p style="height: 45px !important;">
+                      <img style="width: 40px; margin-right: 10px;" class="rounded-circle"
+                        src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                      <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                    </p>
+                  </ng-template>
+                </kendo-combobox>
+                <textarea class="form-control" [(ngModel)]="inviteVirtualParticipantWindowMessage" rows="7" name="text"
+                  placeholder="{{inviteVirtualParticipantWindowMessage}}"></textarea>
+              </div>
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" style="
+    margin-top: 7px; width: auto;" (click)="sendInviteForSelectedVirtualParticipant('speakers')">
+                {{language.inviteVirtualParticipantSpeaker}}
+              </button>
+            </div>
+          </div>
+          <div class="tab-pane fade show active" *ngIf="typeOfVirtualParticipant === 'listeners'"
+            style="padding-top: 25px;">
+            <div class="selected-form">
+              <div style="width: 100%;">
+                <kendo-combobox [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedListeners"
+                  [valueField]="'id'" [textField]="'fullname'"
+                  [placeholder]="language.reminderFriendsForEventSearchGoingFriends"
+                  (filterChange)="handleFilter($event)" class="friend-list" style="margin-bottom:
+                  15px;">
+                  <ng-template kendoComboBoxItemTemplate let-dataItem>
+                    <p style="height: 45px !important;">
+                      <img style="width: 40px; margin-right: 10px;" class="rounded-circle"
+                        src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                      <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                    </p>
+                  </ng-template>
+                </kendo-combobox>
+                <textarea class="form-control" [(ngModel)]="inviteVirtualParticipantWindowMessage" rows="7" name="text"
+                  placeholder="{{inviteVirtualParticipantWindowMessage}}"></textarea>
+              </div>
+              <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" style="
+    margin-top: 7px; width: auto;" (click)="sendInviteForSelectedVirtualParticipant('listeners')">
+                {{language.inviteVirtualParticipantListener}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</kendo-window>
+
+<kendo-window [title]="language.lifeEventDetailsMemberGoing" *ngIf="memberGoingWindow"
+  [width]="windowWidth ? windowWidth : 410" [height]="windowHeight ? windowHeight : 480"
+  (close)="memberGoingWindow = false">
+  <ul class="list-user-profile">
+    <li *ngFor="let item of memberGoingList">
+      <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfile(item.id)">
+        {{item.fullname}} </span>
+      <!-- <button class="btn btn-danger btn-sm ml-5"> <i class="fa fa-bell-o"></i> Send reminder</button> -->
+    </li>
+  </ul>
+</kendo-window>

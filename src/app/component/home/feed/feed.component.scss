@@ -1,15 +1,10 @@
 .img-fluid {
     width: 130px !important;
+    height: 130px !important;
 }
 
 .feed-image {
     width: 40px !important;
-}
-
-pre {
-    font-size: 13px;
-    font-family: "Ubuntu", sans-serif;
-    color: #888da8;
 }
 
 .removePost {
@@ -24,25 +19,29 @@ pre {
     color: #000;
 }
 
-.postOptions {
+.post-options {
     position: absolute;
-    right: 22px;
     z-index: 10000;
     /* border: 1px solid; */
     padding: 5px;
     box-shadow: 1px 2px 7px 3px lightgrey;
     border-radius: 2px;
     background: #fff;
-    width: 110px;
+    right: 25px !important; 
 }
 
-.postOptions ul {
+.connections-options {
+    margin-top: 160px !important; 
+    width: 135px !important;
+}
+
+.post-options ul {
     list-style: none;
     padding: 0px;
     margin: 0px;
 }
 
-.postOptions ul li {
+.post-options ul li {
     cursor: pointer;
 }
 
@@ -85,29 +84,6 @@ pre {
     text-decoration: underline;
 }
 
-.listUserLikes {
-    list-style: none;
-    padding-left: 0px;
-}
-
-.listUserLikes li {
-    margin-bottom: 6px;
-}
-
-.listUserLikes li img {
-    width: 47px;
-}
-
-.listUserLikes li span {
-    margin-left: 7px;
-    cursor: pointer;
-    color: #4e95e0;
-}
-
-.listUserLikes li span:hover {
-    text-decoration: underline;
-}
-
 .comment-input-container {
     border-top: 1px solid #eaebec !important;
     width: 100%;
@@ -120,6 +96,7 @@ pre {
 
 .profile-image-comment img {
     width: 36px;
+    height: 36px;
     border-radius: 50%;
 }
 
@@ -145,7 +122,7 @@ pre {
 .comment-container {
     width: 100%;
     padding: 2px 13px;
-    background: #F2F3F5;
+    background: #f2f3f5;
     border-radius: 20px;
 }
 
@@ -157,4 +134,104 @@ pre {
     font-weight: 400;
     margin-right: 9px;
     color: #385898;
+}
+
+.no-post {
+    height: 350px;
+    text-align: center;
+    padding-top: 120px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #b8b9ba;
+}
+
+.message-success {
+    color: green;
+}
+
+.message-error {
+    color: red;
+}
+
+.btn-referral-link:hover {
+    color: #fff;
+    background-color: #efc109;
+    border-color: #efc109;
+}
+
+.btn-referral-link-copied {
+    color: #fff;
+    background-color: #efc109;
+    border-color: #efc109;
+}
+
+.btn-referral-link {
+    color: #efc109;
+    border-color: #efc109;
+}
+
+/* BACK BUTTON TO TOP */
+
+/* Back to top */
+
+.back-to-top {
+    visibility: hidden;
+    background-color: #0084fc;
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    line-height: 35px;
+    position: fixed;
+    bottom: 65px;
+    right: 35px;
+    z-index: 90;
+    cursor: pointer;
+    border-radius: 1px;
+    opacity: 0;
+    -webkit-transform: translateZ(0);
+    transition: all 0.6s;
+}
+
+.back-to-top .fa {
+    font-size: 18px;
+    color: #fff;
+    vertical-align: middle;
+}
+
+.back-to-top:hover {
+    background-color: #0b6794;
+    opacity: 1;
+}
+
+.back-to-top.show {
+    visibility: visible;
+    bottom: 35px;
+    opacity: 1;
+}
+
+.imageLoaderFeed {
+    width: 34px !important;
+    height: 34px !important;
+    position: absolute;
+    left: 110px !important;
+    top: 80px !important;
+}
+
+.connectionOptions li {
+    padding: 7px 2px;
+}
+
+.feed-pages p {
+    font-size: 14px;
+    font-weight: 600;
+
+}
+
+.feed-pages p img {
+    width: 35px;
+}
+
+.feed-links .d-flex:hover {
+    background: #e0e7ec;
+    border-radius: 5px;
 }

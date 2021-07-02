@@ -1,4 +1,4 @@
-<div id="wrapper" *ngIf="user !== undefined">
+<div id="wrapper" *ngIf="user !== undefined&&language!==undefined">
   <div id="left-side">
     <ul>
       <li class="choose" [ngClass]="step === 'welcome' ? 'active' : 'disabled'">
@@ -51,9 +51,10 @@
       <div class="choose-options">
         <kendo-combobox [data]="directorList" [textField]="'fullname'" [valueField]="'id'"
           (valueChange)="onValueChange($event)" [(ngModel)]="selectedDirector" [filterable]="true"
-          (filterChange)="searchDirector($event)" [loading]="directorLoading">
+          (filterChange)="searchDirector($event)" [loading]="directorLoading" placeholder="{{language.chooseDirectorPlaceholder}}">
           <ng-template kendoComboBoxItemTemplate let-dataItem>
-            <p style="height: 50px !important;">
+            <p style="height: 45px !important;">
+              <img style="width: 40px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">
               <span style="font-weight: bold">{{ dataItem.fullname }}</span>
             </p>
           </ng-template>

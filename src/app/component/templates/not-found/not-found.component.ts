@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: 'app-not-found',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NotFoundComponent implements OnInit {
 
-  constructor() { }
+  public language: any;
+
+  constructor(private helpService: HelpService) { }
 
   ngOnInit() {
+    this.language = this.helpService.getLanguage();
   }
 
 }

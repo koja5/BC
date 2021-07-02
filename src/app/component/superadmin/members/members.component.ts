@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { DashboardService } from 'src/app/services/dashboard.service';
 
 @Component({
@@ -10,10 +10,13 @@ export class MembersComponent implements OnInit {
 
   public gridConfiguration: any;
   public data: any;
+  public height: any;
 
   constructor(private service: DashboardService) { }
 
   ngOnInit() {
+    this.height = window.innerHeight - 81;
+    this.height += "px";
     this.initialization();
   }
 
@@ -24,10 +27,15 @@ export class MembersComponent implements OnInit {
 
     this.service.getAllUsers().subscribe(
       data => {
-        console.log(data);
         this.data = data;
       }
     );
+  }
+
+  @HostListener("window:resize", ["$event"])
+  onResize(event) {
+    this.height = window.innerHeight - 81;
+    this.height += "px";
   }
 
 }

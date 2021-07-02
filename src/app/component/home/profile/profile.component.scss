@@ -1,13 +1,61 @@
 .cover-photo-update {
     position: absolute;
-    right: 0px;
+    right: 23px;
     padding: 10px;
-    background: #0B6794;
-    color: #FFF;
+    background: #0b6794;
+    color: #fff;
     border: 1px solid;
     margin: 7px;
+    cursor: pointer;
 }
 
 .cover-photo-update:hover {
-    color: #FFF;
+    color: #fff;
+}
+.blur {
+    filter: blur(2px);
+}
+
+image-cropper {
+    height: 260px;
+}
+
+.image-cover {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .image-cover {
+        height: 115px;
+    }
+}
+
+@media (min-width: 768px) {
+    .image-cover {
+        height: 300px;
+    }
+}
+
+.no-data-education {
+    color: #0b6794;
+}
+
+.no-data-education span {
+    font-size: 50px;
+}
+
+.no-data-experience {
+    color: #0b6794;
+}
+
+.no-data-experience span {
+    font-size: 50px;
+}
+
+.no-info-looking-offer {
+    color: #0b6794;
+}
+
+.no-info-looking-offer span {
+    font-size: 25px;
 }

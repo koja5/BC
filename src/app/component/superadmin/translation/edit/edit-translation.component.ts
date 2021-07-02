@@ -3,6 +3,7 @@ import { DashboardService } from "../../../../services/dashboard.service";
 import { TranslationModel } from "src/app/models/translation-model";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: "app-edit",
@@ -14,16 +15,19 @@ export class EditTranslationComponent implements OnInit {
   public data = new TranslationModel();
   public id: any;
   public loading = true;
+  public language: any;
 
   constructor(
     private service: DashboardService,
     public route: ActivatedRoute,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private helpService: HelpService
   ) {}
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
+    this.language = this.helpService.getLanguage();
     this.initialization();
   }
 
@@ -48,12 +52,12 @@ export class EditTranslationComponent implements OnInit {
       this.service.createTranslation(this.data).subscribe(data => {
         console.log(data);
         if (data) {
-          this.toastr.success("Successfull!", "Create data is successfull!", {
+          this.toastr.success(this.language.adminSuccessCreateTitle, this.language.adminSuccessCreateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });
         } else {
-          this.toastr.error("Error!", "Create data is unsuccessfull!", {
+          this.toastr.error(this.language.adminErrorCreateTitle, this.language.adminErrorCreateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });
@@ -63,12 +67,12 @@ export class EditTranslationComponent implements OnInit {
       this.service.updateTranslation(this.data).subscribe(data => {
         console.log(data);
         if (data) {
-          this.toastr.success("Successfull!", "Update data is successfull!", {
+          this.toastr.success(this.language.adminSuccessUpdateTitle, this.language.adminSuccessUpdateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });
         } else {
-          this.toastr.error("Error!", "Update data is unsuccessfull!", {
+          this.toastr.error(this.language.adminErrorUpdateTitle, this.language.adminErrorUpdateText, {
             timeOut: 7000,
             positionClass: "toast-bottom-right"
           });

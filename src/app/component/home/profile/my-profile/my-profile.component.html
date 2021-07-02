@@ -11,15 +11,15 @@
         <div class="d-flex">
           <div class="col-6 border-right p-3">
             <h6 class="font-weight-bold text-dark mb-1">358</h6>
-            <p class="mb-0 text-black-50 small">Connections</p>
+            <p class="mb-0 text-black-50 small">{{language.feedConnections}}</p>
           </div>
           <div class="col-6 p-3">
             <h6 class="font-weight-bold text-dark mb-1">85</h6>
-            <p class="mb-0 text-black-50 small">Views</p>
+            <p class="mb-0 text-black-50 small">{{language.feedViews}}</p>
           </div>
         </div>
         <div class="overflow-hidden border-top">
-          <a class="font-weight-bold p-3 d-block" (click)="logout()"> Log Out </a>
+          <a class="font-weight-bold p-3 d-block" (click)="logout()"> {{language.feedLogout}} </a>
         </div>
       </div>
       <!-- <div class="box shadow-sm border rounded bg-white mb-3">
@@ -78,7 +78,7 @@
     <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
       <div class="box shadow-sm border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
-          <h6 class="m-0">About You</h6>
+          <h6 class="m-0">{{data.aboutMe}}</h6>
         </div>
         <div class="box-body p-3">
           <p>{{data.aboutMe}}
@@ -233,11 +233,11 @@
       </div>
       <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center overflow-hidden">
         <div class="p-3 border-bottom">
-          <h6 class="font-weight-bold text-gold">BCI Premium</h6>
-          <p class="mb-0 text-muted">Grow &amp; nurture your network</p>
+          <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
+          <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
         </div>
         <div class="p-3">
-          <button type="button" class="btn btn-outline-gold pl-4 pr-4"> ACTIVATE </button>
+          <button type="button" class="btn btn-outline-gold pl-4 pr-4"> {{language.feedActivate}} </button>
         </div>
       </div>
       <!-- <a href="job-profile.html">

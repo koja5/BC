@@ -1,0 +1,30 @@
+.cover-photo-update {
+    position: absolute;
+    right: 23px;
+    padding: 10px;
+    background: #0b6794;
+    color: #fff;
+    border: 1px solid;
+    margin: 7px;
+    cursor: pointer;
+}
+
+.cover-photo-update:hover {
+    color: #fff;
+}
+
+.no-have-promo {
+    margin-top: 13%;
+    text-align: center;
+}
+
+.no-have-promo .notification-info {
+    font-size: 65px;
+    color: #dc3545;
+}
+
+.promoVideoLoader {
+    left: 44% !important;
+    top: 37% !important;
+}
+

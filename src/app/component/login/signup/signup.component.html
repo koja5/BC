@@ -1,3 +1,60 @@
-<p>
-  signup works!
-</p>
+<div class="fxt-template-animation fxt-template-layout5 has-animation active-animation loaded"
+   *ngIf="language !== undefined">
+   <div class="fxt-bg-img fxt-none-767" data-bg-image="../../../assets/img/login/background.jpg"
+      style="background-image: url(&quot;../../../assets/img/login/background.jpg&quot;);">
+      <div class="fxt-intro">
+         <div class="sub-title">{{language.welcomeBack}}</div>
+         <h1>{{language.bciText}}</h1>
+         <p>{{language.welcomeMessage}}</p>
+      </div>
+   </div>
+   <div class="fxt-bg-color">
+      <div class="fxt-header">
+         <a class="fxt-logo"><img src="../../../assets/img/login/logo-5.png" alt="Logo"></a>
+      </div>
+      <div class="fxt-form">
+         <form (ngSubmit)="signup()">
+            <div class="error-alert" *ngIf="existMail">{{language.existMail}}</div>
+            <div class="error-alert" *ngIf="notEqualPassword">{{language.notEqualPassword}}</div>
+            <div class="error-alert" *ngIf="notAgree">{{language.notAgree}}</div>
+            <div class="success-alert" *ngIf="successSignUp">{{language.successfulSignUp}}</div>
+            <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
+               <input type="text" class="form-control" [(ngModel)]="data.firstname" name="firstname"
+                  placeholder="{{language.firstName}}" required="required">
+               <i class="flaticon-user"></i>
+            </div>
+            <div class="form-group fxt-transformY-50 fxt-transition-delay-1">
+               <input type="text" class="form-control" [(ngModel)]="data.lastname" name="lastname"
+                  placeholder="{{language.lastName}}" required="required">
+               <i class="flaticon-user"></i>
+            </div>
+            <div class="form-group fxt-transformY-50 fxt-transition-delay-2">
+               <input type="email" class="form-control" [(ngModel)]="data.email" name="email"
+                  placeholder="{{language.email}}" required="required">
+               <i class="flaticon-envelope"></i>
+            </div>
+            <div class="form-group fxt-transformY-50 fxt-transition-delay-3">
+               <input type="{{passwordType}}" class="form-control" [(ngModel)]="data.password" name="password"
+                  placeholder="{{language.password}}" required="required">
+               <i class="{{passwordIcon}}" (mousedown)="showPass()" (mouseup)="hidePass()" style="cursor: pointer;"></i>
+            </div>
+            <div class="form-group fxt-transformY-50 fxt-transition-delay-3">
+               <input type="{{passwordType}}" class="form-control" [(ngModel)]="data.confirmPassword"
+                  name="confirmPassword" placeholder="{{language.confirmPassword}}" required="required">
+               <i class="{{passwordIcon}}" (mousedown)="showPass()" (mouseup)="hidePass()" style="cursor: pointer;"></i>
+            </div>
+            <div class="form-group fxt-transformY-50 fxt-transition-delay-4">
+               <div class="fxt-content-between">
+                  <button type="submit" class="fxt-btn-fill">{{language.signUp}}</button>
+                  <div style="padding-top: 15px">
+                     <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" />
+                     {{language.signUpAcceptFirst}} <a routerLink="/terms"
+                        target="_blank">{{language.signUpAcceptTerms}}</a> {{language.signUpAcceptEnd}} <a
+                        routerLink="/privacy-policy" target="_blank">{{language.signUpAcceptCookie}}</a>.
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
