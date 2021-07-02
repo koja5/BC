@@ -59,7 +59,7 @@
         "@types/simple-peer": "^9.6.0",
         "@types/socket.io-client": "^1.4.32",
         "angular6-json-schema-form": "^8.0.0",
-        "axios": "^0.19.0",
+        "axios": "^0.21.1",
         "body-parser": "^1.18.2",
         "bootstrap": "^3.3.7",
         "cookie-parser": "^1.4.3",
