@@ -6,7 +6,6 @@ import { TextboxComponent } from './dynamic-fields/textbox/textbox.component';
 import { TextareaComponent } from './dynamic-fields/textarea/textarea.component';
 import { NumericComponent } from './dynamic-fields/numeric/numeric.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DynamicFormsComponent } from './dynamic-forms.component';
 import {TextBoxModule} from '@syncfusion/ej2-angular-inputs';
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import { DatepickerComponent } from './dynamic-fields/datepicker/datepicker.component';
@@ -14,7 +13,14 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
 import { ButtonComponent } from './dynamic-fields/button/button.component';
 
 @NgModule({
-  declarations: [DynamicFieldsDirective, DropdownComponent, TextboxComponent, TextareaComponent, NumericComponent, DatepickerComponent, ButtonComponent],
+  declarations: [
+    DynamicFieldsDirective, 
+    DropdownComponent, 
+    TextboxComponent, 
+    TextareaComponent, 
+    NumericComponent,
+    DatepickerComponent, 
+    ButtonComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

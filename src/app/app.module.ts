@@ -10,6 +10,8 @@ import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
 import { DashboardModule } from "./component/superadmin/dashboard.module";
 import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
 import { DialogsModule } from '@progress/kendo-angular-dialog';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+
 // services
 import { LoggedGuard } from "./services/guard/logged-guard.service";
 import { DashboardGuard } from "./services/guard/dashboard-guard.service";
@@ -27,6 +29,7 @@ import { RecommendedAnswerComponent } from './component/templates/recommended-an
 import { NotFoundComponent } from "./component/templates/not-found/not-found.component";
 import { SuccessComponent } from './component/templates/success/success.component';
 import { DymanicElementsModule } from "./component/dynamic-elements/dymanic-elements.module";
+import { DemoComponent } from "./component/demo/demo.component";
 
 @NgModule({
   declarations: [
@@ -37,7 +40,8 @@ import { DymanicElementsModule } from "./component/dynamic-elements/dymanic-elem
     MaintenceComponent,
     ImpressumComponent,
     RecommendedAnswerComponent,
-    SuccessComponent
+    SuccessComponent,
+    DemoComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +56,8 @@ import { DymanicElementsModule } from "./component/dynamic-elements/dymanic-elem
     LayoutModule,
     SplitterModule,
     DialogsModule,
-    DymanicElementsModule
+    DymanicElementsModule,
+    NgbModule
   ],
   providers: [
     LoggedGuard,

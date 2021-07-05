@@ -1,3 +1,4 @@
+import { DynamicDialogComponent } from './dynamic-dialog/dynamic-dialog.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import {
@@ -28,8 +29,15 @@ import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
 
 @NgModule({
-  declarations: [DynamicGridComponent, DynamicFormsComponent],
-  exports: [DynamicGridComponent],
+  declarations: [
+    DynamicGridComponent, 
+    DynamicFormsComponent,
+    DynamicDialogComponent
+  ],
+  exports: [
+    DynamicGridComponent,
+    DynamicDialogComponent
+  ],
   imports: [
     CommonModule,
     GridModule,
@@ -42,6 +50,13 @@ import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
     DynamicFormsModule
   ],
   providers: [EditService, ToolbarService, SortService, FilterService, PageService, GroupService, ResizeService],
-  entryComponents: [TextboxComponent, TextareaComponent, DatepickerComponent, ButtonComponent, DropdownComponent]
+  entryComponents: [
+    TextboxComponent, 
+    TextareaComponent,
+    DatepickerComponent, 
+    ButtonComponent,
+    DropdownComponent,
+    DynamicDialogComponent
+    ]
 })
 export class DymanicElementsModule {}

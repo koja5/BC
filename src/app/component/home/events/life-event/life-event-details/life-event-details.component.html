@@ -273,8 +273,8 @@
 <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="deleteEventWindow" (close)="deleteEventWindow = false"
   [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
   <div class="modal-body text-center">
-    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
     <h3>{{language.areYouSure}}</h3>
+    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
   </div>
   <kendo-dialog-actions>
     <button kendoButton (click)="deleteEventWindow = false">{{language.no}}</button>

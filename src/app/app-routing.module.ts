@@ -1,3 +1,4 @@
+import { DemoComponent } from './component/demo/demo.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NotFoundComponent } from "./component/templates/not-found/not-found.component";
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     path: 'success',
     component: SuccessComponent
+  },
+  {
+    path: 'demo',
+    component: DemoComponent
   },
   {
     path: "**",
