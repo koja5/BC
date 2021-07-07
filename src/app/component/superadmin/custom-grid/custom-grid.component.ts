@@ -1,3 +1,4 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Component,
   OnInit,
@@ -13,19 +14,16 @@ import {
   GroupDescriptor,
   SortDescriptor,
 } from "@progress/kendo-data-query";
-import { UploadEvent, SelectEvent } from "@progress/kendo-angular-upload";
+import { UploadEvent } from "@progress/kendo-angular-upload";
 import {
   DataStateChangeEvent,
   PageChangeEvent,
   RowArgs,
-  DataBindingDirective,
 } from "@progress/kendo-angular-grid";
-import { WindowModule } from "@progress/kendo-angular-dialog";
 import * as XLSX from "ts-xlsx";
 import { Router } from "@angular/router";
 import { CustomGridService } from "src/app/services/custom-grid.service";
 import { ToastrService } from "ngx-toastr";
-import { LoadingBarService } from "@ngx-loading-bar/core";
 import { UserModel } from "src/app/models/user-model";
 import { ExcelExportData } from "@progress/kendo-angular-excel-export";
 import { HelpService } from "src/app/services/help.service";
@@ -35,6 +33,7 @@ import * as sha1 from "sha1";
 import { AdditionalInfoModel } from "src/app/models/additional-info-model";
 import { LookingOfferModel } from "src/app/models/looking-offer-model";
 import { ChangePasswordModel } from "src/app/models/change-password-model";
+import { DynamicDialogComponent } from '../../dynamic-elements/dynamic-dialog/dynamic-dialog.component';
 
 @Component({
   selector: "app-custom-grid",
@@ -135,7 +134,8 @@ export class CustomGridComponent implements OnInit {
     private service: CustomGridService,
     private toastr: ToastrService,
     private helpService: HelpService,
-    public serviceEditProfile: EditProfileService
+    public serviceEditProfile: EditProfileService,
+    private modalService: NgbModal
   ) {
     this.allData = this.allData.bind(this);
   }
@@ -333,11 +333,25 @@ export class CustomGridComponent implements OnInit {
     this.id = id;
     this.method = method;
     this.index = index;
-    this.dialogDelete = true;
-  }
-
-  public dialogDeleteAction(answer) {
-    if (answer === "yes") {
+   
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'sm',
+      centered:true
+    });
+    
+    modalRef.componentInstance.modalSettings={
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.adminPleaseConfirm,
+        text: () => this.language.areYouSure,
+        imageUrl: ()=> '../../../../../assets/img/sent.png',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal=modalRef;
+    
+    modalRef.result.then(() => {
       this.service[this.method](this.id).subscribe((data) => {
         console.log(data);
         if (data) {
@@ -346,8 +360,9 @@ export class CustomGridComponent implements OnInit {
           this.gridView.total -= 1;
         }
       });
-    }
-    this.dialogDelete = false;
+    }, () => {
+      console.log(`Dismissed`);
+    });
   }
 
   editMember(dataItem) {

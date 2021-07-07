@@ -633,18 +633,6 @@
   </kendo-window>
 </div>
 
-<kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureRemoveWindow"
-  (close)="areYouSureRemoveWindow = false" [width]="windowWidth ? windowWidth : 450"
-  [height]="windowHeight ? windowHeight : 250">
-  <div class="modal-body text-center">
-    <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-    <h3>{{language.areYouSure}}</h3>
-  </div>
-  <kendo-dialog-actions>
-    <button kendoButton (click)="areYouSureRemoveWindow = false">{{language.no}}</button>
-    <button kendoButton (click)="deletePost('yes')" primary="true">{{language.yes}}</button>
-  </kendo-dialog-actions>
-</kendo-dialog>
 <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
   [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
   (recommendedWindowEmitter)="recommendedWindowEmitter($event)">

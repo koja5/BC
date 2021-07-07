@@ -13,6 +13,8 @@ import { FileUploader, FileItem } from "ng2-file-upload";
 import { ImageCroppedEvent } from "ngx-image-cropper";
 import { MessageService } from "src/app/services/message.service";
 import { UserModel } from "src/app/models/user-model";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-feed",
@@ -71,7 +73,8 @@ export class FeedComponent implements OnInit {
     private router: Router,
     private profileService: ProfileService,
     private toastr: ToastrService,
-    private message: MessageService
+    private message: MessageService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -276,19 +279,35 @@ export class FeedComponent implements OnInit {
       id: id,
       index: index,
     };
-    this.areYouSureRemoveWindow = true;
-  }
 
-  deletePost(answer) {
-    if (answer === "yes") {
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'sm',
+      centered:true
+    });
+
+    modalRef.componentInstance.modalSettings={
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.adminPleaseConfirm,
+        text: () => this.language.areYouSure,
+        imageUrl: ()=> '../../../../../assets/img/sent.png',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal=modalRef;
+    
+    modalRef.result.then(() => {
       this.service.deletePost(this.removeItem.id).subscribe((data) => {
         if (data) {
           this.allPosts.splice(this.removeItem.index, 1);
           this.selectedProcessOption = -1;
         }
       });
-    }
-    this.areYouSureRemoveWindow = false;
+    }, () => {
+      console.log(`Dismissed`)
+    });
+
   }
 
   likePost(id, index) {

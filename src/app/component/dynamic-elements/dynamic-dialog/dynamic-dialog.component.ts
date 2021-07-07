@@ -32,7 +32,7 @@ export class DynamicDialogComponent implements OnInit {
   }
 
   public dismiss():void{
-    this.modal.dismiss('dismiss');
+    this.modal.dismiss('secondary-button-clicked');
   }
 
 }

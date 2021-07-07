@@ -98,18 +98,6 @@
     </ng-template>
   </kendo-grid>
 
-  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="dialogDelete" (close)="dialogDelete = false"
-    [minWidth]="250" [width]="450">
-    <div class="modal-body text-center">
-      <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-      <h3>{{language.areYouSure}}</h3>
-    </div>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="dialogDelete = false">{{language.no}}</button>
-      <button kendoButton (click)="dialogDeleteAction('yes')" primary="true">{{language.yes}}</button>
-    </kendo-dialog-actions>
-  </kendo-dialog>
-
   <kendo-window title="{{language.createNewCustomer}}" *ngIf="memberWindow" [minWidth]="700" [width]="850"
     [height]="auto" (close)="memberWindow = false">
 
