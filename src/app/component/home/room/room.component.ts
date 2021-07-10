@@ -7,15 +7,16 @@ import {
   QueryList,
   HostListener,
 } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import * as SimplePeer from "simple-peer";
-import * as wrtc from "wrtc";
 import { MitronPeer } from "src/app/models/room.model";
 import { SignalMessage, RoomService } from "src/app/services/room.service";
 import { EditEventService } from "src/app/services/edit-event.service";
 import { HelpService } from "src/app/services/help.service";
 declare var document: any;
 import * as io from "socket.io-client";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-room",
@@ -39,7 +40,6 @@ export class RoomComponent implements OnInit {
   public chatStatus = "";
   public otherStream = [];
   public id: any;
-  public windowLeaveMeeting = false;
   public language: any;
   public participantData: any;
   public chatMessage = "";
@@ -104,10 +104,10 @@ export class RoomComponent implements OnInit {
   }
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private signalingService: RoomService,
     private editEventService: EditEventService,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private modalService: NgbModal
   ) {
     // this.socket = io();
     // this.socket = io.connect("http://localhost:3000");
@@ -503,19 +503,42 @@ export class RoomComponent implements OnInit {
     }
   }
 
-  leaveMeetingAnswer(answer) {
-    if (answer === "yes") {
-      /*this.router.navigate([
-        "home/main/event/virtual-event-details/" + this.id,
-      ]);*/
-      window.open("", "_self").close();
-    }
+  openWindowLeaveDialog():void{
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'sm',
+      centered:true
+    });
+
+    modalRef.componentInstance.modalSettings={
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.adminPleaseConfirm,
+        text: () => this.language.areYouSure,
+        imageUrl: ()=> '../../../../../assets/img/sent.png',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal=modalRef;
+    
+    modalRef.result.then(() => {
+      this.leaveMeeting();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  leaveMeeting() {
+    /*this.router.navigate([
+      "home/main/event/virtual-event-details/" + this.id,
+    ]);*/
+    window.open("", "_self").close();
+    
     if (this.myIndex !== null && this.myIndex !== undefined) {
       this.otherStream[this.myIndex].getTracks().forEach(function (track) {
         track.stop();
       });
     }
-    this.windowLeaveMeeting = false;
   }
 
   // send message on chat

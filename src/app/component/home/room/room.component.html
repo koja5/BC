@@ -1,74 +1,62 @@
 <div class="main">
-  <div class="main-left">
-    <div class="main-videos">
-      <div id="video-grid">
-        <video *ngIf="localStream" id="local-video" [srcObject]="localStream" autoplay muted="muted" volume="0" class="embed-responsive-item col-xs-6 col-md-4 video-stream">
+    <div class="main-left">
+        <div class="main-videos">
+            <div id="video-grid">
+                <video *ngIf="localStream" id="local-video" [srcObject]="localStream" autoplay muted="muted" volume="0" class="embed-responsive-item col-xs-6 col-md-4 video-stream">
         </video>
-        <video *ngFor="let item of otherStream" id="{{item.socket_id}}" [srcObject]="item.stream" autoplay class="embed-responsive-item col-xs-6 col-md-4 video-stream">
+                <video *ngFor="let item of otherStream" id="{{item.socket_id}}" [srcObject]="item.stream" autoplay class="embed-responsive-item col-xs-6 col-md-4 video-stream">
         </video>
-      </div>
+            </div>
+        </div>
+        <div class="main-controls">
+            <div class="main-controls-block">
+                <div *ngIf="localStream" (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button {{microphoneStatus}}">
+                    <i class="fa fa-microphone"></i>
+                    <span class="hidden-xs">{{language.chatRoomMute}}</span>
+                </div>
+                <div *ngIf="localStream" (click)="enableDisableVideo()" class="main-controls-button main-video_button {{videoStatus}}">
+                    <i class="fa fa-camera"></i>
+                    <span class="hidden-xs">{{language.chatRoomStopVideo}}</span>
+                </div>
+            </div>
+            <div class="main-controls-block">
+                <div class="main-controls-button">
+                    <i class="fa fa-shield"></i>
+                    <span class="hidden-xs">{{language.chatRoomSecurity}}</span>
+                </div>
+                <div class="main-controls-button">
+                    <i class="fa fa-user"></i>
+                    <span class="hidden-xs">{{language.chatRoomParticipants}}</span>
+                </div>
+                <div class="main-controls-button {{chatStatus}}" (click)="showHideChat()">
+                    <i class="fa fa-comment"></i>
+                    <span class="hidden-xs">{{language.chatRoomChat}}</span>
+                </div>
+            </div>
+            <div class="main-controls-block">
+                <div class="leave_meeting_container" (click)="openWindowLeaveDialog()">
+                    <span class="leave_meeting">{{language.chatRoomLeaveRoom}}</span>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="main-controls">
-      <div class="main-controls-block">
-        <div *ngIf="localStream" (click)="enableDisableMicrophone()" class="main-controls-button main-mute_button {{microphoneStatus}}">
-          <i class="fa fa-microphone"></i>
-          <span class="hidden-xs">{{language.chatRoomMute}}</span>
+    <div class="main-right" *ngIf="showChat">
+        <div class="main-header">
+            <h6>{{language.chatRoomChat}}</h6>
         </div>
-        <div *ngIf="localStream" (click)="enableDisableVideo()" class="main-controls-button main-video_button {{videoStatus}}">
-          <i class="fa fa-camera"></i>
-          <span class="hidden-xs">{{language.chatRoomStopVideo}}</span>
-        </div>
-      </div>
-      <div class="main-controls-block">
-        <div class="main-controls-button">
-          <i class="fa fa-shield"></i>
-          <span class="hidden-xs">{{language.chatRoomSecurity}}</span>
-        </div>
-        <div class="main-controls-button">
-          <i class="fa fa-user"></i>
-          <span class="hidden-xs">{{language.chatRoomParticipants}}</span>
-        </div>
-        <div class="main-controls-button {{chatStatus}}" (click)="showHideChat()">
-          <i class="fa fa-comment"></i>
-          <span class="hidden-xs">{{language.chatRoomChat}}</span>
-        </div>
-      </div>
-      <div class="main-controls-block">
-        <div class="leave_meeting_container" (click)="windowLeaveMeeting = true">
-          <span class="leave_meeting">{{language.chatRoomLeaveRoom}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="main-right" *ngIf="showChat">
-    <div class="main-header">
-      <h6>{{language.chatRoomChat}}</h6>
-    </div>
-    <div class="main-chat_window">
-      <ul class="messages">
-        <li *ngFor="let item of messages" class="item-message">
-          <span class="item-name">{{item.senderId}}</span>
-          <span>{{item.message}}</span>
-        </li>
-      </ul>
+        <div class="main-chat_window">
+            <ul class="messages">
+                <li *ngFor="let item of messages" class="item-message">
+                    <span class="item-name">{{item.senderId}}</span>
+                    <span>{{item.message}}</span>
+                </li>
+            </ul>
 
+        </div>
+        <div class="main-message_container">
+            <input id="chat_message" type="text" [(ngModel)]="chatMessage" placeholder="{{language.chatRoomTypeMessage}}" (keyup.enter)="sendMessage()">
+        </div>
     </div>
-    <div class="main-message_container">
-      <input id="chat_message" type="text" [(ngModel)]="chatMessage" placeholder="{{language.chatRoomTypeMessage}}"
-        (keyup.enter)="sendMessage()">
-    </div>
-  </div>
-  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="windowLeaveMeeting" (close)="windowLeaveMeeting = false"
-    [width]="windowWidth ? windowWidth : 450" [height]="windowHeight ? windowHeight : 250">
-    <div class="modal-body text-center">
-      <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-      <h3>{{language.areYouSure}}</h3>
-    </div>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="windowLeaveMeeting = false">{{language.no}}</button>
-      <button kendoButton (click)="leaveMeetingAnswer('yes')" primary="true">{{language.yes}}</button>
-    </kendo-dialog-actions>
-  </kendo-dialog>
 </div>
 
 <!-- <video *ngFor="let item of otherStream" [srcObject]="item" autoplay class="embed-responsive-item"

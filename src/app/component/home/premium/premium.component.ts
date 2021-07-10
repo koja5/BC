@@ -4,6 +4,8 @@ import { PremiumService } from "src/app/services/premium.service";
 import { ProfileService } from "src/app/services/profile.service";
 import { Router } from "@angular/router";
 import { HelpService } from 'src/app/services/help.service';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-premium",
@@ -14,7 +16,6 @@ export class PremiumComponent implements OnInit {
   public language: any;
   public buyWindow = false;
   public agree = true;
-  public areYouSureWindow = false;
   public buyCompleted = false;
   public data = new FacturaModel();
   public id: any;
@@ -23,7 +24,8 @@ export class PremiumComponent implements OnInit {
     private service: PremiumService,
     private profileService: ProfileService,
     private router: Router,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -35,6 +37,31 @@ export class PremiumComponent implements OnInit {
 
   agreeWithTerms() {
     this.agree = false;
+  }
+
+  openAreYouSureDialog():void{
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'sm',
+      centered:true
+    });
+
+    modalRef.componentInstance.modalSettings={
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.adminPleaseConfirm,
+        text: () => this.language.areYouSure,
+        imageUrl: ()=> '../../../../../assets/img/sent.png',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal=modalRef;
+    
+    modalRef.result.then(() => {
+      this.buyAnswer('yes');
+    }, () => {
+      console.log(`Dismissed`)
+    });
   }
 
   buyAnswer(answer) {
@@ -58,8 +85,6 @@ export class PremiumComponent implements OnInit {
       });
       this.buyCompleted = true;
     }
-
-    this.areYouSureWindow = false;
   }
 
   generateDataForMail(user) {

@@ -1,168 +1,147 @@
 <div *ngIf="language !== undefined">
-  <div class="py-5 bg-primary">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12 text-center py-5">
-          <h1 class="text-white font-weight-light mt-0"><span
-              class="font-weight-bold">{{language.premiumTitleHeader}}</span></h1>
+    <div class="py-5 bg-primary">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center py-5">
+                    <h1 class="text-white font-weight-light mt-0"><span class="font-weight-bold">{{language.premiumTitleHeader}}</span></h1>
 
-          <!-- <button type="button" class="btn btn-lg btn-outline-light" style="margin-right: 10px;">Monthly</button>
+                    <!-- <button type="button" class="btn btn-lg btn-outline-light" style="margin-right: 10px;">Monthly</button>
         <button type="button" class="btn btn-lg btn-outline-light">Yearly <span
             class="badge badge-pill badge-warning">50%</span>
         </button> -->
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="py-5">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-2"></div>
-        <div class="col-md-5">
-          <div class="border-0 box shadow-sm card rounded">
-            <!-- Header -->
-            <header class="card-header text-center p-5 border-0">
-              <h4 class="h6 text-success mb-2">{{language.premiumTitleCard}}</h4>
-              <span class="d-block">
+    <div class="py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-5">
+                    <div class="border-0 box shadow-sm card rounded">
+                        <!-- Header -->
+                        <header class="card-header text-center p-5 border-0">
+                            <h4 class="h6 text-success mb-2">{{language.premiumTitleCard}}</h4>
+                            <span class="d-block">
                 <span class="display-4 text-dark font-weight-normal">
                   <span class="small">{{language.premiumCurrency}}</span>{{language.premiumPrice}}
-                </span>
-                <span class="d-block text-secondary">{{language.premiumPerAccount}}</span>
-              </span>
-            </header>
-            <!-- End Header -->
-            <!-- Content -->
-            <div class="card-body p-4">
-              <ul class="list-group list-group-flush mb-4">
-                <li class="list-group-item py-2 px-0 border-0" *ngFor="let item of language.opportunities"><i
-                    class="feather-check text-success mr-1"></i>
-                  {{item.text}}
-                </li>
-              </ul>
-              <button type="button" class="btn btn-block btn-light"
-                (click)="buyWindow = true">{{language.premiumBuy}}</button>
-            </div>
-            <!-- End Content -->
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="border-0 box shadow-sm card rounded">
-            <!-- Header -->
-            <header class="card-header text-center p-5 border-0">
-              <h4 class="h6 text-danger mb-2">{{language.premiumTitleCardHelp}}</h4>
-              <span class="d-block">
+                            </span>
+                            <span class="d-block text-secondary">{{language.premiumPerAccount}}</span>
+                            </span>
+                        </header>
+                        <!-- End Header -->
+                        <!-- Content -->
+                        <div class="card-body p-4">
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item py-2 px-0 border-0" *ngFor="let item of language.opportunities"><i class="feather-check text-success mr-1"></i> {{item.text}}
+                                </li>
+                            </ul>
+                            <button type="button" class="btn btn-block btn-light" (click)="buyWindow = true">{{language.premiumBuy}}</button>
+                        </div>
+                        <!-- End Content -->
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="border-0 box shadow-sm card rounded">
+                        <!-- Header -->
+                        <header class="card-header text-center p-5 border-0">
+                            <h4 class="h6 text-danger mb-2">{{language.premiumTitleCardHelp}}</h4>
+                            <span class="d-block">
                 <span class="display-4 text-dark font-weight-normal">
                   {{language.premiumTitleCardHelp2}}
                 </span>
-                <span class="d-block text-secondary font-size-1">{{language.premiumContactVia}}</span>
-              </span>
-            </header>
-            <!-- End Header -->
-            <!-- Content -->
-            <div class="card-body p-4">
-              <ul class="list-group list-group-flush mb-4">
-                <li class="list-group-item py-2 px-0 border-0" *ngFor="let item of language.premiumContactPosibility"><i
-                    class="feather-check text-success mr-1"></i>{{item.text}}</li>
-              </ul>
-              <button type="button" class="btn btn-block btn-primary"
-                routerLink="/home/main/contact">{{language.premiumContactUs}}</button>
+                            <span class="d-block text-secondary font-size-1">{{language.premiumContactVia}}</span>
+                            </span>
+                        </header>
+                        <!-- End Header -->
+                        <!-- Content -->
+                        <div class="card-body p-4">
+                            <ul class="list-group list-group-flush mb-4">
+                                <li class="list-group-item py-2 px-0 border-0" *ngFor="let item of language.premiumContactPosibility"><i class="feather-check text-success mr-1"></i>{{item.text}}</li>
+                            </ul>
+                            <button type="button" class="btn btn-block btn-primary" routerLink="/home/main/contact">{{language.premiumContactUs}}</button>
+                        </div>
+                        <!-- End Content -->
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
             </div>
-            <!-- End Content -->
-          </div>
         </div>
-        <div class="col-md-1"></div>
-      </div>
     </div>
-  </div>
-  <footer class="bg-light py-4">
-    <div class="container">
-      <div class="d-flex justify-content-between align-items-center">
-        <!-- Copyright -->
-        <p class="small text-muted mb-0">©2020 {{language.bciText}}.</p>
-        <!-- End Copyright -->
-        <!-- Social Networks -->
-        <ul class="list-inline mb-0">
-          <li class="list-inline-item">
-            <a class="btn btn-sm btn-light" href="#">
-              <span class="feather-facebook"></span>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn btn-sm btn-light" href="#">
-              <span class="feather-youtube"></span>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn btn-sm btn-light" href="#">
-              <span class="feather-twitter"></span>
-            </a>
-          </li>
-          <li class="list-inline-item">
-            <a class="btn btn-sm btn-light" href="#">
-              <span class="feather-github"></span>
-            </a>
-          </li>
-        </ul>
-        <!-- End Social Networks -->
-      </div>
-    </div>
-  </footer>
-  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="areYouSureWindow" (close)="areYouSureWindow = false"
-    [minWidth]="250" [width]="450">
-    <div class="modal-body text-center">
-      <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-      <h3>{{language.areYouSure}}</h3>
-    </div>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="areYouSureWindow = false">{{language.no}}</button>
-      <button kendoButton (click)="buyAnswer('yes')" primary="true">{{language.yes}}</button>
-    </kendo-dialog-actions>
-  </kendo-dialog>
+    <footer class="bg-light py-4">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <!-- Copyright -->
+                <p class="small text-muted mb-0">©2020 {{language.bciText}}.</p>
+                <!-- End Copyright -->
+                <!-- Social Networks -->
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item">
+                        <a class="btn btn-sm btn-light" href="#">
+                            <span class="feather-facebook"></span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="btn btn-sm btn-light" href="#">
+                            <span class="feather-youtube"></span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="btn btn-sm btn-light" href="#">
+                            <span class="feather-twitter"></span>
+                        </a>
+                    </li>
+                    <li class="list-inline-item">
+                        <a class="btn btn-sm btn-light" href="#">
+                            <span class="feather-github"></span>
+                        </a>
+                    </li>
+                </ul>
+                <!-- End Social Networks -->
+            </div>
+        </div>
+    </footer>
 </div>
 
 <kendo-window title="{{language.premiumBuy}}" *ngIf="buyWindow" (close)="buyWindow = false" [width]="550">
 
-  <div class="border-0 box shadow-sm card rounded" *ngIf="!buyCompleted">
-    <!-- Header -->
-    <header class="card-header text-center p-3 border-0">
-      <h4 class="h6 text-success mb-2">{{language.premiumTitleCard}}</h4>
-      <span class="d-block">
+    <div class="border-0 box shadow-sm card rounded" *ngIf="!buyCompleted">
+        <!-- Header -->
+        <header class="card-header text-center p-3 border-0">
+            <h4 class="h6 text-success mb-2">{{language.premiumTitleCard}}</h4>
+            <span class="d-block">
         <span class="display-4 text-dark font-weight-normal">
           <span class="small">{{language.premiumCurrency}}</span>{{language.premiumPrice}}
-        </span>
-        <span class="d-block text-secondary">{{language.premiumPerAccount}}</span>
-      </span>
-      <div style="padding-top: 15px">
-        <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" />
-        {{language.premiumAcceptBuyFirst}} <a routerLink="/terms" target="_blank">{{language.premiumAcceptBuyTerms}}</a>
-        {{language.premiumAcceptBuyEnd}} <a routerLink="/privacy-policy"
-          target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
-      </div>
-    </header>
-    <!-- End Header -->
-    <button (click)="areYouSureWindow = true" type="button" class="btn btn-block btn-light"
-      [title]="agree ? language.premiumRequiredToAllow : ''" [ngClass]="agree ? 'not-allowed' : ''"
-      (click)="buyWindow = true" [disabled]="agree">{{language.premiumBuy}}</button>
-  </div>
-
-  <div *ngIf="buyCompleted">
-    <div class="done_animation">
-      <div class="spinner">
-      </div>
-      <div class="mask">
-      </div>
-      <div class="filler">
-      </div>
-      <div class="innerCircle">
-      </div>
-      <div class="check">
-      </div>
+            </span>
+            <span class="d-block text-secondary">{{language.premiumPerAccount}}</span>
+            </span>
+            <div style="padding-top: 15px">
+                <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" /> {{language.premiumAcceptBuyFirst}} <a routerLink="/terms" target="_blank">{{language.premiumAcceptBuyTerms}}</a> {{language.premiumAcceptBuyEnd}}
+                <a routerLink="/privacy-policy" target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
+            </div>
+        </header>
+        <!-- End Header -->
+        <button (click)="openAreYouSureDialog()" type="button" class="btn btn-block btn-light" [title]="agree ? language.premiumRequiredToAllow : ''" [ngClass]="agree ? 'not-allowed' : ''" (click)="buyWindow = true" [disabled]="agree">{{language.premiumBuy}}</button>
     </div>
 
-    <div class="text-buy-completed">
-      <h5>{{language.premiumSuccessBuyTitle}}</h5>
-      <h6>{{language.premiumSuccessBuyText}}</h6>
+    <div *ngIf="buyCompleted">
+        <div class="done_animation">
+            <div class="spinner">
+            </div>
+            <div class="mask">
+            </div>
+            <div class="filler">
+            </div>
+            <div class="innerCircle">
+            </div>
+            <div class="check">
+            </div>
+        </div>
+
+        <div class="text-buy-completed">
+            <h5>{{language.premiumSuccessBuyTitle}}</h5>
+            <h6>{{language.premiumSuccessBuyText}}</h6>
+        </div>
+        <button (click)="finishBuyRedirect()" type="button" class="btn btn-block btn-light">{{language.ok}}</button>
     </div>
-    <button (click)="finishBuyRedirect()" type="button" class="btn btn-block btn-light">{{language.ok}}</button>
-  </div>
 </kendo-window>

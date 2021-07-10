@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { EditProfileService } from "src/app/services/edit-profile.service";
-import { UserModel } from "src/app/models/user-model";
 import { ToastrService } from "ngx-toastr";
 import { MessageService } from "src/app/services/message.service";
 import { ImageCroppedEvent } from "ngx-image-cropper";
@@ -12,6 +11,8 @@ import { BankAccountModel } from "src/app/models/bank-account-model";
 import { ChangePasswordModel } from "src/app/models/change-password-model";
 import * as sha1 from "sha1";
 import { HelpService } from 'src/app/services/help.service';
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-edit-profile",
@@ -31,12 +32,10 @@ export class EditProfileComponent implements OnInit {
   public windowHeight: any;
   public modificationType: any;
   public selectedExperience: any;
-  public deleteWindowExperience = false;
   public allEducation: any = [];
   public education = new EducationModel();
   public educationWindow = false;
   public selectedEducation: any;
-  public deleteWindowEducation = false;
   public lookingOffer = new LookingOfferModel();
   public lookingOfferCreate = false;
   public additionalInfo = new AdditionalInfoModel();
@@ -56,7 +55,8 @@ export class EditProfileComponent implements OnInit {
     private service: EditProfileService,
     private toastr: ToastrService,
     private message: MessageService,
-    public helpService: HelpService
+    public helpService: HelpService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -258,22 +258,29 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  deleteExperience(answer) {
-    if (answer === "yes") {
-      this.service
-        .deleteExperience(this.selectedExperience.data.id)
-        .subscribe((data) => {
-          if (data) {
-            this.toastr.success(
-              this.language.adminDeleteTitle,
-              this.language.adminDeleteText,
-              { timeOut: 7000, positionClass: "toast-bottom-right" }
-            );
-            this.allExperience.splice(this.selectedExperience.index, 1);
-          }
-        });
-    }
-    this.deleteWindowExperience = false;
+  openDeleteExperienceDialog():void{
+    const modalRef = this.openDeleteDialog();
+    modalRef.result.then(() => {
+      this.deleteExperience();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  deleteExperience() {
+    this.service
+      .deleteExperience(this.selectedExperience.data.id)
+      .subscribe((data) => {
+        if (data) {
+          this.toastr.success(
+            this.language.adminDeleteTitle,
+            this.language.adminDeleteText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+          this.allExperience.splice(this.selectedExperience.index, 1);
+        }
+      });
+    
     this.experienceWindow = false;
   }
 
@@ -337,22 +344,28 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  deleteEducation(answer) {
-    if (answer === "yes") {
-      this.service
-        .deleteEducation(this.selectedEducation.data.id)
-        .subscribe((data) => {
-          if (data) {
-            this.toastr.success(
-              this.language.adminDeleteTitle,
-              this.language.adminDeleteText,
-              { timeOut: 7000, positionClass: "toast-bottom-right" }
-            );
-            this.allEducation.splice(this.selectedEducation.index, 1);
-          }
-        });
-    }
-    this.deleteWindowEducation = false;
+  openDeleteEducationDialog():void {
+    const modalRef = this.openDeleteDialog();
+    modalRef.result.then(() => {
+      this.deleteEducation();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  deleteEducation() {
+    this.service
+      .deleteEducation(this.selectedEducation.data.id)
+      .subscribe((data) => {
+        if (data) {
+          this.toastr.success(
+            this.language.adminDeleteTitle,
+            this.language.adminDeleteText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+          this.allEducation.splice(this.selectedEducation.index, 1);
+        }
+      });
     this.educationWindow = false;
   }
 
@@ -547,4 +560,27 @@ export class EditProfileComponent implements OnInit {
       });
     }
   }
+
+  private openDeleteDialog():NgbModalRef{
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'sm',
+      centered:true
+    });
+
+    modalRef.componentInstance.modalSettings={
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.adminPleaseConfirm,
+        text: () => this.language.areYouSure,
+        imageUrl: ()=> '../../../../../assets/img/sent.png',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal=modalRef;
+    
+
+    return modalRef;
+  }
+
 }

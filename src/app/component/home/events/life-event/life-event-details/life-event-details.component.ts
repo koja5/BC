@@ -1,15 +1,14 @@
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LifeEventService } from "src/app/services/life-event.service";
 import { ProfileService } from "src/app/services/profile.service";
 import { ConnectionService } from "src/app/services/connection.service";
-import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
 import { HelpService } from "src/app/services/help.service";
 import { EditEventService } from "src/app/services/edit-event.service";
-import { type } from "os";
-import { SetPackagesService } from "src/app/services/help-services/set-packages.service";
 import { PrepareMailService } from "src/app/services/help-services/prepare-mail.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-life-event-details",
@@ -22,7 +21,6 @@ export class LifeEventDetailsComponent implements OnInit {
   public id: any;
   public language: any;
   public eventStatus: any;
-  public deleteEventWindow = false;
   public freeSpace = true;
   public numberOfFreeSpace: number;
   public organizator: any;
@@ -48,11 +46,10 @@ export class LifeEventDetailsComponent implements OnInit {
     private service: LifeEventService,
     private profileService: ProfileService,
     private connectionService: ConnectionService,
-    private toastr: ToastrService,
     private helpService: HelpService,
     private editEventService: EditEventService,
-    private setPackages: SetPackagesService,
-    private prepareMail: PrepareMailService
+    private prepareMail: PrepareMailService,
+    private modalService: NgbModal
   ) {}
 
   ngOnInit() {
@@ -98,19 +95,40 @@ export class LifeEventDetailsComponent implements OnInit {
     this.router.navigate(["home/main/event/edit-event/life/" + this.data._id]);
   }
 
-  deleteEvent(answer) {
-    if (answer === "yes") {
-      this.editEventService.deleteEventData(this.data._id).subscribe((data) => {
-        if (data) {
-          this.helpService.deleteSuccessMessage();
-          this.router.navigate(["/home/main/event/all"]);
-        } else {
-          this.helpService.deleteErrorMessage();
-        }
-      });
-    }
+  openAreYouSureDialog():void{
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'sm',
+      centered:true
+    });
 
-    this.deleteEventWindow = false;
+    modalRef.componentInstance.modalSettings={
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.adminPleaseConfirm,
+        text: () => this.language.areYouSure,
+        imageUrl: ()=> '../../../../../assets/img/sent.png',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal=modalRef;
+    
+    modalRef.result.then(() => {
+      this.deleteEvent();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  deleteEvent():void {
+    this.editEventService.deleteEventData(this.data._id).subscribe((data) => {
+      if (data) {
+        this.helpService.deleteSuccessMessage();
+        this.router.navigate(["/home/main/event/all"]);
+      } else {
+        this.helpService.deleteErrorMessage();
+      }
+    });
   }
 
   signIn() {
