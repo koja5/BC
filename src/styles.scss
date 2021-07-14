@@ -29,6 +29,10 @@ button:focus {
     outline: 0;
 }
 
+img {
+    object-fit: cover;
+}
+
 
 /* End body */
 
@@ -643,7 +647,6 @@ small {
 .dropdown-list-image img {
     height: 2.5rem;
     width: 2.5rem;
-    object-fit: cover;
 }
 
 .dropdown-list-image .status-indicator {
