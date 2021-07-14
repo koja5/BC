@@ -6,6 +6,7 @@ import { Router } from "@angular/router";
 import { HelpService } from 'src/app/services/help.service';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
+import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
 
 @Component({
   selector: "app-premium",
@@ -25,7 +26,8 @@ export class PremiumComponent implements OnInit {
     private profileService: ProfileService,
     private router: Router,
     private helpService: HelpService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {}
 
   ngOnInit() {
@@ -41,20 +43,11 @@ export class PremiumComponent implements OnInit {
 
   openAreYouSureDialog():void{
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
 
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
     
     modalRef.result.then(() => {

@@ -34,6 +34,7 @@ import { AdditionalInfoModel } from "src/app/models/additional-info-model";
 import { LookingOfferModel } from "src/app/models/looking-offer-model";
 import { ChangePasswordModel } from "src/app/models/change-password-model";
 import { DynamicDialogComponent } from '../../dynamic-elements/dynamic-dialog/dynamic-dialog.component';
+import { ModalConfigurationService } from 'src/app/services/modal-configuration.service';
 
 @Component({
   selector: "app-custom-grid",
@@ -135,7 +136,8 @@ export class CustomGridComponent implements OnInit {
     private toastr: ToastrService,
     private helpService: HelpService,
     public serviceEditProfile: EditProfileService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {
     this.allData = this.allData.bind(this);
   }
@@ -335,20 +337,11 @@ export class CustomGridComponent implements OnInit {
     this.index = index;
    
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
     
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
     
     modalRef.result.then(() => {

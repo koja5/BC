@@ -15,6 +15,7 @@ import { MessageService } from "src/app/services/message.service";
 import { UserModel } from "src/app/models/user-model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
+import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
 
 @Component({
   selector: "app-feed",
@@ -74,7 +75,8 @@ export class FeedComponent implements OnInit {
     private profileService: ProfileService,
     private toastr: ToastrService,
     private message: MessageService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {}
 
   ngOnInit() {
@@ -281,20 +283,11 @@ export class FeedComponent implements OnInit {
     };
 
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
 
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
     
     modalRef.result.then(() => {

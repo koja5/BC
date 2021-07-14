@@ -28,7 +28,7 @@ import { ImpressumComponent } from './component/templates/impressum/impressum.co
 import { RecommendedAnswerComponent } from './component/templates/recommended-answer/recommended-answer.component';
 import { NotFoundComponent } from "./component/templates/not-found/not-found.component";
 import { SuccessComponent } from './component/templates/success/success.component';
-import { DymanicElementsModule } from "./component/dynamic-elements/dymanic-elements.module";
+import { DynamicElementsModule } from "./component/dynamic-elements/dynamic-elements.module";
 import { DemoComponent } from "./component/demo/demo.component";
 
 @NgModule({
@@ -56,7 +56,7 @@ import { DemoComponent } from "./component/demo/demo.component";
     LayoutModule,
     SplitterModule,
     DialogsModule,
-    DymanicElementsModule,
+    DynamicElementsModule,
     NgbModule
   ],
   providers: [

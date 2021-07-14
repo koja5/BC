@@ -17,6 +17,7 @@ declare var document: any;
 import * as io from "socket.io-client";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
+import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
 
 @Component({
   selector: "app-room",
@@ -107,7 +108,8 @@ export class RoomComponent implements OnInit {
     private signalingService: RoomService,
     private editEventService: EditEventService,
     private helpService: HelpService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {
     // this.socket = io();
     // this.socket = io.connect("http://localhost:3000");
@@ -505,20 +507,11 @@ export class RoomComponent implements OnInit {
 
   openWindowLeaveDialog():void{
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
 
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
     
     modalRef.result.then(() => {

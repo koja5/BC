@@ -62,7 +62,7 @@ export class PopupComponent implements OnInit {
 
   openModal():void{
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
     

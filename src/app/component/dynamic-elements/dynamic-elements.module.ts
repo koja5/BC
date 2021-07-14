@@ -18,7 +18,6 @@ import { DynamicFormsComponent } from "./dynamic-forms/dynamic-forms.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
 import {TextBoxModule} from '@syncfusion/ej2-angular-inputs';
-import { DynamicFieldsDirective } from './dynamic-forms/dynamic-fields/dynamic-fields.directive';
 import { TextboxComponent } from './dynamic-forms/dynamic-fields/textbox/textbox.component';
 import { TextareaComponent } from './dynamic-forms/dynamic-fields/textarea/textarea.component';
 import { DatepickerComponent } from './dynamic-forms/dynamic-fields/datepicker/datepicker.component';
@@ -59,4 +58,4 @@ import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
     DynamicDialogComponent
     ]
 })
-export class DymanicElementsModule {}
+export class DynamicElementsModule {}

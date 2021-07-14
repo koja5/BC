@@ -2,6 +2,7 @@ import { DynamicDialogComponent } from './../dynamic-elements/dynamic-dialog/dyn
 import { Component, OnInit } from '@angular/core';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { HelpService } from 'src/app/services/help.service';
+import { ModalConfigurationService } from 'src/app/services/modal-configuration.service';
 
 @Component({
   selector: 'app-demo',
@@ -13,7 +14,8 @@ export class DemoComponent implements OnInit {
   public language;
 
   constructor(private modalService: NgbModal,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private modalConfigurationService: ModalConfigurationService
     ) { }
 
   ngOnInit() {
@@ -22,20 +24,11 @@ export class DemoComponent implements OnInit {
   
   openModal():void{
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
     
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
     
     modalRef.result.then((result) => {

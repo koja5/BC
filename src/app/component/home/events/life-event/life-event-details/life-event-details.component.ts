@@ -9,6 +9,7 @@ import { EditEventService } from "src/app/services/edit-event.service";
 import { PrepareMailService } from "src/app/services/help-services/prepare-mail.service";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
+import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
 
 @Component({
   selector: "app-life-event-details",
@@ -49,7 +50,8 @@ export class LifeEventDetailsComponent implements OnInit {
     private helpService: HelpService,
     private editEventService: EditEventService,
     private prepareMail: PrepareMailService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {}
 
   ngOnInit() {
@@ -97,20 +99,11 @@ export class LifeEventDetailsComponent implements OnInit {
 
   openAreYouSureDialog():void{
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
 
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
     
     modalRef.result.then(() => {

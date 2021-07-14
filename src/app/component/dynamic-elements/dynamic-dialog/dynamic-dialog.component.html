@@ -1,14 +1,15 @@
 <div class="modal-header">
-  <h5 class="modal-title">{{title}}</h5>
-  <button type="button" class="close" aria-label="Close" (click)="dismiss()">
+    <h5 class="modal-title">{{title}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="dismiss()">
     <span aria-hidden="true">&times;</span>
   </button>
 </div>
 <div class="modal-body justify-content-center text-center">
-  <img *ngIf="imageUrl" src="{{imageUrl}}" width="50" height="46"/>
-  <div class="h3">{{text}}</div>
+    <img *ngIf="imageUrl" src="{{imageUrl}}" width="50" height="46" />
+    <div *ngIf="text" class="h3">{{text}}</div>
+    <ng-content></ng-content>
 </div>
-<div class="modal-footer">
-  <div class="btn btn-outline-secondary m-auto float-left w-25" (click)="dismiss()">{{secondaryButtonLabel}}</div>
-  <div class="btn btn-outline-primary m-auto float-right w-25" (click)="apply()">{{primaryButtonLabel}}</div>
+<div *ngIf="primaryButtonLabel || secondaryButtonLabel" class="modal-footer">
+    <div *ngIf="secondaryButtonLabel" class="btn btn-outline-secondary m-auto float-left w-25" (click)="dismiss()">{{secondaryButtonLabel}}</div>
+    <div *ngIf="primaryButtonLabel" class="btn btn-outline-primary m-auto float-right w-25" (click)="apply()">{{primaryButtonLabel}}</div>
 </div>

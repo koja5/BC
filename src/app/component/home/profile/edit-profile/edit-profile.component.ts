@@ -1,3 +1,4 @@
+import { ModalConfigurationService } from './../../../../services/modal-configuration.service';
 import { Component, OnInit, HostListener } from "@angular/core";
 import { EditProfileService } from "src/app/services/edit-profile.service";
 import { ToastrService } from "ngx-toastr";
@@ -56,7 +57,8 @@ export class EditProfileComponent implements OnInit {
     private toastr: ToastrService,
     private message: MessageService,
     public helpService: HelpService,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {}
 
   ngOnInit() {
@@ -259,6 +261,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   openDeleteExperienceDialog():void{
+    this.experienceWindow = false;
     const modalRef = this.openDeleteDialog();
     modalRef.result.then(() => {
       this.deleteExperience();
@@ -345,6 +348,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   openDeleteEducationDialog():void {
+    this.educationWindow = false
     const modalRef = this.openDeleteDialog();
     modalRef.result.then(() => {
       this.deleteEducation();
@@ -563,22 +567,12 @@ export class EditProfileComponent implements OnInit {
 
   private openDeleteDialog():NgbModalRef{
     const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'sm',
+      size:'lg',
       centered:true
     });
 
-    modalRef.componentInstance.modalSettings={
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => this.language.adminPleaseConfirm,
-        text: () => this.language.areYouSure,
-        imageUrl: ()=> '../../../../../assets/img/sent.png',
-        primaryButtonLabel: () => this.language.yes,
-        secondaryButtonLabel: () => this.language.no
-      }
-    };
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
     modalRef.componentInstance.modal=modalRef;
-    
 
     return modalRef;
   }
