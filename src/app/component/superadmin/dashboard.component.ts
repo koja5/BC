@@ -27,7 +27,7 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private cookie: CookieService,
     private helpService: HelpService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.user = JSON.parse(localStorage.getItem("user"));
@@ -41,6 +41,7 @@ export class DashboardComponent implements OnInit {
       this.service.getTranslationFromFS("english").subscribe(data => {
         console.log(data);
         this.helpService.setLanguage(data);
+        this.helpService.setLanguageCode('en');
         this.language = data["login"];
       });
     }
@@ -71,7 +72,7 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  returnActiveNode(node) {}
+  returnActiveNode(node) { }
 
   toggleFullscreen(): void {
     const isInFullScreen =
@@ -113,7 +114,7 @@ export class DashboardComponent implements OnInit {
   }
 
   showHideSubMenu() {
-    if(this.subMenuInd === '') {
+    if (this.subMenuInd === '') {
       this.subMenuInd = 'active open'
       this.sidebarHeight = window.innerHeight - 40 + 'px';
     } else {

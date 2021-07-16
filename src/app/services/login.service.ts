@@ -1,15 +1,11 @@
 import { Injectable } from "@angular/core";
-import {
-  HttpClient,
-  HttpHeaders,
-  HttpErrorResponse,
-} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import "rxjs/add/operator/map";
 import { CookieService } from "ng2-cookies";
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs';
-//import * as languageCodes from 'src/app/data/languageCodes.json';  
+import languageCodes from 'src/app/data/languageCodes.json';
 
 @Injectable({
   providedIn: "root",
@@ -17,24 +13,24 @@ import { throwError } from 'rxjs';
 export class LoginService {
   public logged: boolean;
 
-  constructor(public http: HttpClient, public cookie: CookieService) {}
+  constructor(public http: HttpClient, public cookie: CookieService) { }
 
-  checkCountryLocation():Observable<any> {
+  checkCountryLocation(): Observable<any> {
     return this.http
       .get("http://ip-api.com/json")
       .catch((error: Response) => {
         return throwError(error);
-     })
+      })
   }
 
   // Search by ISO 639-1 language code.
-  checkLanguageCode(languageCode : string): Observable<any>{
-    return this.http.get('https://restcountries.eu/rest/v2/lang/' + languageCode);
+  checkLanguageCode(languageCode: string): boolean {
+    return languageCodes.filter((lang) => lang.code === languageCode).length > 0;
   }
 
-  getTranslationByCountryCode(code) {
+  getTranslationByLanguageCode(code: string) {
     return this.http
-      .get("/api/getTranslationByCountryCode/" + code)
+      .get("/api/getTranslationByLanguageCode/" + code)
       .map((res) => res);
   }
 
@@ -46,7 +42,7 @@ export class LoginService {
 
   getDefaultLanguage() {
     return this.http
-      .get("/api/getTranslationByCountryCode/US")
+      .get("/api/getTranslationByLanguageCode/en")
       .map((res) => res);
   }
 

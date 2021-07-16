@@ -371,12 +371,20 @@ export class HelpService {
     return sessionStorage.getItem('previous-path');
   }
 
-  setLanguage(language) {
+  setLanguage(language: Object) {
     localStorage.setItem('language', JSON.stringify(language));
   }
 
   getLanguage() {
     return JSON.parse(localStorage.getItem('language'));
+  }
+
+  setLanguageCode(languageCode: string) {
+    localStorage.setItem('languageCode', JSON.stringify(languageCode));
+  }
+
+  getLanguageCode() {
+    return JSON.parse(localStorage.getItem('languageCode'));
   }
 
   postApiRequest(method, parametar) {

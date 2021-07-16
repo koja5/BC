@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
     private profileService: ProfileService,
     private helpService: HelpService,
     private messageService: MessageChatService
-  ) {}
+  ) { }
 
   ngOnInit() {
     console.log(window.location.pathname);
@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
   logout() {
     this.cookie.delete("user", "/home/main");
     this.cookie.delete("user", "/");
-    this.router.navigate(["login"]);
+    this.router.navigate(['login/' + this.helpService.getLanguageCode()]);
   }
 
   onValueChange(event) {

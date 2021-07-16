@@ -44,51 +44,11 @@ export class LoginComponent implements OnInit {
   }
 
   initialization() {
-    let languageCode = this.activatedRoute.snapshot.paramMap.get('languageCode');
+    let languageCode = this.activatedRoute.snapshot.paramMap.get('languageCode').toLowerCase();
 
-    if (languageCode) {
-      languageCode = languageCode.toLowerCase();
-
-      const regex = new RegExp('^[a-z]{2}');
-      // means languageCode has only 2 letters - ISO 639-1 standard
-      if (regex.test(languageCode)) {
-
-        this.service.checkLanguageCode(languageCode).subscribe((data) => {
-
-          //alpha2Code is two-letter country code
-          //for sr, use data[3]['alpha2Code'] because we are still missing array of countries in DB
-          this.service.getTranslationByCountryCode(data[3]['alpha2Code'].toUpperCase()).subscribe(
-            (translation) => {
-              if (translation !== null) {
-                this.language = translation["config"];
-                this.helpService.setLanguage(this.language);
-              } else {
-                this.translationService.getDefaultTranslation().subscribe((data) => {
-                  this.language = data;
-                });
-              }
-            },
-            (error) => {
-              console.log(error);
-              this.router.navigate(["/maintence"]);
-            }
-          );
-        },
-          (error) => {
-            if (error.status === 404) {
-              this.translationService.getDefaultTranslation().subscribe((data) => {
-                this.language = data;
-              });
-            }
-          }
-        )
-      }
-      else {
-        this.translationService.getDefaultTranslation().subscribe((data) => {
-          this.language = data;
-        });
-      }
-    }
+    this.translationService.getTranslation(languageCode).subscribe((data) => {
+      this.language = data;
+    });
   }
 
   changeForm(form) {
