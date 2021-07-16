@@ -1,3 +1,4 @@
+import { ModalsModule } from './component/modals/modals.module';
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
@@ -10,7 +11,7 @@ import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
 import { DashboardModule } from "./component/superadmin/dashboard.module";
 import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
 import { DialogsModule } from '@progress/kendo-angular-dialog';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // services
 import { LoggedGuard } from "./services/guard/logged-guard.service";
@@ -57,7 +58,8 @@ import { DemoComponent } from "./component/demo/demo.component";
     SplitterModule,
     DialogsModule,
     DynamicElementsModule,
-    NgbModule
+    NgbModule,
+    ModalsModule
   ],
   providers: [
     LoggedGuard,
@@ -68,4 +70,4 @@ import { DemoComponent } from "./component/demo/demo.component";
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

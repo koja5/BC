@@ -42,7 +42,7 @@
                     </div>
                     <div class="overflow-hidden text-center p-3">
                         <a class="font-weight-bold btn btn-light rounded p-3 d-block" (click)="saveChanges()">
-              {{language.profileSave}} </a>
+                            {{language.profileSave}} </a>
                     </div>
                 </div>
             </div>
@@ -95,9 +95,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldSalutation}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldSalutation}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <kendo-combobox style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="salutationItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'" (selectionChange)="selectedSalutation($event)"
                                             class="col-xs-12 noPadding" [(ngModel)]="data.salutation" name="salutation">
@@ -109,11 +109,11 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldPassword}}
-                  </label>
+                                        {{language.fieldPassword}}
+                                    </label>
                                     <div class="form-group row">
                                         <input type="text" class="form-control col-sm-11" name="password" [(ngModel)]="data.password" disabled>
-                                        <span class="fa fa-unlock-alt change-icon col-sm-1" (click)="changePasswordWindow = true"></span>
+                                        <span class="fa fa-unlock-alt change-icon col-sm-1" (click)="openChangePasswordModal()"></span>
                                     </div>
                                 </div>
                             </div>
@@ -123,9 +123,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldTitleBefore}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldTitleBefore}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleBefore">
                                     </div>
@@ -135,9 +135,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldTitleAfter}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldTitleAfter}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="titleAfter" [(ngModel)]="data.titleAfter">
                                     </div>
@@ -149,9 +149,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldFirstname}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldFirstname}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="firstname" [(ngModel)]="data.firstname">
                                     </div>
@@ -161,9 +161,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldLastname}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldLastname}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="lastname" [(ngModel)]="data.lastname">
                                     </div>
@@ -175,9 +175,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="nameLabel" class="form-label">
-                    {{language.fieldRelationshipStatus}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldRelationshipStatus}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <kendo-combobox style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="relationshipItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'" (selectionChange)="selectedRelationship($event)"
                                             class="col-xs-12 noPadding" [(ngModel)]="data.relationship" name="relationship">
@@ -189,9 +189,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="phoneNumberLabel" class="form-label">
-                    {{language.fieldBirthday}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldBirthday}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
 
                                         <kendo-datepicker [(ngModel)]="data.birthday" name="birthday" style="display: contents;">
@@ -205,9 +205,9 @@
                             <div class="col-sm-4 mb-2">
                                 <div class="js-form-message">
                                     <label id="phoneNumberLabel" class="form-label">
-                    {{language.fieldPhoneNumber}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldPhoneNumber}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="data.phoneNumber" placeholder="Enter your phone number" aria-label="Enter your phone number" required="" aria-describedby="phoneNumberLabel" data-msg="Please enter a valid phone number"
                                             data-error-class="u-has-error" data-success-class="u-has-success">
@@ -219,9 +219,9 @@
                             <div class="col-sm-4 mb-2">
                                 <div class="js-form-message">
                                     <label id="emailLabel" class="form-label">
-                    {{language.fieldMobile1}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldMobile1}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="mobile1" [(ngModel)]="data.mobile1">
                                     </div>
@@ -232,9 +232,9 @@
                             <div class="col-sm-4 mb-2">
                                 <div class="js-form-message">
                                     <label id="locationLabel" class="form-label">
-                    {{language.fieldMobile2}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldMobile2}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="mobile2" [(ngModel)]="data.mobile2">
                                     </div>
@@ -247,9 +247,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="emailLabel" class="form-label">
-                    {{language.fieldEmail}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldEmail}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="email" class="form-control" name="email" [(ngModel)]="data.email">
                                     </div>
@@ -260,9 +260,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="locationLabel" class="form-label">
-                    {{language.fieldLocation}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldLocation}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="location" [(ngModel)]="data.location">
                                     </div>
@@ -275,9 +275,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="organizationLabel" class="form-label">
-                    {{language.fieldStreet}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldStreet}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="street" [(ngModel)]="data.street">
                                     </div>
@@ -288,9 +288,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="websiteLabel" class="form-label">
-                    {{language.fieldZip}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldZip}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input class="form-control" type="url" name="zip" [(ngModel)]="data.zip">
                                     </div>
@@ -303,9 +303,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="organizationLabel" class="form-label">
-                    {{language.fieldOrganization}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldOrganization}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input type="text" class="form-control" name="organization" [(ngModel)]="data.organization">
                                     </div>
@@ -316,9 +316,9 @@
                             <div class="col-sm-6 mb-2">
                                 <div class="js-form-message">
                                     <label id="websiteLabel" class="form-label">
-                    {{language.fieldWebsite}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
+                                        {{language.fieldWebsite}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
                                     <div class="form-group">
                                         <input class="form-control" type="url" name="website" [(ngModel)]="data.website">
                                     </div>
@@ -330,8 +330,8 @@
                         </div>
 
                         <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveChanges()">
-                &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-                &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                                &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                                &nbsp;&nbsp;&nbsp;&nbsp; </a>
                         </div>
                     </form>
                 </div>
@@ -366,8 +366,8 @@
                     </div>
 
                     <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveLookingOffer()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                            &nbsp;&nbsp;&nbsp;&nbsp; </a>
                     </div>
                 </div>
             </div>
@@ -431,8 +431,8 @@
                     </div>
                 </div>
                 <div class="mb-3 mt-3 text-center"><a class="font-weight-bold btn btn-primary rounded p-2" (click)="addNewExperience()"> &nbsp;&nbsp;
-            <span class="fa fa-plus"></span> {{language.profileAddNewExperience}}
-            &nbsp;&nbsp; </a></div>
+                        <span class="fa fa-plus"></span> {{language.profileAddNewExperience}}
+                        &nbsp;&nbsp; </a></div>
             </div>
 
             <div class="border rounded bg-white mb-3">
@@ -495,8 +495,8 @@
                     </div>
                 </div>
                 <div class="mb-3 mt-3 text-center"><a class="font-weight-bold btn btn-primary rounded p-2" (click)="addNewEducation()"> &nbsp;&nbsp;
-            <span class="fa fa-plus"></span> {{language.profileAddNewEducation}}
-            &nbsp;&nbsp; </a></div>
+                        <span class="fa fa-plus"></span> {{language.profileAddNewEducation}}
+                        &nbsp;&nbsp; </a></div>
             </div>
             <div class="border rounded bg-white mb-3">
                 <div class="box-title border-bottom p-3">
@@ -549,8 +549,8 @@
                     </div>
 
                     <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveAdditionalInfo()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                            &nbsp;&nbsp;&nbsp;&nbsp; </a>
                     </div>
                 </div>
             </div>
@@ -597,8 +597,8 @@
                     </div>
 
                     <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveBankAccount()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                            &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                            &nbsp;&nbsp;&nbsp;&nbsp; </a>
                     </div>
                 </div>
             </div>
@@ -608,162 +608,11 @@
 
 
                 <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"
-                    [roundCropper]="true"></image-cropper>
+                    [roundCropper]="true">
+                </image-cropper>
 
                 <img [src]="croppedImage" />
             </div>
         </main>
     </div>
-
-
-    <kendo-window title="{{language.profileExperienceTitle}}" *ngIf="experienceWindow" (close)="experienceWindow = false" [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 470">
-        <div class="box-body px-3 pt-3 pb-0">
-            <div class="row">
-                <div class="col-sm-6 mb-4">
-                    <label id="FROM" class="form-label">{{language.profileFrom}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <kendo-datepicker [(ngModel)]="experience.fromDate" name="from" style="display: contents;">
-                        </kendo-datepicker>
-                    </div>
-                    <!-- End Input -->
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label id="TO" class="form-label">{{language.profileTo}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <kendo-datepicker [(ngModel)]="experience.toDate" name="to" style="display: contents;">
-                        </kendo-datepicker>
-                    </div>
-                    <!-- End Input -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 mb-4">
-                    <label id="companyLabel" class="form-label">{{language.profileCompany}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <input type="text" class="form-control" [(ngModel)]="experience.company" name="company">
-                    </div>
-                    <!-- End Input -->
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label id="positionLabel" class="form-label">{{language.profilePosition}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <input type="text" class="form-control" [(ngModel)]="experience.position" name="position">
-                    </div>
-                    <!-- End Input -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-mb-12">
-                    <label id="positionLabel" class="form-label">{{language.profileExperienceDescription}}</label>
-                    <div class="input-group">
-                        <textarea class="form-control" rows="4" name="text" [(ngModel)]="experience.description"></textarea>
-                    </div>
-                </div>
-
-            </div>
-            <div class="mb-3 mt-3 text-right">
-                <a *ngIf="modificationType === 'edit'" class="font-weight-bold btn btn-danger rounded p-2 mr-2" (click)="openDeleteExperienceDialog()">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileDelete}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-                <a class="font-weight-bold btn btn-primary rounded p-2" (click)="modificationType === 'edit' ? updateExperience() : saveExperience()">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-            </div>
-        </div>
-    </kendo-window>
-
-    <kendo-window title="{{language.profileEducationTitle}}" *ngIf="educationWindow" (close)="educationWindow = false" [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 470">
-        <div class="box-body px-3 pt-3 pb-0">
-            <div class="row">
-                <div class="col-sm-6 mb-4">
-                    <label id="FROM" class="form-label">{{language.profileFrom}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <kendo-datepicker [(ngModel)]="education.fromDate" name="from" style="display: contents;">
-                        </kendo-datepicker>
-                    </div>
-                    <!-- End Input -->
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label id="TO" class="form-label">{{language.profileTo}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <kendo-datepicker [(ngModel)]="education.toDate" name="to" style="display: contents;">
-                        </kendo-datepicker>
-                    </div>
-                    <!-- End Input -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-6 mb-4">
-                    <label id="companyLabel" class="form-label">{{language.profileSchool}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <input type="text" class="form-control" [(ngModel)]="education.school" name="school">
-                    </div>
-                    <!-- End Input -->
-                </div>
-                <div class="col-sm-6 mb-4">
-                    <label id="positionLabel" class="form-label">{{language.profileDirection}}</label>
-                    <!-- Input -->
-                    <div class="input-group">
-                        <input type="text" class="form-control" [(ngModel)]="education.direction" name="direction">
-                    </div>
-                    <!-- End Input -->
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-12 col-mb-12">
-                    <label id="positionLabel" class="form-label">{{language.profileEducationDescription}}</label>
-                    <div class="input-group">
-                        <textarea class="form-control" rows="4" name="text" [(ngModel)]="education.description"></textarea>
-                    </div>
-                </div>
-
-            </div>
-            <div class="mb-3 mt-3 text-right">
-                <a *ngIf="modificationType === 'edit'" class="font-weight-bold btn btn-danger rounded p-2 mr-2" (click)="openDeleteEducationDialog()">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileDelete}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-                <a class="font-weight-bold btn btn-primary rounded p-2" (click)="modificationType === 'edit' ? updateEducation() : saveEducation()">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-            </div>
-        </div>
-    </kendo-window>
-
-    <kendo-window title="{{language.changePasswordTitle}}" *ngIf="changePasswordWindow" (close)="changePasswordWindow = false" [width]="windowWidth ? windowWidth : 440" [height]="windowHeight ? windowHeight : 390">
-        <form (ngSubmit)="changePassword()">
-            <div class="error-alert" *ngIf="badOldPassword">{{language.oldPasswordIsBad}}</div>
-            <div class="error-alert" *ngIf="passwordIsNotEqual">{{language.passwordIsNotEqual}}</div>
-            <div class="error-alert" *ngIf="notUseSamePassword">{{language.notUseSamePassword}}</div>
-            <div class="col-sm-12 mb-2">
-                <label id="positionLabel" class="form-label">{{language.fieldOldPasword}}</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" [(ngModel)]="changePasswordData.old" name="old">
-                </div>
-            </div>
-            <div class="col-sm-12 mb-2">
-                <label id="positionLabel" class="form-label">{{language.fieldNewPassword}}</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" [(ngModel)]="changePasswordData.new" name="new">
-                </div>
-            </div>
-            <div class="col-sm-12 mb-2">
-                <label id="positionLabel" class="form-label">{{language.fieldNewPasswordRepeat}}</label>
-                <div class="input-group">
-                    <input type="password" class="form-control" [(ngModel)]="changePasswordData.newRepeat" name="newRepeat">
-                </div>
-            </div>
-            <div class="form-group" style="text-align: center; margin-top: 15px;">
-                <button kendoButton [primary]="true" [primary]="true" class="form-button" type="submit">{{language.updateData}}</button>
-            </div>
-        </form>
-    </kendo-window>
-
-
 </div>
