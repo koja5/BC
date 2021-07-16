@@ -1,0 +1,43 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div class="box-body px-3 pt-3 pb-0">
+        <div class="row">
+            <div class="col-sm-6 mb-4">
+                <label id="FROM" class="form-label">{{language.profileFrom}}</label>
+                <div class="input-group">
+                    <kendo-datepicker [(ngModel)]="experience.fromDate" name="from" style="display: contents;">
+                    </kendo-datepicker>
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <label id="TO" class="form-label">{{language.profileTo}}</label>
+                <div class="input-group">
+                    <kendo-datepicker [(ngModel)]="experience.toDate" name="to" style="display: contents;">
+                    </kendo-datepicker>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 mb-4">
+                <label id="companyLabel" class="form-label">{{language.profileCompany}}</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="experience.company" name="company">
+                </div>
+            </div>
+            <div class="col-sm-6 mb-4">
+                <label id="positionLabel" class="form-label">{{language.profilePosition}}</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="experience.position" name="position">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-mb-12">
+                <label id="positionLabel" class="form-label">{{language.profileExperienceDescription}}</label>
+                <div class="input-group">
+                    <textarea class="form-control" rows="4" name="text" [(ngModel)]="experience.description"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</app-dynamic-dialog>
