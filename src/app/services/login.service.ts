@@ -9,6 +9,7 @@ import { CookieService } from "ng2-cookies";
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
 import { throwError } from 'rxjs';
+//import * as languageCodes from 'src/app/data/languageCodes.json';  
 
 @Injectable({
   providedIn: "root",
@@ -24,6 +25,11 @@ export class LoginService {
       .catch((error: Response) => {
         return throwError(error);
      })
+  }
+
+  // Search by ISO 639-1 language code.
+  checkLanguageCode(languageCode : string): Observable<any>{
+    return this.http.get('https://restcountries.eu/rest/v2/lang/' + languageCode);
   }
 
   getTranslationByCountryCode(code) {

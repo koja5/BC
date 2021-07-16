@@ -14,7 +14,7 @@ import { SuccessComponent } from './component/templates/success/success.componen
 
 const routes: Routes = [
   {
-    path: "login",
+    path: "login/:languageCode",
     canActivate: [LoggedGuard],
     loadChildren: "./component/login/login.module#LoginModule"
   },

@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "src/app/services/login.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { HelpService } from "src/app/services/help.service";
+import { TranslationService } from "src/app/services/translation.service";
 
 @Component({
   selector: "app-change-password",
@@ -20,28 +22,62 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     private service: LoginService,
     private router: Router,
-    public route: ActivatedRoute
-  ) {}
+    public activatedRoute: ActivatedRoute,
+    private helpService: HelpService,
+    private translationService: TranslationService
+  ) { }
 
   ngOnInit() {
-    this.data.email = this.route.snapshot.params.id;
+    this.data.email = this.activatedRoute.snapshot.params.id;
     this.initialization();
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe(data => {
-      this.service
-        .getTranslationByCountryCode(data["countryCode"])
-        .subscribe(language => {
-          if (language !== null) {
-            this.language = language["config"];
-          } else {
-            this.service.getDefaultLanguage().subscribe(language => {
-              this.language = language["config"];
-            });
+    let languageCode = this.activatedRoute.snapshot.paramMap.get('languageCode');
+
+    if (languageCode) {
+      languageCode = languageCode.toLowerCase();
+
+      const regex = new RegExp('^[a-z]{2}');
+      // means languageCode has only 2 letters - ISO 639-1 standard
+      if (regex.test(languageCode)) {
+
+        this.service.checkLanguageCode(languageCode).subscribe((data) => {
+
+          //alpha2Code is two-letter country code
+          //for sr, use data[3]['alpha2Code'] because we are still missing array of countries in DB
+          this.service.getTranslationByCountryCode(data[3]['alpha2Code'].toUpperCase()).subscribe(
+            (translation) => {
+              if (translation !== null) {
+                this.language = translation["config"];
+                this.helpService.setLanguage(this.language);
+              } else {
+                this.translationService.getDefaultTranslation().subscribe((data) => {
+                  this.language = data;
+                });
+              }
+            },
+            (error) => {
+              console.log(error);
+              this.router.navigate(["/maintence"]);
+            }
+          );
+        },
+          (error) => {
+            if (error.status === 404) {
+              this.translationService.getDefaultTranslation().subscribe((data) => {
+                this.language = data;
+              });
+            }
           }
+        )
+      }
+      else {
+        this.translationService.getDefaultTranslation().subscribe((data) => {
+          this.language = data;
         });
-    });
+      }
+    }
   }
 
   showPass() {
