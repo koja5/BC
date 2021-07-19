@@ -51,8 +51,8 @@ export class LifeEventDetailsComponent implements OnInit {
     private editEventService: EditEventService,
     private prepareMail: PrepareMailService,
     private modalService: NgbModal,
-    private modalConfigurationService: ModalConfigurationService
-  ) {}
+    private modalConfigurationService: ModalConfigurationService,
+  ) { }
 
   ngOnInit() {
     this.language = this.helpService.getLanguage();
@@ -97,15 +97,15 @@ export class LifeEventDetailsComponent implements OnInit {
     this.router.navigate(["home/main/event/edit-event/life/" + this.data._id]);
   }
 
-  openAreYouSureDialog():void{
-    const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'lg',
-      centered:true
+  openAreYouSureDialog(): void {
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
     });
 
     this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
-    modalRef.componentInstance.modal=modalRef;
-    
+    modalRef.componentInstance.modal = modalRef;
+
     modalRef.result.then(() => {
       this.deleteEvent();
     }, () => {
@@ -113,7 +113,7 @@ export class LifeEventDetailsComponent implements OnInit {
     });
   }
 
-  deleteEvent():void {
+  deleteEvent(): void {
     this.editEventService.deleteEventData(this.data._id).subscribe((data) => {
       if (data) {
         this.helpService.deleteSuccessMessage();

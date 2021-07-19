@@ -23,11 +23,11 @@ import { Tooltip } from '@syncfusion/ej2-popups';
 export class DynamicGridComponent implements OnInit {
   @Input() path: string;
   @Input() name: string;
-  @ViewChild(DynamicFormsComponent) form: DynamicFormsComponent;
-  @ViewChild("orderForm") public orderForm: FormGroup;
-  @ViewChild("editSettingsTemplate") editSettingsTemplate: DialogComponent;
-  @ViewChild("grid") public grid: GridComponent;
-  @ViewChild("container") public container: ElementRef;
+  @ViewChild(DynamicFormsComponent, { static: false }) form: DynamicFormsComponent;
+  @ViewChild("orderForm", { static: false }) public orderForm: FormGroup;
+  @ViewChild("editSettingsTemplate", { static: false }) editSettingsTemplate: DialogComponent;
+  @ViewChild("grid", { static: false }) public grid: GridComponent;
+  @ViewChild("container", { static: false }) public container: ElementRef;
 
   public config: any;
   public toolbar: ToolbarItems[];
@@ -48,7 +48,7 @@ export class DynamicGridComponent implements OnInit {
   constructor(
     private service: DynamicService,
     private helpService: HelpService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initialization();
@@ -64,7 +64,7 @@ export class DynamicGridComponent implements OnInit {
     this.container.nativeElement.style.height = this.helpService.getHeightForGrid();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   initialization() {
     this.service.getConfiguration(this.path, this.name).subscribe((data) => {
@@ -82,7 +82,7 @@ export class DynamicGridComponent implements OnInit {
   }
 
   callApiPost(api, body) {
-    this.service.callApiPost(api, body).subscribe((data) => {});
+    this.service.callApiPost(api, body).subscribe((data) => { });
   }
 
   callApiGet(api, parameters) {

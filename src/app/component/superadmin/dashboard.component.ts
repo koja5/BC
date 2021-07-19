@@ -1,5 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { Modal } from "ngx-modal";
+import { Component, OnInit } from "@angular/core";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { Router } from "@angular/router";
 import { CookieService } from "ng2-cookies";

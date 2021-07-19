@@ -59,7 +59,7 @@ export class VirtualEventDetailsComponent implements OnInit {
     private prepareMail: PrepareMailService,
     private modalService: NgbModal,
     private modalConfigurationService: ModalConfigurationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.language = this.helpService.getLanguage();
@@ -107,15 +107,15 @@ export class VirtualEventDetailsComponent implements OnInit {
     ]);
   }
 
-  openAreYouSureDialog():void{
-    const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'lg',
-      centered:true
+  openAreYouSureDialog(): void {
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
     });
 
     this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
-    modalRef.componentInstance.modal=modalRef;
-    
+    modalRef.componentInstance.modal = modalRef;
+
     modalRef.result.then(() => {
       this.deleteEvent();
     }, () => {

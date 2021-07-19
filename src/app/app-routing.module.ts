@@ -2,9 +2,9 @@ import { DemoComponent } from './component/demo/demo.component';
 import { NgModule } from "@angular/core";
 import { Routes, RouterModule } from "@angular/router";
 import { NotFoundComponent } from "./component/templates/not-found/not-found.component";
-import { LoggedGuard } from "./services/guard/logged-guard.service";
-import { LoginGuard } from './services/guard/login-guard.service';
-import { DashboardGuard } from './services/guard/dashboard-guard.service';
+import { LoggedGuardService } from "./services/guard/logged-guard.service";
+import { LoginGuardService } from './services/guard/login-guard.service';
+import { DashboardGuardService } from './services/guard/dashboard-guard.service';
 import { PrivacyPolicyComponent } from './component/templates/privacy-policy/privacy-policy.component';
 import { TermsComponent } from './component/templates/terms/terms.component';
 import { MaintenceComponent } from './component/templates/maintence/maintence.component';
@@ -15,23 +15,23 @@ import { SuccessComponent } from './component/templates/success/success.componen
 const routes: Routes = [
   {
     path: "login/:languageCode",
-    canActivate: [LoggedGuard],
+    canActivate: [LoggedGuardService],
     loadChildren: "./component/login/login.module#LoginModule"
   },
   {
     path: "login",
-    canActivate: [LoggedGuard],
+    canActivate: [LoggedGuardService],
     redirectTo: 'login/en',
   },
   {
     path: "dashboard",
-    canActivate: [LoginGuard, DashboardGuard],
-    loadChildren: "./component/superadmin/dashboard.module#DashboardModule"
+    canActivate: [LoginGuardService, DashboardGuardService],
+    loadChildren: () => import('./component/superadmin/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: "home",
-    canActivate: [LoginGuard, DashboardGuard],
-    loadChildren: "./component/home/home.module#HomeModule"
+    canActivate: [LoginGuardService, DashboardGuardService],
+    loadChildren: () => import('./component/home/home.module').then(m => m.HomeModule)
   },
   {
     path: 'privacy-policy',

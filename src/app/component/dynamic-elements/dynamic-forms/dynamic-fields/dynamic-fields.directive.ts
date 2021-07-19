@@ -1,7 +1,5 @@
 import { ComponentFactoryResolver, ComponentRef, Directive, Input, OnChanges, OnInit, Type, ViewContainerRef } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-
-
 import { Field } from '../models/field';
 import { FieldConfig } from '../models/field-config';
 import { ButtonComponent } from './button/button.component';
@@ -11,7 +9,7 @@ import { TextareaComponent } from './textarea/textarea.component';
 import { TextboxComponent } from './textbox/textbox.component';
 
 
-const components: {[type: string]: Type<Field>} = {
+const components: { [type: string]: Type<Field> } = {
   textbox: TextboxComponent,
   textarea: TextareaComponent,
   dropdown: DropdownComponent,
@@ -37,7 +35,7 @@ export class DynamicFieldsDirective implements Field, OnChanges, OnInit {
   constructor(
     private resolver: ComponentFactoryResolver,
     private container: ViewContainerRef
-  ) {}
+  ) { }
 
   ngOnChanges() {
     if (this.component) {

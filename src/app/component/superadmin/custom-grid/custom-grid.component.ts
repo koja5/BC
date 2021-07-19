@@ -2,7 +2,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Component,
   OnInit,
-  ViewChild,
   HostListener,
   Input,
   Output,
@@ -20,7 +19,7 @@ import {
   PageChangeEvent,
   RowArgs,
 } from "@progress/kendo-angular-grid";
-import * as XLSX from "ts-xlsx";
+import * as XLSX from "xlsx";
 import { Router } from "@angular/router";
 import { CustomGridService } from "src/app/services/custom-grid.service";
 import { ToastrService } from "ngx-toastr";
@@ -191,7 +190,7 @@ export class CustomGridComponent implements OnInit {
     this.selectedUserTypeFilter = event;
   }
 
-  selectionUserType(event) {}
+  selectionUserType(event) { }
 
   public dataStateChange(state: DataStateChangeEvent): void {
     this.state = state;
@@ -221,7 +220,7 @@ export class CustomGridComponent implements OnInit {
     console.log(e);
   }
 
-  action(event) {}
+  action(event) { }
 
   onFileChange(args) {
     this.customerDialogOpened = true;

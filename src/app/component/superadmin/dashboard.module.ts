@@ -28,7 +28,6 @@ import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
 } from "ngx-perfect-scrollbar";
-import { ModalModule } from "ngx-modal";
 import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
 import { EventComponent } from './parameters/event/event.component';
 import { TodoComponent } from './todo/todo.component';
@@ -65,7 +64,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     ButtonsModule,
     MaterialDesignFrameworkModule,
     PerfectScrollbarModule,
-    ModalModule,
     LayoutModule,
     SplitterModule,
     DynamicElementsModule
@@ -78,4 +76,4 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     },
   ],
 })
-export class DashboardModule {}
+export class DashboardModule { }

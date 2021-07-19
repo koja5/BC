@@ -1,7 +1,8 @@
 import { Injectable } from "@angular/core";
 import * as io from "socket.io-client";
-import { Observable } from "rxjs/Observable";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
+import { map } from "rxjs/operators";
+import { Observable } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -10,7 +11,7 @@ export class MessageChatService {
   public url = window.location.protocol + "//" + window.location.hostname + ":" + window.location.port;
   // public url = "http://localhost:3000";
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   // private socket = io.connect(this.url);
   private socket = io(this.url);
@@ -97,29 +98,29 @@ export class MessageChatService {
   }
 
   createMessage(data) {
-    return this.http.post("/api/createMessage", data).map((res) => res);
+    return this.http.post("/api/createMessage", data).pipe(map((res) => res));
   }
 
   getAllMessagesForUser(id) {
-    return this.http.get("/api/getAllMessagesForUser/" + id).map((res) => res);
+    return this.http.get("/api/getAllMessagesForUser/" + id).pipe(map((res) => res));
   }
 
   getMessageForSelectedUser(id) {
     return this.http
       .get("/api/getMessageForSelectedUser/" + id)
-      .map((res) => res);
+      .pipe(map((res) => res));
   }
 
   getOrCreate(data) {
-    return this.http.post("/api/getOrCreate", data).map((res) => res);
+    return this.http.post("/api/getOrCreate", data).pipe(map((res) => res));
   }
 
   pushNewMessage(data) {
     this.socket.emit("new message", { username: "john" });
-    return this.http.post("/api/pushNewMessage", data).map((res) => res);
+    return this.http.post("/api/pushNewMessage", data).pipe(map((res) => res));
   }
 
   updateSeen(data) {
-    return this.http.post("/api/updateSeen", data).map((res) => res);
+    return this.http.post("/api/updateSeen", data).pipe(map((res) => res));
   }
 }

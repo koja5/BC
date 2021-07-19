@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import "rxjs/add/operator/map";
+import { catchError, map } from 'rxjs/operators';
 import { CookieService } from "ng2-cookies";
 import 'rxjs/add/operator/catch';
 import { Observable } from 'rxjs/Observable';
@@ -18,9 +18,11 @@ export class LoginService {
   checkCountryLocation(): Observable<any> {
     return this.http
       .get("http://ip-api.com/json")
-      .catch((error: Response) => {
-        return throwError(error);
-      })
+      .pipe(
+        catchError((error: Response) => {
+          return throwError(error);
+        })
+      );
   }
 
   // Search by ISO 639-1 language code.
@@ -31,7 +33,8 @@ export class LoginService {
   getTranslationByLanguageCode(code: string) {
     return this.http
       .get("/api/getTranslationByLanguageCode/" + code)
-      .map((res) => res);
+      .pipe(map((res) => res));
+
   }
 
   /*getDefaultLanguage() {
@@ -43,43 +46,43 @@ export class LoginService {
   getDefaultLanguage() {
     return this.http
       .get("/api/getTranslationByLanguageCode/en")
-      .map((res) => res);
+      .pipe(map((res) => res));
   }
 
   login(data) {
     console.log(data);
-    return this.http.post("/api/login", data).map((res) => res);
+    return this.http.post("/api/login", data).pipe(map((res) => res));
   }
 
   signUp(data) {
-    return this.http.post("/api/signup", data).map((res) => res);
+    return this.http.post("/api/signup", data).pipe(map((res) => res));
   }
 
   getUserInfo(id) {
-    return this.http.get("/api/getUserInfo/" + id).map((res) => res);
+    return this.http.get("/api/getUserInfo/" + id).pipe(map((res) => res));
   }
 
   updateUserSID(data) {
-    return this.http.post("/api/updateUserSID", data).map((res) => res);
+    return this.http.post("/api/updateUserSID", data).pipe(map((res) => res));
   }
 
   searchDirector(filter) {
-    return this.http.post("/api/searchDirector", filter).map((res) => res);
+    return this.http.post("/api/searchDirector", filter).pipe(map((res) => res));
   }
 
   forgotPassword(data) {
-    return this.http.post("/api/forgotPassword", data).map((res) => res);
+    return this.http.post("/api/forgotPassword", data).pipe(map((res) => res));
   }
 
   changePassword(data) {
-    return this.http.post("/api/changePassword", data).map((res) => res);
+    return this.http.post("/api/changePassword", data).pipe(map((res) => res));
   }
 
   joinTo(data) {
-    return this.http.post("/api/joinTo", data).map((res) => res);
+    return this.http.post("/api/joinTo", data).pipe(map((res) => res));
   }
 
   joinToFromReferral(data) {
-    return this.http.post("/api/joinToFromReferral", data).map((res) => res);
+    return this.http.post("/api/joinToFromReferral", data).pipe(map((res) => res));
   }
 }

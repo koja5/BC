@@ -27,8 +27,7 @@ export class RecordVideoComponent implements OnInit {
   public multipleWebcamsAvailable = false;
   public previewVideo = true;
   public language: any;
-  @ViewChild("videoPreview")
-  video: ElementRef<HTMLVideoElement>;
+  @ViewChild("videoPreview", { static: false }) video: ElementRef<HTMLVideoElement>;
 
   constructor(private helpService: HelpService) {
     /*console.log(document.getElementById("video-preview"));

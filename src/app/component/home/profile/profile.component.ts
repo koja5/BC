@@ -1,8 +1,6 @@
 import {
   Component,
   OnInit,
-  ViewChild,
-  ElementRef,
   HostListener,
 } from "@angular/core";
 import { ProfileService } from "src/app/services/profile.service";
@@ -11,10 +9,8 @@ import { HttpClient } from "@angular/common/http";
 import { FileUploader, FileItem } from "ng2-file-upload";
 import {
   DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl,
 } from "@angular/platform-browser";
-import { Dimensions, ImageCroppedEvent } from "ngx-image-cropper";
+import { ImageCroppedEvent } from "ngx-image-cropper";
 import { HelpService } from "src/app/services/help.service";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
@@ -79,7 +75,7 @@ export class ProfileComponent implements OnInit {
     public helpService: HelpService,
     public editProfileService: EditProfileService,
     private toastr: ToastrService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;

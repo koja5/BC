@@ -4,7 +4,6 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { NgModule } from "@angular/core";
 
 import { AppRoutingModule } from "./app-routing.module";
-import { HttpModule } from "@angular/http";
 import { HttpClientModule, HttpClientJsonpModule } from "@angular/common/http";
 import { ToastrModule } from "ngx-toastr";
 import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
@@ -14,9 +13,9 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // services
-import { LoggedGuard } from "./services/guard/logged-guard.service";
-import { DashboardGuard } from "./services/guard/dashboard-guard.service";
-import { LoginGuard } from "./services/guard/login-guard.service";
+import { LoggedGuardService } from "./services/guard/logged-guard.service";
+import { DashboardGuardService } from "./services/guard/dashboard-guard.service";
+import { LoginGuardService } from "./services/guard/login-guard.service";
 import { CookieService } from "ng2-cookies";
 import { MailService } from "./services/mail.service";
 
@@ -49,7 +48,6 @@ import { DemoComponent } from "./component/demo/demo.component";
     BrowserAnimationsModule,
     AppRoutingModule,
     DashboardModule,
-    HttpModule,
     HttpClientModule,
     HttpClientJsonpModule,
     ToastrModule.forRoot(),
@@ -62,10 +60,10 @@ import { DemoComponent } from "./component/demo/demo.component";
     ModalsModule
   ],
   providers: [
-    LoggedGuard,
+    LoggedGuardService,
     CookieService,
-    LoginGuard,
-    DashboardGuard,
+    LoginGuardService,
+    DashboardGuardService,
     MailService
   ],
   bootstrap: [AppComponent],

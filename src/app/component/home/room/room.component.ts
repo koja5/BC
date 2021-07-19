@@ -28,11 +28,9 @@ export class RoomComponent implements OnInit {
   roomName: string;
   mitronPeers: Array<MitronPeer> = new Array();
 
-  @ViewChild("myVideo")
-  myVideo: ElementRef<HTMLVideoElement>;
+  @ViewChild("myVideo", { static: false }) myVideo: ElementRef<HTMLVideoElement>;
 
-  @ViewChildren("peerVideo")
-  peerVideos: QueryList<ElementRef<HTMLVideoElement>>;
+  @ViewChildren("peerVideo") peerVideos: QueryList<ElementRef<HTMLVideoElement>>;
   public currentFilter: any;
   public currentPeer: any;
   public localStream: any;
@@ -49,8 +47,7 @@ export class RoomComponent implements OnInit {
   private socket: SocketIOClient.Socket;
   public attendee: any;
   public showChat = true;
-  @ViewChild("localVideo")
-  localVideo: ElementRef<HTMLVideoElement>;
+  @ViewChild("localVideo", { static: false }) localVideo: ElementRef<HTMLVideoElement>;
   private link =
     window.location.protocol +
     "//" +
@@ -97,8 +94,7 @@ export class RoomComponent implements OnInit {
 
   public peers = {};
   // public videos = document.getElementById("videos");
-  @ViewChildren("videos")
-  videos: QueryList<ElementRef<HTMLVideoElement>>;
+  @ViewChildren("videos") videos: QueryList<ElementRef<HTMLVideoElement>>;
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     this.checkRezolution();
@@ -326,7 +322,7 @@ export class RoomComponent implements OnInit {
         this.attendee.signal(data.signal);}, 250);*/
     });
 
-    this.attendee.on("connect", function (conn) {});
+    this.attendee.on("connect", function (conn) { });
 
     // Ask broadcaster to start his connection
     // for (let i = 0; i < this.participantData.speakers.length; i++) {

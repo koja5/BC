@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import "rxjs/add/operator/map";
+import { HttpClient } from "@angular/common/http";
+import { map } from 'rxjs/operators';
+import { pipe } from "rxjs";
 
 @Injectable({
   providedIn: "root",
 })
 export class ProfileService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getUserInfoSHA1(id) {
-    return this.http.get("/api/getUserInfoSHA1/" + id).map((res) => res);
+    return this.http.get("/api/getUserInfoSHA1/" + id).pipe(pipe(map((res) => res)));
   }
 
   uploadImage(data) {
@@ -17,7 +18,7 @@ export class ProfileService {
       id: 1,
       img: data,
     };
-    return this.http.post("/api/uploadImage", data1).map((res) => res);
+    return this.http.post("/api/uploadImage", data1).pipe(pipe(map((res) => res)));
   }
 
   getImage(name) {
@@ -27,10 +28,10 @@ export class ProfileService {
   }
 
   uploadImage1(data) {
-    return this.http.post("/api/uploadImage1", data).map((res) => res);
+    return this.http.post("/api/uploadImage1", data).pipe(pipe(map((res) => res)));
   }
 
   getRecommendation(id) {
-    return this.http.get("/api/getRecommendation/" + id).map((res) => res);
+    return this.http.get("/api/getRecommendation/" + id).pipe(pipe(map((res) => res)));
   }
 }
