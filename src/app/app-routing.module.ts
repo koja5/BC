@@ -19,6 +19,11 @@ const routes: Routes = [
     loadChildren: "./component/login/login.module#LoginModule"
   },
   {
+    path: "login",
+    canActivate: [LoggedGuard],
+    redirectTo: 'login/en',
+  },
+  {
     path: "dashboard",
     canActivate: [LoginGuard, DashboardGuard],
     loadChildren: "./component/superadmin/dashboard.module#DashboardModule"
@@ -67,4 +72,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
