@@ -1,68 +1,62 @@
 <div class="loader4 loading" *ngIf="data === undefined"></div>
 
 <div *ngIf="data !== undefined && language !== undefined">
-  <div class="profile-cover text-center">
-    <div *ngIf="owner" style="position: relative;">
-      <label class="cover-photo-update" (click)="showPopupForChangeCoverPicture()">
-        <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
-      </label>
-      <!-- <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
+    <div class="profile-cover text-center">
+        <div *ngIf="owner" style="position: relative;">
+            <label class="cover-photo-update" (click)="showPopupForChangeCoverPicture()">
+                <i class="fa fa-camera-retro"></i> {{language.profileUpdateCover}}
+            </label>
+            <!-- <input id="file-upload-cover" type="file" (change)="fileChangeEventCover($event)" ng2FileSelect
         [uploader]="uploader" /> -->
-    </div>
-    <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-    <!-- <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
-    <img class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''" src="/assets/img/profile_image/{{data.cover}}"
-      alt="">
-  </div>
-  <div class="bg-white shadow-sm border-bottom">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="d-flex align-items-center py-3">
-            <div class="profile-left">
-              <h5 class="font-weight-bold text-dark mb-1 mt-0"> {{data.fullname}} <span class="text-info"><i
-                    data-toggle="tooltip" data-placement="top" title="Verified" class="feather-check-circle"></i></span>
-              </h5>
-              <p class="mb-0 text-muted"> {{data.profession}} </p>
-            </div>
-            <div class="profile-right ml-auto">
-              <button type="button" class="btn btn-light mr-2" (click)="sendMessageForThisUser()"> <i
-                  class="fa fa-envelope"></i>
-                {{language.profileSendMessage}}
-              </button>
-              <button type="button" class="btn btn-primary mr-2"
-                (click)="recommended(data.id, data.fullname, data.email, data.phoneNumber)"> <i
-                  class="fa fa-paper-plane"></i> {{language.profileRecommended}}
-              </button>
-              <button *ngIf="data.promo || owner" type="button" class="btn btn-secondary" (click)="openPromoVideo()"> <i
-                  class="fa fa-film"></i> {{language.promoButton}}
-              </button>
-            </div>
-          </div>
         </div>
-      </div>
+        <div class="loader4 imageLoader" *ngIf="loadImage"></div>
+        <!-- <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
+        <img class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''" src="/assets/img/profile_image/{{data.cover}}" alt="">
     </div>
-  </div>
-  <div class="pb-4 pt-3">
-    <div class="container">
-      <div class="row">
-        <!-- Main Content -->
-        <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-          <div class="box shadow-sm rounded bg-white mb-3 overflow-hidden">
-            <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
-              <li class="nav-item">
-                <a class="nav-link" [ngClass]="selectedTab === 'profile' ? 'active' : ''" (click)="changeTab('profile')"
-                  id="home-tab">{{language.profileAbout}}</a>
-              </li>
-              <li class="nav-item" *ngIf="owner">
-                <a class="nav-link" [ngClass]="selectedTab === 'bankAccount' ? 'active' : ''"
-                  (click)="changeTab('bankAccount')" id="profile-tab">{{language.profileBankAccountTitle}}</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" [ngClass]="selectedTab === 'other' ? 'active' : ''" (click)="changeTab('other')"
-                  id="profile-tab">{{language.profileOtherInfoTitle}}</a>
-              </li>
-              <!-- <li class="nav-item">
+    <div class="bg-white shadow-sm border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex align-items-center py-3">
+                        <div class="profile-left">
+                            <h5 class="font-weight-bold text-dark mb-1 mt-0"> {{data.fullname}} <span class="text-info"><i data-toggle="tooltip" data-placement="top" title="Verified"
+                                        class="feather-check-circle"></i></span>
+                            </h5>
+                            <p class="mb-0 text-muted"> {{data.profession}} </p>
+                        </div>
+                        <div class="profile-right ml-auto">
+                            <button type="button" class="btn btn-light mr-2" (click)="sendMessageForThisUser()"> <i
+                                    class="fa fa-envelope"></i>
+                                {{language.profileSendMessage}}
+                            </button>
+                            <button type="button" class="btn btn-primary mr-2" (click)="recommended(data.id, data.fullname, data.email, data.phoneNumber)"> <i
+                                    class="fa fa-paper-plane"></i> {{language.profileRecommended}}
+                            </button>
+                            <button *ngIf="data.promo || owner" type="button" class="btn btn-secondary" (click)="openPromoVideo()"> <i class="fa fa-film"></i> {{language.promoButton}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pb-4 pt-3">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+                    <div class="box shadow-sm rounded bg-white mb-3 overflow-hidden">
+                        <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="selectedTab === 'profile' ? 'active' : ''" (click)="changeTab('profile')" id="home-tab">{{language.profileAbout}}</a>
+                            </li>
+                            <li class="nav-item" *ngIf="owner">
+                                <a class="nav-link" [ngClass]="selectedTab === 'bankAccount' ? 'active' : ''" (click)="changeTab('bankAccount')" id="profile-tab">{{language.profileBankAccountTitle}}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="selectedTab === 'other' ? 'active' : ''" (click)="changeTab('other')" id="profile-tab">{{language.profileOtherInfoTitle}}</a>
+                            </li>
+                            <!-- <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                   aria-controls="contact" aria-selected="false">Jobs</a>
               </li>
@@ -70,259 +64,255 @@
                 <a class="nav-link" id="type-tab" data-toggle="tab" href="#type" role="tab" aria-controls="type"
                   aria-selected="false">Life</a>
               </li> -->
-            </ul>
-          </div>
-          <div *ngIf="selectedTab === 'profile'">
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div class="box shadow-sm border rounded bg-white mb-3">
-                  <div class="box-title border-bottom p-3">
-                    <h6 class="m-0">{{language.profileAbout}}</h6>
-                  </div>
-                  <div class="box-body p-3">
-                    <p>
-                      {{data.aboutMe}}
-                    </p>
-                  </div>
-                </div>
-                <div class="box shadow-sm border rounded bg-white mb-3">
-                  <div class="box-title border-bottom p-3">
-                    <h6 class="m-0">{{language.profileOverview}}</h6>
-                  </div>
-                  <div class="box-body">
-                    <table class="table table-borderless mb-0">
-                      <tbody>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldSalutation}}</th>
-                          <td class="p-3">{{data.salutation}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldTitleBefore}}</th>
-                          <td class="p-3">{{data.titleBefore}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldFirstname}}</th>
-                          <td class="p-3">{{data.firstname}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldLastname}}</th>
-                          <td class="p-3">{{data.lastname}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldTitleAfter}}</th>
-                          <td class="p-3">{{data.titleAfter}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldGender}}</th>
-                          <td class="p-3">{{data.gender}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldRelationshipStatus}}</th>
-                          <td class="p-3">{{data.relationship}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldBirthday}}</th>
-                          <td class="p-3">{{data.birthday | date: 'dd/MM/yyyy'}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldPhoneNumber}}</th>
-                          <td class="p-3">{{data.phoneNumber}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldMobile1}}</th>
-                          <td class="p-3">{{data.mobile1}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldMobile2}}</th>
-                          <td class="p-3">{{data.mobile2}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldEmail}}</th>
-                          <td class="p-3">{{data.email}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldLocation}}</th>
-                          <td class="p-3">{{data.location}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldOrganization}}</th>
-                          <td class="p-3">{{data.organization}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldStreet}}</th>
-                          <td class="p-3">{{data.street}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.fieldZip}}</th>
-                          <td class="p-3">{{data.zip}}</td>
-                        </tr>
-                        <tr>
-                          <th class="p-3">{{language.fieldWebsite}}</th>
-                          <td class="p-3"><a href="{{data.website}}" target="_blank">{{data.website}}</a></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
+                        </ul>
+                    </div>
+                    <div *ngIf="selectedTab === 'profile'">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="box shadow-sm border rounded bg-white mb-3">
+                                    <div class="box-title border-bottom p-3">
+                                        <h6 class="m-0">{{language.profileAbout}}</h6>
+                                    </div>
+                                    <div class="box-body p-3">
+                                        <p>
+                                            {{data.aboutMe}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="box shadow-sm border rounded bg-white mb-3">
+                                    <div class="box-title border-bottom p-3">
+                                        <h6 class="m-0">{{language.profileOverview}}</h6>
+                                    </div>
+                                    <div class="box-body">
+                                        <table class="table table-borderless mb-0">
+                                            <tbody>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldSalutation}}</th>
+                                                    <td class="p-3">{{data.salutation}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldTitleBefore}}</th>
+                                                    <td class="p-3">{{data.titleBefore}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldFirstname}}</th>
+                                                    <td class="p-3">{{data.firstname}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldLastname}}</th>
+                                                    <td class="p-3">{{data.lastname}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldTitleAfter}}</th>
+                                                    <td class="p-3">{{data.titleAfter}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldGender}}</th>
+                                                    <td class="p-3">{{data.gender}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldRelationshipStatus}}</th>
+                                                    <td class="p-3">{{data.relationship}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldBirthday}}</th>
+                                                    <td class="p-3">{{data.birthday | date: 'dd/MM/yyyy'}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldPhoneNumber}}</th>
+                                                    <td class="p-3">{{data.phoneNumber}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldMobile1}}</th>
+                                                    <td class="p-3">{{data.mobile1}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldMobile2}}</th>
+                                                    <td class="p-3">{{data.mobile2}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldEmail}}</th>
+                                                    <td class="p-3">{{data.email}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldLocation}}</th>
+                                                    <td class="p-3">{{data.location}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldOrganization}}</th>
+                                                    <td class="p-3">{{data.organization}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldStreet}}</th>
+                                                    <td class="p-3">{{data.street}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.fieldZip}}</th>
+                                                    <td class="p-3">{{data.zip}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="p-3">{{language.fieldWebsite}}</th>
+                                                    <td class="p-3"><a href="{{data.website}}" target="_blank">{{data.website}}</a></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="box shadow-sm border rounded bg-white mb-3">
-              <div class="box-title border-bottom p-3">
-                <h6 class="m-0">{{language.profileExperienceTitle}}</h6>
-              </div>
+                        <div class="box shadow-sm border rounded bg-white mb-3">
+                            <div class="box-title border-bottom p-3">
+                                <h6 class="m-0">{{language.profileExperienceTitle}}</h6>
+                            </div>
 
-              <div class="box-body p-3 border-bottom text-center no-data-experience"
-                *ngIf="allExperience&&allExperience.length === 0">
-                <span class="fa fa fa-briefcase"></span>
-                <h5>{{language.profileNoInfoAboutExperience}}</h5>
-              </div>
+                            <div class="box-body p-3 border-bottom text-center no-data-experience" *ngIf="allExperience&&allExperience.length === 0">
+                                <span class="fa fa fa-briefcase"></span>
+                                <h5>{{language.profileNoInfoAboutExperience}}</h5>
+                            </div>
 
-              <div class="box-body p-3 border-bottom" *ngFor="let item of allExperience">
-                <div class="d-flex align-items-top job-item-header pb-2">
-                  <div class="mr-2">
-                    <h6 class="font-weight-bold text-dark mb-0">{{item.position}}</h6>
-                    <div class="text-truncate text-primary">{{item.company}}</div>
-                    <div class="small text-gray-500">{{item.fromDate | date: 'dd/MM/yyyy'}} - <span
-                        *ngIf="item.toDate === null">{{language.profilePresent}}</span> <span
-                        *ngIf="item.toDate !== null">{{item.toDate | date: 'dd/MM/yyyy'}}</span> </div>
-                  </div>
-                </div>
-                <p class="mb-0">{{item.description}}</p>
-              </div>
-            </div>
+                            <div class="box-body p-3 border-bottom" *ngFor="let item of allExperience">
+                                <div class="d-flex align-items-top job-item-header pb-2">
+                                    <div class="mr-2">
+                                        <h6 class="font-weight-bold text-dark mb-0">{{item.position}}</h6>
+                                        <div class="text-truncate text-primary">{{item.company}}</div>
+                                        <div class="small text-gray-500">{{item.fromDate | date: 'dd/MM/yyyy'}} - <span *ngIf="item.toDate === null">{{language.profilePresent}}</span> <span *ngIf="item.toDate !== null">{{item.toDate | date: 'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mb-0">{{item.description}}</p>
+                            </div>
+                        </div>
 
-            <div class="box shadow-sm border rounded bg-white mb-3">
-              <div class="box-title border-bottom p-3">
-                <h6 class="m-0">{{language.profileEducationTitle}}</h6>
-              </div>
+                        <div class="box shadow-sm border rounded bg-white mb-3">
+                            <div class="box-title border-bottom p-3">
+                                <h6 class="m-0">{{language.profileEducationTitle}}</h6>
+                            </div>
 
-              <div class="box-body p-3 border-bottom text-center no-data-education"
-                *ngIf="allEducation&&allEducation.length === 0">
-                <span class="fa fa-graduation-cap"></span>
-                <h5>{{language.profileNoInfoAboutEducation}}</h5>
-              </div>
+                            <div class="box-body p-3 border-bottom text-center no-data-education" *ngIf="allEducation&&allEducation.length === 0">
+                                <span class="fa fa-graduation-cap"></span>
+                                <h5>{{language.profileNoInfoAboutEducation}}</h5>
+                            </div>
 
-              <div class="box-body p-3 border-bottom" *ngFor="let item of allEducation">
-                <div class="d-flex align-items-top job-item-header pb-2">
-                  <div class="mr-2">
-                    <h6 class="font-weight-bold text-dark mb-0">{{item.school}}</h6>
-                    <div class="text-truncate text-primary">{{item.direction}}</div>
-                    <div class="small text-gray-500">{{item.fromDate | date: 'dd/MM/yyyy'}} - <span
-                        *ngIf="item.toDate === null">{{language.profilePresent}}</span> <span
-                        *ngIf="item.toDate !== null">{{item.toDate | date: 'dd/MM/yyyy'}}</span> </div>
-                  </div>
-                </div>
-                <p class="mb-0">{{item.description}}</p>
-              </div>
-            </div>
-          </div>
+                            <div class="box-body p-3 border-bottom" *ngFor="let item of allEducation">
+                                <div class="d-flex align-items-top job-item-header pb-2">
+                                    <div class="mr-2">
+                                        <h6 class="font-weight-bold text-dark mb-0">{{item.school}}</h6>
+                                        <div class="text-truncate text-primary">{{item.direction}}</div>
+                                        <div class="small text-gray-500">{{item.fromDate | date: 'dd/MM/yyyy'}} - <span *ngIf="item.toDate === null">{{language.profilePresent}}</span> <span *ngIf="item.toDate !== null">{{item.toDate | date: 'dd/MM/yyyy'}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="mb-0">{{item.description}}</p>
+                            </div>
+                        </div>
+                    </div>
 
-          <div *ngIf="selectedTab === 'other'">
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div *ngIf="!additionalInfo" class="box shadow-sm border rounded bg-white mb-3">
-                  <div class="box-body p-3 border-bottom text-center no-data-experience">
-                    <span class="fa fa-info"></span>
-                    <h6 class="m-0">{{language.profileNoInfoOtherInfo}}</h6>
-                  </div>
-                </div>
-                <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="additionalInfo">
-                  <div class="box-title border-bottom p-3">
-                    <h6 class="m-0">{{language.profileOtherInfoTitle}}</h6>
-                  </div>
-                  <div class="box-body">
-                    <table class="table table-borderless mb-0">
-                      <tbody>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileAbilitiesAndKnowledge}}</th>
-                          <td class="p-3">{{additionalInfo.abilitiesKnowledge}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileLanguages}}</th>
-                          <td class="p-3">{{additionalInfo.languages}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileQualifications}}</th>
-                          <td class="p-3">{{additionalInfo.qualifications}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileInterests}}</th>
-                          <td class="p-3">{{additionalInfo.interests}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                    <div *ngIf="selectedTab === 'other'">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div *ngIf="!additionalInfo" class="box shadow-sm border rounded bg-white mb-3">
+                                    <div class="box-body p-3 border-bottom text-center no-data-experience">
+                                        <span class="fa fa-info"></span>
+                                        <h6 class="m-0">{{language.profileNoInfoOtherInfo}}</h6>
+                                    </div>
+                                </div>
+                                <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="additionalInfo">
+                                    <div class="box-title border-bottom p-3">
+                                        <h6 class="m-0">{{language.profileOtherInfoTitle}}</h6>
+                                    </div>
+                                    <div class="box-body">
+                                        <table class="table table-borderless mb-0">
+                                            <tbody>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileAbilitiesAndKnowledge}}</th>
+                                                    <td class="p-3">{{additionalInfo.abilitiesKnowledge}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileLanguages}}</th>
+                                                    <td class="p-3">{{additionalInfo.languages}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileQualifications}}</th>
+                                                    <td class="p-3">{{additionalInfo.qualifications}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileInterests}}</th>
+                                                    <td class="p-3">{{additionalInfo.interests}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-          <div *ngIf="selectedTab === 'bankAccount'">
-            <div class="tab-content" id="myTabContent">
-              <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-                <div *ngIf="!bankAccount" class="box shadow-sm border rounded bg-white mb-3">
-                  <div class="box-body p-3 border-bottom text-center no-data-experience">
-                    <span class="fa fa-usd"></span>
-                    <h6 class="m-0">{{language.profileNoInfoBankAccount}}</h6>
-                  </div>
-                </div>
-                <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="bankAccount && owner">
-                  <div class="box-title border-bottom p-3">
-                    <h6 class="m-0">{{language.profileBankAccountTitle}}</h6>
-                  </div>
-                  <div class="box-body">
-                    <table class="table table-borderless mb-0">
-                      <tbody>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileBankAccount}}</th>
-                          <td class="p-3">{{bankAccount.bankAccount}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileIBAN}}</th>
-                          <td class="p-3">{{bankAccount.iban}}</td>
-                        </tr>
-                        <tr class="border-bottom">
-                          <th class="p-3">{{language.profileBIC}}</th>
-                          <td class="p-3">{{bankAccount.bic}}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+                    <div *ngIf="selectedTab === 'bankAccount'">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div *ngIf="!bankAccount" class="box shadow-sm border rounded bg-white mb-3">
+                                    <div class="box-body p-3 border-bottom text-center no-data-experience">
+                                        <span class="fa fa-usd"></span>
+                                        <h6 class="m-0">{{language.profileNoInfoBankAccount}}</h6>
+                                    </div>
+                                </div>
+                                <div class="box shadow-sm border rounded bg-white mb-3" *ngIf="bankAccount && owner">
+                                    <div class="box-title border-bottom p-3">
+                                        <h6 class="m-0">{{language.profileBankAccountTitle}}</h6>
+                                    </div>
+                                    <div class="box-body">
+                                        <table class="table table-borderless mb-0">
+                                            <tbody>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileBankAccount}}</th>
+                                                    <td class="p-3">{{bankAccount.bankAccount}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileIBAN}}</th>
+                                                    <td class="p-3">{{bankAccount.iban}}</td>
+                                                </tr>
+                                                <tr class="border-bottom">
+                                                    <th class="p-3">{{language.profileBIC}}</th>
+                                                    <td class="p-3">{{bankAccount.bic}}</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-        </main>
-        <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-          <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
-            <div class="pt-5 pl-5 pr-5 pb-3 profile-img-container">
+                </main>
+                <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+                    <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
+                        <div class="pt-5 pl-5 pr-5 pb-3 profile-img-container">
 
-              <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-              <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''"
-                class="img-fluid rounded-circle" alt="Responsive image">
-              <div *ngIf="owner"><label class="change-icon" (click)="showPopupForChangeProfilePicture()">
-                  <i class="fa fa-upload  fa-3x" style="top: 50% !important;"></i>
-                </label>
-              </div>
-            </div>
-            <div class="d-flex" style="border-top: 1px solid #eaebec;">
-              <div class="col-6 border-right p-3">
-                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="recommendationStatus.helpfull">
-                  {{recommendationStatus.helpfull}}</h6>
-                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="!recommendationStatus.helpfull">0</h6>
-                <p class="mb-0 small helpfullColor">{{language.recommendedHelpfullTitle}}</p>
-              </div>
-              <div class="col-6 p-3">
-                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="recommendationStatus.notHelpfull">
-                  {{recommendationStatus.notHelpfull}}</h6>
-                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="!recommendationStatus.notHelpfull">0</h6>
-                <p class="mb-0 small notHelpfullColor">{{language.recommendedNotHelpfullTitle}}</p>
-              </div>
-            </div>
-          </div>
-          <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
+                            <div class="loader4 imageLoader" *ngIf="loadImage"></div>
+                            <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid rounded-circle" alt="Responsive image">
+                            <div *ngIf="owner"><label class="change-icon" (click)="showPopupForChangeProfilePicture()">
+                                    <i class="fa fa-upload  fa-3x" style="top: 50% !important;"></i>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="d-flex" style="border-top: 1px solid #eaebec;">
+                            <div class="col-6 border-right p-3">
+                                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="recommendationStatus.helpfull">
+                                    {{recommendationStatus.helpfull}}</h6>
+                                <h6 class="font-weight-bold mb-1 helpfullColor" *ngIf="!recommendationStatus.helpfull">0
+                                </h6>
+                                <p class="mb-0 small helpfullColor">{{language.recommendedHelpfullTitle}}</p>
+                            </div>
+                            <div class="col-6 p-3">
+                                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="recommendationStatus.notHelpfull">
+                                    {{recommendationStatus.notHelpfull}}</h6>
+                                <h6 class="font-weight-bold mb-1 notHelpfullColor" *ngIf="!recommendationStatus.notHelpfull">0</h6>
+                                <p class="mb-0 small notHelpfullColor">{{language.recommendedNotHelpfullTitle}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
             <img src="../../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
             <div class="p-3 border-bottom">
               <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
@@ -332,103 +322,43 @@
               <button type="button" class="btn btn-outline-primary pl-4 pr-4"> POST A JOB </button>
             </div>
           </div> -->
-        </aside>
-        <aside class="col col-xl-3 order-xl-3 col-lg-12 order-lg-3 col-12">
-          <div class="box shadow-sm border rounded bg-white mb-3">
-            <div class="box-title border-bottom p-3">
-              <h6 class="m-0">{{language.profileLooking}}</h6>
+                </aside>
+                <aside class="col col-xl-3 order-xl-3 col-lg-12 order-lg-3 col-12">
+                    <div class="box shadow-sm border rounded bg-white mb-3">
+                        <div class="box-title border-bottom p-3">
+                            <h6 class="m-0">{{language.profileLooking}}</h6>
+                        </div>
+                        <div class="box-body p-3 no-info-looking-offer text-center" *ngIf="!lookingOffer || lookingOffer.looking === ''">
+                            <span class="fa fa-binoculars"></span>
+                            <h6>{{language.profileNoInfoAboutLooking}}</h6>
+                        </div>
+                        <div class="box-body p-3" *ngIf="lookingOffer&&lookingOffer.looking !== ''">
+                            <p style="white-space: break-spaces;">{{lookingOffer.looking}}</p>
+                        </div>
+                    </div>
+                    <div class="box shadow-sm border rounded bg-white mb-3">
+                        <div class="box-title border-bottom p-3">
+                            <h6 class="m-0">{{language.profileOffer}}</h6>
+                        </div>
+                        <div class="box-body p-3  no-info-looking-offer text-center" *ngIf="!lookingOffer || lookingOffer.offer === ''">
+                            <span class="fa fa-info-circle"></span>
+                            <h6>{{language.profileNoInfoAboutOffer}}</h6>
+                        </div>
+                        <div class="box-body p-3" *ngIf="lookingOffer&&lookingOffer.offer !== ''">
+                            <p style="white-space: break-spaces;">{{lookingOffer.offer}}</p>
+                        </div>
+                    </div>
+                </aside>
             </div>
-            <div class="box-body p-3 no-info-looking-offer text-center"
-              *ngIf="!lookingOffer || lookingOffer.looking === ''">
-              <span class="fa fa-binoculars"></span>
-              <h6>{{language.profileNoInfoAboutLooking}}</h6>
-            </div>
-            <div class="box-body p-3" *ngIf="lookingOffer&&lookingOffer.looking !== ''">
-              <p style="white-space: break-spaces;">{{lookingOffer.looking}}</p>
-            </div>
-          </div>
-          <div class="box shadow-sm border rounded bg-white mb-3">
-            <div class="box-title border-bottom p-3">
-              <h6 class="m-0">{{language.profileOffer}}</h6>
-            </div>
-            <div class="box-body p-3  no-info-looking-offer text-center"
-              *ngIf="!lookingOffer || lookingOffer.offer === ''">
-              <span class="fa fa-info-circle"></span>
-              <h6>{{language.profileNoInfoAboutOffer}}</h6>
-            </div>
-            <div class="box-body p-3" *ngIf="lookingOffer&&lookingOffer.offer !== ''">
-              <p style="white-space: break-spaces;">{{lookingOffer.offer}}</p>
-            </div>
-          </div>
-        </aside>
-      </div>
+        </div>
     </div>
-  </div>
 </div>
 
 
 <div *ngIf="uploader !== undefined" style="text-align: center;">
-  <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false; uploadProfileWindow = true"
-    [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 400">
 
-    <div class="loader4 imageLoader" *ngIf="showCropper"></div>
-    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png"
-      (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="380" [cropperMinHeight]="380" [onlyScaleDown]="false">
-    </image-cropper>
-    <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
-      {{language.profileUpdateProfileImage}}
-    </button>
-  </kendo-window>
+    <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id" [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone" (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
+    </app-recommendation-button>
 
-  <kendo-window title="{{language.profileUpdateCover}}" *ngIf="changeImageCover" (close)="changeImageCover = false; uploadProfileWindow = true"
-    [width]="windowWidth ? windowWidth : 600" [height]="windowHeight ? windowHeight : 400">
-
-    <div class="loader4 imageLoader" *ngIf="showCropper"></div>
-    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png"
-      (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="1500" [cropperMinHeight]="300" [onlyScaleDown]="false">
-    </image-cropper>
-    <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
-      {{language.profileUpdateCover}}
-    </button>
-  </kendo-window>
-
-  <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
-    [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
-    (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
-  </app-recommendation-button>
-
-  <app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="id" [owner]="owner" [video]="data.promo"
-    (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
+    <app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="id" [owner]="owner" [video]="data.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 </div>
-
-<kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="uploadProfileWindow"
-  (close)="uploadProfileWindow = false" [width]="windowWidth ? windowWidth : 550"
-  [height]="windowHeight ? windowHeight : 400">
-  <div class="text-center">
-    <img src="./assets/img/upload_profile.png" class="mb-3" style="width: 85%">
-    <div class="row text-center">
-      <div class="col-6">
-        <button class="btn btn-primary"><label for="file-upload-profile" class="change-icon mb-0" style="cursor: pointer;">
-            <i class="fa fa-plus"></i> {{language.profileAddImage}}
-          </label>
-          <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
-            [uploader]="uploader" /></button>
-      </div>
-      <div class="col-6">
-        <button class="btn btn-light" (click)="takeACameraWindow = true; uploadProfileWindow = false;"><i class="fa fa-camera"></i> {{language.profileTakePhotoWithCamera}}</button>
-      </div>
-    </div>
-  </div>
-</kendo-window>
-
-<kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="takeACameraWindow"
-  (close)="takeACameraWindow = false; uploadProfileWindow = true" [width]="windowWidth ? windowWidth : 595"
-  [height]="windowHeight ? windowHeight : 440">
-  <div class="text-center">
-    <app-take-camera [width]="windowWidth ? windowWidth : 595" [height]="windowHeight ? windowHeight : 440"
-      (takeASnapshotEmitter)="takeASnapshotEmitter($event)">
-    </app-take-camera>
-  </div>
-</kendo-window>

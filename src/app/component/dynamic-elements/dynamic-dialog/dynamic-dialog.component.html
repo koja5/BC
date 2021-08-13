@@ -5,13 +5,15 @@
     </button>
 </div>
 <div class="modal-body justify-content-center text-center">
-    <img *ngIf="imageUrl" src="{{imageUrl}}" width="50" height="46" />
+    <img *ngIf="imageUrl" src="{{imageUrl}}" [style]="imageStyle" />
     <div *ngIf="text" class="h3">{{text}}</div>
-    <ng-content></ng-content>
+    <ng-content select="[body]"></ng-content>
 </div>
-<div *ngIf="primaryButtonLabel || secondaryButtonLabel" class="modal-footer">
+<div class="modal-footer">
     <div *ngIf="secondaryButtonLabel" class="btn btn-outline-secondary m-auto float-left w-25" (click)="cancel()">
         {{secondaryButtonLabel}}</div>
     <div *ngIf="primaryButtonLabel" class="btn btn-outline-primary m-auto float-right w-25" (click)="apply()">
         {{primaryButtonLabel}}</div>
+
+    <ng-content select="[footer]"></ng-content>
 </div>
