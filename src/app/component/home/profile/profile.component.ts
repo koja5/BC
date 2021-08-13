@@ -31,8 +31,7 @@ export class ProfileComponent implements OnInit {
   public id: number;
   public data: any;
   public language: any;
-  public imageChangedEvent: any = "";
-  public croppedImage: any = "";
+
   canvasRotation = 0;
   rotation = 0;
   scale = 1;
@@ -162,22 +161,6 @@ export class ProfileComponent implements OnInit {
         }
       }
     });
-  }
-
-  imageCropped(event: ImageCroppedEvent) {
-    this.croppedImage = event.base64;
-  }
-  imageLoaded() {
-    // show cropper
-    this.showCropper = false;
-  }
-  cropperReady() {
-    /*this.service.uploadImage(this.croppedImage).subscribe((data) => {
-      console.log(data);
-    });*/
-  }
-  loadImageFailed() {
-    // show message
   }
 
 
