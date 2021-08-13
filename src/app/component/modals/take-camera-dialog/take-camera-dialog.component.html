@@ -1,0 +1,26 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body class="text-center">
+        <!-- <app-take-camera [width]="windowWidth ? windowWidth : 595" [height]="windowHeight ? windowHeight : 440" (takeASnapshotEmitter)="takeASnapshotEmitter($event)">
+        </app-take-camera> -->
+
+        <div *ngIf="!webcamImage">
+            <webcam [height]="440" [width]="595" [trigger]="triggerObservable" (imageCapture)="handleImage($event)" [allowCameraSwitch]="allowCameraSwitch" [switchCamera]="nextWebcamObservable" [videoOptions]="videoOptions" [imageQuality]="1" (cameraSwitched)="cameraWasSwitched($event)"
+                (initError)="handleInitError($event)"></webcam>
+        </div>
+
+        <div class="snapshot" *ngIf="webcamImage">
+            <img [src]="webcamImage.imageAsDataUrl" [height]="height - 140" [width]="width - 100" />
+        </div>
+    </div>
+
+    <div footer class="text-center">
+        <div *ngIf="!webcamImage">
+            <button class="btn btn-success width-20 float-left" (click)="triggerSnapshot()">{{language.profileTakeASnapshot}}</button>
+            <button class="btn btn-light width-20 float-right" (click)="toggleWebcam()">{{language.profileTakeASnapshotRotation}}</button>
+        </div>
+        <div class="snapshot" *ngIf="webcamImage">
+            <button class="btn btn-info width-20 float-left" (click)="saveImage()">{{language.profileTakeASnapshotSave}}</button>
+            <button class="btn btn-success width-20 float-right" (click)="takeANew()">{{language.profileTakeASnapshotNewShot}}</button>
+        </div>
+    </div>
+</app-dynamic-dialog>

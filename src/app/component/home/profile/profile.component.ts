@@ -1,3 +1,5 @@
+import { ImageCropperDialogComponent } from './../../modals/image-cropper-dialog/image-cropper-dialog.component';
+import { FileUploadDialogComponent } from './../../modals/file-upload-dialog/file-upload-dialog.component';
 import {
   Component,
   OnInit,
@@ -21,6 +23,8 @@ import * as sha1 from "sha1";
 import { EditProfileService } from "src/app/services/edit-profile.service";
 import { RecommendationModel } from "src/app/models/recommendation-model";
 import { ToastrService } from "ngx-toastr";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { TakeCameraDialogComponent } from '../../modals/take-camera-dialog/take-camera-dialog.component';
 
 @Component({
   selector: "app-profile",
@@ -38,8 +42,6 @@ export class ProfileComponent implements OnInit {
   scale = 1;
   showCropper = false;
   containWithinAspectRatio = false;
-  public changeImage = false;
-  public changeImageCover = false;
   public uploader: FileUploader;
   public imageBlob: Blob;
   public imageData: any;
@@ -78,8 +80,9 @@ export class ProfileComponent implements OnInit {
     public domSanitizer: DomSanitizer,
     public helpService: HelpService,
     public editProfileService: EditProfileService,
-    private toastr: ToastrService
-  ) {}
+    private toastr: ToastrService,
+    private modalService: NgbModal,
+  ) { }
 
   ngOnInit() {
     this.id = this.route.snapshot.params.id;
@@ -114,51 +117,6 @@ export class ProfileComponent implements OnInit {
       }
     });
 
-    this.uploader = new FileUploader({
-      url: this.url,
-      maxFileSize: 1 * 1024 * 1024,
-    });
-
-    this.uploader.onBuildItemForm = (fileItem: FileItem, form: any) => {
-      console.log(fileItem);
-      const date: number = new Date().getTime();
-      const file = new File([this.croppedImage], "1.PNG", {
-        type: "image/png",
-        lastModified: date,
-      });
-      if (this.typeOfUpload === "img") {
-        this.imageData = this.croppedImage;
-      } else {
-        this.imageCover = this.croppedImage;
-      }
-      fileItem = new FileItem(this.uploader, file, {});
-      console.log(fileItem);
-      form.append("description", fileItem.file["description"]);
-      form.append(
-        "date",
-        fileItem.file.lastModifiedDate !== undefined
-          ? fileItem.file.lastModifiedDate
-          : new Date()
-      );
-      form.append("customer_id", this.data.id);
-    };
-    this.uploader.onCompleteItem = (
-      item: any,
-      response: any,
-      status: any,
-      headers: any
-    ) => {
-      console.log(JSON.parse(response));
-      const respon = JSON.parse(response);
-      if (respon["info"]) {
-        if (respon["type"] === "img") {
-          this.data.image = respon["name"];
-        } else {
-          this.data.cover = respon["name"];
-        }
-      }
-      this.loadImage = false;
-    };
 
     this.editProfileService.getExperience(this.id).subscribe((data: []) => {
       // this.allExperience = data;
@@ -210,35 +168,6 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  fileChangeEventProfile(event: any): void {
-    if (event.target.files[0].size <= this.maxFileImageSize) {
-      this.imageChangedEvent = event;
-      this.changeImage = true;
-      this.showCropper = true;
-      this.uploadProfileWindow = false;
-      this.typeOfUpload = "img";
-    } else {
-      this.toastr.error(this.language.adminMaxFileImage, "", {
-        timeOut: 7000,
-        positionClass: "toast-bottom-right",
-      });
-    }
-  }
-
-  fileChangeEventCover(event: any): void {
-    if (event.target.files[0].size <= this.maxFileCoverSize) {
-      this.imageChangedEvent = event;
-      this.changeImageCover = true;
-      this.showCropper = true;
-      this.typeOfUpload = "cover";
-    } else {
-      this.toastr.error(this.language.adminMaxFileCover, "", {
-        timeOut: 7000,
-        positionClass: "toast-bottom-right",
-      });
-    }
-  }
-
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
   }
@@ -255,40 +184,6 @@ export class ProfileComponent implements OnInit {
     // show message
   }
 
-  public save() {
-    this.loadImage = true;
-    const date: number = new Date().getTime();
-    // Put the blob into the fileBits array of the File constructor
-    const myFile = this.dataURItoBlob(this.croppedImage);
-    const file = new File(
-      [myFile],
-      this.id.toString() + "-" + this.typeOfUpload,
-      {
-        type: "image/png",
-        lastModified: date,
-      }
-    );
-    console.log(file);
-    const fileItem = new FileItem(this.uploader, file, { itemAlias: "1" });
-    console.log(fileItem);
-    this.uploader.queue = [];
-    this.uploader.queue.push(fileItem);
-    fileItem.upload();
-    this.changeImage = false;
-    this.changeImageCover = false;
-    this.message.sendUserInfo();
-  }
-
-  dataURItoBlob(dataURI) {
-    var binary = atob(dataURI.split(",")[1]);
-    var array = [];
-    for (var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], {
-      type: "image/jpg",
-    });
-  }
 
   @HostListener("window:resize", ["$event"])
   onResize(event) {
@@ -340,20 +235,111 @@ export class ProfileComponent implements OnInit {
     this.router.navigate(["/home/main/message"]);
   }
 
-  takeASnapshotEmitter(event) {
-    console.log(event);
-    this.croppedImage = event["_imageAsDataUrl"];
-    this.save();
-    this.takeACameraWindow = false;
+  showPopupForChangeProfilePicture() {
+    this.typeOfUpload = "img";
+
+    const modalRef = this.modalService.open(FileUploadDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileUpdateProfileImage,
+        text: () => null,
+        imageUrl: () => './assets/img/upload_profile.png',
+        imageStyle: () => 'width: 75%;',
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = this.id;
+
+    modalRef.result.catch((reason) => {
+      if (reason === 'open-camera-dialog') {
+        this.modalService.dismissAll();
+        this.openCameraDialog();
+      }
+    });
   }
 
-  showPopupForChangeProfilePicture() {
-    this.uploadProfileWindow = true;
-    this.typeOfUpload = "img";
+
+  openCameraDialog(): void {
+    const modalRef = this.modalService.open(TakeCameraDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileUpdateProfileImage,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      console.log(reason);
+    });
   }
 
   showPopupForChangeCoverPicture() {
-    this.uploadProfileWindow = true;
     this.typeOfUpload = "cover";
+
+    const modalRef = this.modalService.open(FileUploadDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileUpdateCover,
+        text: () => null,
+        imageUrl: () => './assets/img/upload_profile.png',
+        imageStyle: () => 'width: 75%;',
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = this.id;
+  }
+
+
+  public showPopupForCroppingImage(): void {
+    this.modalService.dismissAll();
+    const modalRef = this.modalService.open(ImageCropperDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileUpdateProfileImage,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      console.log(reason);
+    });
   }
 }

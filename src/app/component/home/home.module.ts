@@ -71,6 +71,9 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     RecordVideoComponent,
     PopupComponent
   ],
+  exports: [
+    TakeCameraComponent,
+  ],
   imports: [
     CommonModule,
     HomeRouting,
