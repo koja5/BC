@@ -34,7 +34,6 @@ export class FileUploadDialogComponent implements OnInit {
   public maxFileImageSize = 1 * 1024 * 1024;
   public maxFileCoverSize = 1 * 1024 * 1024;
   fileChangeEventProfile(event: any): void {
-    debugger
     if (event.target.files[0].size <= this.maxFileImageSize) {
       this.showPopupForCroppingImage();
 

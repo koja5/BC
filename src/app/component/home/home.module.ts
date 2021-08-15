@@ -73,6 +73,7 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
   ],
   exports: [
     TakeCameraComponent,
+    LifeEventDetailsComponent
   ],
   imports: [
     CommonModule,
@@ -87,6 +88,9 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     FileUploadModule,
     MatVideoModule,
     WebcamModule
-  ]
+  ],
+  entryComponents: [
+    LifeEventDetailsComponent
+  ],
 })
 export class HomeModule { }

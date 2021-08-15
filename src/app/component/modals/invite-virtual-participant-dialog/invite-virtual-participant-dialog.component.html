@@ -1,0 +1,62 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body class="container register">
+        <div class="row">
+            <div class="register-right">
+                <ul class="nav nav-tabs nav-justified" id="myTab" role="tablist">
+                    <li class="member-switch">
+                        <a class="nav-link" [ngClass]="typeOfVirtualParticipant === 'speakers' ? 'active': ''" (click)="typeOfVirtualParticipant = 'speakers'">{{language.inviteVirtualParticipantSpeaker}}</a>
+                    </li>
+                    <li class="member-switch">
+                        <a class="nav-link" [ngClass]="typeOfVirtualParticipant === 'listeners' ? 'active': ''" (click)="typeOfVirtualParticipant = 'listeners'">{{language.inviteVirtualParticipantListener}}</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" *ngIf="typeOfVirtualParticipant === 'speakers'" style="padding-top: 25px;">
+
+                        <div class="selected-form">
+                            <div style="width: 100%;">
+                                <kendo-combobox [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedSpeakers" [valueField]="'id'" [textField]="'fullname'" [placeholder]="language.reminderFriendsForEventSearchGoingFriends" (filterChange)="handleFilter($event)" class="friend-list"
+                                    style="margin-bottom:
+                  15px;">
+                                    <ng-template kendoComboBoxItemTemplate let-dataItem>
+                                        <p style="height: 45px !important;">
+                                            <img style="width: 40px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                                            <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                                        </p>
+                                    </ng-template>
+                                </kendo-combobox>
+                                <textarea class="form-control" [(ngModel)]="inviteVirtualParticipantWindowMessage" rows="7" name="text" placeholder="{{inviteVirtualParticipantWindowMessage}}"></textarea>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" style="
+    margin-top: 7px; width: auto;" (click)="sendInviteForSelectedVirtualParticipant('speakers')">
+                                {{language.inviteVirtualParticipantSpeaker}}
+                            </button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade show active" *ngIf="typeOfVirtualParticipant === 'listeners'" style="padding-top: 25px;">
+                        <div class="selected-form">
+                            <div style="width: 100%;">
+                                <kendo-combobox [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedListeners" [valueField]="'id'" [textField]="'fullname'" [placeholder]="language.reminderFriendsForEventSearchGoingFriends" (filterChange)="handleFilter($event)" class="friend-list"
+                                    style="margin-bottom:
+                  15px;">
+                                    <ng-template kendoComboBoxItemTemplate let-dataItem>
+                                        <p style="height: 45px !important;">
+                                            <img style="width: 40px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                                            <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                                        </p>
+                                    </ng-template>
+                                </kendo-combobox>
+                                <textarea class="form-control" [(ngModel)]="inviteVirtualParticipantWindowMessage" rows="7" name="text" placeholder="{{inviteVirtualParticipantWindowMessage}}"></textarea>
+                            </div>
+                            <button class="btn btn-outline-primary btn-sm pl-4 pr-4" type="button" style="
+    margin-top: 7px; width: auto;" (click)="sendInviteForSelectedVirtualParticipant('listeners')">
+                                {{language.inviteVirtualParticipantListener}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</app-dynamic-dialog>

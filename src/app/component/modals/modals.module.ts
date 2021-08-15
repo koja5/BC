@@ -14,6 +14,13 @@ import { TakeCameraDialogComponent } from './take-camera-dialog/take-camera-dial
 import { FileUploadModule } from 'ng2-file-upload';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { WebcamModule } from 'ngx-webcam';
+import { LifeEventInviteFriendDialogComponent } from './life-event-invite-friend-dialog/life-event-invite-friend-dialog.component';
+import { InputsModule } from '@progress/kendo-angular-inputs';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { ReminderFriendsDialogComponent } from './reminder-friends-dialog/reminder-friends-dialog.component';
+import { InviteVirtualParticipantDialogComponent } from './invite-virtual-participant-dialog/invite-virtual-participant-dialog.component';
+import { LifeEventMemberDetailsComponent } from './life-event-member-details/life-event-member-details.component';
+import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/life-event-details-dialog.component';
 
 @NgModule({
     declarations: [
@@ -23,7 +30,12 @@ import { WebcamModule } from 'ngx-webcam';
         EducationDialogComponent,
         ImageCropperDialogComponent,
         FileUploadDialogComponent,
-        TakeCameraDialogComponent
+        TakeCameraDialogComponent,
+        LifeEventInviteFriendDialogComponent,
+        ReminderFriendsDialogComponent,
+        InviteVirtualParticipantDialogComponent,
+        LifeEventMemberDetailsComponent,
+        LifeEventDetailsDialogComponent
     ],
     imports: [
         CommonModule,
@@ -33,7 +45,9 @@ import { WebcamModule } from 'ngx-webcam';
         ImageCropperModule,
         FileUploadModule,
         WebcamModule,
-        HomeModule
+        HomeModule,
+        InputsModule,
+        DropDownsModule
     ],
     exports: [
         CreateEventComponent,
@@ -42,7 +56,12 @@ import { WebcamModule } from 'ngx-webcam';
         EducationDialogComponent,
         ImageCropperDialogComponent,
         FileUploadDialogComponent,
-        TakeCameraDialogComponent
+        TakeCameraDialogComponent,
+        LifeEventInviteFriendDialogComponent,
+        ReminderFriendsDialogComponent,
+        InviteVirtualParticipantDialogComponent,
+        LifeEventMemberDetailsComponent,
+        LifeEventDetailsDialogComponent
     ],
     entryComponents: [
         CreateEventComponent,
@@ -51,7 +70,12 @@ import { WebcamModule } from 'ngx-webcam';
         EducationDialogComponent,
         ImageCropperDialogComponent,
         FileUploadDialogComponent,
-        TakeCameraDialogComponent
+        TakeCameraDialogComponent,
+        LifeEventInviteFriendDialogComponent,
+        ReminderFriendsDialogComponent,
+        InviteVirtualParticipantDialogComponent,
+        LifeEventMemberDetailsComponent,
+        LifeEventDetailsDialogComponent
     ]
 })
 export class ModalsModule { }

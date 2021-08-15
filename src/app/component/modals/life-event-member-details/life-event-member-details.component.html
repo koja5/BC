@@ -1,0 +1,11 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body>
+        <ul class="list-user-profile">
+            <li *ngFor="let item of memberGoingList">
+                <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfile(item.id)">
+                    {{item.fullname}} </span>
+                <!-- <button class="btn btn-danger btn-sm ml-5"> <i class="fa fa-bell-o"></i> Send reminder</button> -->
+            </li>
+        </ul>
+    </div>
+</app-dynamic-dialog>
