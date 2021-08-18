@@ -11,7 +11,6 @@ import { PrepareMailService } from "src/app/services/help-services/prepare-mail.
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
-import { throwMatDialogContentAlreadyAttachedError } from '@angular/material';
 import { InviteVirtualParticipantDialogComponent } from 'src/app/component/modals/invite-virtual-participant-dialog/invite-virtual-participant-dialog.component';
 import { ReminderFriendsDialogComponent } from 'src/app/component/modals/reminder-friends-dialog/reminder-friends-dialog.component';
 import { LifeEventMemberDetailsComponent } from 'src/app/component/modals/life-event-member-details/life-event-member-details.component';
@@ -53,9 +52,7 @@ export class VirtualEventDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: LifeEventService,
     private profileService: ProfileService,
-    private connectionService: ConnectionService,
     private helpService: HelpService,
     private editEventService: EditEventService,
     private prepareMail: PrepareMailService,

@@ -22,6 +22,7 @@ import { InviteVirtualParticipantDialogComponent } from './invite-virtual-partic
 import { LifeEventMemberDetailsComponent } from './life-event-member-details/life-event-member-details.component';
 import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/life-event-details-dialog.component';
 import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-friend-dialog/virtual-event-invite-friend-dialog.component';
+import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dialog.component';
 
 @NgModule({
     declarations: [
@@ -37,7 +38,8 @@ import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-
         InviteVirtualParticipantDialogComponent,
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
-        VirtualEventInviteFriendDialogComponent
+        VirtualEventInviteFriendDialogComponent,
+        PremiumBuyDialogComponent
     ],
     imports: [
         CommonModule,
@@ -49,7 +51,7 @@ import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-
         WebcamModule,
         HomeModule,
         InputsModule,
-        DropDownsModule
+        DropDownsModule,
     ],
     exports: [
         CreateEventComponent,
@@ -65,6 +67,7 @@ import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
+        PremiumBuyDialogComponent,
     ],
     entryComponents: [
         CreateEventComponent,
@@ -80,6 +83,7 @@ import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
+        PremiumBuyDialogComponent,
 
     ]
 })

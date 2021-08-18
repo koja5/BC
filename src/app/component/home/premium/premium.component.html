@@ -23,8 +23,8 @@
                         <header class="card-header text-center p-5 border-0">
                             <h4 class="h6 text-success mb-2">{{language.premiumTitleCard}}</h4>
                             <span class="d-block">
-                <span class="display-4 text-dark font-weight-normal">
-                  <span class="small">{{language.premiumCurrency}}</span>{{language.premiumPrice}}
+                                <span class="display-4 text-dark font-weight-normal">
+                                    <span class="small">{{language.premiumCurrency}}</span>{{language.premiumPrice}}
                             </span>
                             <span class="d-block text-secondary">{{language.premiumPerAccount}}</span>
                             </span>
@@ -36,7 +36,7 @@
                                 <li class="list-group-item py-2 px-0 border-0" *ngFor="let item of language.opportunities"><i class="feather-check text-success mr-1"></i> {{item.text}}
                                 </li>
                             </ul>
-                            <button type="button" class="btn btn-block btn-light" (click)="buyWindow = true">{{language.premiumBuy}}</button>
+                            <button type="button" class="btn btn-block btn-light" (click)="openPremiumBuyDialog()">{{language.premiumBuy}}</button>
                         </div>
                         <!-- End Content -->
                     </div>
@@ -47,9 +47,9 @@
                         <header class="card-header text-center p-5 border-0">
                             <h4 class="h6 text-danger mb-2">{{language.premiumTitleCardHelp}}</h4>
                             <span class="d-block">
-                <span class="display-4 text-dark font-weight-normal">
-                  {{language.premiumTitleCardHelp2}}
-                </span>
+                                <span class="display-4 text-dark font-weight-normal">
+                                    {{language.premiumTitleCardHelp2}}
+                                </span>
                             <span class="d-block text-secondary font-size-1">{{language.premiumContactVia}}</span>
                             </span>
                         </header>
@@ -102,46 +102,3 @@
         </div>
     </footer>
 </div>
-
-<kendo-window title="{{language.premiumBuy}}" *ngIf="buyWindow" (close)="buyWindow = false" [width]="550">
-
-    <div class="border-0 box shadow-sm card rounded" *ngIf="!buyCompleted">
-        <!-- Header -->
-        <header class="card-header text-center p-3 border-0">
-            <h4 class="h6 text-success mb-2">{{language.premiumTitleCard}}</h4>
-            <span class="d-block">
-        <span class="display-4 text-dark font-weight-normal">
-          <span class="small">{{language.premiumCurrency}}</span>{{language.premiumPrice}}
-            </span>
-            <span class="d-block text-secondary">{{language.premiumPerAccount}}</span>
-            </span>
-            <div style="padding-top: 15px">
-                <input (click)="agreeWithTerms()" type="checkbox" kendoCheckBox style="margin-bottom: 3px;" /> {{language.premiumAcceptBuyFirst}} <a routerLink="/terms" target="_blank">{{language.premiumAcceptBuyTerms}}</a> {{language.premiumAcceptBuyEnd}}
-                <a routerLink="/privacy-policy" target="_blank">{{language.premiumAcceptBuyCookie}}</a>.
-            </div>
-        </header>
-        <!-- End Header -->
-        <button (click)="openAreYouSureDialog()" type="button" class="btn btn-block btn-light" [title]="agree ? language.premiumRequiredToAllow : ''" [ngClass]="agree ? 'not-allowed' : ''" (click)="buyWindow = true" [disabled]="agree">{{language.premiumBuy}}</button>
-    </div>
-
-    <div *ngIf="buyCompleted">
-        <div class="done_animation">
-            <div class="spinner">
-            </div>
-            <div class="mask">
-            </div>
-            <div class="filler">
-            </div>
-            <div class="innerCircle">
-            </div>
-            <div class="check">
-            </div>
-        </div>
-
-        <div class="text-buy-completed">
-            <h5>{{language.premiumSuccessBuyTitle}}</h5>
-            <h6>{{language.premiumSuccessBuyText}}</h6>
-        </div>
-        <button (click)="finishBuyRedirect()" type="button" class="btn btn-block btn-light">{{language.ok}}</button>
-    </div>
-</kendo-window>
