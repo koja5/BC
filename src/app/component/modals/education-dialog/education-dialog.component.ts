@@ -24,6 +24,4 @@ export class EducationDialogComponent implements OnInit {
     this.language = this.helpService.getLanguage();
   }
 
-
-
 }

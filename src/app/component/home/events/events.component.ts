@@ -1,6 +1,5 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { EventAllService } from "src/app/services/event-all.service";
-import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { HelpService } from 'src/app/services/help.service';
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
@@ -25,7 +24,6 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private service: EventAllService,
-    private router: Router,
     private toastr: ToastrService,
     private helpService: HelpService,
     private modalService: NgbModal

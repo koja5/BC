@@ -208,7 +208,6 @@ export class LifeEventDetailsComponent implements OnInit {
   showSpeakersConfirm() {
     this.memberGoingList = this.data.speakersConfirm;
     this.openLifeEventMemberDetailsDialog();
-
   }
 
   showListenersConfirm() {

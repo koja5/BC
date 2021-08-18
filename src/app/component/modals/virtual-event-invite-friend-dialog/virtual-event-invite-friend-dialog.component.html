@@ -1,0 +1,22 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body class="row">
+        <kendo-multiselect [data]="allMyConnection" [filterable]="true" [(ngModel)]="selectedInviteFriends" [valueField]="'id'" [textField]="'fullname'" [autoClose]="false" [placeholder]="language.inviteFriendsForEventSearchFriends" (filterChange)="handleFilter($event)"
+            class="friend-list">
+            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                <input type="checkbox" class="k-checkbox" [checked]="isItemSelected(dataItem.id)">
+                <label class="k-checkbox-label"> <img class="rounded-circle" style="width: 25px; height: 25px"
+                        src="./assets/img/profile_image/{{dataItem.image}}"> <span style="padding: 3px"> {{
+                        dataItem.fullname }}
+                    </span></label>
+            </ng-template>
+        </kendo-multiselect>
+
+        <div class="full-width mt-3">
+            <input type="checkbox" class="k-checkbox" (click)="selectAllMyFriends()" [checked]="isChecked">
+            <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+        </div>
+        <button class="btn btn-outline-primary btn-sm pl-4 pr-4 mt-5 margin-auto" type="button" (click)="sendInviteForSelectedFriends()"> <span class="fa fa-envelope"></span>
+            {{language.virtualEventInviteFriend}}
+        </button>
+    </div>
+</app-dynamic-dialog>

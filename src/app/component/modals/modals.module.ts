@@ -21,6 +21,7 @@ import { ReminderFriendsDialogComponent } from './reminder-friends-dialog/remind
 import { InviteVirtualParticipantDialogComponent } from './invite-virtual-participant-dialog/invite-virtual-participant-dialog.component';
 import { LifeEventMemberDetailsComponent } from './life-event-member-details/life-event-member-details.component';
 import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/life-event-details-dialog.component';
+import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-friend-dialog/virtual-event-invite-friend-dialog.component';
 
 @NgModule({
     declarations: [
@@ -35,7 +36,8 @@ import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/lif
         ReminderFriendsDialogComponent,
         InviteVirtualParticipantDialogComponent,
         LifeEventMemberDetailsComponent,
-        LifeEventDetailsDialogComponent
+        LifeEventDetailsDialogComponent,
+        VirtualEventInviteFriendDialogComponent
     ],
     imports: [
         CommonModule,
@@ -61,7 +63,8 @@ import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/lif
         ReminderFriendsDialogComponent,
         InviteVirtualParticipantDialogComponent,
         LifeEventMemberDetailsComponent,
-        LifeEventDetailsDialogComponent
+        LifeEventDetailsDialogComponent,
+        VirtualEventInviteFriendDialogComponent,
     ],
     entryComponents: [
         CreateEventComponent,
@@ -75,7 +78,9 @@ import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/lif
         ReminderFriendsDialogComponent,
         InviteVirtualParticipantDialogComponent,
         LifeEventMemberDetailsComponent,
-        LifeEventDetailsDialogComponent
+        LifeEventDetailsDialogComponent,
+        VirtualEventInviteFriendDialogComponent,
+
     ]
 })
 export class ModalsModule { }
