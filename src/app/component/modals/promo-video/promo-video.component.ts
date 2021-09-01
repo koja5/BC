@@ -165,6 +165,7 @@ export class PromoVideoComponent implements OnInit {
     modalRef.componentInstance.modal = modalRef;
     modalRef.componentInstance.width = 500;
     modalRef.componentInstance.height = 420;
+    modalRef.componentInstance.id = this.id;
   }
 
 }

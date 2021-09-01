@@ -1,3 +1,4 @@
+import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { HomeModule } from './../home/home.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -26,6 +27,8 @@ import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dial
 import { RecordCameraDialogComponent } from './record-camera-dialog/record-camera-dialog.component';
 import { PromoVideoComponent } from './promo-video/promo-video.component';
 import { MatVideoModule } from 'mat-video';
+import { CreateEventTypeDialogComponent } from './create-event-type-dialog/create-event-type-dialog.component';
+import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/create-new-customer-dialog.component';
 
 @NgModule({
     declarations: [
@@ -46,6 +49,9 @@ import { MatVideoModule } from 'mat-video';
         RecordCameraDialogComponent,
         PromoVideoComponent,
 
+        TakeCameraDialogComponent,
+        CreateEventTypeDialogComponent,
+        CreateNewCustomerDialogComponent
     ],
     imports: [
         CommonModule,
@@ -59,6 +65,7 @@ import { MatVideoModule } from 'mat-video';
         InputsModule,
         DropDownsModule,
         MatVideoModule,
+        ButtonsModule
     ],
     exports: [
         CreateEventComponent,
@@ -77,7 +84,11 @@ import { MatVideoModule } from 'mat-video';
         PremiumBuyDialogComponent,
         RecordCameraDialogComponent,
         PromoVideoComponent,
-
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+        TakeCameraDialogComponent,
+        CreateEventTypeDialogComponent,
+        CreateNewCustomerDialogComponent
     ],
     entryComponents: [
         CreateEventComponent,
@@ -96,7 +107,11 @@ import { MatVideoModule } from 'mat-video';
         PremiumBuyDialogComponent,
         RecordCameraDialogComponent,
         PromoVideoComponent,
-
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+        TakeCameraDialogComponent,
+        CreateEventTypeDialogComponent,
+        CreateNewCustomerDialogComponent
     ]
 })
 export class ModalsModule { }

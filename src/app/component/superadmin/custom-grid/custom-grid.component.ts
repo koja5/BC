@@ -1,3 +1,5 @@
+import { CreateNewCustomerDialogComponent } from './../../modals/create-new-customer-dialog/create-new-customer-dialog.component';
+import { CreateEventTypeDialogComponent } from './../../modals/create-event-type-dialog/create-event-type-dialog.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import {
   Component,
@@ -28,12 +30,13 @@ import { ExcelExportData } from "@progress/kendo-angular-excel-export";
 import { HelpService } from "src/app/services/help.service";
 import { BankAccountModel } from "src/app/models/bank-account-model";
 import { EditProfileService } from "src/app/services/edit-profile.service";
-import * as sha1 from "sha1";
 import { AdditionalInfoModel } from "src/app/models/additional-info-model";
 import { LookingOfferModel } from "src/app/models/looking-offer-model";
 import { ChangePasswordModel } from "src/app/models/change-password-model";
 import { DynamicDialogComponent } from '../../dynamic-elements/dynamic-dialog/dynamic-dialog.component';
 import { ModalConfigurationService } from 'src/app/services/modal-configuration.service';
+import { ChangePasswordDialogComponent } from '../../modals/change-password-dialog/change-password-dialog.component';
+import * as sha1 from "sha1";
 
 @Component({
   selector: "app-custom-grid",
@@ -43,8 +46,6 @@ import { ModalConfigurationService } from 'src/app/services/modal-configuration.
 export class CustomGridComponent implements OnInit {
   @Input() data: any;
   @Input() gridConfiguration: any;
-  @Input() create: any;
-  @Output() sendEventEmitter = new EventEmitter<any>();
 
   // @ViewChild(DataBindingDirective) dataBinding: DataBindingDirective;
   public customer = false;
@@ -136,7 +137,7 @@ export class CustomGridComponent implements OnInit {
     private helpService: HelpService,
     public serviceEditProfile: EditProfileService,
     private modalService: NgbModal,
-    private modalConfigurationService: ModalConfigurationService
+    private modalConfigurationService: ModalConfigurationService,
   ) {
     this.allData = this.allData.bind(this);
   }
@@ -334,15 +335,15 @@ export class CustomGridComponent implements OnInit {
     this.id = id;
     this.method = method;
     this.index = index;
-   
-    const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'lg',
-      centered:true
+
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
     });
-    
+
     this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
-    modalRef.componentInstance.modal=modalRef;
-    
+    modalRef.componentInstance.modal = modalRef;
+
     modalRef.result.then(() => {
       this.service[this.method](this.id).subscribe((data) => {
         console.log(data);
@@ -366,7 +367,7 @@ export class CustomGridComponent implements OnInit {
       this.member.activePremiumDate
     );
     this.operationMode = "edit";
-    this.memberWindow = true;
+    this.openCreateNewCustomerDialog();
     this.directorId = Number(
       this.helpService.getMyDirectorUser(this.member.id, this.member.sid)
     );
@@ -381,12 +382,6 @@ export class CustomGridComponent implements OnInit {
     this.selectedTab = "profile";
   }
 
-  editEvent(dataItem) {
-    this.create = dataItem;
-    this.eventWindow = true;
-    this.operationMode = "edit";
-  }
-
   convertToDate(date) {
     if (date) {
       return new Date(date);
@@ -394,10 +389,15 @@ export class CustomGridComponent implements OnInit {
     return null;
   }
 
+
+  editEvent(dataItem) {
+    this.openCreateEventTypeDialog("edit", dataItem);
+  }
+
+
   openModal(type) {
     if (type === "event") {
-      this.eventWindow = true;
-      this.operationMode = "add";
+      this.openCreateEventTypeDialog("add");
     }
     if (type === "member") {
       this.newMember();
@@ -408,7 +408,7 @@ export class CustomGridComponent implements OnInit {
     this.member = new UserModel();
     this.member.image = "no-image.png";
     this.operationMode = "add";
-    this.memberWindow = true;
+    this.openCreateNewCustomerDialog();
   }
 
   updateMember(data) {
@@ -432,7 +432,7 @@ export class CustomGridComponent implements OnInit {
           }
         );
       }
-      this.memberWindow = false;
+      this.modalService.dismissAll();
     });
   }
 
@@ -459,7 +459,7 @@ export class CustomGridComponent implements OnInit {
           }
         );
       }
-      this.memberWindow = false;
+      this.modalService.dismissAll();
     });
   }
 
@@ -513,43 +513,7 @@ export class CustomGridComponent implements OnInit {
     return null;
   }
 
-  changeTab(tab) {
-    this.selectedTab = tab;
-    if (tab === "bankAccount") {
-      this.bankAccount = new BankAccountModel();
-      this.serviceEditProfile
-        .getBankAccount(sha1(this.member.id.toString()))
-        .subscribe((data) => {
-          if (data["length"] > 0) {
-            this.bankAccount = data[0];
-          } else {
-            this.bankAccountCreate = true;
-          }
-        });
-    } else if (tab === "other") {
-      this.additionalInfo = new AdditionalInfoModel();
-      this.serviceEditProfile
-        .getAdditionalInfo(sha1(this.member.id.toString()))
-        .subscribe((data) => {
-          if (data["length"] > 0) {
-            this.additionalInfo = data[0];
-          } else {
-            this.additionalInfoCreate = true;
-          }
-        });
-    } else if (tab === "lookingOffer") {
-      this.lookingOffer = new LookingOfferModel();
-      this.serviceEditProfile
-        .getLookingOffer(sha1(this.member.id.toString()))
-        .subscribe((data) => {
-          if (data["length"] > 0) {
-            this.lookingOffer = data[0];
-          } else {
-            this.lookingOfferCreate = true;
-          }
-        });
-    }
-  }
+
 
   saveBankAccount(data) {
     if (this.helpService.validate(this.bankAccount.iban)) {
@@ -706,16 +670,69 @@ export class CustomGridComponent implements OnInit {
             { timeOut: 7000, positionClass: "toast-bottom-right" }
           );
         }
-        this.changePasswordWindow = false;
       });
     }
   }
 
-  sendAction(operation, data) {
-    const actionData = {
-      operation: operation,
-      data: data,
+  openCreateEventTypeDialog(operationMode: string, dataItem?: any): void {
+    const modalRef = this.modalService.open(CreateEventTypeDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.lifeEventTypeCreateTitle,
+        operationMode: () => operationMode,
+        dataItem: () => dataItem
+      }
     };
-    this.sendEventEmitter.next(actionData);
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.operationMode = this.operationMode;
+  }
+
+  public openChangePasswordDialog(): void {
+    const modalRef = this.modalService.open(ChangePasswordDialogComponent, {
+      size: 'sm',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.changePasswordTitle,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.result.then(() => {
+      this.changePassword();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  public openCreateNewCustomerDialog(): void {
+    const modalRef = this.modalService.open(CreateNewCustomerDialogComponent, {
+      size: 'sm',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.createNewCustomer,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+
   }
 }

@@ -13,13 +13,12 @@ export class EventComponent implements OnInit {
   public gridConfiguration: any;
   public data: any;
   public height: any;
-  public create = new EventModel();
 
   constructor(
     private service: DashboardService,
     private eventService: EventService,
     private helpService: HelpService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.height = window.innerHeight - 81;

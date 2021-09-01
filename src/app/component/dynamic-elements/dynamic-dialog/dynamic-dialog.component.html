@@ -9,7 +9,7 @@
     <div *ngIf="text" class="h3">{{text}}</div>
     <ng-content select="[body]"></ng-content>
 </div>
-<div class="modal-footer" *ngIf="primaryButtonLabel || secondaryButtonLabel">
+<div class="modal-footer">
     <div *ngIf="secondaryButtonLabel" class="btn btn-outline-secondary m-auto float-left w-25" (click)="cancel()">
         {{secondaryButtonLabel}}</div>
     <div *ngIf="primaryButtonLabel" class="btn btn-outline-primary m-auto float-right w-25" (click)="apply()">
