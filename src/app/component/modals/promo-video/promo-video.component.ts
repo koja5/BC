@@ -1,3 +1,4 @@
+import { RecordCameraDialogComponent } from '../record-camera-dialog/record-camera-dialog.component';
 import {
   Component,
   OnInit,
@@ -6,6 +7,7 @@ import {
   Output,
   EventEmitter,
 } from "@angular/core";
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
 import { FileUploader, FileItem } from "ng2-file-upload";
 import { ToastrService } from 'ngx-toastr';
 import { HelpService } from 'src/app/services/help.service';
@@ -16,11 +18,12 @@ import { HelpService } from 'src/app/services/help.service';
   styleUrls: ["./promo-video.component.scss"],
 })
 export class PromoVideoComponent implements OnInit {
-  @Input() promoWindow: boolean;
+  @Input() modal: NgbModalRef;
+  @Input() modalSettings: any;
+
   @Input() id: any;
   @Input() video: any;
   @Input() owner: any;
-  @Output() promoWindowEmitter = new EventEmitter<null>();
 
   public windowHeight: any;
   public windowWidth: any;
@@ -33,7 +36,9 @@ export class PromoVideoComponent implements OnInit {
   public maxFilePromoVideo = 50 * 1024 * 1024;
   public recordCameraPromoWindow = false;
 
-  constructor(private toastr: ToastrService, private helpService: HelpService) {}
+  constructor(private toastr: ToastrService,
+    private modalService: NgbModal,
+    private helpService: HelpService) { }
 
   ngOnInit() {
     if (window.innerWidth < 768) {
@@ -94,11 +99,6 @@ export class PromoVideoComponent implements OnInit {
     }
   }
 
-  closeWindow() {
-    this.promoWindowEmitter.emit();
-    this.promoWindow = false;
-  }
-
   fileChange(event: any): void {
     if (event.target.files[0].size <= this.maxFilePromoVideo) {
       this.imageChangedEvent = event.target.files[0];
@@ -142,7 +142,29 @@ export class PromoVideoComponent implements OnInit {
 
   saveRecordVideoEmitter(event) {
     this.imageChangedEvent = event;
-    this.uploadVideo()
+    this.uploadVideo();
   }
-  
+
+  public openRecordCameraDialog(): void {
+    const modalRef = this.modalService.open(RecordCameraDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => null,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.width = 500;
+    modalRef.componentInstance.height = 420;
+  }
+
 }

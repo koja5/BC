@@ -16,6 +16,7 @@ import { UserModel } from "src/app/models/user-model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
+import { PromoVideoComponent } from "../../modals/promo-video/promo-video.component";
 
 @Component({
   selector: "app-feed",
@@ -77,7 +78,7 @@ export class FeedComponent implements OnInit {
     private message: MessageService,
     private modalService: NgbModal,
     private modalConfigurationService: ModalConfigurationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (window.innerWidth < 768) {
@@ -86,7 +87,7 @@ export class FeedComponent implements OnInit {
     }
     this.id = localStorage.getItem("id");
     this.user = JSON.parse(localStorage.getItem("user"));
-    
+
     this.language = this.helpService.getLanguage();
     this.initialization();
     this.uploadInitialization();
@@ -282,14 +283,14 @@ export class FeedComponent implements OnInit {
       index: index,
     };
 
-    const modalRef=this.modalService.open(DynamicDialogComponent, {
-      size:'lg',
-      centered:true
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
     });
 
     this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
-    modalRef.componentInstance.modal=modalRef;
-    
+    modalRef.componentInstance.modal = modalRef;
+
     modalRef.result.then(() => {
       this.service.deletePost(this.removeItem.id).subscribe((data) => {
         if (data) {
@@ -348,7 +349,7 @@ export class FeedComponent implements OnInit {
     });
   }
 
-  showUserProfile(id) {}
+  showUserProfile(id) { }
 
   createComment(id, index) {
     const commentPostData = {
@@ -426,7 +427,7 @@ export class FeedComponent implements OnInit {
     } else {
       this.windowWidth = null;
       this.windowHeight = null;
-    }    
+    }
   }
 
   getImageFromBlob(image) {
@@ -588,8 +589,28 @@ export class FeedComponent implements OnInit {
 
   openPromoVideo(item) {
     this.selectedMember = item;
-    this.promoWindow = true;
     this.selectedFeedConnectionsOptions = -1;
+
+    const modalRef = this.modalService.open(PromoVideoComponent, {
+      size: 'sm',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => null,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.video = this.selectedMember.promo;
+    modalRef.componentInstance.owner = false;
+    modalRef.componentInstance.id = this.id;
   }
 
   promoWindowEmitter() {

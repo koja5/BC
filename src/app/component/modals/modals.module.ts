@@ -23,6 +23,9 @@ import { LifeEventMemberDetailsComponent } from './life-event-member-details/lif
 import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/life-event-details-dialog.component';
 import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-friend-dialog/virtual-event-invite-friend-dialog.component';
 import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dialog.component';
+import { RecordCameraDialogComponent } from './record-camera-dialog/record-camera-dialog.component';
+import { PromoVideoComponent } from './promo-video/promo-video.component';
+import { MatVideoModule } from 'mat-video';
 
 @NgModule({
     declarations: [
@@ -39,7 +42,10 @@ import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dial
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
-        PremiumBuyDialogComponent
+        PremiumBuyDialogComponent,
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+
     ],
     imports: [
         CommonModule,
@@ -52,6 +58,7 @@ import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dial
         HomeModule,
         InputsModule,
         DropDownsModule,
+        MatVideoModule,
     ],
     exports: [
         CreateEventComponent,
@@ -68,6 +75,9 @@ import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dial
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
         PremiumBuyDialogComponent,
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+
     ],
     entryComponents: [
         CreateEventComponent,
@@ -84,6 +94,8 @@ import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dial
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
         PremiumBuyDialogComponent,
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
 
     ]
 })

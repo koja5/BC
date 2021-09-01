@@ -21,6 +21,7 @@ import { RecommendationModel } from "src/app/models/recommendation-model";
 import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TakeCameraDialogComponent } from '../../modals/take-camera-dialog/take-camera-dialog.component';
+import { PromoVideoComponent } from '../../modals/promo-video/promo-video.component';
 
 @Component({
   selector: "app-profile",
@@ -60,7 +61,6 @@ export class ProfileComponent implements OnInit {
   public recommendedItem: any;
   public recommendedWindow = false;
   public recommendationStatus = new RecommendationModel();
-  public promoWindow = false;
   public maxFileImageSize = 1 * 1024 * 1024;
   public maxFileCoverSize = 1 * 1024 * 1024;
   public uploadProfileWindow = false;
@@ -201,12 +201,27 @@ export class ProfileComponent implements OnInit {
     this.recommendedItem = null;
   }
 
-  openPromoVideo() {
-    this.promoWindow = true;
-  }
+  openPromoVideoDialog() {
+    const modalRef = this.modalService.open(PromoVideoComponent, {
+      size: 'sm',
+      centered: true
+    });
 
-  promoWindowEmitter() {
-    this.promoWindow = false;
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => null,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.video = this.data.promo;
+    modalRef.componentInstance.owner = this.owner;
+    modalRef.componentInstance.id = this.id;
   }
 
   sendMessageForThisUser() {

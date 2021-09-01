@@ -22,7 +22,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ConnectionFilterPipe } from './connection/connection.pipe';
 import { RecommendationButtonComponent } from './recommendation-button/recommendation-button.component';
-import { PromoVideoComponent } from './profile/promo-video/promo-video.component';
+import { PromoVideoComponent } from '../modals/promo-video/promo-video.component';
 import { MatVideoModule } from 'mat-video';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { EventsComponent } from './events/events.component';
@@ -55,7 +55,6 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     ContactComponent,
     ConnectionFilterPipe,
     RecommendationButtonComponent,
-    PromoVideoComponent,
     AboutUsComponent,
     EventsComponent,
     LifeEventComponent,
@@ -73,7 +72,8 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
   ],
   exports: [
     TakeCameraComponent,
-    LifeEventDetailsComponent
+    LifeEventDetailsComponent,
+    RecordVideoComponent
   ],
   imports: [
     CommonModule,
@@ -90,7 +90,8 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     WebcamModule
   ],
   entryComponents: [
-    LifeEventDetailsComponent
+    LifeEventDetailsComponent,
+    RecordVideoComponent
   ],
 })
 export class HomeModule { }

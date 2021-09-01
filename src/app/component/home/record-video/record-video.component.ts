@@ -17,8 +17,8 @@ import { HelpService } from 'src/app/services/help.service';
   styleUrls: ["./record-video.component.scss"],
 })
 export class RecordVideoComponent implements OnInit {
-  @Input() width: any;
-  @Input() height: any;
+  @Input() width: any = 500;
+  @Input() height: any = 420;
   @Output() saveRecordVideoEmitter = new EventEmitter<any>();
 
   public disabled: any;

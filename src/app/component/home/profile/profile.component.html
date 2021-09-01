@@ -32,7 +32,7 @@
                             <button type="button" class="btn btn-primary mr-2" (click)="recommended(data.id, data.fullname, data.email, data.phoneNumber)"> <i
                                     class="fa fa-paper-plane"></i> {{language.profileRecommended}}
                             </button>
-                            <button *ngIf="data.promo || owner" type="button" class="btn btn-secondary" (click)="openPromoVideo()"> <i class="fa fa-film"></i> {{language.promoButton}}
+                            <button *ngIf="data.promo || owner" type="button" class="btn btn-secondary" (click)="openPromoVideoDialog()"> <i class="fa fa-film"></i> {{language.promoButton}}
                             </button>
                         </div>
                     </div>
@@ -360,5 +360,4 @@
     <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id" [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone" (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
     </app-recommendation-button>
 
-    <app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="id" [owner]="owner" [video]="data.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 </div>

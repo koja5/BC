@@ -1,52 +1,50 @@
 <!-- <app-content-placeholder></app-content-placeholder> -->
 
 <div>
-  <div class="container py-4" *ngIf="language !== undefined">
-    <div class="row" *ngIf="data !== undefined">
-      <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
-        <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
-          <div class="py-4 px-3 border-bottom profile-img-container">
-            <div class="loader4 imageLoaderFeed" *ngIf="loadImage"></div>
-            <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle"
-              alt="Responsive image">
-            <!-- <label for="file-upload-profile" class="change-icon">
+    <div class="container py-4" *ngIf="language !== undefined">
+        <div class="row" *ngIf="data !== undefined">
+            <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">
+                <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
+                    <div class="py-4 px-3 border-bottom profile-img-container">
+                        <div class="loader4 imageLoaderFeed" *ngIf="loadImage"></div>
+                        <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle" alt="Responsive image">
+                        <!-- <label for="file-upload-profile" class="change-icon">
               <i class="fa fa-upload  fa-2x"></i>
             </label>
             <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
               [uploader]="uploader" /> -->
-            <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
-            <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
-            <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
-          </div>
-          <div class="overflow-hidden border-top">
-            <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> {{language.feedViewMyProfile}}
+                        <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
+                        <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
+                        <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
+                    </div>
+                    <div class="overflow-hidden border-top">
+                        <a class="font-weight-bold p-3 d-block" (click)="openProfileWithoutSHA1(id)"> {{language.feedViewMyProfile}}
             </a>
-          </div>
-        </div>
-        <div class="box mb-3 feed-links">
-          <div class="d-flex mb-2">
-            <div class="col-12 feed-pages" routerLink="/home/main/connection" style="cursor: pointer;">
-              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/connections.png">
-                {{language.feedConnections}}</p>
-            </div>
-          </div>
-          <div class="d-flex">
-            <div class="col-12 feed-pages" routerLink="/home/main/event/all" style="cursor: pointer;">
-              <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/events.png">
-                {{language.feedEvents}}</p>
-            </div>
-          </div>
-        </div>
-        <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center" *ngIf="userType !== 2">
-          <h6 class="text-dark mt-2">{{language.feedReferralLinkTitle}}</h6>
-          <div class="p-3"><button class="btn btn-referral-link btn-sm pl-4 pr-4" *ngIf="!referralLinkCopied"
-              type="button" (click)="copyLinkInClipboard()"> <span
+                    </div>
+                </div>
+                <div class="box mb-3 feed-links">
+                    <div class="d-flex mb-2">
+                        <div class="col-12 feed-pages" routerLink="/home/main/connection" style="cursor: pointer;">
+                            <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/connections.png"> {{language.feedConnections}}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="d-flex">
+                        <div class="col-12 feed-pages" routerLink="/home/main/event/all" style="cursor: pointer;">
+                            <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/events.png"> {{language.feedEvents}}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center" *ngIf="userType !== 2">
+                    <h6 class="text-dark mt-2">{{language.feedReferralLinkTitle}}</h6>
+                    <div class="p-3"><button class="btn btn-referral-link btn-sm pl-4 pr-4" *ngIf="!referralLinkCopied" type="button" (click)="copyLinkInClipboard()"> <span
                 *ngIf="!referralLinkCopied">{{language.feedReferralLinkButton}}</span> </button>
-            <button class="btn btn-referral-link-copied btn-sm pl-4 pr-4" *ngIf="referralLinkCopied" type="button"
-              (click)="copyLinkInClipboard()"> <span>{{language.feedCopiedLinkButton}}</span> </button></div>
-          <p class="ml-1 mr-1 text-muted">{{language.feedReferralLinkText}}</p>
-        </div>
-        <!-- <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
+                        <button class="btn btn-referral-link-copied btn-sm pl-4 pr-4" *ngIf="referralLinkCopied" type="button" (click)="copyLinkInClipboard()"> <span>{{language.feedCopiedLinkButton}}</span> </button>
+                    </div>
+                    <p class="ml-1 mr-1 text-muted">{{language.feedReferralLinkText}}</p>
+                </div>
+                <!-- <div class="box mb-3 shadow-sm rounded bg-white view-box overflow-hidden">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">Profile Views</h6>
         </div>
@@ -64,7 +62,7 @@
           <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
         </div>
       </div> -->
-        <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
+                <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
         <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
         <div class="p-3 border-bottom">
           <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
@@ -74,84 +72,77 @@
           <button type="button" class="btn btn-outline-primary pl-4 pr-4"> POST A JOB </button>
         </div>
       </div> -->
-      </aside>
-      <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
-        <div class="box shadow-sm border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3">
-            <h6 class="m-0">{{language.feedYourConnections}}</h6>
-          </div>
-          <div class="box-body p-3">
-            <div class="d-flex align-items-center osahan-post-header mb-3 people-list"
-              *ngFor="let item of peopleYouMightKnowList">
-              <div class="dropdown-list-image mr-3">
-                <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
-                <div class="status-indicator bg-success"></div>
-              </div>
-              <div class="font-weight-bold mr-2">
-                <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}
-                </div>
-                <div class="small text-gray-500">{{item.profession}}
-                  (
-                  <span *ngIf="item.help !== null" class="helpfullColor">{{item.help}}</span>
-                  <span *ngIf="item.help === null" class="helpfullColor">0</span> /
-                  <span *ngIf="item.notHelp !== null" class="notHelpfullColor">{{item.notHelp}}</span>
-                  <span *ngIf="item.notHelp === null" class="notHelpfullColor">0</span>
-                  )
-                </div>
-              </div>
-              <!-- <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+            </aside>
+            <aside class="col col-xl-3 order-xl-3 col-lg-6 order-lg-3 col-md-6 col-sm-6 col-12">
+                <div class="box shadow-sm border rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">{{language.feedYourConnections}}</h6>
+                    </div>
+                    <div class="box-body p-3">
+                        <div class="d-flex align-items-center osahan-post-header mb-3 people-list" *ngFor="let item of peopleYouMightKnowList">
+                            <div class="dropdown-list-image mr-3">
+                                <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
+                                <div class="status-indicator bg-success"></div>
+                            </div>
+                            <div class="font-weight-bold mr-2">
+                                <div class="text-truncate" (click)="openProfile(item.id)">{{item.fullname}}
+                                </div>
+                                <div class="small text-gray-500">{{item.profession}} (
+                                    <span *ngIf="item.help !== null" class="helpfullColor">{{item.help}}</span>
+                                    <span *ngIf="item.help === null" class="helpfullColor">0</span> /
+                                    <span *ngIf="item.notHelp !== null" class="notHelpfullColor">{{item.notHelp}}</span>
+                                    <span *ngIf="item.notHelp === null" class="notHelpfullColor">0</span> )
+                                </div>
+                            </div>
+                            <!-- <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
                   (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
                     class="fa fa-paper-plane" title="{{language.recommendedTooltip}}"></i></button>
               </span> -->
 
-              <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
+                            <span class="ml-auto"><button type="button" class="btn btn-light btn-sm"
                   (click)="showHideFeedConnections(item.id)">
                   <i class="fa fa-ellipsis-v removePost"></i>
                 </button>
               </span>
-              <div class="post-options connections-options"
-                [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'">
-                <ul class="connectionOptions">
-                  <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
-                      class="fa fa-paper-plane"></i> {{language.recommendedTooltip}}</li>
-                  <li (click)="openPromoVideo(item)"><i class="fa fa-film"></i> {{language.promoButton}}</li>
-                  <li (click)="sendMessageForThisUser(item)"><i class="fa fa-comments-o"></i>
-                    {{language.connectionSendMessage}}</li>
-                </ul>
-              </div>
+                            <div class="post-options connections-options" [ngClass]="selectedFeedConnectionsOptions === item.id ? 'show' : 'hide'">
+                                <ul class="connectionOptions">
+                                    <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i class="fa fa-paper-plane"></i> {{language.recommendedTooltip}}</li>
+                                    <li (click)="openPromoVideo(item)"><i class="fa fa-film"></i> {{language.promoButton}}</li>
+                                    <li (click)="sendMessageForThisUser(item)"><i class="fa fa-comments-o"></i> {{language.connectionSendMessage}}
+                                    </li>
+                                </ul>
+                            </div>
 
-            </div>
-          </div>
-        </div>
-        <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2">
-          <img src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
-          <div class="p-3 border-bottom">
-            <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
-            <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
-          </div>
-          <div class="p-3">
-            <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium">
+                        </div>
+                    </div>
+                </div>
+                <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2">
+                    <img src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
+                    <div class="p-3 border-bottom">
+                        <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
+                        <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
+                    </div>
+                    <div class="p-3">
+                        <button type="button" class="btn btn-outline-gold pl-4 pr-4" routerLink="/home/main/premium">
               {{language.feedActivate}}
             </button>
-          </div>
-        </div>
-        <div class="box shadow-sm mb-3 border rounded bg-white text-center" *ngIf="userType !== 2">
-          <div class="image-overlap-2 pt-4">
-            <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm"
-              alt="Responsive image">
-            <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}"
-              class="rounded-circle shadow-sm" alt="Responsive image">
-          </div>
-          <div class="p-3 border-bottom">
-            <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
-            <p class="mb-0 text-muted">{{language.feedInviteText}}</p>
-          </div>
-          <div class="p-3">
-            <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+                    </div>
+                </div>
+                <div class="box shadow-sm mb-3 border rounded bg-white text-center" *ngIf="userType !== 2">
+                    <div class="image-overlap-2 pt-4">
+                        <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm" alt="Responsive image">
+                        <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm" alt="Responsive image">
+                    </div>
+                    <div class="p-3 border-bottom">
+                        <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
+                        <p class="mb-0 text-muted">{{language.feedInviteText}}</p>
+                    </div>
+                    <div class="p-3">
+                        <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
               {{language.feedSendInvite}} </button>
-          </div>
-        </div>
-        <!-- <div class="box shadow-sm mb-3 border rounded bg-white text-center">
+                    </div>
+                </div>
+                <!-- <div class="box shadow-sm mb-3 border rounded bg-white text-center">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">{{language.termsHeaderTitle}}</h6>
         </div>
@@ -178,7 +169,7 @@
               {{language.privacyShow}} </button></a>
         </div>
       </div> -->
-        <!-- <div class="box shadow-sm border rounded bg-white mb-3">
+                <!-- <div class="box shadow-sm border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">Jobs
           </h6>
@@ -241,15 +232,15 @@
           </a>
         </div>
       </div> -->
-      </aside>
-      <!-- Main Content -->
-      <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
-        <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
-          <ul class="nav nav-justified border-bottom osahan-line-tab" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link active" id="home-tab"><i class="feather-edit"></i> {{language.feedShareAUpdate}}</a>
-            </li>
-            <!-- <li class="nav-item">
+            </aside>
+            <!-- Main Content -->
+            <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+                <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
+                    <ul class="nav nav-justified border-bottom osahan-line-tab" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab"><i class="feather-edit"></i> {{language.feedShareAUpdate}}</a>
+                        </li>
+                        <!-- <li class="nav-item">
             <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile"
               aria-selected="false"><i class="feather-image"></i> {{language.feedUploadPhoto}}</a>
           </li>
@@ -257,115 +248,102 @@
             <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact"
               aria-selected="false"><i class="feather-clipboard"></i> {{language.feedWriteAnArticle}}</a>
           </li> -->
-          </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="p-3 d-flex align-items-center w-100" href="#">
-                <div class="dropdown-list-image mr-3">
-                  <img class="rounded-circle feed-image" src="assets/img/profile_image/{{data.image}}" alt="">
-                  <div class="status-indicator bg-success"></div>
-                </div>
-                <div class="w-100">
-                  <textarea placeholder="{{language.feedWriteYourPost}}" class="form-control border-0 p-0 shadow-none"
-                    rows="1" [(ngModel)]="postData.post" name="post" ng-trim="false"></textarea>
-                </div>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-              <div class="p-3 w-100">
-                <textarea placeholder="{{language.feedWriteYourPost}}" class="form-control border-0 p-0 shadow-none"
-                  rows="3"></textarea>
-              </div>
-            </div>
-            <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-              <div class="p-3 w-100">
-                <textarea placeholder="{{language.feedWriteAnArticle}}" class="form-control border-0 p-0 shadow-none"
-                  rows="3"></textarea>
-              </div>
-            </div>
-          </div>
-          <div class="border-top p-3 d-flex align-items-center">
-            <div class="mr-auto hidden-xs">
-              <!-- <a href="#" class="text-link small"><i class="feather-map-pin"></i>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="p-3 d-flex align-items-center w-100" href="#">
+                                <div class="dropdown-list-image mr-3">
+                                    <img class="rounded-circle feed-image" src="assets/img/profile_image/{{data.image}}" alt="">
+                                    <div class="status-indicator bg-success"></div>
+                                </div>
+                                <div class="w-100">
+                                    <textarea placeholder="{{language.feedWriteYourPost}}" class="form-control border-0 p-0 shadow-none" rows="1" [(ngModel)]="postData.post" name="post" ng-trim="false"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                            <div class="p-3 w-100">
+                                <textarea placeholder="{{language.feedWriteYourPost}}" class="form-control border-0 p-0 shadow-none" rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                            <div class="p-3 w-100">
+                                <textarea placeholder="{{language.feedWriteAnArticle}}" class="form-control border-0 p-0 shadow-none" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-top p-3 d-flex align-items-center">
+                        <div class="mr-auto hidden-xs">
+                            <!-- <a href="#" class="text-link small"><i class="feather-map-pin"></i>
               {{language.feedAddLocation}}</a> -->
-            </div>
-            <div class="flex-shrink-1 row-xs">
-              <button type="button" class="btn btn-light btn-sm col-xs-6" (click)="previewPost = true"
-                [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
-              <button type="button" class="btn btn-primary btn-sm col-xs-6"
-                (click)="createPost()">{{language.feedPost}}</button>
-            </div>
-          </div>
-        </div>
+                        </div>
+                        <div class="flex-shrink-1 row-xs">
+                            <button type="button" class="btn btn-light btn-sm col-xs-6" (click)="previewPost = true" [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
+                            <button type="button" class="btn btn-primary btn-sm col-xs-6" (click)="createPost()">{{language.feedPost}}</button>
+                        </div>
+                    </div>
+                </div>
 
-        <div *ngIf="loading">
-          <app-content-placeholder></app-content-placeholder>
-        </div>
+                <div *ngIf="loading">
+                    <app-content-placeholder></app-content-placeholder>
+                </div>
 
-        <div *ngIf="allPosts !== undefined && allPosts.length === 0 && !loading"
-          class="no-post box shadow-sm border rounded bg-white mb-3 osahan-post">
-          <h3>{{language.feedNoHaveFeed}}</h3>
-          <h4>{{language.feedStartType}}</h4>
-          <span class="fa fa-rss" style="font-size: 28px;"></span>
-        </div>
+                <div *ngIf="allPosts !== undefined && allPosts.length === 0 && !loading" class="no-post box shadow-sm border rounded bg-white mb-3 osahan-post">
+                    <h3>{{language.feedNoHaveFeed}}</h3>
+                    <h4>{{language.feedStartType}}</h4>
+                    <span class="fa fa-rss" style="font-size: 28px;"></span>
+                </div>
 
-        <div *ngFor="let item of allPosts; let i = index"
-          class="box shadow-sm border rounded bg-white mb-3 osahan-post">
-          <div class="p-3 d-flex align-items-center border-bottom osahan-post-header"
-            style="padding-top: 5px !important">
-            <div class="dropdown-list-image mr-3">
-              <img class="rounded-circle" src="assets/img/profile_image/{{item.image}}" alt="">
-              <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold">
-              <div class="text-truncate"><a (click)="openProfileWithoutSHA1(item.user_id)">{{item.name}}</a></div>
-              <div class="small text-gray-500">{{item.proffesion}}</div>
-            </div>
-            <div class="ml-auto small">
-              <i class="fa fa-ellipsis-h removePost" aria-hidden="true" (click)="showHidePostOption(item._id)"
-                *ngIf="id === item.user_id"></i>
-              <div class="post-options" [ngClass]="selectedProcessOption === item._id ? 'show' : 'hide'">
-                <ul>
-                  <li (click)="deletePostQuestion(item._id, i)">{{language.feedRemove}}</li>
-                </ul>
-              </div>
-              <p class="ml-auto small">{{item.date | date: 'dd/MM/yyyy - HH:mm'}}</p>
-            </div>
-          </div>
-          <div class="p-3 border-bottom osahan-post-body">
-            <!-- <pre class="mb-0"><code>{{item.post}} <a href="http://google.rs">http://google.rs</a></code></pre> -->
-            <div [innerHTML]="'<pre>' + item.post + '</pre>'"></div>
-          </div>
-          <div class="p-3 border-bottom osahan-post-footer">
-            <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes"
+                <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
+                    <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
+                        <div class="dropdown-list-image mr-3">
+                            <img class="rounded-circle" src="assets/img/profile_image/{{item.image}}" alt="">
+                            <div class="status-indicator bg-success"></div>
+                        </div>
+                        <div class="font-weight-bold">
+                            <div class="text-truncate"><a (click)="openProfileWithoutSHA1(item.user_id)">{{item.name}}</a></div>
+                            <div class="small text-gray-500">{{item.proffesion}}</div>
+                        </div>
+                        <div class="ml-auto small">
+                            <i class="fa fa-ellipsis-h removePost" aria-hidden="true" (click)="showHidePostOption(item._id)" *ngIf="id === item.user_id"></i>
+                            <div class="post-options" [ngClass]="selectedProcessOption === item._id ? 'show' : 'hide'">
+                                <ul>
+                                    <li (click)="deletePostQuestion(item._id, i)">{{language.feedRemove}}</li>
+                                </ul>
+                            </div>
+                            <p class="ml-auto small">{{item.date | date: 'dd/MM/yyyy - HH:mm'}}</p>
+                        </div>
+                    </div>
+                    <div class="p-3 border-bottom osahan-post-body">
+                        <!-- <pre class="mb-0"><code>{{item.post}} <a href="http://google.rs">http://google.rs</a></code></pre> -->
+                        <div [innerHTML]="'<pre>' + item.post + '</pre>'"></div>
+                    </div>
+                    <div class="p-3 border-bottom osahan-post-footer">
+                        <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes"
                 (click)="getLikesForPost(item._id)">{{item.likes.length}}</span></a>
-            <a class="mr-3 text-secondary"><i class="feather-message-square"></i> {{item.recomment.length}}</a>
-          </div>
-          <div class="p-3" class="likeCommentButtons">
-            <button (click)="likePost(item._id, i)" [ngClass]="checkLikedPost(item.likes) ? 'liked' : 'noLike'">
+                        <a class="mr-3 text-secondary"><i class="feather-message-square"></i> {{item.recomment.length}}</a>
+                    </div>
+                    <div class="p-3" class="likeCommentButtons">
+                        <button (click)="likePost(item._id, i)" [ngClass]="checkLikedPost(item.likes) ? 'liked' : 'noLike'">
               <i class="fa fa-thumbs-up"></i> {{language.feedLike}}
             </button>
-            <button>
+                        <button>
               <i class="fa fa-comments"></i> {{language.feedComment}}
             </button>
-          </div>
-          <div *ngIf="item.recomment.length > 0">
-            <a *ngIf="item.recomment.length > 3" (click)="showAllComments(item._id)" class="p-2 d-flex"
-              style="color: #007BFF">{{language.feedShowAll}}</a>
-            <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment"
-              *ngFor="let comm of item.recomment; let j = index"
-              [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
-              <div class="dropdown-list-image mr-3">
-                <img class="rounded-circle" src="/assets/img/profile_image/{{comm.image}}" alt="">
-                <div class="status-indicator bg-success"></div>
-              </div>
-              <div class="font-weight-bold" style="width: 100%;">
-                <div class="comment-container">
-                  <div class="text-truncate"> <a (click)="openProfileWithoutSHA1(comm.user_id)"> {{comm.name}}</a> <span
-                      class="float-right small">{{comm.date | date: 'dd/MM/yyyy - HH:mm'}}</span></div>
-                  <div class="small" style="font-size: 13px !important;">{{comm.comment}}</div>
-                </div>
-                <!-- <div class="recomment-options">
+                    </div>
+                    <div *ngIf="item.recomment.length > 0">
+                        <a *ngIf="item.recomment.length > 3" (click)="showAllComments(item._id)" class="p-2 d-flex" style="color: #007BFF">{{language.feedShowAll}}</a>
+                        <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment" *ngFor="let comm of item.recomment; let j = index" [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
+                            <div class="dropdown-list-image mr-3">
+                                <img class="rounded-circle" src="/assets/img/profile_image/{{comm.image}}" alt="">
+                                <div class="status-indicator bg-success"></div>
+                            </div>
+                            <div class="font-weight-bold" style="width: 100%;">
+                                <div class="comment-container">
+                                    <div class="text-truncate"> <a (click)="openProfileWithoutSHA1(comm.user_id)"> {{comm.name}}</a> <span class="float-right small">{{comm.date | date: 'dd/MM/yyyy - HH:mm'}}</span></div>
+                                    <div class="small" style="font-size: 13px !important;">{{comm.comment}}</div>
+                                </div>
+                                <!-- <div class="recomment-options">
                 <a (click)="likeItRecomment()">Like it</a>
                 <a (click)="commentOnRecomment()">Comment</a>
               </div>
@@ -389,26 +367,25 @@
                   </div>
                 </div>
               </div> -->
-              </div>
-            </div>
-          </div>
-          <div class="p-3 border-bottom osahan-post-footer comment-input-container">
-            <div class="profile-image-comment">
-              <img src="assets/img/profile_image/{{data.image}}">
-            </div>
-            <div class="comment-input">
-              <input class="form-control" (keyup.enter)="createComment(item._id, i)" [(ngModel)]="item.newComment"
-                name="comment-{{item._id}}" [id]="item.id" placeholder="{{language.feedEnterYourComment}}" type="text">
-            </div>
-          </div>
-          <!-- <div class="p-3">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-3 border-bottom osahan-post-footer comment-input-container">
+                        <div class="profile-image-comment">
+                            <img src="assets/img/profile_image/{{data.image}}">
+                        </div>
+                        <div class="comment-input">
+                            <input class="form-control" (keyup.enter)="createComment(item._id, i)" [(ngModel)]="item.newComment" name="comment-{{item._id}}" [id]="item.id" placeholder="{{language.feedEnterYourComment}}" type="text">
+                        </div>
+                    </div>
+                    <!-- <div class="p-3">
         <button type="button" class="btn btn-outline-primary btn-sm mr-1">Awesome!!</button>
         <button type="button" class="btn btn-light btn-sm mr-1">😍</button>
         <button type="button" class="btn btn-outline-secondary btn-sm mr-1">Whats it about?</button>
         <button type="button" class="btn btn-outline-secondary btn-sm mr-1">Oooo Great Wow</button>
       </div> -->
-        </div>
-        <!-- <div class="mb-3 shadow-sm rounded box bg-white osahan-slider-main">
+                </div>
+                <!-- <div class="mb-3 shadow-sm rounded box bg-white osahan-slider-main">
       <div class="osahan-slider">
         <div class="osahan-slider-item">
           <a href="job-profile.html">
@@ -504,7 +481,7 @@
         </div>
       </div>
     </div> -->
-        <!-- <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
+                <!-- <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
       <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
         <div class="dropdown-list-image mr-3">
           <img class="rounded-circle" src="../../../assets/img/p6.png" alt="">
@@ -542,103 +519,88 @@
         <textarea placeholder="Add Comment..." class="form-control border-0 p-0 shadow-none" rows="1"></textarea>
       </div>
     </div> -->
-      </main>
+            </main>
 
+        </div>
     </div>
-  </div>
 </div>
 
-<kendo-window [title]="language.feedPostLikes" *ngIf="postLikes" [width]="windowWidth ? windowWidth : 410"
-  [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">
-  <ul class="list-user-profile">
-    <li *ngFor="let item of allLikesForPost">
-      <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfileWithoutSHA1(item.user_id)">
+<kendo-window [title]="language.feedPostLikes" *ngIf="postLikes" [width]="windowWidth ? windowWidth : 410" [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">
+    <ul class="list-user-profile">
+        <li *ngFor="let item of allLikesForPost">
+            <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfileWithoutSHA1(item.user_id)">
         {{item.name}} </span>
-    </li>
-  </ul>
+        </li>
+    </ul>
 </kendo-window>
 
-<kendo-window [title]="language.feedInviteTitle" *ngIf="inviteWindows" [height]="windowHeight ? windowHeight : 400"
-  [width]="windowWidth ? windowWidth : 500" (close)="inviteWindows = false">
+<kendo-window [title]="language.feedInviteTitle" *ngIf="inviteWindows" [height]="windowHeight ? windowHeight : 400" [width]="windowWidth ? windowWidth : 500" (close)="inviteWindows = false">
 
-  <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
+    <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
 
-  <form (ngSubmit)="sendInviteFriend(invite)">
+    <form (ngSubmit)="sendInviteFriend(invite)">
 
-    <div class="form-group row">
-      <div class="col-sm-6 col-xs-12">
-        <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname"
-          placeholder="{{language.feedEnterFirstname}}" required="">
-      </div>
-      <div class="col-sm-6 col-xs-12">
-        <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname"
-          placeholder="{{language.feedEnterLastname}}" required="">
-      </div>
-    </div>
+        <div class="form-group row">
+            <div class="col-sm-6 col-xs-12">
+                <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname" placeholder="{{language.feedEnterFirstname}}" required="">
+            </div>
+            <div class="col-sm-6 col-xs-12">
+                <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname" placeholder="{{language.feedEnterLastname}}" required="">
+            </div>
+        </div>
 
-    <div class="form-group">
-      <input type="email" [(ngModel)]="invite.email" class="form-control" name="email"
-        placeholder="{{language.feedEnterMail}}" required="">
-    </div>
+        <div class="form-group">
+            <input type="email" [(ngModel)]="invite.email" class="form-control" name="email" placeholder="{{language.feedEnterMail}}" required="">
+        </div>
 
-    <textarea class="form-control" [(ngModel)]="invite.message" rows="4" name="text"
-      placeholder="{{language.feedEnterMessage}}"></textarea>
+        <textarea class="form-control" [(ngModel)]="invite.message" rows="4" name="text" placeholder="{{language.feedEnterMessage}}"></textarea>
 
-    <div class="p-3" style="text-align: center;">
-      <button type="submit" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+        <div class="p-3" style="text-align: center;">
+            <button type="submit" class="btn btn-outline-primary btn-sm pl-4 pr-4">
         {{language.feedSendInviteToMail}} </button>
-    </div>
-  </form>
+        </div>
+    </form>
 </kendo-window>
 
-<kendo-window [title]="language.feedPreviewPost" *ngIf="previewPost" [height]="windowHeight ? windowHeight : 350"
-  [width]="windowWidth ? windowWidth : 500" (close)="previewPost = false">
-  <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
-    <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
-      <div class="dropdown-list-image mr-3">
-        <img class="rounded-circle" src="assets/img/profile_image/{{data.image}}" alt="">
-        <div class="status-indicator bg-success"></div>
-      </div>
-      <div class="font-weight-bold">
-        <div class="text-truncate"><a>{{data.fullname}}</a></div>
-        <div class="small text-gray-500">{{data.profession}}</div>
-      </div>
+<kendo-window [title]="language.feedPreviewPost" *ngIf="previewPost" [height]="windowHeight ? windowHeight : 350" [width]="windowWidth ? windowWidth : 500" (close)="previewPost = false">
+    <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
+        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
+            <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="assets/img/profile_image/{{data.image}}" alt="">
+                <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold">
+                <div class="text-truncate"><a>{{data.fullname}}</a></div>
+                <div class="small text-gray-500">{{data.profession}}</div>
+            </div>
+        </div>
+        <div class="p-3 border-bottom osahan-post-body">
+            <div [innerHTML]="'<pre>' + postData.post + '</pre>'"></div>
+        </div>
+        <div class="p-3 border-bottom osahan-post-footer">
+            <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes">0</span></a>
+            <a class="mr-3 text-secondary"><i class="feather-message-square"></i> 0</a>
+        </div>
     </div>
-    <div class="p-3 border-bottom osahan-post-body">
-      <div [innerHTML]="'<pre>' + postData.post + '</pre>'"></div>
+    <div style="text-align: end;">
+        <button type="button" class="btn btn-primary btn-sm col-xs-6" (click)="createPost();previewPost = false">{{language.feedPost}}</button>
     </div>
-    <div class="p-3 border-bottom osahan-post-footer">
-      <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes">0</span></a>
-      <a class="mr-3 text-secondary"><i class="feather-message-square"></i> 0</a>
-    </div>
-  </div>
-  <div style="text-align: end;">
-    <button type="button" class="btn btn-primary btn-sm col-xs-6"
-      (click)="createPost();previewPost = false">{{language.feedPost}}</button>
-  </div>
 </kendo-window>
 
 <div *ngIf="uploader !== undefined" style="text-align: center;">
-  <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false"
-    [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 400">
+    <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false" [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 400">
 
-    <div class="loader4 imageLoader" *ngIf="showCropper"></div>
-    <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png"
-      (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()"
-      (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="380" [cropperMinHeight]="380" [onlyScaleDown]="false">
-    </image-cropper>
-    <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
+        <div class="loader4 imageLoader" *ngIf="showCropper"></div>
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="380"
+            [cropperMinHeight]="380" [onlyScaleDown]="false">
+        </image-cropper>
+        <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
       {{language.profileUpdateProfileImage}}
     </button>
-  </kendo-window>
+    </kendo-window>
 </div>
 
-<app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id"
-  [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone"
-  (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
+<app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id" [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone" (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
 </app-recommendation-button>
-
-<app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="selectedMember.id" [owner]="false"
-  [video]="selectedMember.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 
 <div class='back-to-top hidden-xs' id='back-to-top' title='Back to top'><i class='fa fa-chevron-up'></i></div>
