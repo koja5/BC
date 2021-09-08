@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MaterialDesignFrameworkModule } from 'angular6-json-schema-form';
 import { TranslationComponent } from "./translation/translation.component";
 import { MembersComponent } from "./members/members.component";
-
-import { MatCardModule, MatToolbarModule } from "@angular/material";
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { EditTranslationComponent } from "./translation/edit/edit-translation.component";
 import { CustomGridComponent } from "./custom-grid/custom-grid.component";
 import {
