@@ -6,7 +6,7 @@ describe('DashboardGuardService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: DashboardGuardService = TestBed.get(DashboardGuardService);
+    const service: DashboardGuardService = TestBed.inject(DashboardGuardService);
     expect(service).toBeTruthy();
   });
 });
