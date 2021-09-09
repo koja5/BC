@@ -89,9 +89,5 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     MatVideoModule,
     WebcamModule
   ],
-  entryComponents: [
-    LifeEventDetailsComponent,
-    RecordVideoComponent
-  ],
 })
 export class HomeModule { }

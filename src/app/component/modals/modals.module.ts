@@ -90,28 +90,6 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         CreateEventTypeDialogComponent,
         CreateNewCustomerDialogComponent
     ],
-    entryComponents: [
-        CreateEventComponent,
-        ChangePasswordDialogComponent,
-        ExperienceDialogComponent,
-        EducationDialogComponent,
-        ImageCropperDialogComponent,
-        FileUploadDialogComponent,
-        TakeCameraDialogComponent,
-        LifeEventInviteFriendDialogComponent,
-        ReminderFriendsDialogComponent,
-        InviteVirtualParticipantDialogComponent,
-        LifeEventMemberDetailsComponent,
-        LifeEventDetailsDialogComponent,
-        VirtualEventInviteFriendDialogComponent,
-        PremiumBuyDialogComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-        TakeCameraDialogComponent,
-        CreateEventTypeDialogComponent,
-        CreateNewCustomerDialogComponent
-    ]
+
 })
 export class ModalsModule { }

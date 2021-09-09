@@ -17,7 +17,7 @@ import { DynamicGridComponent } from "./dynamic-grid/dynamic-grid.component";
 import { DynamicFormsComponent } from "./dynamic-forms/dynamic-forms.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DropDownListModule } from '@syncfusion/ej2-angular-dropdowns';
-import {TextBoxModule} from '@syncfusion/ej2-angular-inputs';
+import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { TextboxComponent } from './dynamic-forms/dynamic-fields/textbox/textbox.component';
 import { TextareaComponent } from './dynamic-forms/dynamic-fields/textarea/textarea.component';
 import { DatepickerComponent } from './dynamic-forms/dynamic-fields/datepicker/datepicker.component';
@@ -29,7 +29,7 @@ import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
 
 @NgModule({
   declarations: [
-    DynamicGridComponent, 
+    DynamicGridComponent,
     DynamicFormsComponent,
     DynamicDialogComponent
   ],
@@ -49,13 +49,6 @@ import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
     DynamicFormsModule
   ],
   providers: [EditService, ToolbarService, SortService, FilterService, PageService, GroupService, ResizeService],
-  entryComponents: [
-    TextboxComponent, 
-    TextareaComponent,
-    DatepickerComponent, 
-    ButtonComponent,
-    DropdownComponent,
-    DynamicDialogComponent
-    ]
+
 })
-export class DynamicElementsModule {}
+export class DynamicElementsModule { }
