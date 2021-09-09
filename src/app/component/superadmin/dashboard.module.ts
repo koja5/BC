@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
 import { DashboardRouting } from "./dashboard-routing.module";
 import { CommonModule } from '@angular/common';
-import { MaterialDesignFrameworkModule } from 'angular6-json-schema-form';
 import { TranslationComponent } from "./translation/translation.component";
 import { MembersComponent } from "./members/members.component";
 import { MatCardModule } from '@angular/material/card';
@@ -62,7 +61,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     DialogsModule,
     DateInputsModule,
     ButtonsModule,
-    MaterialDesignFrameworkModule,
     PerfectScrollbarModule,
     LayoutModule,
     SplitterModule,

@@ -26,7 +26,6 @@ import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-
 import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dialog.component';
 import { RecordCameraDialogComponent } from './record-camera-dialog/record-camera-dialog.component';
 import { PromoVideoComponent } from './promo-video/promo-video.component';
-import { MatVideoModule } from 'mat-video';
 import { CreateEventTypeDialogComponent } from './create-event-type-dialog/create-event-type-dialog.component';
 import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/create-new-customer-dialog.component';
 
@@ -64,7 +63,6 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         HomeModule,
         InputsModule,
         DropDownsModule,
-        MatVideoModule,
         ButtonsModule
     ],
     exports: [
@@ -90,6 +88,28 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         CreateEventTypeDialogComponent,
         CreateNewCustomerDialogComponent
     ],
-
+    entryComponents: [
+        CreateEventComponent,
+        ChangePasswordDialogComponent,
+        ExperienceDialogComponent,
+        EducationDialogComponent,
+        ImageCropperDialogComponent,
+        FileUploadDialogComponent,
+        TakeCameraDialogComponent,
+        LifeEventInviteFriendDialogComponent,
+        ReminderFriendsDialogComponent,
+        InviteVirtualParticipantDialogComponent,
+        LifeEventMemberDetailsComponent,
+        LifeEventDetailsDialogComponent,
+        VirtualEventInviteFriendDialogComponent,
+        PremiumBuyDialogComponent,
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+        TakeCameraDialogComponent,
+        CreateEventTypeDialogComponent,
+        CreateNewCustomerDialogComponent
+    ]
 })
 export class ModalsModule { }

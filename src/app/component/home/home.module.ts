@@ -23,7 +23,6 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ConnectionFilterPipe } from './connection/connection.pipe';
 import { RecommendationButtonComponent } from './recommendation-button/recommendation-button.component';
 import { PromoVideoComponent } from '../modals/promo-video/promo-video.component';
-import { MatVideoModule } from 'mat-video';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { EventsComponent } from './events/events.component';
 import { LifeEventComponent } from './events/life-event/life-event.component';
@@ -86,7 +85,6 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     DropDownsModule,
     ButtonsModule,
     FileUploadModule,
-    MatVideoModule,
     WebcamModule
   ],
 })
