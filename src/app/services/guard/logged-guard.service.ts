@@ -1,7 +1,6 @@
 import { CanActivate, Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import 'rxjs/add/operator/map';
 import { CookieService } from 'ng2-cookies';
 
 @Injectable()
@@ -16,8 +15,5 @@ export class LoggedGuardService implements CanActivate {
             this.router.navigate(['/home']);
             return false;
         }
-
-
     }
-
 }

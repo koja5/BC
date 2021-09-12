@@ -31,7 +31,7 @@ export class CreateEventTypeDialogComponent implements OnInit {
       operation: operation,
       data: data,
     };
-    this.sendEventEmitter.next(actionData);
+    this.sendEventEmitter.emit(actionData);
   }
 
 }

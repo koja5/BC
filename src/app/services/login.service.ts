@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { catchError, map } from 'rxjs/operators';
 import { CookieService } from "ng2-cookies";
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import languageCodes from 'src/app/data/languageCodes.json';
 
