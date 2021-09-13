@@ -7,7 +7,6 @@ import { FeedComponent } from './feed/feed.component';
 import { MessageComponent } from './message/message.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { FormsModule } from '@angular/forms';
-import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { ContentPlaceholderComponent } from './content-placeholder/content-placeholder.component';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { MyProfileComponent } from './profile/my-profile/my-profile.component';
@@ -78,7 +77,6 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     CommonModule,
     HomeRouting,
     FormsModule,
-    DialogsModule,
     InputsModule,
     DateInputsModule,
     ImageCropperModule,

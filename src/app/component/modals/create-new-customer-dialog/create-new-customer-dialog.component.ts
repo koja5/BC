@@ -1,17 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { RowArgs } from '@progress/kendo-angular-grid';
+import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { State, GroupDescriptor } from '@progress/kendo-data-query';
-import { ToastrService } from 'ngx-toastr';
 import { AdditionalInfoModel } from 'src/app/models/additional-info-model';
 import { BankAccountModel } from 'src/app/models/bank-account-model';
 import { ChangePasswordModel } from 'src/app/models/change-password-model';
 import { LookingOfferModel } from 'src/app/models/looking-offer-model';
-import { CustomGridService } from 'src/app/services/custom-grid.service';
 import { EditProfileService } from 'src/app/services/edit-profile.service';
 import { HelpService } from 'src/app/services/help.service';
-import { ModalConfigurationService } from 'src/app/services/modal-configuration.service';
 import * as sha1 from "sha1";
 
 @Component({

@@ -17,8 +17,6 @@ import { InputsModule } from "@progress/kendo-angular-inputs";
 import { DateInputsModule } from "@progress/kendo-angular-dateinputs";
 import { DropDownsModule } from "@progress/kendo-angular-dropdowns";
 import { IntlModule } from "@progress/kendo-angular-intl";
-import { DialogModule } from "@progress/kendo-angular-dialog";
-import { DialogsModule } from "@progress/kendo-angular-dialog";
 import { ButtonsModule } from "@progress/kendo-angular-buttons";
 import { CustomGridService } from "../../services/custom-grid.service";
 import { DashboardComponent } from "./dashboard.component";
@@ -55,10 +53,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     InputsModule,
     IntlModule,
     DropDownsModule,
-    DialogModule,
     ExcelModule,
     PDFModule,
-    DialogsModule,
     DateInputsModule,
     ButtonsModule,
     PerfectScrollbarModule,

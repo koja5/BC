@@ -9,7 +9,6 @@ import { ToastrModule } from "ngx-toastr";
 import { LoadingBarRouterModule } from "@ngx-loading-bar/router";
 import { DashboardModule } from "./component/superadmin/dashboard.module";
 import { SplitterModule, LayoutModule } from "@progress/kendo-angular-layout";
-import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // services
@@ -54,7 +53,6 @@ import { DemoComponent } from "./component/demo/demo.component";
     LoadingBarRouterModule,
     LayoutModule,
     SplitterModule,
-    DialogsModule,
     DynamicElementsModule,
     NgbModule,
     ModalsModule
