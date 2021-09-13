@@ -11,8 +11,8 @@
         </div>
 
         <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-        <!-- <img class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
-        <img class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''" src="/assets/img/profile_image/{{data.cover}}" alt="">
+        <!-- <img loading="lazy"  class="img-fluid" src="../../../../assets/img/no-photo-cover.png" alt=""> -->
+        <img loading="lazy" class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''" src="/assets/img/profile_image/{{data.cover}}" alt="">
     </div>
     <div class="bg-white shadow-sm border-bottom">
         <div class="container">
@@ -291,7 +291,7 @@
                         <div class="pt-5 pl-5 pr-5 pb-3 profile-img-container">
 
                             <div class="loader4 imageLoader" *ngIf="loadImage"></div>
-                            <img src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid rounded-circle" alt="Responsive image">
+                            <img loading="lazy" src="/assets/img/profile_image/{{data.image}}" [ngClass]="loadImage ? 'blur': ''" class="img-fluid rounded-circle" alt="Responsive image">
                             <div *ngIf="owner"><label class="change-icon" (click)="showPopupForChangeProfilePicture()">
                                     <i class="fa fa-upload  fa-3x" style="top: 50% !important;"></i>
                                 </label>
@@ -314,7 +314,7 @@
                         </div>
                     </div>
                     <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
-            <img src="../../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
+            <img loading="lazy"  src="../../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
             <div class="p-3 border-bottom">
               <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
               <p class="mb-0 text-muted">Looking for talent?</p>

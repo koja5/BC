@@ -5,7 +5,7 @@
     </button>
 </div>
 <div class="modal-body justify-content-center text-center">
-    <img *ngIf="imageUrl" src="{{imageUrl}}" [style]="imageStyle" />
+    <img loading="lazy" *ngIf="imageUrl" src="{{imageUrl}}" [style]="imageStyle" />
     <div *ngIf="text" class="h3">{{text}}</div>
     <ng-content select="[body]"></ng-content>
 </div>

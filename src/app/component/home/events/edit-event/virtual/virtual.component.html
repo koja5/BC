@@ -1,60 +1,53 @@
 <div class="loader4 loading" *ngIf="organizators === undefined"></div>
 
 <div class="container py-4" *ngIf="language&&organizators">
-  <div class="row">
-    <main class="col-md-8" style="margin: auto;">
-      <form class="js-validate" name="eventForm" class="eventForm" #eventForm="ngForm">
-        <div class="border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3 row">
-            <div class="col-md-8">
-              <h6 class="m-0">{{language.virtualEventEditTitle}}</h6>
-              <p class="mb-0 mt-0 small">{{language.virtualEventEditText}}
-              </p>
-            </div>
-            <div class="col-md-4" style="text-align: end;">
-              <button [disabled]="eventForm.form.invalid" name="save"
-                class="font-weight-bold btn btn-primary rounded save-event mr-2"
-                (click)="openDialog(false, false, 'saveChanges', 'cancelChanges')">
+    <div class="row">
+        <main class="col-md-8" style="margin: auto;">
+            <form class="js-validate" name="eventForm" class="eventForm" #eventForm="ngForm">
+                <div class="border rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3 row">
+                        <div class="col-md-8">
+                            <h6 class="m-0">{{language.virtualEventEditTitle}}</h6>
+                            <p class="mb-0 mt-0 small">{{language.virtualEventEditText}}
+                            </p>
+                        </div>
+                        <div class="col-md-4" style="text-align: end;">
+                            <button [disabled]="eventForm.form.invalid" name="save" class="font-weight-bold btn btn-primary rounded save-event mr-2" (click)="openDialog(false, false, 'saveChanges', 'cancelChanges')">
                 <span class="fa fa-floppy-o"></span> {{language.virtualEventEditSave}}
               </button>
-              <a class="font-weight-bold btn btn-danger rounded save-event mr-2"
-                (click)="openDialog(false, false, 'cancelChanges', false)">
+                            <a class="font-weight-bold btn btn-danger rounded save-event mr-2" (click)="openDialog(false, false, 'cancelChanges', false)">
                 {{language.virtualEventEditCancel}}
               </a>
-            </div>
-          </div>
-          <div class="box-body p-3">
-            <div class="row">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="phoneNumberLabel" class="form-label">
+                        </div>
+                    </div>
+                    <div class="box-body p-3">
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="phoneNumberLabel" class="form-label">
                     {{language.lifeEventDetailsNameOfEvent}}
                     <!--<span class="text-danger">*</span>-->
                   </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="nameOfEvent" [(ngModel)]="data.nameOfEvent">
-                  </div>
-                </div>
-              </div>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="nameOfEvent" [(ngModel)]="data.nameOfEvent">
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsOrganizer}}
                   </label>
-                  <div class="form-group">
-                    <kendo-combobox *ngIf="organizators"
-                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
-                      [data]="organizators" [valuePrimitive]="true" [textField]="'fullname'" [valueField]="'id'"
-                      (selectionChange)="selectOrganizator($event)" (filterChange)="searchOrganizator($event)"
-                      [filterable]="true" [loading]="organizatorLoading" [(ngModel)]="data.id_user"
-                      class="col-xs-12 noPadding" name="event">
-                    </kendo-combobox>
-                  </div>
-                </div>
-              </div>
+                                    <div class="form-group">
+                                        <kendo-combobox *ngIf="organizators" style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="organizators" [valuePrimitive]="true" [textField]="'fullname'" [valueField]="'id'" (selectionChange)="selectOrganizator($event)"
+                                            (filterChange)="searchOrganizator($event)" [filterable]="true" [loading]="organizatorLoading" [(ngModel)]="data.id_user" class="col-xs-12 noPadding" name="event">
+                                        </kendo-combobox>
+                                    </div>
+                                </div>
+                            </div>
 
-              <!-- <div class="col-sm-6 mb-2">
+                            <!-- <div class="col-sm-6 mb-2">
                 <div class="js-form-message">
                   <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsEvent}}
@@ -69,223 +62,215 @@
                   </div>
                 </div>
               </div> -->
-            </div>
-            <div class="row">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="phoneNumberLabel" class="form-label">
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="phoneNumberLabel" class="form-label">
                     {{language.virtualEventDetailsDate}}<span title="{{language.required}}">(*)</span>
                   </label>
-                  <div class="form-group">
-                    <kendo-datepicker name="date" [(ngModel)]="data.date" name="date" style="display: contents;" requred>
-                    </kendo-datepicker>
-                  </div>
-                </div>
-              </div>
+                                    <div class="form-group">
+                                        <kendo-datepicker name="date" [(ngModel)]="data.date" name="date" style="display: contents;" requred>
+                                        </kendo-datepicker>
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsTime}}<span title="{{language.required}}">(*)</span>
                   </label>
-                  <div class="form-group">
-                    <kendo-timepicker [(value)]="data.time" [(ngModel)]="data.time" name="time" style="width: 100%;" required></kendo-timepicker>
-                  </div>
-                </div>
-              </div>
-            </div>
+                                    <div class="form-group">
+                                        <kendo-timepicker [(value)]="data.time" [(ngModel)]="data.time" name="time" style="width: 100%;" required></kendo-timepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="row">
-              <div class="col-sm-12 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsAboutEvent}}
                   </label>
-                  <div class="form-group">
-                    <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.comment"></textarea>
-                  </div>
-                </div>
-              </div>
-            </div>
+                                    <div class="form-group">
+                                        <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.comment"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="row">
+                        <div class="row">
 
-              <div class="full-width mt-2">
-                <input type="checkbox" class="k-checkbox" name="isPrivate" [(ngModel)]="data.isPrivate"
-                  [checked]="data.isPrivate">
-                <label class="pl-2">{{language.virtualEventEditPrivateOrNot}}</label>
-              </div>
+                            <div class="full-width mt-2">
+                                <input type="checkbox" class="k-checkbox" name="isPrivate" [(ngModel)]="data.isPrivate" [checked]="data.isPrivate">
+                                <label class="pl-2">{{language.virtualEventEditPrivateOrNot}}</label>
+                            </div>
 
-            </div>
+                        </div>
 
-            <div class="row" *ngIf="!data.isPrivate">
-              <div class="col-sm-3 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                        <div class="row" *ngIf="!data.isPrivate">
+                            <div class="col-sm-3 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsMaximumNumberOfSpeakers}}
                   </label>
-                  <div class="form-group">
-                    <input type="number" class="form-control" name="speakers" [(ngModel)]="data.numberOfSpeakers">
-                  </div>
-                </div>
-              </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="speakers" [(ngModel)]="data.numberOfSpeakers">
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-3 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                            <div class="col-sm-3 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsMaximumNumberOfListeners}}
                   </label>
-                  <div class="form-group">
-                    <input type="number" class="form-control" name="listeners" [(ngModel)]="data.numberOfListeners">
-                  </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="listeners" [(ngModel)]="data.numberOfListeners">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 text-right">
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-            <div class="mb-3 text-right">
-            </div>
-          </div>
-        </div>
-        <div class="border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3">
-            <h6 class="m-0">{{language.virtualEventSpeakersTitle}}</h6>
-            <p class="mb-0 mt-0 small">{{language.virtualEventSpeakersText}}
-            </p>
-          </div>
-          <div class="box-body p-3">
-            <div class="row">
-              <div class="col-sm-12 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                <div class="border rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">{{language.virtualEventSpeakersTitle}}</h6>
+                        <p class="mb-0 mt-0 small">{{language.virtualEventSpeakersText}}
+                        </p>
+                    </div>
+                    <div class="box-body p-3">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsSpekers}}
                   </label>
-                  <div class="form-group">
-                    <kendo-multiselect [data]="allMyConnectionSpeakers" [filterable]="true"
-                      [itemDisabled]="itemDisabled" [(ngModel)]="data.speakers" name="speaker" [valueField]="'id'"
-                      [textField]="'fullname'" [autoClose]="false"
-                      [placeholder]="language.inviteFriendsForEventSearchFriends" (valueChange)="speakersChange($event)"
-                      (filterChange)="handleFilterSpeakers($event)" class="friend-list">
-                      <ng-template kendoMultiSelectItemTemplate let-dataItem>
-                        <input type="checkbox" class="k-checkbox" [checked]="isItemSelectedSpeakers(dataItem.id)">
-                        <label class="k-checkbox-label"> <img class="rounded-circle" style="width: 25px; height: 25px"
-                            src="./assets/img/profile_image/{{dataItem.image}}"> <span style="padding: 3px">
+                                    <div class="form-group">
+                                        <kendo-multiselect [data]="allMyConnectionSpeakers" [filterable]="true" [itemDisabled]="itemDisabled" [(ngModel)]="data.speakers" name="speaker" [valueField]="'id'" [textField]="'fullname'" [autoClose]="false" [placeholder]="language.inviteFriendsForEventSearchFriends"
+                                            (valueChange)="speakersChange($event)" (filterChange)="handleFilterSpeakers($event)" class="friend-list">
+                                            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                                                <input type="checkbox" class="k-checkbox" [checked]="isItemSelectedSpeakers(dataItem.id)">
+                                                <label class="k-checkbox-label"> <img loading="lazy" class="rounded-circle"
+                            style="width: 25px; height: 25px" src="./assets/img/profile_image/{{dataItem.image}}"> <span
+                            style="padding: 3px">
                             {{ dataItem.fullname }}
                           </span></label>
-                      </ng-template>
-                    </kendo-multiselect>
-                    <div class="full-width mt-3">
-                      <input type="checkbox" class="k-checkbox" (click)="selectAllForSpeakers()"
-                        [checked]="helpService.isSelectedAllFriends(data.speakers, currentLoadData)">
-                      <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+                                            </ng-template>
+                                        </kendo-multiselect>
+                                        <div class="full-width mt-3">
+                                            <input type="checkbox" class="k-checkbox" (click)="selectAllForSpeakers()" [checked]="helpService.isSelectedAllFriends(data.speakers, currentLoadData)">
+                                            <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3">
-            <h6 class="m-0">{{language.virtualEventListenersTitle}}</h6>
-            <p class="mb-0 mt-0 small">{{language.virtualEventListenersText}}
-            </p>
-          </div>
-          <div class="box-body p-3">
-            <div class="row">
-              <div class="col-sm-12 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                <div class="border rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">{{language.virtualEventListenersTitle}}</h6>
+                        <p class="mb-0 mt-0 small">{{language.virtualEventListenersText}}
+                        </p>
+                    </div>
+                    <div class="box-body p-3">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.virtualEventDetailsListeners}}
                   </label>
-                  <div class="form-group">
-                    <kendo-multiselect [data]="allMyConnectionListeners" [filterable]="true"
-                      [itemDisabled]="itemDisabled" [(ngModel)]="data.listeners" name="listener" [valueField]="'id'"
-                      [textField]="'fullname'" [autoClose]="false"
-                      [placeholder]="language.inviteFriendsForEventSearchFriends" (valueChange)="listenerChange($event)"
-                      (filterChange)="handleFilterListeners($event)" class="friend-list">
-                      <ng-template kendoMultiSelectItemTemplate let-dataItem>
-                        <input type="checkbox" class="k-checkbox" [checked]="isItemSelectedListeners(dataItem.id)">
-                        <label class="k-checkbox-label"> <img class="rounded-circle" style="width: 25px; height: 25px"
-                            src="./assets/img/profile_image/{{dataItem.image}}"> <span style="padding: 3px">
+                                    <div class="form-group">
+                                        <kendo-multiselect [data]="allMyConnectionListeners" [filterable]="true" [itemDisabled]="itemDisabled" [(ngModel)]="data.listeners" name="listener" [valueField]="'id'" [textField]="'fullname'" [autoClose]="false" [placeholder]="language.inviteFriendsForEventSearchFriends"
+                                            (valueChange)="listenerChange($event)" (filterChange)="handleFilterListeners($event)" class="friend-list">
+                                            <ng-template kendoMultiSelectItemTemplate let-dataItem>
+                                                <input type="checkbox" class="k-checkbox" [checked]="isItemSelectedListeners(dataItem.id)">
+                                                <label class="k-checkbox-label"> <img loading="lazy" class="rounded-circle"
+                            style="width: 25px; height: 25px" src="./assets/img/profile_image/{{dataItem.image}}"> <span
+                            style="padding: 3px">
                             {{ dataItem.fullname }}
                           </span></label>
-                      </ng-template>
-                    </kendo-multiselect>
-                    <div class="full-width mt-3">
-                      <input type="checkbox" class="k-checkbox" (click)="selectAllForListeners()"
-                        [checked]="helpService.isSelectedAllFriends(data.listeners, currentLoadData)">
-                      <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+                                            </ng-template>
+                                        </kendo-multiselect>
+                                        <div class="full-width mt-3">
+                                            <input type="checkbox" class="k-checkbox" (click)="selectAllForListeners()" [checked]="helpService.isSelectedAllFriends(data.listeners, currentLoadData)">
+                                            <label class="pl-2">{{language.inviteFriendsForEventSelectAllFriends}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3">
-            <h6 class="m-0">{{language.virtualEventDetailsLifeTitle}}</h6>
-            <p class="mb-0 mt-0 small">{{language.virtualEventDetailsLifeText}}
-            </p>
-          </div>
-          <div class="box-body p-3">
-            <div class="row">
-              <div class="col-sm-12 mb-2">
-                <div class="js-form-message">
-                  <input type="checkbox" class="k-checkbox" [(ngModel)]="data.life">
-                  <label class="k-checkbox-label"> {{language.virtualEventDetailsLifeQuestionCheckBox}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="data.life">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                <div class="border rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">{{language.virtualEventDetailsLifeTitle}}</h6>
+                        <p class="mb-0 mt-0 small">{{language.virtualEventDetailsLifeText}}
+                        </p>
+                    </div>
+                    <div class="box-body p-3">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <div class="js-form-message">
+                                    <input type="checkbox" class="k-checkbox" [(ngModel)]="data.life">
+                                    <label class="k-checkbox-label"> {{language.virtualEventDetailsLifeQuestionCheckBox}} </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="data.life">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.lifeEventDetailsMaximumNumber}}
                   </label>
-                  <div class="form-group">
-                    <input type="number" class="form-control" name="attendees" [(ngModel)]="data.attendees">
-                  </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="attendees" [(ngModel)]="data.attendees">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="border rounded bg-white mb-3">
-          <div class="box-title border-bottom p-3">
-            <h6 class="m-0">{{language.eventChargeableTitle}}</h6>
-            <p class="mb-0 mt-0 small">{{language.eventChargeableText}}
-            </p>
-          </div>
-          <div class="box-body p-3">
-            <div class="row">
-              <div class="col-sm-12 mb-2">
-                <div class="js-form-message">
-                  <input type="checkbox" class="k-checkbox" [(ngModel)]="data.chargeable">
-                  <label class="k-checkbox-label"> {{language.eventChargeableQuestion}} </label>
-                </div>
-              </div>
-            </div>
-            <div class="row" *ngIf="data.chargeable">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
+                <div class="border rounded bg-white mb-3">
+                    <div class="box-title border-bottom p-3">
+                        <h6 class="m-0">{{language.eventChargeableTitle}}</h6>
+                        <p class="mb-0 mt-0 small">{{language.eventChargeableText}}
+                        </p>
+                    </div>
+                    <div class="box-body p-3">
+                        <div class="row">
+                            <div class="col-sm-12 mb-2">
+                                <div class="js-form-message">
+                                    <input type="checkbox" class="k-checkbox" [(ngModel)]="data.chargeable">
+                                    <label class="k-checkbox-label"> {{language.eventChargeableQuestion}} </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" *ngIf="data.chargeable">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
                     {{language.eventChargeablePrice}}
                   </label>
-                  <div class="form-group">
-                    <input type="number" class="form-control" name="chargeablePrice" [(ngModel)]="data.price">
-                  </div>
+                                    <div class="form-group">
+                                        <input type="number" class="form-control" name="chargeablePrice" [(ngModel)]="data.price">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- POPUP COMPONENTS -->
+                <!-- POPUP COMPONENTS -->
 
-        <app-popup *ngIf="popupInd" [title]="popupTitle" [ind]="popupInd" [functionNameYes]="functionNameYes"
-          [functionNameNo]="functionNameNo" (answerEmitter)="OpenDialogEvent($event)"></app-popup>
+                <app-popup *ngIf="popupInd" [title]="popupTitle" [ind]="popupInd" [functionNameYes]="functionNameYes" [functionNameNo]="functionNameNo" (answerEmitter)="OpenDialogEvent($event)"></app-popup>
 
-        <!-- END POPUP COMPONENTS -->
-      </form>
-    </main>
-  </div>
+                <!-- END POPUP COMPONENTS -->
+            </form>
+        </main>
+    </div>
 </div>

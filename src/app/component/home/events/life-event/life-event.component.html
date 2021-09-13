@@ -1,33 +1,32 @@
 <div class="event-container">
-  <p class="type-of-event-life">{{language.lifeEventLife}}</p>
-  <img src="../../../../assets/img/events_cover.jpg" class="no-photo-event">
-  <div class="date-ribbon">
-    <h2>{{months}}</h2>
-    <h1>{{item.date | date: 'dd' }}</h1>
-  </div>
-  <div class="event-content">
-    <p class="time">{{item.date | date: 'dd/MM/yyyy' }}, {{item.time | date: 'HH:mm'}}</p>
-    <p class="title">{{item.nameOfEvent}}</p>
-    <p class="location">{{item.organizer}}</p>
-    <div class="row">
-      <button class="btn btn-show-info btn-sm col-9 mr-2 ml-2" type="button"
-        (click)="openEvent(item._id)"><i class="fa fa-info-circle"></i>
+    <p class="type-of-event-life">{{language.lifeEventLife}}</p>
+    <img loading="lazy" src="../../../../assets/img/events_cover.jpg" class="no-photo-event">
+    <div class="date-ribbon">
+        <h2>{{months}}</h2>
+        <h1>{{item.date | date: 'dd' }}</h1>
+    </div>
+    <div class="event-content">
+        <p class="time">{{item.date | date: 'dd/MM/yyyy' }}, {{item.time | date: 'HH:mm'}}</p>
+        <p class="title">{{item.nameOfEvent}}</p>
+        <p class="location">{{item.organizer}}</p>
+        <div class="row">
+            <button class="btn btn-show-info btn-sm col-9 mr-2 ml-2" type="button" (click)="openEvent(item._id)"><i
+          class="fa fa-info-circle"></i>
         {{language.lifeEventShowInfo}}
       </button>
-      <button class="btn btn-show-info btn-lg btn-block col-2" type="button" (click)="shareEvent(item._id)"><i
+            <button class="btn btn-show-info btn-lg btn-block col-2" type="button" (click)="shareEvent(item._id)"><i
           class="fa fa-share"></i>
       </button>
-      <div class="eventShareOptions" [ngClass]="eventShareShowHide === item._id ? 'show' : 'hide'">
-        <ul class="connectionOptions">
-          <!-- <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
+            <div class="eventShareOptions" [ngClass]="eventShareShowHide === item._id ? 'show' : 'hide'">
+                <ul class="connectionOptions">
+                    <!-- <li (click)="recommended(item.id, item.fullname, item.email, item.phoneNumber)"><i
               class="fa fa-paper-plane" title="This function will be available soon!"></i>
             {{language.lifeEventInviteFriend}}</li> -->
-          <li (click)="copyLinkToClipboard(item._id)"><i class="fa fa-clone"></i>
-            {{language.lifeEventCopyLink}}</li>
-        </ul>
-      </div>
+                    <li (click)="copyLinkToClipboard(item._id)"><i class="fa fa-clone"></i> {{language.lifeEventCopyLink}}
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <span class="fa fa-check-circle signed-icon" *ngIf="item.eventStatus === 1" title="{{language.lifeEventDetailsRegisteredButton}}"></span>
     </div>
-    <span class="fa fa-check-circle signed-icon" *ngIf="item.eventStatus === 1"
-      title="{{language.lifeEventDetailsRegisteredButton}}"></span>
-  </div>
 </div>

@@ -6,7 +6,7 @@
         <aside class="col-md-4">
             <div class="mb-3 border rounded bg-white profile-box text-center w-10">
                 <div class="p-4 d-flex align-items-center">
-                    <img src="../../../../../assets/img/profile_image/{{data.image}}" class="img-fluid rounded-circle" alt="Responsive image" style="width: 175px; height: 175px; margin: auto;">
+                    <img loading="lazy" src="../../../../../assets/img/profile_image/{{data.image}}" class="img-fluid rounded-circle" alt="Responsive image" style="width: 175px; height: 175px; margin: auto;">
                     <!-- <div class="upload-image">
             <input type="file" (change)="fileChangeEvent($event)" />
           </div> -->
@@ -611,7 +611,7 @@
                     [roundCropper]="true">
                 </image-cropper>
 
-                <img [src]="croppedImage" />
+                <img loading="lazy" [src]="croppedImage" />
             </div>
         </main>
     </div>

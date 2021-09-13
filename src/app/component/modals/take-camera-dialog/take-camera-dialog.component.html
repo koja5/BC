@@ -9,7 +9,7 @@
         </div>
 
         <div class="snapshot" *ngIf="webcamImage">
-            <img [src]="webcamImage.imageAsDataUrl" [height]="height - 140" [width]="width - 100" />
+            <img loading="lazy" [src]="webcamImage.imageAsDataUrl" [height]="height - 140" [width]="width - 100" />
         </div>
     </div>
 

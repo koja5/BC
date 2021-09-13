@@ -4,7 +4,7 @@
     <div class="profile-cover text-center" style="position: relative;">
         <button class="btn btn-danger back-to-event" routerLink="/home/main/event/all"><span
                 class="fa fa-arrow-left"></span> {{language.lifeEventDetailsBackToEvent}}</button>
-        <img class="img-fluid event-cover" src="./assets/img/events_cover.jpg" alt="">
+        <img loading="lazy" class="img-fluid event-cover" src="./assets/img/events_cover.jpg" alt="">
     </div>
     <div class="bg-white shadow-sm border-bottom">
         <div class="container">
@@ -84,7 +84,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.speakers">
                                 <div class="our-team">
                                     <div class="pic">
-                                        <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
+                                        <img loading="lazy" src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
                                     </div>
                                     <div class="content">
                                         <ul class="social">
@@ -112,7 +112,7 @@
                             <div class="col-md-4 col-sm-6 col-xs-6" *ngFor="let item of data.listeners">
                                 <div class="our-team">
                                     <div class="pic">
-                                        <img src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
+                                        <img loading="lazy" src="./assets/img/profile_image/{{item.image}}" alt="team member" class="img-responsive">
                                     </div>
                                     <div class="content">
                                         <ul class="social">
@@ -169,7 +169,7 @@
                             <h6 class="m-0 font-weight-bold">{{language.lifeEventDetailsOrganizer}}</h6>
                         </div>
                         <div class="p-3 basic-info row" *ngIf="organizator">
-                            <div _ngcontent-dvd-c7="" class="dropdown-list-image col-3"><img alt="Responsive image" class="img-fluid rounded-circle" src="/assets/img/profile_image/{{organizator.image}}"></div>
+                            <div _ngcontent-dvd-c7="" class="dropdown-list-image col-3"><img loading="lazy" alt="Responsive image" class="img-fluid rounded-circle" src="/assets/img/profile_image/{{organizator.image}}"></div>
                             <div class="font-weight-bold col-9">
                                 <div class="text-truncate"><a>{{organizator.fullname}}</a></div>
                                 <div class="small text-gray-500">{{organizator.profession}}</div>

@@ -4,8 +4,9 @@
             class="friend-list">
             <ng-template kendoMultiSelectItemTemplate let-dataItem>
                 <input type="checkbox" class="k-checkbox" [checked]="isItemSelected(dataItem.id)">
-                <label class="k-checkbox-label"> <img class="rounded-circle" style="width: 25px; height: 25px"
-                        src="./assets/img/profile_image/{{dataItem.image}}"> <span style="padding: 3px"> {{
+                <label class="k-checkbox-label"> <img loading="lazy" class="rounded-circle"
+                        style="width: 25px; height: 25px" src="./assets/img/profile_image/{{dataItem.image}}"> <span
+                        style="padding: 3px"> {{
                         dataItem.fullname }}
                     </span></label>
             </ng-template>

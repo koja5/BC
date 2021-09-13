@@ -61,7 +61,7 @@
                 </div>
             </ng-template>
             <ng-template *ngIf="item.type === 'image'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
-                <img src="{{item.rootPath}}{{dataItem[item.field]}}" class="column-image">
+                <img loading="lazy" src="{{item.rootPath}}{{dataItem[item.field]}}" class="column-image">
             </ng-template>
             <ng-template *ngIf="item.type === 'datetime'" kendoGridCellTemplate let-dataItem let-rowIndex="rowIndex">
                 <div>
