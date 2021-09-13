@@ -8,17 +8,14 @@ import {
 import { ProfileService } from "src/app/services/profile.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import { HttpClient } from "@angular/common/http";
-import { FileUploader, FileItem } from "ng2-file-upload";
+import { FileUploader } from "ng2-file-upload";
 import {
   DomSanitizer,
 } from "@angular/platform-browser";
-import { ImageCroppedEvent } from "ngx-image-cropper";
 import { HelpService } from "src/app/services/help.service";
-import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { EditProfileService } from "src/app/services/edit-profile.service";
 import { RecommendationModel } from "src/app/models/recommendation-model";
-import { ToastrService } from "ngx-toastr";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TakeCameraDialogComponent } from '../../modals/take-camera-dialog/take-camera-dialog.component';
 import { PromoVideoComponent } from '../../modals/promo-video/promo-video.component';
@@ -70,12 +67,10 @@ export class ProfileComponent implements OnInit {
     private service: ProfileService,
     public route: ActivatedRoute,
     private router: Router,
-    private message: MessageService,
     public http: HttpClient,
     public domSanitizer: DomSanitizer,
     public helpService: HelpService,
     public editProfileService: EditProfileService,
-    private toastr: ToastrService,
     private modalService: NgbModal,
   ) { }
 
@@ -115,7 +110,6 @@ export class ProfileComponent implements OnInit {
 
     this.editProfileService.getExperience(this.id).subscribe((data: []) => {
       // this.allExperience = data;
-      const currentDate = new Date().toString();
       this.allExperience = data.sort((a, b) => {
         return (
           <any>new Date(b["toDate"] ? b["toDate"] : "") -
@@ -165,7 +159,7 @@ export class ProfileComponent implements OnInit {
 
 
   @HostListener("window:resize", ["$event"])
-  onResize(event) {
+  onResize() {
     if (window.innerWidth < 768) {
       this.windowWidth = window.innerWidth;
       this.windowHeight = window.innerHeight;

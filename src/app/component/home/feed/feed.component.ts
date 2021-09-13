@@ -1,3 +1,4 @@
+import { PreviewPostDialogComponent } from './../../modals/preview-post-dialog/preview-post-dialog.component';
 import { Component, OnInit, HostListener } from "@angular/core";
 import { FeedService } from "src/app/services/feed.service";
 import { PostModel } from "src/app/models/post-model";
@@ -16,7 +17,9 @@ import { UserModel } from "src/app/models/user-model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
-import { PromoVideoComponent } from "../../modals/promo-video/promo-video.component";
+import { FeedPostLikesDialogComponent } from "../../modals/feed-post-likes-dialog/feed-post-likes-dialog.component";
+import { FeedInviteDialogComponent } from "../../modals/feed-invite-dialog/feed-invite-dialog.component";
+import { ImageCropperDialogComponent } from '../../modals/image-cropper-dialog/image-cropper-dialog.component';
 
 @Component({
   selector: "app-feed",
@@ -32,14 +35,10 @@ export class FeedComponent implements OnInit {
   public selectedProcessOption = -1;
   public selectedFeedConnectionsOptions = -1;
   public likePostIndex = -1;
-  public postLikes = false;
   public allLikesForPost: any;
   public commentInput: any;
   public postShowAllComments = -1;
   public user: any;
-  public inviteWindows = false;
-  public invite = new InviteModel();
-  public inviteInfo = new MessageSubmitModel();
   public peopleYouMightKnowList: any;
   public simpleMember = false;
   public userType = 2;
@@ -52,12 +51,10 @@ export class FeedComponent implements OnInit {
   public loading = true;
   public linkClient = window.location.origin;
   public referralLinkCopied = false;
-  public previewPost = false;
   public recommendedWindow = false;
   public recommendedItem: any;
   public height: any;
   public imageChangedEvent: any = "";
-  public changeImage = false;
   public showCropper = false;
   public typeOfUpload: any;
   public maxFileImageSize = 1 * 1024 * 1024;
@@ -342,11 +339,25 @@ export class FeedComponent implements OnInit {
     return false;
   }
 
-  getLikesForPost(id) {
-    this.service.getLikesForPost(id).subscribe((data) => {
-      this.allLikesForPost = data["likes"];
-      this.postLikes = true;
+  openFeedPostLikesDialog(id: any): void {
+    const modalRef = this.modalService.open(FeedPostLikesDialogComponent, {
+      size: 'sm',
+      centered: true
     });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.feedPostLikes,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = id;
   }
 
   showUserProfile(id) { }
@@ -388,35 +399,24 @@ export class FeedComponent implements OnInit {
     this.router.navigate(["/home/main/profile/" + id]);
   }
 
-  sendInviteFriend(invite) {
-    console.log(this.invite);
-    if (this.invite.email && this.invite.message) {
-      this.invite.directorId = localStorage.getItem("id");
-      this.invite["language"] = {
-        inviteFriendSubject: this.language.inviteFriendSubject,
-        inviteFriendBCITitle: this.language.inviteFriendBCITitle,
-        inviteFriendJoinTo: this.language.inviteFriendJoinTo,
-        inviteFriendThanksForUsing: this.language.inviteFriendThanksForUsing,
-        inviteFriendHaveQuestion: this.language.inviteFriendHaveQuestion,
-        inviteFriendGenerateMail: this.language.inviteFriendGenerateMail,
-        inviteFriendCopyright: this.language.inviteFriendCopyrigh,
-      };
-      this.service.sendInviteFriend(this.invite).subscribe((data) => {
-        console.log(data);
-      });
+  public openFeedInviteDialog(): void {
+    const modalRef = this.modalService.open(FeedInviteDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
 
-      this.inviteInfo.show = true;
-      this.inviteInfo.status = "success";
-      this.inviteInfo.message = this.language.feedYourInviteIsSend;
-
-      setTimeout(() => {
-        this.inviteWindows = false;
-      }, 2000);
-    } else {
-      this.inviteInfo.show = true;
-      this.inviteInfo.status = "error";
-      this.inviteInfo.message = this.language.feedInputAllRequired;
-    }
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.feedInviteTitle,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
   }
 
   @HostListener("window:resize", ["$event"])
@@ -526,7 +526,7 @@ export class FeedComponent implements OnInit {
   fileChangeEventProfile(event: any): void {
     if (event.target.files[0].size <= this.maxFileImageSize) {
       this.imageChangedEvent = event;
-      this.changeImage = true;
+      this.openCropperImageDialog();
       this.showCropper = true;
       this.typeOfUpload = "img";
     } else {
@@ -536,6 +536,33 @@ export class FeedComponent implements OnInit {
       });
     }
   }
+
+  openCropperImageDialog(): void {
+    const modalRef = this.modalService.open(ImageCropperDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileUpdateProfileImage,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then((result) => {
+      console.log(`Closed with: ${result}`);
+    }, (reason) => {
+      console.log(reason);
+    });
+  }
+
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
@@ -572,7 +599,7 @@ export class FeedComponent implements OnInit {
     this.uploader.queue = [];
     this.uploader.queue.push(fileItem);
     fileItem.upload();
-    this.changeImage = false;
+    this.modalService.dismissAll();
     this.message.sendUserInfo();
   }
 
@@ -589,28 +616,8 @@ export class FeedComponent implements OnInit {
 
   openPromoVideo(item) {
     this.selectedMember = item;
+    this.promoWindow = true;
     this.selectedFeedConnectionsOptions = -1;
-
-    const modalRef = this.modalService.open(PromoVideoComponent, {
-      size: 'sm',
-      centered: true
-    });
-
-    modalRef.componentInstance.modalSettings = {
-      windowClass: 'modal fade in',
-      resolve: {
-        title: () => null,
-        text: () => null,
-        imageUrl: () => null,
-        imageStyle: () => null,
-        primaryButtonLabel: () => null,
-        secondaryButtonLabel: () => null
-      }
-    };
-    modalRef.componentInstance.modal = modalRef;
-    modalRef.componentInstance.video = this.selectedMember.promo;
-    modalRef.componentInstance.owner = false;
-    modalRef.componentInstance.id = this.id;
   }
 
   promoWindowEmitter() {
@@ -620,5 +627,32 @@ export class FeedComponent implements OnInit {
   sendMessageForThisUser(data) {
     sessionStorage.setItem("message_user", JSON.stringify(data));
     this.router.navigate(["/home/main/message"]);
+  }
+
+  public openPreviewPostDialog(): void {
+    const modalRef = this.modalService.open(PreviewPostDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.feedPreviewPost,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => this.language.feedPost,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.data = this.data;
+    modalRef.componentInstance.postData = this.postData;
+
+    modalRef.result.then(() => {
+      this.createPost();
+      this.modalService.dismissAll();
+    });
   }
 }

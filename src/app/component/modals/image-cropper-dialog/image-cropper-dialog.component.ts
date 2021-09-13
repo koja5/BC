@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { HelpService } from 'src/app/services/help.service';
 
 @Component({
   selector: 'app-image-cropper-dialog',
@@ -14,13 +15,14 @@ export class ImageCropperDialogComponent implements OnInit {
   @Input() showCropper: boolean;
   public croppedImage: any = "";
   public imageChangedEvent: any = "";
+  public language: any;
 
-  constructor() { }
+
+  constructor(private helpService: HelpService) { }
 
   ngOnInit() {
+    this.language = this.helpService.getLanguage();
   }
-
-
 
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;

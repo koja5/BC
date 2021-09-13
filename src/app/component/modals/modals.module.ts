@@ -1,4 +1,3 @@
-import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { HomeModule } from './../home/home.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,11 +22,9 @@ import { InviteVirtualParticipantDialogComponent } from './invite-virtual-partic
 import { LifeEventMemberDetailsComponent } from './life-event-member-details/life-event-member-details.component';
 import { LifeEventDetailsDialogComponent } from './life-event-details-dialog/life-event-details-dialog.component';
 import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-friend-dialog/virtual-event-invite-friend-dialog.component';
-import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dialog.component';
-import { RecordCameraDialogComponent } from './record-camera-dialog/record-camera-dialog.component';
-import { PromoVideoComponent } from './promo-video/promo-video.component';
-import { CreateEventTypeDialogComponent } from './create-event-type-dialog/create-event-type-dialog.component';
-import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/create-new-customer-dialog.component';
+import { FeedPostLikesDialogComponent } from './feed-post-likes-dialog/feed-post-likes-dialog.component';
+import { FeedInviteDialogComponent } from './feed-invite-dialog/feed-invite-dialog.component';
+import { PreviewPostDialogComponent } from './preview-post-dialog/preview-post-dialog.component';
 
 @NgModule({
     declarations: [
@@ -44,13 +41,9 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
-        PremiumBuyDialogComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-
-        TakeCameraDialogComponent,
-        CreateEventTypeDialogComponent,
-        CreateNewCustomerDialogComponent
+        FeedPostLikesDialogComponent,
+        FeedInviteDialogComponent,
+        PreviewPostDialogComponent
     ],
     imports: [
         CommonModule,
@@ -62,8 +55,7 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         WebcamModule,
         HomeModule,
         InputsModule,
-        DropDownsModule,
-        ButtonsModule
+        DropDownsModule
     ],
     exports: [
         CreateEventComponent,
@@ -79,14 +71,8 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
-        PremiumBuyDialogComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-        TakeCameraDialogComponent,
-        CreateEventTypeDialogComponent,
-        CreateNewCustomerDialogComponent
+        FeedPostLikesDialogComponent,
+        FeedInviteDialogComponent
     ],
     entryComponents: [
         CreateEventComponent,
@@ -102,14 +88,8 @@ import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/c
         LifeEventMemberDetailsComponent,
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
-        PremiumBuyDialogComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-        RecordCameraDialogComponent,
-        PromoVideoComponent,
-        TakeCameraDialogComponent,
-        CreateEventTypeDialogComponent,
-        CreateNewCustomerDialogComponent
+        FeedPostLikesDialogComponent,
+        FeedInviteDialogComponent
     ]
 })
 export class ModalsModule { }

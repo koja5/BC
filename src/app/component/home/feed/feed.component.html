@@ -7,12 +7,11 @@
                 <div class="box mb-3 shadow-sm border rounded bg-white profile-box text-center">
                     <div class="py-4 px-3 border-bottom profile-img-container">
                         <div class="loader4 imageLoaderFeed" *ngIf="loadImage"></div>
-                        <img loading="lazy" src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle" alt="Responsive image">
+                        <img src="assets/img/profile_image/{{data.image}}" class="img-fluid mt-2 rounded-circle" alt="Responsive image">
                         <!-- <label for="file-upload-profile" class="change-icon">
               <i class="fa fa-upload  fa-2x"></i>
             </label>
-            <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
-              [uploader]="uploader" /> -->
+                        <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect [uploader]="uploader" /> -->
                         <h5 class="font-weight-bold text-dark mb-1 mt-4">{{data.fullname}}</h5>
                         <p class="mb-0 text-muted" *ngIf="data.profession">{{data.profession}}</p>
                         <p class="mb-0 text-muted" *ngIf="!data.profession">{{language.feedNoProfessionInfo}}</p>
@@ -25,13 +24,13 @@
                 <div class="box mb-3 feed-links">
                     <div class="d-flex mb-2">
                         <div class="col-12 feed-pages" routerLink="/home/main/connection" style="cursor: pointer;">
-                            <p class="mb-0 text-black-50 small"><img loading="lazy" src="../../../../assets/img/users/connections.png"> {{language.feedConnections}}
+                            <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/connections.png"> {{language.feedConnections}}
                             </p>
                         </div>
                     </div>
                     <div class="d-flex">
                         <div class="col-12 feed-pages" routerLink="/home/main/event/all" style="cursor: pointer;">
-                            <p class="mb-0 text-black-50 small"><img loading="lazy" src="../../../../assets/img/users/events.png"> {{language.feedEvents}}
+                            <p class="mb-0 text-black-50 small"><img src="../../../../assets/img/users/events.png"> {{language.feedEvents}}
                             </p>
                         </div>
                     </div>
@@ -59,11 +58,11 @@
           </div>
         </div>
         <div class="overflow-hidden border-top text-center">
-          <img loading="lazy"  src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
+          <img src="../../../assets/img/chart.png" class="img-fluid" alt="Responsive image">
         </div>
       </div> -->
                 <!-- <div class="box shadow-sm mb-3 rounded bg-white ads-box text-center">
-        <img loading="lazy"  src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
+        <img src="../../../assets/img/job1.png" class="img-fluid" alt="Responsive image">
         <div class="p-3 border-bottom">
           <h6 class="font-weight-bold text-dark">Osahan Solutions</h6>
           <p class="mb-0 text-muted">Looking for talent?</p>
@@ -81,7 +80,7 @@
                     <div class="box-body p-3">
                         <div class="d-flex align-items-center osahan-post-header mb-3 people-list" *ngFor="let item of peopleYouMightKnowList">
                             <div class="dropdown-list-image mr-3">
-                                <img loading="lazy" class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
+                                <img class="rounded-circle" src="../../../assets/img/profile_image/{{item.image}}" alt="">
                                 <div class="status-indicator bg-success"></div>
                             </div>
                             <div class="font-weight-bold mr-2">
@@ -117,7 +116,7 @@
                     </div>
                 </div>
                 <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden" *ngIf="userType === 2">
-                    <img loading="lazy" src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
+                    <img src="../../../../assets/img/premium.png" style="width: 130px;" alt="Responsive image">
                     <div class="p-3 border-bottom">
                         <h6 class="font-weight-bold text-gold">{{language.feedPremium}}</h6>
                         <p class="mb-0 text-muted">{{language.feedGrowAndNature}}</p>
@@ -130,15 +129,15 @@
                 </div>
                 <div class="box shadow-sm mb-3 border rounded bg-white text-center" *ngIf="userType !== 2">
                     <div class="image-overlap-2 pt-4">
-                        <img loading="lazy" style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm" alt="Responsive image">
-                        <img loading="lazy" style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm" alt="Responsive image">
+                        <img style="width: 75px; height: 75px;" src="../../../../assets/img/l4.png" class="rounded-circle shadow-sm" alt="Responsive image">
+                        <img style="width: 75px; height: 75px" src="assets/img/profile_image/{{data.image}}" class="rounded-circle shadow-sm" alt="Responsive image">
                     </div>
                     <div class="p-3 border-bottom">
                         <h6 class="text-dark">{{language.feedInviteTitle}}</h6>
                         <p class="mb-0 text-muted">{{language.feedInviteText}}</p>
                     </div>
                     <div class="p-3">
-                        <button type="button" (click)="inviteWindows = true" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+                        <button type="button" (click)="openFeedInviteDialog()" class="btn btn-outline-primary btn-sm pl-4 pr-4">
               {{language.feedSendInvite}} </button>
                     </div>
                 </div>
@@ -147,7 +146,7 @@
           <h6 class="m-0">{{language.termsHeaderTitle}}</h6>
         </div>
         <div class="image-overlap-2 pt-2">
-          <img loading="lazy"  style="width: 100px;" src="../../../../assets/img/terms-icon.png" class="rounded-circle"
+          <img style="width: 100px;" src="../../../../assets/img/terms-icon.png" class="rounded-circle"
             alt="Responsive image">
         </div>
         <div class="p-3">
@@ -160,7 +159,7 @@
           <h6 class="m-0">{{language.privacyHeaderTitle}}</h6>
         </div>
         <div class="image-overlap-2 pt-2">
-          <img loading="lazy"  style="width: 75px;" src="../../../../assets/img/privacy-policy.png" class="rounded-circle"
+          <img style="width: 75px;" src="../../../../assets/img/privacy-policy.png" class="rounded-circle"
             alt="Responsive image">
         </div>
         <div class="p-3">
@@ -183,17 +182,17 @@
                   <div class="text-truncate text-primary">Spotify Inc.</div>
                   <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
                 </div>
-                <img loading="lazy"  class="img-fluid ml-auto" src="../../../assets/img/l3.png" alt="">
+                <img class="img-fluid ml-auto" src="../../../assets/img/l3.png" alt="">
               </div>
               <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
                 <div class="overlap-rounded-circle">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p9.png" alt="" data-original-title="Sophia Lee">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p10.png" alt="" data-original-title="John Doe">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p11.png" alt="" data-original-title="Julia Cox">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p12.png" alt="" data-original-title="Robert Cook">
                 </div>
                 <span class="font-weight-bold text-muted">18 connections</span>
@@ -212,15 +211,15 @@
                   <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
                   </div>
                 </div>
-                <img loading="lazy"  class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
+                <img class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
               </div>
               <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
                 <div class="overlap-rounded-circle">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p13.png" alt="" data-original-title="Sophia Lee">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p1.png" alt="" data-original-title="John Doe">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p3.png" alt="" data-original-title="Robert Cook">
                 </div>
                 <span class="font-weight-bold text-muted">18 connections</span>
@@ -253,7 +252,7 @@
                         <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                             <div class="p-3 d-flex align-items-center w-100" href="#">
                                 <div class="dropdown-list-image mr-3">
-                                    <img loading="lazy" class="rounded-circle feed-image" src="assets/img/profile_image/{{data.image}}" alt="">
+                                    <img class="rounded-circle feed-image" src="assets/img/profile_image/{{data.image}}" alt="">
                                     <div class="status-indicator bg-success"></div>
                                 </div>
                                 <div class="w-100">
@@ -278,7 +277,7 @@
               {{language.feedAddLocation}}</a> -->
                         </div>
                         <div class="flex-shrink-1 row-xs">
-                            <button type="button" class="btn btn-light btn-sm col-xs-6" (click)="previewPost = true" [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
+                            <button type="button" class="btn btn-light btn-sm col-xs-6" (click)="openPreviewPostDialog()" [disabled]="postData.post ? false : true">{{language.feedPreview}}</button>
                             <button type="button" class="btn btn-primary btn-sm col-xs-6" (click)="createPost()">{{language.feedPost}}</button>
                         </div>
                     </div>
@@ -297,7 +296,7 @@
                 <div *ngFor="let item of allPosts; let i = index" class="box shadow-sm border rounded bg-white mb-3 osahan-post">
                     <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
                         <div class="dropdown-list-image mr-3">
-                            <img loading="lazy" class="rounded-circle" src="assets/img/profile_image/{{item.image}}" alt="">
+                            <img class="rounded-circle" src="assets/img/profile_image/{{item.image}}" alt="">
                             <div class="status-indicator bg-success"></div>
                         </div>
                         <div class="font-weight-bold">
@@ -320,7 +319,7 @@
                     </div>
                     <div class="p-3 border-bottom osahan-post-footer">
                         <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes"
-                (click)="getLikesForPost(item._id)">{{item.likes.length}}</span></a>
+                (click)="openFeedPostLikesDialog(item._id)">{{item.likes.length}}</span></a>
                         <a class="mr-3 text-secondary"><i class="feather-message-square"></i> {{item.recomment.length}}</a>
                     </div>
                     <div class="p-3" class="likeCommentButtons">
@@ -335,7 +334,7 @@
                         <a *ngIf="item.recomment.length > 3" (click)="showAllComments(item._id)" class="p-2 d-flex" style="color: #007BFF">{{language.feedShowAll}}</a>
                         <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment" *ngFor="let comm of item.recomment; let j = index" [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
                             <div class="dropdown-list-image mr-3">
-                                <img loading="lazy" class="rounded-circle" src="/assets/img/profile_image/{{comm.image}}" alt="">
+                                <img class="rounded-circle" src="/assets/img/profile_image/{{comm.image}}" alt="">
                                 <div class="status-indicator bg-success"></div>
                             </div>
                             <div class="font-weight-bold" style="width: 100%;">
@@ -354,7 +353,7 @@
                   *ngFor="let comm1 of comm.recomment; let j = index"
                   [ngClass]="j > 2 && postShowAllComments !== item._id ? 'hideComments' : ''">
                   <div class="dropdown-list-image mr-3">
-                    <img loading="lazy"  class="rounded-circle" src="../../../../assets/img/profile_image/{{comm.image}}" alt="">
+                    <img class="rounded-circle" src="../../../../assets/img/profile_image/{{comm.image}}" alt="">
                     <div class="status-indicator bg-success"></div>
                   </div>
                   <div class="font-weight-bold comment-container">
@@ -372,7 +371,7 @@
                     </div>
                     <div class="p-3 border-bottom osahan-post-footer comment-input-container">
                         <div class="profile-image-comment">
-                            <img loading="lazy" src="assets/img/profile_image/{{data.image}}">
+                            <img src="assets/img/profile_image/{{data.image}}">
                         </div>
                         <div class="comment-input">
                             <input class="form-control" (keyup.enter)="createComment(item._id, i)" [(ngModel)]="item.newComment" name="comment-{{item._id}}" [id]="item.id" placeholder="{{language.feedEnterYourComment}}" type="text">
@@ -396,19 +395,19 @@
                   <div class="text-truncate text-primary">Envato</div>
                   <div class="small text-gray-500"><i class="feather-map-pin"></i> India, Punjab</div>
                 </div>
-                <img loading="lazy"  class="img-fluid ml-auto" src="../../../assets/img/l1.png" alt="">
+                <img class="img-fluid ml-auto" src="../../../assets/img/l1.png" alt="">
               </div>
               <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
                 <div class="overlap-rounded-circle d-flex">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p1.png" alt="" data-original-title="Sophia Lee">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p2.png" alt="" data-original-title="John Doe">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p3.png" alt="" data-original-title="Julia Cox">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p4.png" alt="" data-original-title="Robert Cook">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p5.png" alt="" data-original-title="Sophia Lee">
                 </div>
                 <span class="font-weight-bold text-primary">18 connections</span>
@@ -429,17 +428,17 @@
                   <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
                   </div>
                 </div>
-                <img loading="lazy"  class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
+                <img class="img-fluid ml-auto" src="../../../assets/img/l4.png" alt="">
               </div>
               <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
                 <div class="overlap-rounded-circle d-flex">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p13.png" alt="" data-original-title="Sophia Lee">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p1.png" alt="" data-original-title="John Doe">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p2.png" alt="" data-original-title="Julia Cox">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p3.png" alt="" data-original-title="Robert Cook">
                 </div>
                 <span class="font-weight-bold text-primary">18 connections</span>
@@ -460,15 +459,15 @@
                   <div class="small text-gray-500"><i class="feather-map-pin"></i> London, UK
                   </div>
                 </div>
-                <img loading="lazy"  class="img-fluid ml-auto" src="../../../assets/img/l7.png" alt="">
+                <img class="img-fluid ml-auto" src="../../../assets/img/l7.png" alt="">
               </div>
               <div class="d-flex align-items-center p-3 border-top border-bottom job-item-body">
                 <div class="overlap-rounded-circle d-flex">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p12.png" alt="" data-original-title="Sophia Lee">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p13.png" alt="" data-original-title="John Doe">
-                  <img loading="lazy"  class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
+                  <img class="rounded-circle shadow-sm" data-toggle="tooltip" data-placement="top" title=""
                     src="../../../assets/img/p2.png" alt="" data-original-title="Julia Cox">
                 </div>
                 <span class="font-weight-bold text-primary">18 connections</span>
@@ -484,7 +483,7 @@
                 <!-- <div class="box mb-3 shadow-sm border rounded bg-white osahan-post">
       <div class="p-3 d-flex align-items-center border-bottom osahan-post-header">
         <div class="dropdown-list-image mr-3">
-          <img loading="lazy"  class="rounded-circle" src="../../../assets/img/p6.png" alt="">
+          <img class="rounded-circle" src="../../../assets/img/p6.png" alt="">
           <div class="status-indicator bg-success"></div>
         </div>
         <div class="font-weight-bold">
@@ -497,7 +496,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur 😍😎 adipisicing elit, sed do eiusmod tempo incididunt ut labore
           et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco <a href="#">laboris
             consequat.</a></p>
-        <img loading="lazy"  src="../../../assets/img/post1.png" class="img-fluid" alt="Responsive image">
+        <img src="../../../assets/img/post1.png" class="img-fluid" alt="Responsive image">
       </div>
       <div class="p-3 border-bottom osahan-post-footer">
         <a href="#" class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> 16</a>
@@ -506,7 +505,7 @@
       </div>
       <div class="p-3 d-flex align-items-top border-bottom osahan-post-comment">
         <div class="dropdown-list-image mr-3">
-          <img loading="lazy"  class="rounded-circle" src="../../../assets/img/p7.png" alt="">
+          <img class="rounded-circle" src="../../../assets/img/p7.png" alt="">
           <div class="status-indicator bg-success"></div>
         </div>
         <div class="font-weight-bold">
@@ -525,82 +524,9 @@
     </div>
 </div>
 
-<kendo-window [title]="language.feedPostLikes" *ngIf="postLikes" [width]="windowWidth ? windowWidth : 410" [height]="windowHeight ? windowHeight : 480" (close)="postLikes = false">
-    <ul class="list-user-profile">
-        <li *ngFor="let item of allLikesForPost">
-            <img loading="lazy" src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfileWithoutSHA1(item.user_id)">
-        {{item.name}} </span>
-        </li>
-    </ul>
-</kendo-window>
-
-<kendo-window [title]="language.feedInviteTitle" *ngIf="inviteWindows" [height]="windowHeight ? windowHeight : 400" [width]="windowWidth ? windowWidth : 500" (close)="inviteWindows = false">
-
-    <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
-
-    <form (ngSubmit)="sendInviteFriend(invite)">
-
-        <div class="form-group row">
-            <div class="col-sm-6 col-xs-12">
-                <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname" placeholder="{{language.feedEnterFirstname}}" required="">
-            </div>
-            <div class="col-sm-6 col-xs-12">
-                <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname" placeholder="{{language.feedEnterLastname}}" required="">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <input type="email" [(ngModel)]="invite.email" class="form-control" name="email" placeholder="{{language.feedEnterMail}}" required="">
-        </div>
-
-        <textarea class="form-control" [(ngModel)]="invite.message" rows="4" name="text" placeholder="{{language.feedEnterMessage}}"></textarea>
-
-        <div class="p-3" style="text-align: center;">
-            <button type="submit" class="btn btn-outline-primary btn-sm pl-4 pr-4">
-        {{language.feedSendInviteToMail}} </button>
-        </div>
-    </form>
-</kendo-window>
-
-<kendo-window [title]="language.feedPreviewPost" *ngIf="previewPost" [height]="windowHeight ? windowHeight : 350" [width]="windowWidth ? windowWidth : 500" (close)="previewPost = false">
-    <div class="box shadow-sm border rounded bg-white mb-3 osahan-post">
-        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
-            <div class="dropdown-list-image mr-3">
-                <img loading="lazy" class="rounded-circle" src="assets/img/profile_image/{{data.image}}" alt="">
-                <div class="status-indicator bg-success"></div>
-            </div>
-            <div class="font-weight-bold">
-                <div class="text-truncate"><a>{{data.fullname}}</a></div>
-                <div class="small text-gray-500">{{data.profession}}</div>
-            </div>
-        </div>
-        <div class="p-3 border-bottom osahan-post-body">
-            <div [innerHTML]="'<pre>' + postData.post + '</pre>'"></div>
-        </div>
-        <div class="p-3 border-bottom osahan-post-footer">
-            <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span class="numberLikes">0</span></a>
-            <a class="mr-3 text-secondary"><i class="feather-message-square"></i> 0</a>
-        </div>
-    </div>
-    <div style="text-align: end;">
-        <button type="button" class="btn btn-primary btn-sm col-xs-6" (click)="createPost();previewPost = false">{{language.feedPost}}</button>
-    </div>
-</kendo-window>
-
-<div *ngIf="uploader !== undefined" style="text-align: center;">
-    <kendo-window title="{{language.profileUpdateProfileImage}}" *ngIf="changeImage" (close)="changeImage = false" [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 400">
-
-        <div class="loader4 imageLoader" *ngIf="showCropper"></div>
-        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="380"
-            [cropperMinHeight]="380" [onlyScaleDown]="false">
-        </image-cropper>
-        <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
-      {{language.profileUpdateProfileImage}}
-    </button>
-    </kendo-window>
-</div>
-
 <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id" [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone" (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
 </app-recommendation-button>
+
+<app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="selectedMember.id" [owner]="false" [video]="selectedMember.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 
 <div class='back-to-top hidden-xs' id='back-to-top' title='Back to top'><i class='fa fa-chevron-up'></i></div>

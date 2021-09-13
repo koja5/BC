@@ -1,0 +1,28 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body>
+        <p *ngIf="inviteInfo.show" class="message-{{inviteInfo.status}}">{{inviteInfo.message}}</p>
+
+        <form (ngSubmit)="sendInviteFriend(invite)">
+
+            <div class="form-group row">
+                <div class="col-sm-6 col-xs-12">
+                    <input type="email" [(ngModel)]="invite.firstname" class="form-control" name="firstname" placeholder="{{language.feedEnterFirstname}}" required="">
+                </div>
+                <div class="col-sm-6 col-xs-12">
+                    <input type="email" [(ngModel)]="invite.lastname" class="form-control" name="lastname" placeholder="{{language.feedEnterLastname}}" required="">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <input type="email" [(ngModel)]="invite.email" class="form-control" name="email" placeholder="{{language.feedEnterMail}}" required="">
+            </div>
+
+            <textarea class="form-control" [(ngModel)]="invite.message" rows="4" name="text" placeholder="{{language.feedEnterMessage}}"></textarea>
+
+            <div class="p-3" style="text-align: center;">
+                <button type="submit" class="btn btn-outline-primary btn-sm pl-4 pr-4">
+                    {{language.feedSendInviteToMail}} </button>
+            </div>
+        </form>
+    </div>
+</app-dynamic-dialog>

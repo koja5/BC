@@ -1,0 +1,22 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body class="box shadow-sm border rounded bg-white mb-3 osahan-post text-left">
+        <div class="p-3 d-flex align-items-center border-bottom osahan-post-header" style="padding-top: 5px !important">
+            <div class="dropdown-list-image mr-3">
+                <img class="rounded-circle" src="assets/img/profile_image/{{data.image}}" alt="">
+                <div class="status-indicator bg-success"></div>
+            </div>
+            <div class="font-weight-bold">
+                <div class="text-truncate"><a>{{data.fullname}}</a></div>
+                <div class="small text-gray-500">{{data.profession}}</div>
+            </div>
+        </div>
+        <div class="p-3 border-bottom osahan-post-body">
+            <div [innerHTML]="'<pre>' + postData.post + '</pre>'"></div>
+        </div>
+        <div class="p-3 border-bottom osahan-post-footer">
+            <a class="mr-3 text-secondary"><i class="feather-heart text-danger"></i> <span
+                    class="numberLikes">0</span></a>
+            <a class="mr-3 text-secondary"><i class="feather-message-square"></i> 0</a>
+        </div>
+    </div>
+</app-dynamic-dialog>
