@@ -19,6 +19,7 @@ import { RecommendationModel } from "src/app/models/recommendation-model";
 import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TakeCameraDialogComponent } from '../../modals/take-camera-dialog/take-camera-dialog.component';
 import { PromoVideoComponent } from '../../modals/promo-video/promo-video.component';
+import { RecommendedDialogComponent } from '../../modals/recommended-dialog/recommended-dialog.component';
 
 @Component({
   selector: "app-profile",
@@ -56,7 +57,6 @@ export class ProfileComponent implements OnInit {
   public height: any;
   public heightContainer: any;
   public recommendedItem: any;
-  public recommendedWindow = false;
   public recommendationStatus = new RecommendationModel();
   public maxFileImageSize = 1 * 1024 * 1024;
   public maxFileCoverSize = 1 * 1024 * 1024;
@@ -187,12 +187,32 @@ export class ProfileComponent implements OnInit {
       email: email,
       phone: phone,
     };
-    this.recommendedWindow = true;
-  }
 
-  recommendedWindowEmitter() {
-    this.recommendedWindow = false;
-    this.recommendedItem = null;
+    const modalRef = this.modalService.open(RecommendedDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.recommendedTitle + ' ' + name,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.name = name;
+    modalRef.componentInstance.email = email;
+    modalRef.componentInstance.phone = phone;
+
+    modalRef.result.catch(() => {
+      this.recommendedItem = null;
+    });
   }
 
   openPromoVideoDialog() {

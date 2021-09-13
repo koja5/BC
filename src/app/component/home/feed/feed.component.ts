@@ -20,6 +20,7 @@ import { ModalConfigurationService } from "src/app/services/modal-configuration.
 import { FeedPostLikesDialogComponent } from "../../modals/feed-post-likes-dialog/feed-post-likes-dialog.component";
 import { FeedInviteDialogComponent } from "../../modals/feed-invite-dialog/feed-invite-dialog.component";
 import { ImageCropperDialogComponent } from '../../modals/image-cropper-dialog/image-cropper-dialog.component';
+import { RecommendedDialogComponent } from '../../modals/recommended-dialog/recommended-dialog.component';
 
 @Component({
   selector: "app-feed",
@@ -51,7 +52,6 @@ export class FeedComponent implements OnInit {
   public loading = true;
   public linkClient = window.location.origin;
   public referralLinkCopied = false;
-  public recommendedWindow = false;
   public recommendedItem: any;
   public height: any;
   public imageChangedEvent: any = "";
@@ -514,13 +514,33 @@ export class FeedComponent implements OnInit {
       email: email,
       phone: phone,
     };
-    this.recommendedWindow = true;
-    this.selectedFeedConnectionsOptions = -1;
-  }
 
-  recommendedWindowEmitter() {
-    this.recommendedWindow = false;
-    this.recommendedItem = null;
+    const modalRef = this.modalService.open(RecommendedDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.recommendedTitle + ' ' + name,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.name = name;
+    modalRef.componentInstance.email = email;
+    modalRef.componentInstance.phone = phone;
+
+    modalRef.result.catch(() => {
+      this.recommendedItem = null;
+    });
+    this.selectedFeedConnectionsOptions = -1;
   }
 
   fileChangeEventProfile(event: any): void {

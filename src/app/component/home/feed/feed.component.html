@@ -524,9 +524,6 @@
     </div>
 </div>
 
-<app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id" [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone" (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
-</app-recommendation-button>
-
 <app-promo-video *ngIf="promoWindow" [promoWindow]="promoWindow" [id]="selectedMember.id" [owner]="false" [video]="selectedMember.promo" (promoWindowEmitter)="promoWindowEmitter($event)"></app-promo-video>
 
 <div class='back-to-top hidden-xs' id='back-to-top' title='Back to top'><i class='fa fa-chevron-up'></i></div>

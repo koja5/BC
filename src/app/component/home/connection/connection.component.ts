@@ -1,3 +1,4 @@
+import { RecommendedDialogComponent } from './../../modals/recommended-dialog/recommended-dialog.component';
 import { PromoVideoComponent } from '../../modals/promo-video/promo-video.component';
 import { Component, OnInit, HostListener } from "@angular/core";
 import { ConnectionService } from "src/app/services/connection.service";
@@ -18,7 +19,6 @@ export class ConnectionComponent implements OnInit {
   public language: any;
   public searchTerm: any;
   public height: any;
-  public recommendedWindow = false;
   public hover = "fa fa-heart-o";
   public recommendedItem: any;
   public hoverItem: any;
@@ -84,11 +84,6 @@ export class ConnectionComponent implements OnInit {
     this.height += "px";
   }
 
-  recommendedWindowEmitter() {
-    this.recommendedWindow = false;
-    this.recommendedItem = null;
-  }
-
   heartHoverIn(index) {
     this.hover = "fa fa-heart";
     this.hoverItem = index;
@@ -106,7 +101,32 @@ export class ConnectionComponent implements OnInit {
       email: email,
       phone: phone,
     };
-    this.recommendedWindow = true;
+
+    const modalRef = this.modalService.open(RecommendedDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.recommendedTitle + ' ' + name,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.name = name;
+    modalRef.componentInstance.email = email;
+    modalRef.componentInstance.phone = phone;
+
+    modalRef.result.catch(() => {
+      this.recommendedItem = null;
+    });
   }
 
   sendMessageForThisUser(data) {

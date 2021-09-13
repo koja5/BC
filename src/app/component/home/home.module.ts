@@ -87,5 +87,10 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     FileUploadModule,
     WebcamModule
   ],
+  entryComponents: [
+    LifeEventDetailsComponent,
+    RecordVideoComponent
+  ],
+
 })
 export class HomeModule { }

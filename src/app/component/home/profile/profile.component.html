@@ -354,11 +354,3 @@
         </div>
     </div>
 </div>
-
-
-<div *ngIf="uploader !== undefined" style="text-align: center;">
-
-    <app-recommendation-button *ngIf="recommendedWindow" [recommendedWindow]="recommendedWindow" [id]="recommendedItem.id" [name]="recommendedItem.name" [email]="recommendedItem.email" [phone]="recommendedItem.phone" (recommendedWindowEmitter)="recommendedWindowEmitter($event)">
-    </app-recommendation-button>
-
-</div>

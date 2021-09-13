@@ -25,6 +25,13 @@ import { VirtualEventInviteFriendDialogComponent } from './virtual-event-invite-
 import { FeedPostLikesDialogComponent } from './feed-post-likes-dialog/feed-post-likes-dialog.component';
 import { FeedInviteDialogComponent } from './feed-invite-dialog/feed-invite-dialog.component';
 import { PreviewPostDialogComponent } from './preview-post-dialog/preview-post-dialog.component';
+import { RecommendedDialogComponent } from './recommended-dialog/recommended-dialog.component';
+import { ContactFormDialogComponent } from './contact-form-dialog/contact-form-dialog.component';
+import { CreateEventTypeDialogComponent } from './create-event-type-dialog/create-event-type-dialog.component';
+import { CreateNewCustomerDialogComponent } from './create-new-customer-dialog/create-new-customer-dialog.component';
+import { PremiumBuyDialogComponent } from './premium-buy-dialog/premium-buy-dialog.component';
+import { PromoVideoComponent } from './promo-video/promo-video.component';
+import { RecordCameraDialogComponent } from './record-camera-dialog/record-camera-dialog.component';
 
 @NgModule({
     declarations: [
@@ -43,7 +50,9 @@ import { PreviewPostDialogComponent } from './preview-post-dialog/preview-post-d
         VirtualEventInviteFriendDialogComponent,
         FeedPostLikesDialogComponent,
         FeedInviteDialogComponent,
-        PreviewPostDialogComponent
+        PreviewPostDialogComponent,
+        RecommendedDialogComponent,
+        ContactFormDialogComponent
     ],
     imports: [
         CommonModule,
@@ -89,7 +98,14 @@ import { PreviewPostDialogComponent } from './preview-post-dialog/preview-post-d
         LifeEventDetailsDialogComponent,
         VirtualEventInviteFriendDialogComponent,
         FeedPostLikesDialogComponent,
-        FeedInviteDialogComponent
+        FeedInviteDialogComponent,
+        PremiumBuyDialogComponent,
+        RecordCameraDialogComponent,
+        PromoVideoComponent,
+        CreateEventTypeDialogComponent,
+        CreateNewCustomerDialogComponent,
+        RecommendedDialogComponent,
+        ContactFormDialogComponent
     ]
 })
 export class ModalsModule { }
