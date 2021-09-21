@@ -30,8 +30,8 @@
                                 <input type="text" class="form-control border-0 shadow-none" placeholder="{{language.feedSearch}}" aria-label="Search" aria-describedby="basic-addon2">
                                 <div class="input-group-append">
                                     <button class="btn" type="button">
-                    <i class="feather-search"></i>
-                  </button>
+                                        <i class="feather-search"></i>
+                                    </button>
                                 </div>
                             </div>
                         </form>
@@ -39,11 +39,12 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" routerLink="/home/main/feed" (click)="showFeedItem=false"><i
-              class="fa fa-home mr-2"></i><span class="d-none d-lg-inline">{{language.feedNavigationMenu}}</span></a>
+                            class="fa fa-home mr-2"></i><span
+                            class="d-none d-lg-inline">{{language.feedNavigationMenu}}</span></a>
                 </li>
                 <li class="nav-item">
-                    <a *ngIf="superadminInd" class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
-              class="d-none d-lg-inline">{{language.feedDashboard}}</span></a>
+                    <a class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
+                            class="d-none d-lg-inline">{{language.feedDashboard}}</span></a>
                 </li>
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow mx-1 osahan-list-dropdown">
@@ -93,12 +94,13 @@
                         </div>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" (click)="openProfileWithoutSHA1()"><i class="feather-edit mr-1"></i>
-              {{language.feedMyAccount}}</a>
+                            {{language.feedMyAccount}}</a>
                         <a class="dropdown-item" routerLink="/home/main/edit-profile"><i class="feather-user mr-1"></i>
-              {{language.feedEdit}}
-              {{language.feedProfile}}</a>
+                            {{language.feedEdit}}
+                            {{language.feedProfile}}</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" (click)="logout()"><i class="feather-log-out mr-1"></i> {{language.feedLogout}}</a>
+                        <a class="dropdown-item" (click)="logout()"><i class="feather-log-out mr-1"></i>
+                            {{language.feedLogout}}</a>
                     </div>
                 </li>
             </ul>
