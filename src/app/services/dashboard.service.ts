@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
+import { UserModel } from '../models/user-model';
+import { Observable } from 'rxjs';
+import { UserConfiguration } from '../models/user-configuration';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +39,11 @@ export class DashboardService {
 
   getAllUsers() {
     return this.http.get('/api/getAllUsers')
+      .pipe(map((res) => res));
+  }
+
+  getUserConfiguration(id: number): Observable<UserConfiguration> {
+    return this.http.get<UserConfiguration>('/api/getConfiguration/' + id)
       .pipe(map((res) => res));
   }
 

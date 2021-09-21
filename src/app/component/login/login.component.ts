@@ -35,7 +35,6 @@ export class LoginComponent implements OnInit {
     public message: MessageService,
     public mailService: MailService,
     private helpService: HelpService,
-    private activatedRoute: ActivatedRoute,
     private translationService: TranslationService
   ) { }
 
@@ -44,7 +43,15 @@ export class LoginComponent implements OnInit {
   }
 
   initialization() {
-    let languageCode = this.activatedRoute.snapshot.paramMap.get('languageCode').toLowerCase();
+    let languageCode = this.helpService.getLanguageCode();
+    console.log(languageCode);
+
+    if (languageCode == undefined || languageCode == null) {
+      // language is undefined or null in local storage
+      languageCode = navigator.language.toLowerCase().split('-')[0];
+
+      console.log(languageCode);
+    }
 
     this.translationService.getTranslation(languageCode).subscribe((data) => {
       this.language = data;

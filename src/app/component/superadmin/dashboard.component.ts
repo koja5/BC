@@ -1,3 +1,4 @@
+import { TranslationService } from 'src/app/services/translation.service';
 import { Component, OnInit } from "@angular/core";
 import { DashboardService } from "src/app/services/dashboard.service";
 import { Router } from "@angular/router";
@@ -22,10 +23,11 @@ export class DashboardComponent implements OnInit {
   public sidebarHeight: any;
 
   constructor(
-    private service: DashboardService,
+    private dashboardService: DashboardService,
     private router: Router,
     private cookie: CookieService,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private translationService: TranslationService
   ) { }
 
   ngOnInit() {
@@ -34,16 +36,21 @@ export class DashboardComponent implements OnInit {
   }
 
   initialization() {
-    if (localStorage.getItem("language") !== null) {
-      this.language = this.helpService.getLanguage();
-    } else {
-      this.service.getTranslationFromFS("english").subscribe(data => {
-        console.log(data);
-        this.helpService.setLanguage(data);
-        this.helpService.setLanguageCode('en');
-        this.language = data["login"];
-      });
-    }
+    let languageCode;
+    this.dashboardService.getUserConfiguration(this.user.id).subscribe(data => {
+      if (data.language != null && data.language != undefined) {
+        languageCode = data.language;
+      } else {
+        languageCode = 'en';
+      }
+    });
+
+    this.helpService.setLanguageCode(languageCode);
+
+    this.translationService.getTranslation(languageCode).subscribe((data) => {
+      this.language = data;
+      this.helpService.setLanguage(data);
+    });
   }
 
   hideShowSidebar() {

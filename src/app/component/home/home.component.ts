@@ -98,7 +98,7 @@ export class HomeComponent implements OnInit {
   logout() {
     this.cookie.delete("user", "/home/main");
     this.cookie.delete("user", "/");
-    this.router.navigate(['login/' + this.helpService.getLanguageCode()]);
+    this.router.navigate(['login']);
   }
 
   onValueChange(event) {

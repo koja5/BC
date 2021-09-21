@@ -42,13 +42,13 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     CustomGridComponent,
     EventComponent,
     TodoComponent,
+
   ],
   imports: [
     CommonModule,
     DashboardRouting,
     MatCardModule,
     MatToolbarModule,
-    GridModule,
     FormsModule,
     InputsModule,
     IntlModule,
@@ -61,6 +61,9 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     LayoutModule,
     SplitterModule,
     DynamicElementsModule
+  ],
+  exports: [
+    GridModule
   ],
   providers: [
     CustomGridService,

@@ -20,15 +20,19 @@ import { ButtonComponent } from './dynamic-fields/button/button.component';
     TextareaComponent,
     NumericComponent,
     DatepickerComponent,
-    ButtonComponent],
+    ButtonComponent
+  ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    TextBoxModule, DropDownListModule,
     FormsModule,
+  ],
+  exports: [
+    DynamicFieldsDirective,
+    TextBoxModule,
+    DropDownListModule,
     DatePickerModule
   ],
-  exports: [DynamicFieldsDirective],
 
 })
 export class DynamicFormsModule { }

@@ -57,6 +57,10 @@
                             <li class="nav-item">
                                 <a class="nav-link" [ngClass]="selectedTab === 'other' ? 'active' : ''" (click)="changeTab('other')" id="profile-tab">{{language.profileOtherInfoTitle}}</a>
                             </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="selectedTab === 'language' ? 'active' : ''" (click)="changeTab('language')" id="language-tab"> Promeni jezik </a>
+                            </li>
                             <!-- <li class="nav-item">
                 <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
                   aria-controls="contact" aria-selected="false">Jobs</a>
@@ -284,6 +288,30 @@
                             </div>
                         </div>
                     </div>
+
+
+                    <div *ngIf="selectedTab === 'language'">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="box shadow-sm border rounded bg-white mb-3">
+                                    <div class="box-body p-3 border-bottom text-center no-data-experience">
+                                        <div class="d-none d-sm-inline-block form-inline mr-auto my-2 my-md-0 mw-100 navbar-search ">
+                                            <div class="input-group">
+                                                <kendo-combobox [data]="languageList" [textField]="'name'" [valueField]="'code'" (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeLanguage($event)" [(ngModel)]="selectedLanguage" name="language" [filterable]="true" (filterChange)="searchLanguage($event)"
+                                                    [loading]="languageListLoading" placeholder="Pretrazi jezike">
+                                                </kendo-combobox>
+                                            </div>
+
+                                            <button class="btn" [ngClass]="selectedLanguage ? 'btn-success' : 'disabled'" (click)="changeLanguage()">
+                                                Promeni jezik</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
                 </main>
                 <aside class="col col-xl-3 order-xl-1 col-lg-6 order-lg-2 col-md-6 col-sm-6 col-12">

@@ -85,67 +85,6 @@ router.post("/login", (req, res, next) => {
     }
 });
 
-router.post("/signUp", function(req, res, next) {
-    connection.getConnection(function(err, conn) {
-        console.log(conn);
-        if (err) {
-            res.json({
-                code: 100,
-                status: "Error in connection database",
-            });
-            return;
-        }
-
-        var response = {};
-        delete req.body.confirmPassword;
-        req.body.password = sha1(req.body.password);
-
-        conn.query("SELECT * FROM users WHERE email=?", [req.body.email], function(
-            err,
-            rows,
-            fields
-        ) {
-            if (err) {
-                console.error("SQL error:", err);
-                res.json({
-                    code: 100,
-                    status: "Error in connection database",
-                });
-                return next(err);
-            }
-
-            if (rows.length >= 1) {
-                response.success = false;
-                response.info = "Email already exists!";
-                res.json(response);
-            } else {
-                req.body.fullname = req.body.lastname + " " + req.body.firstname;
-                conn.query("insert into users SET ?", req.body, function(err, rows) {
-                    conn.release();
-                    if (!err) {
-                        if (!err) {
-                            response.id = rows.insertId;
-                            response.success = true;
-                        } else {
-                            response.success = false;
-                            response.info = "Error";
-                        }
-                        res.json(response);
-                    } else {
-                        res.json({
-                            code: 100,
-                            status: "Error in connection database",
-                        });
-                        console.log(err);
-                    }
-                });
-            }
-        });
-        conn.on("error", function(err) {
-            console.log("[mysql error]", err);
-        });
-    });
-});
 
 router.get("/getUserInfo/:id", function(req, res, next) {
     connection.getConnection(function(err, conn) {
