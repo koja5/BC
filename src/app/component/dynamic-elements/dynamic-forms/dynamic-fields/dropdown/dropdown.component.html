@@ -1,11 +1,8 @@
 <div class="form-group" [ngClass]="config.width">
     <div class="e-float-input e-control-wrapper" [formGroup]="group" [ngClass]="{'e-error': config.field.invalid && (config.field.dirty || config.field.touched)}" style="margin-top: 0px !important;">
         <label for="{{config.name}}"> {{config.label}}</label>
-        <!-- <ejs-dropdownlist  [fields]="config.field"
-  [ignoreAccent]='config.fieldConfig.ignoreAccent' [filterBarPlaceholder]='config.fieldConfig.filterPlaceholder'></ejs-dropdownlist>
-     -->
 
-        <kendo-dropdownlist id='ddlelement' [data]="data" [filterable]="config.fieldConfig.filter" textField="text" valueField="value" [placeholder]="config.placeholder" [formControlName]="config.name" (filterChange)="onFiltering($event)">
+        <kendo-dropdownlist id='ddlelement' [data]="data" [filterable]="config.fieldConfig.filter" textField="text" valueField="value" placeholder="config.placeholder" [formControlName]="config.name" (filterChange)="onFiltering($event)">
         </kendo-dropdownlist>
     </div>
     <div id="OrderIDError" *ngIf='config.field.invalid && (config.field.dirty || config.field.touched)'>

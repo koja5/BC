@@ -8,6 +8,7 @@ import { NumericComponent } from './dynamic-fields/numeric/numeric.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatepickerComponent } from './dynamic-fields/datepicker/datepicker.component';
 import { ButtonComponent } from './dynamic-fields/button/button.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { ButtonComponent } from './dynamic-fields/button/button.component';
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    DropDownsModule,
     FormsModule,
   ],
 

@@ -1,3 +1,5 @@
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { DynamicDialogComponent } from './dynamic-dialog/dynamic-dialog.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -7,6 +9,7 @@ import { DynamicGridComponent } from "./dynamic-grid/dynamic-grid.component";
 import { DynamicFormsComponent } from "./dynamic-forms/dynamic-forms.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
+import { GridModule } from '@progress/kendo-angular-grid';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,8 @@ import { DynamicFormsModule } from "./dynamic-forms/dynamic-forms.module";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    DynamicFormsModule
+    DynamicFormsModule,
+    DropDownsModule
   ],
 
 })
