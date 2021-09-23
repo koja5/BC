@@ -43,8 +43,7 @@
                             class="d-none d-lg-inline">{{language.feedNavigationMenu}}</span></a>
                 </li>
                 <li class="nav-item">
-                    <a *ngIf="superadminInd" class="nav-link" routerLink="/dashboard"><i
-                            class="fa fa-cogs mr-2"></i><span
+                    <a class="nav-link" routerLink="/dashboard"><i class="fa fa-cogs mr-2"></i><span
                             class="d-none d-lg-inline">{{language.feedDashboard}}</span></a>
                 </li>
                 <!-- Nav Item - User Information -->
@@ -99,9 +98,6 @@
                         <a class="dropdown-item" routerLink="/home/main/edit-profile"><i class="feather-user mr-1"></i>
                             {{language.feedEdit}}
                             {{language.feedProfile}}</a>
-
-                        <a class="dropdown-item" routerLink="/home/main/settings"><i class="feather-settings mr-1"></i>
-                            {{language.changeLanguageTitle}}</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" (click)="logout()"><i class="feather-log-out mr-1"></i>
                             {{language.feedLogout}}</a>

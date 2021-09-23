@@ -3,12 +3,6 @@ import { FormGroup } from "@angular/forms";
 import { HelpService } from "src/app/services/help.service";
 import { Field } from "../../models/field";
 import { FieldConfig } from "../../models/field-config";
-import {
-  Query,
-  DataManager,
-  ODataV4Adaptor,
-  ReturnOption,
-} from "@syncfusion/ej2-data";
 
 @Component({
   selector: "app-dropdown",
@@ -16,16 +10,14 @@ import {
   styleUrls: ["./dropdown.component.scss"],
 })
 export class DropdownComponent implements OnInit, Field {
-  constructor(private helpService: HelpService) {}
+  constructor(private helpService: HelpService) { }
   config: FieldConfig;
   group: FormGroup;
 
   public data: any;
 
-  public query: Query = new Query().from("entries");
-
   ngOnInit() {
-    if(this.config.data['translation']) {
+    if (this.config.data['translation']) {
       this.data = this.helpService.getLanguage()[this.config.data['translation']['property']]
       this.config.field = this.config.data['translation']['fields'];
     } else {
