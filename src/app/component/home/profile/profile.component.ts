@@ -1,3 +1,5 @@
+import { map } from 'rxjs/operators';
+import { LoginService } from 'src/app/services/login.service';
 import { ImageCropperDialogComponent } from './../../modals/image-cropper-dialog/image-cropper-dialog.component';
 import { FileUploadDialogComponent } from './../../modals/file-upload-dialog/file-upload-dialog.component';
 import {
@@ -20,7 +22,6 @@ import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
 import { TakeCameraDialogComponent } from '../../modals/take-camera-dialog/take-camera-dialog.component';
 import { PromoVideoComponent } from '../../modals/promo-video/promo-video.component';
 import { RecommendedDialogComponent } from '../../modals/recommended-dialog/recommended-dialog.component';
-import languageCodes from 'src/app/data/languageCodes.json';
 import { TranslationService } from 'src/app/services/translation.service';
 
 @Component({
@@ -32,7 +33,8 @@ export class ProfileComponent implements OnInit {
   public id: number;
   public data: any;
   public language: any;
-  public languageList = languageCodes;
+  public languages;
+  public languageList;
   public languageListLoading = false;
   public selectedLanguage: any;
 
@@ -77,7 +79,8 @@ export class ProfileComponent implements OnInit {
     public helpService: HelpService,
     public editProfileService: EditProfileService,
     private modalService: NgbModal,
-    private translationService: TranslationService
+    private translationService: TranslationService,
+    private loginService: LoginService
   ) { }
 
   ngOnInit() {
@@ -357,45 +360,4 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-
-  onValueChange(event) {
-    console.log(event);
-    if (event === undefined) {
-      this.selectedLanguage = null;
-    } else {
-      this.selectedLanguage = event;
-    }
-  }
-
-  selectionChangeLanguage(event) {
-    console.log(event);
-  }
-
-  searchLanguage(event: string) {
-    const searchValue = event.toLowerCase();
-
-    if (searchValue !== "" && searchValue.length > 1) {
-      this.languageListLoading = true;
-
-      console.log(searchValue);
-      const temp: { code: string, name: string }[] = languageCodes;
-      this.languageList = temp.filter(x => x.name.toLowerCase().startsWith(event, 0));
-
-      this.languageListLoading = false;
-    } else {
-      this.languageList = [];
-    }
-  }
-
-  changeLanguage(): void {
-    if (!this.selectedLanguage) { return; }
-    this.helpService.setLanguageCode(this.selectedLanguage.code);
-
-    this.translationService.getTranslation(this.selectedLanguage.code).subscribe((data) => {
-      console.log(data);
-      this.language = data;
-      this.helpService.setLanguage(data);
-      location.reload();
-    });
-  }
 }

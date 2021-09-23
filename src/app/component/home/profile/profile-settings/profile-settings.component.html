@@ -1,0 +1,74 @@
+<div class="loader4 loading" *ngIf="data === undefined"></div>
+
+<div *ngIf="data !== undefined && language !== undefined">
+    <div class="profile-cover text-center">
+
+        <div class="loader4 imageLoader" *ngIf="loadImage"></div>
+        <img loading="lazy" class="img-fluid image-cover" [ngClass]="loadImage ? 'blur': ''" src="/assets/img/profile_image/{{data.cover}}" alt="">
+    </div>
+    <div class="bg-white shadow-sm border-bottom">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="d-flex align-items-center py-3">
+                        <div class="profile-left">
+                            <h5 class="font-weight-bold text-dark mb-1 mt-0"> {{data.fullname}} <span class="text-info"><i data-toggle="tooltip" data-placement="top" title="Verified"
+                                        class="feather-check-circle"></i></span>
+                            </h5>
+                            <p class="mb-0 text-muted"> {{data.profession}} </p>
+                        </div>
+                        <div class="profile-right ml-auto">
+                            <button type="button" class="btn btn-light mr-2" (click)="sendMessageForThisUser()"> <i
+                                    class="fa fa-envelope"></i>
+                                {{language.profileSendMessage}}
+                            </button>
+                            <button type="button" class="btn btn-primary mr-2" (click)="recommended(data.id, data.fullname, data.email, data.phoneNumber)"> <i
+                                    class="fa fa-paper-plane"></i> {{language.profileRecommended}}
+                            </button>
+                            <button *ngIf="data.promo || owner" type="button" class="btn btn-secondary" (click)="openPromoVideoDialog()"> <i class="fa fa-film"></i> {{language.promoButton}}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="pb-4 pt-3">
+        <div class="container">
+            <div class="row">
+                <!-- Main Content -->
+                <main class="col col-xl-6 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12">
+                    <div class="box shadow-sm rounded bg-white mb-3 overflow-hidden">
+                        <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" [ngClass]="selectedTab === 'language' ? 'active' : ''" (click)="changeTab('language')" id="language-tab"> Promeni jezik </a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div *ngIf="selectedTab === 'language'">
+                        <div class="tab-content" id="myTabContent">
+                            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                <div class="box shadow-sm border rounded bg-white mb-3">
+                                    <div class="box-body p-3 border-bottom text-center no-data-experience">
+                                        <div class="d-none d-sm-inline-block form-inline mr-auto mw-100 navbar-search ">
+                                            <div class="input-group mb-4">
+                                                <kendo-combobox [data]="languageList" [textField]="'name'" [valueField]="'code'" (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeLanguage($event)" [(ngModel)]="selectedLanguage" name="language" [filterable]="true" (filterChange)="searchLanguage($event)"
+                                                    [loading]="languageListLoading" placeholder="Pretrazi jezike">
+                                                </kendo-combobox>
+                                            </div>
+
+                                            <button class="btn btn-success" [ngClass]="selectedLanguage ? '' : 'notAllowed'" (click)="changeLanguage()">
+                                                {{ language.changeLanguageTitle }}</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>

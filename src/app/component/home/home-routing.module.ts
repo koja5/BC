@@ -15,6 +15,7 @@ import { LifeEventDetailsComponent } from './events/life-event/life-event-detail
 import { EditEventComponent } from './events/edit-event/edit-event.component';
 import { VirtualEventDetailsComponent } from './events/virtual-event/virtual-event-details/virtual-event-details.component';
 import { RoomComponent } from './room/room.component';
+import { ProfileSettingsComponent } from "./profile/profile-settings/profile-settings.component";
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: "edit-profile",
         component: EditProfileComponent,
+      },
+      {
+        path: "settings",
+        component: ProfileSettingsComponent,
       },
       {
         path: "message",
@@ -86,4 +91,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class HomeRouting {}
+export class HomeRouting { }

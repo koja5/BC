@@ -48,6 +48,10 @@ export class LoginService {
       .pipe(map((res) => res));
   }
 
+  getLanguages(): Observable<any[]> {
+    return this.http.get<any[]>("/api/getTranslation").pipe(map((res) => res));
+  }
+
   login(data) {
     console.log(data);
     return this.http.post("/api/login", data).pipe(map((res) => res));

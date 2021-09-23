@@ -37,6 +37,7 @@ import { WebcamModule } from 'ngx-webcam';
 import { TakeCameraComponent } from './take-camera/take-camera.component';
 import { RecordVideoComponent } from './record-video/record-video.component';
 import { PopupComponent } from '../sub-components/popup/popup.component';
+import { ProfileSettingsComponent } from './profile/profile-settings/profile-settings.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     RoomComponent,
     TakeCameraComponent,
     RecordVideoComponent,
-    PopupComponent
+    PopupComponent,
+    ProfileSettingsComponent
   ],
   exports: [
     TakeCameraComponent,
