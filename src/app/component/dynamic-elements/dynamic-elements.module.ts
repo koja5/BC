@@ -1,5 +1,4 @@
 import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
-import { DialogModule } from '@syncfusion/ej2-angular-popups';
 import { DynamicDialogComponent } from './dynamic-dialog/dynamic-dialog.component';
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
@@ -20,8 +19,7 @@ import { GridModule } from '@progress/kendo-angular-grid';
   exports: [
     DynamicGridComponent,
     DynamicDialogComponent,
-    GridModule,
-    DialogModule
+    GridModule
   ],
   imports: [
     CommonModule,
