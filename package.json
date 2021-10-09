@@ -89,7 +89,7 @@
         "nodemailer": "^6.1.1",
         "recordrtc": "^5.6.1",
         "redbird": "^0.10.0",
-        "rxjs": "^7.3.0",
+        "rxjs": "^6.5.3",
         "sha1": "^1.1.1",
         "simple-peer": "^9.9.3",
         "socket.io": "^2.2.0",
