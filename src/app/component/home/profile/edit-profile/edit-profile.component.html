@@ -1,35 +1,34 @@
 <div class="loader4 loading" *ngIf="data === undefined"></div>
 
 <div class="container py-4" *ngIf="data !== undefined&&language !== undefined">
-  <div class="row">
-    <!-- Main Content -->
-    <aside class="col-md-4">
-      <div class="mb-3 border rounded bg-white profile-box text-center w-10">
-        <div class="p-4 d-flex align-items-center">
-          <img src="../../../../../assets/img/profile_image/{{data.image}}" class="img-fluid rounded-circle"
-            alt="Responsive image" style="width: 175px; height: 175px; margin: auto;">
-          <!-- <div class="upload-image">
+    <div class="row">
+        <!-- Main Content -->
+        <aside class="col-md-4">
+            <div class="mb-3 border rounded bg-white profile-box text-center w-10">
+                <div class="p-4 d-flex align-items-center">
+                    <img loading="lazy" src="../../../../../assets/img/profile_image/{{data.image}}" class="img-fluid rounded-circle" alt="Responsive image" style="width: 175px; height: 175px; margin: auto;">
+                    <!-- <div class="upload-image">
             <input type="file" (change)="fileChangeEvent($event)" />
           </div> -->
-        </div>
-      </div>
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.fieldProfession}}</h6>
-          <p class="mb-0 mt-0 small">{{language.profileProfessionText}}
-          </p>
-          <input type="text" class="form-control" name="profession" [(ngModel)]="data.profession">
-        </div>
-        <div class="box-body">
-          <div class="p-3 border-bottom">
-            <div class="form-group mb-4">
-              <h6 class="m-0">{{language.fieldAboutMe}}</h6>
-              <p class="mb-0 mt-0 small">{{language.profileAboutMeText}}
-              <div class="position-relative">
-                <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.aboutMe"></textarea>
-              </div>
+                </div>
             </div>
-            <!-- <div class="form-group mb-0">
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.fieldProfession}}</h6>
+                    <p class="mb-0 mt-0 small">{{language.profileProfessionText}}
+                    </p>
+                    <input type="text" class="form-control" name="profession" [(ngModel)]="data.profession">
+                </div>
+                <div class="box-body">
+                    <div class="p-3 border-bottom">
+                        <div class="form-group mb-4">
+                            <h6 class="m-0">{{language.fieldAboutMe}}</h6>
+                            <p class="mb-0 mt-0 small">{{language.profileAboutMeText}}
+                                <div class="position-relative">
+                                    <textarea class="form-control" rows="4" name="text" [(ngModel)]="data.aboutMe"></textarea>
+                                </div>
+                        </div>
+                        <!-- <div class="form-group mb-0">
               <label class="mb-1 w-100">SKILLS</label>
               <div class="custom-control custom-checkbox d-inline mr-3">
                 <input type="checkbox" class="custom-control-input" id="customCheck1">
@@ -40,14 +39,14 @@
                 <label class="custom-control-label" for="customCheck2">HTML5, CSS3</label>
               </div>
             </div> -->
-          </div>
-          <div class="overflow-hidden text-center p-3">
-            <a class="font-weight-bold btn btn-light rounded p-3 d-block" (click)="saveChanges()">
-              {{language.profileSave}} </a>
-          </div>
-        </div>
-      </div>
-      <!-- <div class="border rounded bg-white mb-3">
+                    </div>
+                    <div class="overflow-hidden text-center p-3">
+                        <a class="font-weight-bold btn btn-light rounded p-3 d-block" (click)="saveChanges()">
+                            {{language.profileSave}} </a>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="border rounded bg-white mb-3">
         <div class="box-title border-bottom p-3">
           <h6 class="m-0">{{language.profileSocialProfileTitle}}</h6>
           <p class="mb-0 mt-0 small">{{language.profileSocialProfileText}}
@@ -82,744 +81,538 @@
           </div>
         </div>
       </div> -->
-    </aside>
-    <main class="col-md-8">
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileEditBasicInfoTitle}}</h6>
-          <p class="mb-0 mt-0 small">{{language.profileEditBasicInfoText}}
-          </p>
-        </div>
-        <div class="box-body p-3">
-          <form class="js-validate" novalidate="novalidate">
-            <div class="row">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldSalutation}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <kendo-combobox
-                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
-                      [data]="salutationItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'"
-                      (selectionChange)="selectedSalutation($event)" class="col-xs-12 noPadding"
-                      [(ngModel)]="data.salutation" name="salutation">
-                    </kendo-combobox>
-                  </div>
+        </aside>
+        <main class="col-md-8">
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.profileEditBasicInfoTitle}}</h6>
+                    <p class="mb-0 mt-0 small">{{language.profileEditBasicInfoText}}
+                    </p>
                 </div>
-              </div>
+                <div class="box-body p-3">
+                    <form class="js-validate" novalidate="novalidate">
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldSalutation}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <kendo-combobox style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="salutationItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'" (selectionChange)="selectedSalutation($event)"
+                                            class="col-xs-12 noPadding" [(ngModel)]="data.salutation" name="salutation">
+                                        </kendo-combobox>
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldPassword}}
-                  </label>
-                  <div class="form-group row">
-                    <input type="text" class="form-control col-sm-11" name="password" [(ngModel)]="data.password"
-                      disabled>
-                    <span class="fa fa-unlock-alt change-icon col-sm-1" (click)="changePasswordWindow = true"></span>
-                  </div>
-                </div>
-              </div>
-            </div>
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldPassword}}
+                                    </label>
+                                    <div class="form-group row">
+                                        <input type="text" class="form-control col-sm-11" name="password" [(ngModel)]="data.password" disabled>
+                                        <span class="fa fa-unlock-alt change-icon col-sm-1" (click)="openChangePasswordModal()"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="row">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldTitleBefore}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleBefore">
-                  </div>
-                </div>
-              </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldTitleBefore}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="titleBefore" [(ngModel)]="data.titleBefore">
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldTitleAfter}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="titleAfter" [(ngModel)]="data.titleAfter">
-                  </div>
-                </div>
-              </div>
-            </div>
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldTitleAfter}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="titleAfter" [(ngModel)]="data.titleAfter">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            <div class="row">
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldFirstname}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="firstname" [(ngModel)]="data.firstname">
-                  </div>
-                </div>
-              </div>
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldFirstname}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="firstname" [(ngModel)]="data.firstname">
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldLastname}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="lastname" [(ngModel)]="data.lastname">
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldLastname}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="lastname" [(ngModel)]="data.lastname">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="nameLabel" class="form-label">
-                    {{language.fieldRelationshipStatus}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <kendo-combobox
-                      style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;"
-                      [data]="relationshipItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'"
-                      (selectionChange)="selectedRelationship($event)" class="col-xs-12 noPadding"
-                      [(ngModel)]="data.relationship" name="relationship">
-                    </kendo-combobox>
-                  </div>
-                </div>
-              </div>
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="nameLabel" class="form-label">
+                                        {{language.fieldRelationshipStatus}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <kendo-combobox style="width: 100% !important; border: 1px solid #ced4da; border-radius: 4px; padding-left: 13px;" [data]="relationshipItem" [valuePrimitive]="true" [textField]="'title'" [valueField]="'title'" (selectionChange)="selectedRelationship($event)"
+                                            class="col-xs-12 noPadding" [(ngModel)]="data.relationship" name="relationship">
+                                        </kendo-combobox>
+                                    </div>
+                                </div>
+                            </div>
 
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="phoneNumberLabel" class="form-label">
-                    {{language.fieldBirthday}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="phoneNumberLabel" class="form-label">
+                                        {{language.fieldBirthday}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
 
-                    <kendo-datepicker [(ngModel)]="data.birthday" name="birthday" style="display: contents;">
-                    </kendo-datepicker>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <!-- Input -->
-              <div class="col-sm-4 mb-2">
-                <div class="js-form-message">
-                  <label id="phoneNumberLabel" class="form-label">
-                    {{language.fieldPhoneNumber}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="data.phoneNumber"
-                      placeholder="Enter your phone number" aria-label="Enter your phone number" required=""
-                      aria-describedby="phoneNumberLabel" data-msg="Please enter a valid phone number"
-                      data-error-class="u-has-error" data-success-class="u-has-success">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-              <!-- Input -->
-              <div class="col-sm-4 mb-2">
-                <div class="js-form-message">
-                  <label id="emailLabel" class="form-label">
-                    {{language.fieldMobile1}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="mobile1" [(ngModel)]="data.mobile1">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-              <!-- Input -->
-              <div class="col-sm-4 mb-2">
-                <div class="js-form-message">
-                  <label id="locationLabel" class="form-label">
-                    {{language.fieldMobile2}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="mobile2" [(ngModel)]="data.mobile2">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="row">
-              <!-- Input -->
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="emailLabel" class="form-label">
-                    {{language.fieldEmail}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="email" class="form-control" name="email" [(ngModel)]="data.email">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-              <!-- Input -->
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="locationLabel" class="form-label">
-                    {{language.fieldLocation}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="location" [(ngModel)]="data.location">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="row">
-              <!-- Input -->
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="organizationLabel" class="form-label">
-                    {{language.fieldStreet}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="street" [(ngModel)]="data.street">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-              <!-- Input -->
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="websiteLabel" class="form-label">
-                    {{language.fieldZip}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input class="form-control" type="url" name="zip" [(ngModel)]="data.zip">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="row">
-              <!-- Input -->
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="organizationLabel" class="form-label">
-                    {{language.fieldOrganization}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input type="text" class="form-control" name="organization" [(ngModel)]="data.organization">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-              <!-- Input -->
-              <div class="col-sm-6 mb-2">
-                <div class="js-form-message">
-                  <label id="websiteLabel" class="form-label">
-                    {{language.fieldWebsite}}
-                    <!--<span class="text-danger">*</span>-->
-                  </label>
-                  <div class="form-group">
-                    <input class="form-control" type="url" name="website" [(ngModel)]="data.website">
-                  </div>
-                </div>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="row">
-            </div>
+                                        <kendo-datepicker [(ngModel)]="data.birthday" name="birthday" style="display: contents;">
+                                        </kendo-datepicker>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <!-- Input -->
+                            <div class="col-sm-4 mb-2">
+                                <div class="js-form-message">
+                                    <label id="phoneNumberLabel" class="form-label">
+                                        {{language.fieldPhoneNumber}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input class="form-control" type="tel" name="phoneNumber" [(ngModel)]="data.phoneNumber" placeholder="Enter your phone number" aria-label="Enter your phone number" required="" aria-describedby="phoneNumberLabel" data-msg="Please enter a valid phone number"
+                                            data-error-class="u-has-error" data-success-class="u-has-success">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                            <!-- Input -->
+                            <div class="col-sm-4 mb-2">
+                                <div class="js-form-message">
+                                    <label id="emailLabel" class="form-label">
+                                        {{language.fieldMobile1}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="mobile1" [(ngModel)]="data.mobile1">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                            <!-- Input -->
+                            <div class="col-sm-4 mb-2">
+                                <div class="js-form-message">
+                                    <label id="locationLabel" class="form-label">
+                                        {{language.fieldMobile2}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="mobile2" [(ngModel)]="data.mobile2">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="row">
+                            <!-- Input -->
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="emailLabel" class="form-label">
+                                        {{language.fieldEmail}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control" name="email" [(ngModel)]="data.email">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                            <!-- Input -->
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="locationLabel" class="form-label">
+                                        {{language.fieldLocation}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="location" [(ngModel)]="data.location">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="row">
+                            <!-- Input -->
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="organizationLabel" class="form-label">
+                                        {{language.fieldStreet}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="street" [(ngModel)]="data.street">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                            <!-- Input -->
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="websiteLabel" class="form-label">
+                                        {{language.fieldZip}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input class="form-control" type="url" name="zip" [(ngModel)]="data.zip">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="row">
+                            <!-- Input -->
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="organizationLabel" class="form-label">
+                                        {{language.fieldOrganization}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input type="text" class="form-control" name="organization" [(ngModel)]="data.organization">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                            <!-- Input -->
+                            <div class="col-sm-6 mb-2">
+                                <div class="js-form-message">
+                                    <label id="websiteLabel" class="form-label">
+                                        {{language.fieldWebsite}}
+                                        <!--<span class="text-danger">*</span>-->
+                                    </label>
+                                    <div class="form-group">
+                                        <input class="form-control" type="url" name="website" [(ngModel)]="data.website">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="row">
+                        </div>
 
-            <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"
-                (click)="saveChanges()">
-                &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-                &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                        <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveChanges()">
+                                &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                                &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                        </div>
+                    </form>
+                </div>
             </div>
-          </form>
-        </div>
-      </div>
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileLookingOfferTitle}}
-          </h6>
-          <p class="mb-0 mt-0 small">{{language.profileLookingOfferText}}
-          </p>
-        </div>
-        <div class="box-body px-3 pt-3 pb-3">
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileLooking}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.looking" name="looking">
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.profileLookingOfferTitle}}
+                    </h6>
+                    <p class="mb-0 mt-0 small">{{language.profileLookingOfferText}}
+                    </p>
+                </div>
+                <div class="box-body px-3 pt-3 pb-3">
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileLooking}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.looking" name="looking">
                 </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileOffer}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.offer" name="offer">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="TO" class="form-label">{{language.profileOffer}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" [(ngModel)]="lookingOffer.offer" name="offer">
                 </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
 
-          <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"
-              (click)="saveLookingOffer()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
-          </div>
-        </div>
-      </div>
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileExperienceTitle}}
-          </h6>
-          <p class="mb-0 mt-0 small">{{language.profileExperienceText}}
-          </p>
-        </div>
-        <div class="box-body px-3 pt-3 pb-3" *ngFor="let item of allExperience; let i = index"
-          style="border-bottom: 1px solid lightgray;">
-          <div class="text-right">
-            <span class="fa fa-pencil" (click)="editExperience(i)" style="color:#0087FB; cursor: pointer;"></span>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileFrom}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <kendo-datepicker [(ngModel)]="item.fromDate" name="from" style="display: contents;">
-                </kendo-datepicker>
-              </div>
-              <!-- End Input -->
+                    <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveLookingOffer()">
+                            &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                            &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileTo}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <kendo-datepicker [(ngModel)]="item.toDate" name="to" style="display: contents;">
-                </kendo-datepicker>
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="companyLabel" class="form-label">{{language.profileCompany}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="item.company" name="company">
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="positionLabel" class="form-label">{{language.profilePosition}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="item.position" name="position">
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-mb-12">
-              <label id="positionLabel" class="form-label">{{language.profileExperienceDescription}}</label>
-              <div class="input-group">
-                <textarea class="form-control" rows="4" name="text" [(ngModel)]="item.description"></textarea>
-              </div>
-            </div>
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.profileExperienceTitle}}
+                    </h6>
+                    <p class="mb-0 mt-0 small">{{language.profileExperienceText}}
+                    </p>
+                </div>
+                <div class="box-body px-3 pt-3 pb-3" *ngFor="let item of allExperience; let i = index" style="border-bottom: 1px solid lightgray;">
+                    <div class="text-right">
+                        <span class="fa fa-pencil" (click)="editExperience(i)" style="color:#0087FB; cursor: pointer;"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileFrom}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <kendo-datepicker [(ngModel)]="item.fromDate" name="from" style="display: contents;">
+                                </kendo-datepicker>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="TO" class="form-label">{{language.profileTo}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <kendo-datepicker [(ngModel)]="item.toDate" name="to" style="display: contents;">
+                                </kendo-datepicker>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="companyLabel" class="form-label">{{language.profileCompany}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <input type="text" class="form-control" [(ngModel)]="item.company" name="company">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="positionLabel" class="form-label">{{language.profilePosition}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <input type="text" class="form-control" [(ngModel)]="item.position" name="position">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-mb-12">
+                            <label id="positionLabel" class="form-label">{{language.profileExperienceDescription}}</label>
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" name="text" [(ngModel)]="item.description"></textarea>
+                            </div>
+                        </div>
 
-          </div>
-        </div>
-        <div class="mb-3 mt-3 text-center"><a class="font-weight-bold btn btn-primary rounded p-2"
-            (click)="addNewExperience()"> &nbsp;&nbsp;
-            <span class="fa fa-plus"></span> {{language.profileAddNewExperience}}
-            &nbsp;&nbsp; </a></div>
-      </div>
-
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileEducationTitle}}
-          </h6>
-          <p class="mb-0 mt-0 small">{{language.profileEducationText}}
-          </p>
-        </div>
-        <div class="box-body px-3 pt-3 pb-3" *ngFor="let item of allEducation; let i = index"
-          style="border-bottom: 1px solid lightgray;">
-          <div class="text-right">
-            <span class="fa fa-pencil" (click)="editEducation(i)" style="color:#0087FB; cursor: pointer;"></span>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileFrom}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <kendo-datepicker [(ngModel)]="item.fromDate" name="from" style="display: contents;">
-                </kendo-datepicker>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileTo}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <kendo-datepicker [(ngModel)]="item.toDate" name="to" style="display: contents;">
-                </kendo-datepicker>
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="companyLabel" class="form-label">{{language.profileSchool}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="item.school" name="school">
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="positionLabel" class="form-label">{{language.profileDirection}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <input type="text" class="form-control" [(ngModel)]="item.direction" name="direction">
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-sm-12 col-mb-12">
-              <label id="positionLabel" class="form-label">{{language.profileEducationDescription}}</label>
-              <div class="input-group">
-                <textarea class="form-control" rows="4" name="text" [(ngModel)]="item.description"></textarea>
-              </div>
+                    </div>
+                </div>
+                <div class="mb-3 mt-3 text-center"><a class="font-weight-bold btn btn-primary rounded p-2" (click)="addNewExperience()"> &nbsp;&nbsp;
+                        <span class="fa fa-plus"></span> {{language.profileAddNewExperience}}
+                        &nbsp;&nbsp; </a></div>
             </div>
 
-          </div>
-        </div>
-        <div class="mb-3 mt-3 text-center"><a class="font-weight-bold btn btn-primary rounded p-2"
-            (click)="addNewEducation()"> &nbsp;&nbsp;
-            <span class="fa fa-plus"></span> {{language.profileAddNewEducation}}
-            &nbsp;&nbsp; </a></div>
-      </div>
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileOtherInfoTitle}}
-          </h6>
-          <p class="mb-0 mt-0 small">{{language.profileOtherInfoText}}
-          </p>
-        </div>
-        <div class="box-body px-3 pt-3 pb-3">
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileAbilitiesAndKnowledge}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.abilitiesKnowledge" name="looking">
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.profileEducationTitle}}
+                    </h6>
+                    <p class="mb-0 mt-0 small">{{language.profileEducationText}}
+                    </p>
+                </div>
+                <div class="box-body px-3 pt-3 pb-3" *ngFor="let item of allEducation; let i = index" style="border-bottom: 1px solid lightgray;">
+                    <div class="text-right">
+                        <span class="fa fa-pencil" (click)="editEducation(i)" style="color:#0087FB; cursor: pointer;"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileFrom}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <kendo-datepicker [(ngModel)]="item.fromDate" name="from" style="display: contents;">
+                                </kendo-datepicker>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="TO" class="form-label">{{language.profileTo}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <kendo-datepicker [(ngModel)]="item.toDate" name="to" style="display: contents;">
+                                </kendo-datepicker>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="companyLabel" class="form-label">{{language.profileSchool}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <input type="text" class="form-control" [(ngModel)]="item.school" name="school">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="positionLabel" class="form-label">{{language.profileDirection}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <input type="text" class="form-control" [(ngModel)]="item.direction" name="direction">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12 col-mb-12">
+                            <label id="positionLabel" class="form-label">{{language.profileEducationDescription}}</label>
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" name="text" [(ngModel)]="item.description"></textarea>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="mb-3 mt-3 text-center"><a class="font-weight-bold btn btn-primary rounded p-2" (click)="addNewEducation()"> &nbsp;&nbsp;
+                        <span class="fa fa-plus"></span> {{language.profileAddNewEducation}}
+                        &nbsp;&nbsp; </a></div>
+            </div>
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.profileOtherInfoTitle}}
+                    </h6>
+                    <p class="mb-0 mt-0 small">{{language.profileOtherInfoText}}
+                    </p>
+                </div>
+                <div class="box-body px-3 pt-3 pb-3">
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileAbilitiesAndKnowledge}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.abilitiesKnowledge" name="looking">
                 </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileLanguages}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.languages" name="offer">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="TO" class="form-label">{{language.profileLanguages}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.languages" name="offer">
                 </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
 
-          <div class="row">
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileQualifications}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.qualifications" name="looking">
+                    <div class="row">
+                        <div class="col-sm-6 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileQualifications}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.qualifications" name="looking">
                 </textarea>
-              </div>
-              <!-- End Input -->
-            </div>
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileInterests}}</label>
-              <!-- Input -->
-              <div class="input-group">
-                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.interests" name="offer">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="TO" class="form-label">{{language.profileInterests}}</label>
+                            <!-- Input -->
+                            <div class="input-group">
+                                <textarea class="form-control" rows="4" [(ngModel)]="additionalInfo.interests" name="offer">
                 </textarea>
-              </div>
-              <!-- End Input -->
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
+
+                    <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveAdditionalInfo()">
+                            &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                            &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"
-              (click)="saveAdditionalInfo()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
-          </div>
-        </div>
-      </div>
+            <div class="border rounded bg-white mb-3">
+                <div class="box-title border-bottom p-3">
+                    <h6 class="m-0">{{language.profileBankAccountTitle}}
+                    </h6>
+                    <p class="mb-0 mt-0 small">{{language.profileBankAccountText}}
+                    </p>
+                </div>
+                <div class="box-body px-3 pt-3 pb-3">
+                    <div class="row">
+                        <div class="col-sm-12 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileBankAccount}}</label>
+                            <!-- Input -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" [(ngModel)]="bankAccount.bankAccount" name="bankAccount">
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
 
-      <div class="border rounded bg-white mb-3">
-        <div class="box-title border-bottom p-3">
-          <h6 class="m-0">{{language.profileBankAccountTitle}}
-          </h6>
-          <p class="mb-0 mt-0 small">{{language.profileBankAccountText}}
-          </p>
-        </div>
-        <div class="box-body px-3 pt-3 pb-3">
-          <div class="row">
-            <div class="col-sm-12 mb-4">
-              <label id="FROM" class="form-label">{{language.profileBankAccount}}</label>
-              <!-- Input -->
-              <div class="form-group">
-                <input type="text" class="form-control" [(ngModel)]="bankAccount.bankAccount" name="bankAccount">
-              </div>
-              <!-- End Input -->
+                    <div class="row">
+
+                        <div class="col-sm-6 mb-4">
+                            <label id="TO" class="form-label">{{language.profileIBAN}}</label>
+                            <!-- Input -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" [ngClass]="badIBAN === true ? 'badIBAN' : ''" [(ngModel)]="bankAccount.iban" name="iban">
+                                <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                        <div class="col-sm-6 mb-4">
+                            <label id="FROM" class="form-label">{{language.profileBIC}}</label>
+                            <!-- Input -->
+                            <div class="form-group">
+                                <input type="text" class="form-control" [(ngModel)]="bankAccount.bic" name="bic">
+                                <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
+                            </div>
+                            <!-- End Input -->
+                        </div>
+                    </div>
+
+                    <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2" (click)="saveBankAccount()">
+                            &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
+                            &nbsp;&nbsp;&nbsp;&nbsp; </a>
+                    </div>
+                </div>
             </div>
-          </div>
 
-          <div class="row">
+            <div>
 
-            <div class="col-sm-6 mb-4">
-              <label id="TO" class="form-label">{{language.profileIBAN}}</label>
-              <!-- Input -->
-              <div class="form-group">
-                <input type="text" class="form-control" [ngClass]="badIBAN === true ? 'badIBAN' : ''"
-                  [(ngModel)]="bankAccount.iban" name="iban">
-                <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
-              </div>
-              <!-- End Input -->
+
+
+                <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()"
+                    [roundCropper]="true">
+                </image-cropper>
+
+                <img loading="lazy" [src]="croppedImage" />
             </div>
-            <div class="col-sm-6 mb-4">
-              <label id="FROM" class="form-label">{{language.profileBIC}}</label>
-              <!-- Input -->
-              <div class="form-group">
-                <input type="text" class="form-control" [(ngModel)]="bankAccount.bic" name="bic">
-                <small class="form-text text-muted">{{language.profileJustYouCanSee}}</small>
-              </div>
-              <!-- End Input -->
-            </div>
-          </div>
-
-          <div class="mb-3 text-right"> <a class="font-weight-bold btn btn-primary rounded p-2"
-              (click)="saveBankAccount()">
-              &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-              &nbsp;&nbsp;&nbsp;&nbsp; </a>
-          </div>
-        </div>
-      </div>
-
-      <div>
-
-
-
-        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1"
-          format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()"
-          (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()" [roundCropper]="true"></image-cropper>
-
-        <img [src]="croppedImage" />
-      </div>
-    </main>
-  </div>
-
-
-  <kendo-window title="{{language.profileExperienceTitle}}" *ngIf="experienceWindow" (close)="experienceWindow = false"
-    [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 470">
-    <div class="box-body px-3 pt-3 pb-0">
-      <div class="row">
-        <div class="col-sm-6 mb-4">
-          <label id="FROM" class="form-label">{{language.profileFrom}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <kendo-datepicker [(ngModel)]="experience.fromDate" name="from" style="display: contents;">
-            </kendo-datepicker>
-          </div>
-          <!-- End Input -->
-        </div>
-        <div class="col-sm-6 mb-4">
-          <label id="TO" class="form-label">{{language.profileTo}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <kendo-datepicker [(ngModel)]="experience.toDate" name="to" style="display: contents;">
-            </kendo-datepicker>
-          </div>
-          <!-- End Input -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 mb-4">
-          <label id="companyLabel" class="form-label">{{language.profileCompany}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="experience.company" name="company">
-          </div>
-          <!-- End Input -->
-        </div>
-        <div class="col-sm-6 mb-4">
-          <label id="positionLabel" class="form-label">{{language.profilePosition}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="experience.position" name="position">
-          </div>
-          <!-- End Input -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-mb-12">
-          <label id="positionLabel" class="form-label">{{language.profileExperienceDescription}}</label>
-          <div class="input-group">
-            <textarea class="form-control" rows="4" name="text" [(ngModel)]="experience.description"></textarea>
-          </div>
-        </div>
-
-      </div>
-      <div class="mb-3 mt-3 text-right">
-        <a *ngIf="modificationType === 'edit'" class="font-weight-bold btn btn-danger rounded p-2 mr-2"
-          (click)="deleteWindowExperience = true">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileDelete}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-        <a class="font-weight-bold btn btn-primary rounded p-2"
-          (click)="modificationType === 'edit' ? updateExperience() : saveExperience()">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-      </div>
+        </main>
     </div>
-  </kendo-window>
-
-  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="deleteWindowExperience"
-    (close)="deleteWindowExperience = false" [width]="windowWidth ? windowWidth : 450"
-    [height]="windowHeight ? windowHeight : 250">
-    <div class="modal-body text-center">
-      <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-      <h3>{{language.areYouSure}}</h3>
-    </div>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="deleteWindowExperience = false">{{language.no}}</button>
-      <button kendoButton (click)="deleteExperience('yes')" primary="true">{{language.yes}}</button>
-    </kendo-dialog-actions>
-  </kendo-dialog>
-
-
-  <kendo-window title="{{language.profileEducationTitle}}" *ngIf="educationWindow" (close)="educationWindow = false"
-    [width]="windowWidth ? windowWidth : 550" [height]="windowHeight ? windowHeight : 470">
-    <div class="box-body px-3 pt-3 pb-0">
-      <div class="row">
-        <div class="col-sm-6 mb-4">
-          <label id="FROM" class="form-label">{{language.profileFrom}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <kendo-datepicker [(ngModel)]="education.fromDate" name="from" style="display: contents;">
-            </kendo-datepicker>
-          </div>
-          <!-- End Input -->
-        </div>
-        <div class="col-sm-6 mb-4">
-          <label id="TO" class="form-label">{{language.profileTo}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <kendo-datepicker [(ngModel)]="education.toDate" name="to" style="display: contents;">
-            </kendo-datepicker>
-          </div>
-          <!-- End Input -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-6 mb-4">
-          <label id="companyLabel" class="form-label">{{language.profileSchool}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="education.school" name="school">
-          </div>
-          <!-- End Input -->
-        </div>
-        <div class="col-sm-6 mb-4">
-          <label id="positionLabel" class="form-label">{{language.profileDirection}}</label>
-          <!-- Input -->
-          <div class="input-group">
-            <input type="text" class="form-control" [(ngModel)]="education.direction" name="direction">
-          </div>
-          <!-- End Input -->
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 col-mb-12">
-          <label id="positionLabel" class="form-label">{{language.profileEducationDescription}}</label>
-          <div class="input-group">
-            <textarea class="form-control" rows="4" name="text" [(ngModel)]="education.description"></textarea>
-          </div>
-        </div>
-
-      </div>
-      <div class="mb-3 mt-3 text-right">
-        <a *ngIf="modificationType === 'edit'" class="font-weight-bold btn btn-danger rounded p-2 mr-2"
-          (click)="deleteWindowEducation = true">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileDelete}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-        <a class="font-weight-bold btn btn-primary rounded p-2"
-          (click)="modificationType === 'edit' ? updateEducation() : saveEducation()">
-          &nbsp;&nbsp;&nbsp;&nbsp; {{language.profileSave}}
-          &nbsp;&nbsp;&nbsp;&nbsp; </a>
-      </div>
-    </div>
-  </kendo-window>
-
-  <kendo-dialog title="{{language.adminPleaseConfirm}}" *ngIf="deleteWindowEducation"
-    (close)="deleteWindowEducation = false" [width]="windowWidth ? windowWidth : 450"
-    [height]="windowHeight ? windowHeight : 250">
-    <div class="modal-body text-center">
-      <img src="../../../../../assets/img/sent.png" alt="" width="50" height="46">
-      <h3>{{language.areYouSure}}</h3>
-    </div>
-    <kendo-dialog-actions>
-      <button kendoButton (click)="deleteWindowEducation = false">{{language.no}}</button>
-      <button kendoButton (click)="deleteEducation('yes')" primary="true">{{language.yes}}</button>
-    </kendo-dialog-actions>
-  </kendo-dialog>
-
-  <kendo-window title="{{language.changePasswordTitle}}" *ngIf="changePasswordWindow"
-    (close)="changePasswordWindow = false" [width]="windowWidth ? windowWidth : 440"
-    [height]="windowHeight ? windowHeight : 390">
-    <form (ngSubmit)="changePassword()">
-      <div class="error-alert" *ngIf="badOldPassword">{{language.oldPasswordIsBad}}</div>
-      <div class="error-alert" *ngIf="passwordIsNotEqual">{{language.passwordIsNotEqual}}</div>
-      <div class="error-alert" *ngIf="notUseSamePassword">{{language.notUseSamePassword}}</div>
-      <div class="col-sm-12 mb-2">
-        <label id="positionLabel" class="form-label">{{language.fieldOldPasword}}</label>
-        <div class="input-group">
-          <input type="password" class="form-control" [(ngModel)]="changePasswordData.old" name="old">
-        </div>
-      </div>
-      <div class="col-sm-12 mb-2">
-        <label id="positionLabel" class="form-label">{{language.fieldNewPassword}}</label>
-        <div class="input-group">
-          <input type="password" class="form-control" [(ngModel)]="changePasswordData.new" name="new">
-        </div>
-      </div>
-      <div class="col-sm-12 mb-2">
-        <label id="positionLabel" class="form-label">{{language.fieldNewPasswordRepeat}}</label>
-        <div class="input-group">
-          <input type="password" class="form-control" [(ngModel)]="changePasswordData.newRepeat" name="newRepeat">
-        </div>
-      </div>
-      <div class="form-group" style="text-align: center; margin-top: 15px;">
-        <button kendoButton [primary]="true" [primary]="true" class="form-button"
-          type="submit">{{language.updateData}}</button>
-      </div>
-    </form>
-  </kendo-window>
-
-
 </div>

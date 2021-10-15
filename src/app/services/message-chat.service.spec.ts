@@ -6,7 +6,7 @@ describe('MessageChatService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MessageChatService = TestBed.get(MessageChatService);
+    const service: MessageChatService = TestBed.inject(MessageChatService);
     expect(service).toBeTruthy();
   });
 });

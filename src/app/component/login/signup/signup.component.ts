@@ -4,6 +4,8 @@ import { UserModel } from "src/app/models/user-model";
 import { Router, ActivatedRoute } from "@angular/router";
 import { MailService } from "src/app/services/mail.service";
 import { ProfileService } from "src/app/services/profile.service";
+import { HelpService } from "src/app/services/help.service";
+import { TranslationService } from "src/app/services/translation.service";
 
 @Component({
   selector: "app-signup",
@@ -27,9 +29,11 @@ export class SignupComponent implements OnInit {
     private service: LoginService,
     private profileService: ProfileService,
     private router: Router,
-    private route: ActivatedRoute,
-    private mailService: MailService
-  ) {}
+    private activatedRoute: ActivatedRoute,
+    private mailService: MailService,
+    private helpService: HelpService,
+    private translationService: TranslationService
+  ) { }
 
   ngOnInit() {
     this.packModelFromUrl();
@@ -37,31 +41,23 @@ export class SignupComponent implements OnInit {
   }
 
   packModelFromUrl() {
-    this.directorId = this.route.snapshot.params.id;
-    if (this.route.snapshot.params.email !== "null") {
-      this.data.email = this.route.snapshot.params.email;
+    this.directorId = this.activatedRoute.snapshot.params.id;
+    if (this.activatedRoute.snapshot.params.email !== "null") {
+      this.data.email = this.activatedRoute.snapshot.params.email;
     }
-    if (this.route.snapshot.params.firstname !== "null") {
-      this.data.firstname = this.route.snapshot.params.firstname;
+    if (this.activatedRoute.snapshot.params.firstname !== "null") {
+      this.data.firstname = this.activatedRoute.snapshot.params.firstname;
     }
-    if (this.route.snapshot.params.lastname !== "null") {
-      this.data.lastname = this.route.snapshot.params.lastname;
+    if (this.activatedRoute.snapshot.params.lastname !== "null") {
+      this.data.lastname = this.activatedRoute.snapshot.params.lastname;
     }
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe((data) => {
-      this.service
-        .getTranslationByCountryCode(data["countryCode"])
-        .subscribe((language) => {
-          if (language !== null) {
-            this.language = language["config"];
-          } else {
-            this.service.getDefaultLanguage().subscribe((language) => {
-              this.language = language["config"];
-            });
-          }
-        });
+    let languageCode = this.activatedRoute.snapshot.paramMap.get('languageCode').toLowerCase();
+
+    this.translationService.getTranslation(languageCode).subscribe((data) => {
+      this.language = data;
     });
   }
 
@@ -79,9 +75,9 @@ export class SignupComponent implements OnInit {
         directorId: this.directorId,
       };
       if (
-        this.route.snapshot.params.email === "null" &&
-        this.route.snapshot.params.firstname === "null" &&
-        this.route.snapshot.params.lastname === "null"
+        this.activatedRoute.snapshot.params.email === "null" &&
+        this.activatedRoute.snapshot.params.firstname === "null" &&
+        this.activatedRoute.snapshot.params.lastname === "null"
       ) {
         this.service.joinToFromReferral(data).subscribe((data) => {
           console.log(data);
@@ -101,7 +97,7 @@ export class SignupComponent implements OnInit {
               confirmMailGenerateMail: this.language.confirmMailGenerateMail,
               confirmMailCopyright: this.language.confirmMailCopyright,
             };
-            this.mailService.sendMail(this.data, function () {});
+            this.mailService.sendMail(this.data, function () { });
             this.successSignUp = true;
             setTimeout(() => {
               this.router.navigate(["/login"]);

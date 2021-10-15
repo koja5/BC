@@ -17,8 +17,8 @@ import { HelpService } from 'src/app/services/help.service';
   styleUrls: ["./record-video.component.scss"],
 })
 export class RecordVideoComponent implements OnInit {
-  @Input() width: any;
-  @Input() height: any;
+  @Input() width: any = 500;
+  @Input() height: any = 420;
   @Output() saveRecordVideoEmitter = new EventEmitter<any>();
 
   public disabled: any;
@@ -27,8 +27,7 @@ export class RecordVideoComponent implements OnInit {
   public multipleWebcamsAvailable = false;
   public previewVideo = true;
   public language: any;
-  @ViewChild("videoPreview")
-  video: ElementRef<HTMLVideoElement>;
+  @ViewChild("videoPreview", { static: false }) video: ElementRef<HTMLVideoElement>;
 
   constructor(private helpService: HelpService) {
     /*console.log(document.getElementById("video-preview"));

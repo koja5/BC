@@ -1,5 +1,5 @@
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
-import { LifeEventService } from "src/app/services/life-event.service";
 import { ProfileService } from "src/app/services/profile.service";
 import * as sha1 from "sha1";
 import { Router } from "@angular/router";
@@ -7,6 +7,7 @@ import { HelpService } from "src/app/services/help.service";
 import { EditEventService } from "src/app/services/edit-event.service";
 import { ConnectionService } from "src/app/services/connection.service";
 import { PrepareMailService } from "src/app/services/help-services/prepare-mail.service";
+import { LifeEventDetailsDialogComponent } from 'src/app/component/modals/life-event-details-dialog/life-event-details-dialog.component';
 
 @Component({
   selector: "app-life",
@@ -24,7 +25,6 @@ export class LifeComponent implements OnInit {
   @Output() searchOrganizatorEmitter = new EventEmitter<any>();
   @Output() selectOrganizatorEmitter = new EventEmitter<any>();
   @Output() selectEventEmitter = new EventEmitter<any>();
-  public showPreview = false;
   public allMyConnectionSpeakers: any;
   public allMyConnectionListeners: any;
   public currentLoadData: any;
@@ -36,8 +36,9 @@ export class LifeComponent implements OnInit {
     private helpService: HelpService,
     private editEventService: EditEventService,
     private connectionService: ConnectionService,
-    private prepareMail: PrepareMailService
-  ) {}
+    private prepareMail: PrepareMailService,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit() {
     this.initialization();
@@ -201,5 +202,26 @@ export class LifeComponent implements OnInit {
 
   isItemSelectedListeners(itemText: string): boolean {
     return this.data.listeners.some((item) => item.id === itemText);
+  }
+
+  openLifeEventDetailsDialog(): void {
+    const modalRef = this.modalService.open(LifeEventDetailsDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => null,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.data = this.data;
   }
 }

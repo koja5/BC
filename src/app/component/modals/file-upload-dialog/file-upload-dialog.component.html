@@ -1,0 +1,17 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div footer class="row text-center w-100">
+        <div class="col-6">
+            <button class="btn btn-primary">
+                <label for="file-upload-profile" class="change-icon mb-0" style="cursor: pointer;">
+                    <i class="fa fa-plus"></i> {{language.profileAddImage}}
+                </label>
+                <input id="file-upload-profile" type="file" (change)="fileChangeEventProfile($event)" ng2FileSelect
+                    [uploader]="uploader" />
+            </button>
+        </div>
+        <div class="col-6">
+            <button class="btn btn-light" (click)="openCameraDialog()"><i class="fa fa-camera"></i>
+                {{language.profileTakePhotoWithCamera}}</button>
+        </div>
+    </div>
+</app-dynamic-dialog>

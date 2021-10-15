@@ -1,15 +1,11 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import "rxjs/add/operator/map";
+import { HttpClient } from "@angular/common/http";
+import { map } from 'rxjs/operators';
 import {
   DomSanitizer,
-  SafeResourceUrl,
-  SafeUrl,
 } from "@angular/platform-browser";
 import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
-import { ProfileService } from "./profile.service";
-import { EditEventService } from "./edit-event.service";
 
 @Injectable({
   providedIn: "root",
@@ -20,8 +16,6 @@ export class HelpService {
   constructor(
     public domSanitizer: DomSanitizer,
     private toastr: ToastrService,
-    private profileService: ProfileService,
-    private editEventService: EditEventService,
     private http: HttpClient
   ) {
     this.language = JSON.parse(localStorage.getItem("language"));
@@ -371,7 +365,7 @@ export class HelpService {
     return sessionStorage.getItem('previous-path');
   }
 
-  setLanguage(language) {
+  setLanguage(language: Object) {
     localStorage.setItem('language', JSON.stringify(language));
   }
 
@@ -379,14 +373,22 @@ export class HelpService {
     return JSON.parse(localStorage.getItem('language'));
   }
 
+  setLanguageCode(languageCode: string) {
+    localStorage.setItem('languageCode', JSON.stringify(languageCode));
+  }
+
+  getLanguageCode() {
+    return JSON.parse(localStorage.getItem('languageCode'));
+  }
+
   postApiRequest(method, parametar) {
-    return this.http.post(method, parametar).map((res) => res);
+    return this.http.post(method, parametar).pipe(map((res) => res));
   }
 
   getApiRequest(method, parametars) {
     return this.http
       .get(this.concatenateRequest(method, parametars))
-      .map((res) => res);
+      .pipe(map((res) => res));
   }
 
   concatenateRequest(method, parametars) {

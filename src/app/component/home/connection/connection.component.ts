@@ -1,9 +1,12 @@
+import { RecommendedDialogComponent } from './../../modals/recommended-dialog/recommended-dialog.component';
+import { PromoVideoComponent } from '../../modals/promo-video/promo-video.component';
 import { Component, OnInit, HostListener } from "@angular/core";
 import { ConnectionService } from "src/app/services/connection.service";
 import { Router } from "@angular/router";
 import * as sha1 from "sha1";
 import { UserModel } from 'src/app/models/user-model';
 import { HelpService } from 'src/app/services/help.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: "app-connection",
@@ -16,14 +19,16 @@ export class ConnectionComponent implements OnInit {
   public language: any;
   public searchTerm: any;
   public height: any;
-  public recommendedWindow = false;
   public hover = "fa fa-heart-o";
   public recommendedItem: any;
   public hoverItem: any;
-  public promoWindow = false;
   public selectedMember = new UserModel();
 
-  constructor(private service: ConnectionService, private router: Router, private helpService: HelpService) {}
+  constructor(
+    private connectionService: ConnectionService,
+    private router: Router,
+    private modalService: NgbModal,
+    private helpService: HelpService) { }
 
   ngOnInit() {
     if (window.innerWidth > 1000) {
@@ -48,14 +53,14 @@ export class ConnectionComponent implements OnInit {
   getUsers(tab) {
     this.allUsers = undefined;
     if (tab === "myConnection") {
-      this.service
+      this.connectionService
         .getMyOwnConnection(localStorage.getItem("id"))
         .subscribe((data) => {
           console.log(data);
           this.allUsers = data;
         });
     } else {
-      this.service
+      this.connectionService
         .getOtherConnections(localStorage.getItem("id"))
         .subscribe((data) => {
           console.log(data);
@@ -79,11 +84,6 @@ export class ConnectionComponent implements OnInit {
     this.height += "px";
   }
 
-  recommendedWindowEmitter() {
-    this.recommendedWindow = false;
-    this.recommendedItem = null;
-  }
-
   heartHoverIn(index) {
     this.hover = "fa fa-heart";
     this.hoverItem = index;
@@ -101,7 +101,32 @@ export class ConnectionComponent implements OnInit {
       email: email,
       phone: phone,
     };
-    this.recommendedWindow = true;
+
+    const modalRef = this.modalService.open(RecommendedDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.recommendedTitle + ' ' + name,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = id;
+    modalRef.componentInstance.name = name;
+    modalRef.componentInstance.email = email;
+    modalRef.componentInstance.phone = phone;
+
+    modalRef.result.catch(() => {
+      this.recommendedItem = null;
+    });
   }
 
   sendMessageForThisUser(data) {
@@ -111,10 +136,26 @@ export class ConnectionComponent implements OnInit {
 
   openPromoVideo(item) {
     this.selectedMember = item;
-    this.promoWindow = true;
-  }
 
-  promoWindowEmitter() {
-    this.promoWindow = false;
+    const modalRef = this.modalService.open(PromoVideoComponent, {
+      size: 'sm',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => null,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.video = this.selectedMember.promo;
+    modalRef.componentInstance.owner = false;
+    modalRef.componentInstance.id = this.selectedMember.id;
   }
 }

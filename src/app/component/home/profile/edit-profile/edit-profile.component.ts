@@ -1,6 +1,9 @@
+import { EducationDialogComponent } from './../../../modals/education-dialog/education-dialog.component';
+import { ExperienceDialogComponent } from './../../../modals/experience-dialog/experience-dialog.component';
+import { ChangePasswordDialogComponent } from './../../../modals/change-password-dialog/change-password-dialog.component';
+import { ModalConfigurationService } from './../../../../services/modal-configuration.service';
 import { Component, OnInit, HostListener } from "@angular/core";
 import { EditProfileService } from "src/app/services/edit-profile.service";
-import { UserModel } from "src/app/models/user-model";
 import { ToastrService } from "ngx-toastr";
 import { MessageService } from "src/app/services/message.service";
 import { ImageCroppedEvent } from "ngx-image-cropper";
@@ -9,9 +12,9 @@ import { EducationModel } from "src/app/models/education-model";
 import { LookingOfferModel } from "src/app/models/looking-offer-model";
 import { AdditionalInfoModel } from "src/app/models/additional-info-model";
 import { BankAccountModel } from "src/app/models/bank-account-model";
-import { ChangePasswordModel } from "src/app/models/change-password-model";
-import * as sha1 from "sha1";
 import { HelpService } from 'src/app/services/help.service';
+import { NgbModal, NgbModalRef } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-edit-profile",
@@ -26,17 +29,12 @@ export class EditProfileComponent implements OnInit {
   public language: any;
   public allExperience: any = [];
   public experience = new ExperienceModel();
-  public experienceWindow = false;
   public windowWidth: any;
   public windowHeight: any;
-  public modificationType: any;
   public selectedExperience: any;
-  public deleteWindowExperience = false;
   public allEducation: any = [];
   public education = new EducationModel();
-  public educationWindow = false;
   public selectedEducation: any;
-  public deleteWindowEducation = false;
   public lookingOffer = new LookingOfferModel();
   public lookingOfferCreate = false;
   public additionalInfo = new AdditionalInfoModel();
@@ -46,18 +44,15 @@ export class EditProfileComponent implements OnInit {
   public badIBAN = false;
   public salutationItem: any;
   public relationshipItem: any;
-  public changePasswordWindow = false;
-  public changePasswordData = new ChangePasswordModel();
-  public badOldPassword = false;
-  public passwordIsNotEqual = false;
-  public notUseSamePassword = false;
 
   constructor(
-    private service: EditProfileService,
+    private editProfileService: EditProfileService,
     private toastr: ToastrService,
     private message: MessageService,
-    public helpService: HelpService
-  ) {}
+    public helpService: HelpService,
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
+  ) { }
 
   ngOnInit() {
     this.id = localStorage.getItem("id");
@@ -80,7 +75,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   initialization() {
-    this.service.getUserInfoSHA1(this.id).subscribe((data) => {
+    this.editProfileService.getUserInfoSHA1(this.id).subscribe((data) => {
       this.data = data[0];
       this.data.birthday = new Date(data[0].birthday);
     });
@@ -89,7 +84,7 @@ export class EditProfileComponent implements OnInit {
 
     this.getEducation();
 
-    this.service.getLookingOffer(this.id).subscribe((data) => {
+    this.editProfileService.getLookingOffer(this.id).subscribe((data) => {
       if (data["length"] > 0) {
         this.lookingOffer = data[0];
       } else {
@@ -97,7 +92,7 @@ export class EditProfileComponent implements OnInit {
       }
     });
 
-    this.service.getAdditionalInfo(this.id).subscribe((data) => {
+    this.editProfileService.getAdditionalInfo(this.id).subscribe((data) => {
       if (data["length"] > 0) {
         this.additionalInfo = data[0];
       } else {
@@ -105,7 +100,7 @@ export class EditProfileComponent implements OnInit {
       }
     });
 
-    this.service.getBankAccount(this.id).subscribe((data) => {
+    this.editProfileService.getBankAccount(this.id).subscribe((data) => {
       if (data["length"] > 0) {
         this.bankAccount = data[0];
       } else {
@@ -115,7 +110,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   getExperience() {
-    this.service.getExperience(this.id).subscribe((data: []) => {
+    this.editProfileService.getExperience(this.id).subscribe((data: []) => {
       console.log(data);
       this.allExperience = data.sort((a, b) => {
         return (
@@ -135,7 +130,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   getEducation() {
-    this.service.getEducation(this.id).subscribe((data: []) => {
+    this.editProfileService.getEducation(this.id).subscribe((data: []) => {
       console.log(data);
       this.allEducation = data.sort((a, b) => {
         return (
@@ -155,7 +150,7 @@ export class EditProfileComponent implements OnInit {
   }
 
   saveChanges() {
-    this.service.editUser(this.data).subscribe((data) => {
+    this.editProfileService.editUser(this.data).subscribe((data) => {
       console.log(data);
       if (data) {
         this.toastr.success(
@@ -198,7 +193,7 @@ export class EditProfileComponent implements OnInit {
 
   saveExperience() {
     this.experience.id_user = this.id;
-    this.service.createExperience(this.experience).subscribe((data) => {
+    this.editProfileService.createExperience(this.experience).subscribe((data) => {
       if (data["success"]) {
         this.toastr.success(
           this.language.adminSuccessCreateTitle,
@@ -208,7 +203,6 @@ export class EditProfileComponent implements OnInit {
         // this.allExperience.push(this.experience);
         this.experience = new ExperienceModel();
         this.getExperience();
-        this.experienceWindow = false;
       } else {
         this.toastr.error(
           this.language.adminErrorCreateTitle,
@@ -227,25 +221,76 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
+  addNewExperience() {
+    const modalRef = this.modalService.open(ExperienceDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileExperienceTitle,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => this.language.profileSave,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    this.experience = new ExperienceModel();
+    modalRef.componentInstance.experience = this.experience;
+
+    modalRef.result.then(() => {
+      this.saveExperience();
+    }, () => {
+      console.log(`Dismissed education dialog`);
+    });
+  }
+
+
   editExperience(i) {
     this.experience = this.allExperience[i];
     this.selectedExperience = {
       index: i,
       data: this.allExperience[i],
     };
-    this.modificationType = "edit";
-    this.experienceWindow = true;
+
+    const modalRef = this.modalService.open(ExperienceDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileExperienceTitle,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => this.language.profileSave,
+        secondaryButtonLabel: () => this.language.profileDelete
+      }
+    };
+    modalRef.componentInstance.experience = this.allExperience[i];
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then(() => {
+      this.updateExperience();
+    }, (reason) => {
+      if (reason === 'secondary-button-clicked') {
+        this.openDeleteExperienceDialog();
+      }
+    });
   }
 
   updateExperience() {
-    this.service.updateExperience(this.experience).subscribe((data) => {
+    this.editProfileService.updateExperience(this.experience).subscribe((data) => {
       if (data) {
         this.toastr.success(
           this.language.adminSuccessUpdateTitle,
           this.language.adminSuccessUpdateText,
           { timeOut: 7000, positionClass: "toast-bottom-right" }
         );
-        this.experienceWindow = false;
         this.getExperience();
         this.experience = new ExperienceModel();
       } else {
@@ -258,34 +303,61 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  deleteExperience(answer) {
-    if (answer === "yes") {
-      this.service
-        .deleteExperience(this.selectedExperience.data.id)
-        .subscribe((data) => {
-          if (data) {
-            this.toastr.success(
-              this.language.adminDeleteTitle,
-              this.language.adminDeleteText,
-              { timeOut: 7000, positionClass: "toast-bottom-right" }
-            );
-            this.allExperience.splice(this.selectedExperience.index, 1);
-          }
-        });
-    }
-    this.deleteWindowExperience = false;
-    this.experienceWindow = false;
+  openDeleteExperienceDialog(): void {
+    const modalRef = this.openDeleteDialog();
+    modalRef.result.then(() => {
+      this.deleteExperience();
+    }, () => {
+      console.log(`Dismissed`)
+    });
   }
 
-  addNewExperience() {
-    this.modificationType = "add";
-    this.experienceWindow = true;
-    this.experience = new ExperienceModel();
+  deleteExperience() {
+    this.editProfileService
+      .deleteExperience(this.selectedExperience.data.id)
+      .subscribe((data) => {
+        if (data) {
+          this.toastr.success(
+            this.language.adminDeleteTitle,
+            this.language.adminDeleteText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+          this.allExperience.splice(this.selectedExperience.index, 1);
+        }
+      });
+
+  }
+
+  addNewEducation(): void {
+    const modalRef = this.modalService.open(EducationDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileEducationTitle,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => this.language.profileSave,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    this.education = new EducationModel();
+    modalRef.componentInstance.education = this.education;
+
+    modalRef.result.then(() => {
+      this.saveEducation();
+    }, () => {
+      console.log(`Dismissed education dialog`);
+    });
   }
 
   saveEducation() {
     this.education.id_user = this.id;
-    this.service.createEducation(this.education).subscribe((data) => {
+    this.editProfileService.createEducation(this.education).subscribe((data) => {
       if (data["success"]) {
         this.toastr.success(
           this.language.adminSuccessCreateTitle,
@@ -295,7 +367,6 @@ export class EditProfileComponent implements OnInit {
         // this.allEducation.push(this.education);
         this.education = new EducationModel();
         this.getEducation();
-        this.educationWindow = false;
       } else {
         this.toastr.error(
           this.language.adminErrorCreateTitle,
@@ -312,19 +383,42 @@ export class EditProfileComponent implements OnInit {
       index: i,
       data: this.allEducation[i],
     };
-    this.modificationType = "edit";
-    this.educationWindow = true;
+
+    const modalRef = this.modalService.open(EducationDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.profileEducationTitle,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => this.language.profileSave,
+        secondaryButtonLabel: () => this.language.profileDelete
+      }
+    };
+    modalRef.componentInstance.education = this.allEducation[i];
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then(() => {
+      this.updateEducation();
+    }, (reason) => {
+      if (reason === 'secondary-button-clicked') {
+        this.openDeleteEducationDialog();
+      }
+    });
   }
 
   updateEducation() {
-    this.service.updateEducation(this.education).subscribe((data) => {
+    this.editProfileService.updateEducation(this.education).subscribe((data) => {
       if (data) {
         this.toastr.success(
           this.language.adminSuccessUpdateTitle,
           this.language.adminSuccessUpdateText,
           { timeOut: 7000, positionClass: "toast-bottom-right" }
         );
-        this.educationWindow = false;
         this.getEducation();
         this.education = new EducationModel();
       } else {
@@ -337,41 +431,39 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
-  deleteEducation(answer) {
-    if (answer === "yes") {
-      this.service
-        .deleteEducation(this.selectedEducation.data.id)
-        .subscribe((data) => {
-          if (data) {
-            this.toastr.success(
-              this.language.adminDeleteTitle,
-              this.language.adminDeleteText,
-              { timeOut: 7000, positionClass: "toast-bottom-right" }
-            );
-            this.allEducation.splice(this.selectedEducation.index, 1);
-          }
-        });
-    }
-    this.deleteWindowEducation = false;
-    this.educationWindow = false;
+  openDeleteEducationDialog(): void {
+    const modalRef = this.openDeleteDialog();
+    modalRef.result.then(() => {
+      this.deleteEducation();
+    }, () => {
+      console.log(`Dismissed`)
+    });
   }
 
-  addNewEducation() {
-    this.modificationType = "add";
-    this.educationWindow = true;
-    this.education = new EducationModel();
+  deleteEducation() {
+    this.editProfileService
+      .deleteEducation(this.selectedEducation.data.id)
+      .subscribe((data) => {
+        if (data) {
+          this.toastr.success(
+            this.language.adminDeleteTitle,
+            this.language.adminDeleteText,
+            { timeOut: 7000, positionClass: "toast-bottom-right" }
+          );
+          this.allEducation.splice(this.selectedEducation.index, 1);
+        }
+      });
   }
 
   saveLookingOffer() {
     if (!this.lookingOfferCreate) {
-      this.service.updateLookingOffer(this.lookingOffer).subscribe((data) => {
+      this.editProfileService.updateLookingOffer(this.lookingOffer).subscribe((data) => {
         if (data) {
           this.toastr.success(
             this.language.adminSuccessUpdateTitle,
             this.language.adminSuccessUpdateText,
             { timeOut: 7000, positionClass: "toast-bottom-right" }
           );
-          this.educationWindow = false;
           this.education = new EducationModel();
         } else {
           this.toastr.error(
@@ -383,7 +475,7 @@ export class EditProfileComponent implements OnInit {
       });
     } else {
       this.lookingOffer.id_user = this.id;
-      this.service.createLookingOffer(this.lookingOffer).subscribe((data) => {
+      this.editProfileService.createLookingOffer(this.lookingOffer).subscribe((data) => {
         if (data["success"]) {
           this.toastr.success(
             this.language.adminSuccessCreateTitle,
@@ -392,7 +484,6 @@ export class EditProfileComponent implements OnInit {
           );
           this.allEducation.push(this.education);
           this.education = new EducationModel();
-          this.educationWindow = false;
         } else {
           this.toastr.error(
             this.language.adminErrorCreateTitle,
@@ -406,7 +497,7 @@ export class EditProfileComponent implements OnInit {
 
   saveAdditionalInfo() {
     if (!this.additionalInfoCreate) {
-      this.service
+      this.editProfileService
         .updateAdditionalInfo(this.additionalInfo)
         .subscribe((data) => {
           if (data) {
@@ -415,7 +506,6 @@ export class EditProfileComponent implements OnInit {
               this.language.adminSuccessUpdateText,
               { timeOut: 7000, positionClass: "toast-bottom-right" }
             );
-            this.educationWindow = false;
             this.education = new EducationModel();
           } else {
             this.toastr.error(
@@ -427,7 +517,7 @@ export class EditProfileComponent implements OnInit {
         });
     } else {
       this.additionalInfo.id_user = this.id;
-      this.service
+      this.editProfileService
         .createAdditionalInfo(this.additionalInfo)
         .subscribe((data) => {
           if (data["success"]) {
@@ -438,7 +528,6 @@ export class EditProfileComponent implements OnInit {
             );
             this.allEducation.push(this.education);
             this.education = new EducationModel();
-            this.educationWindow = false;
           } else {
             this.toastr.error(
               this.language.adminErrorCreateTitle,
@@ -455,14 +544,13 @@ export class EditProfileComponent implements OnInit {
       this.bankAccount.telephone = this.data.phoneNumber;
       this.bankAccount.mobile = this.data.mobile1;
       if (!this.bankAccountCreate) {
-        this.service.updateBankAccount(this.bankAccount).subscribe((data) => {
+        this.editProfileService.updateBankAccount(this.bankAccount).subscribe((data) => {
           if (data) {
             this.toastr.success(
               this.language.adminSuccessUpdateTitle,
               this.language.adminSuccessUpdateText,
               { timeOut: 7000, positionClass: "toast-bottom-right" }
             );
-            this.educationWindow = false;
             this.education = new EducationModel();
           } else {
             this.toastr.error(
@@ -474,7 +562,7 @@ export class EditProfileComponent implements OnInit {
         });
       } else {
         this.bankAccount.id_user = this.id;
-        this.service.createBankAccount(this.bankAccount).subscribe((data) => {
+        this.editProfileService.createBankAccount(this.bankAccount).subscribe((data) => {
           if (data["success"]) {
             this.toastr.success(
               this.language.adminSuccessCreateTitle,
@@ -483,7 +571,6 @@ export class EditProfileComponent implements OnInit {
             );
             this.allEducation.push(this.education);
             this.education = new EducationModel();
-            this.educationWindow = false;
           } else {
             this.toastr.error(
               this.language.adminErrorCreateTitle,
@@ -504,8 +591,6 @@ export class EditProfileComponent implements OnInit {
     }
   }
 
-  
-
   selectedSalutation(event) {
     this.data.salutation = event;
   }
@@ -514,37 +599,35 @@ export class EditProfileComponent implements OnInit {
     this.data.relationship = event;
   }
 
-  changePassword() {
-    this.badOldPassword = false;
-    this.passwordIsNotEqual = false;
-    if (sha1(this.changePasswordData.old) !== this.data.password) {
-      this.badOldPassword = true;
-    } else if (
-      this.changePasswordData.new !== this.changePasswordData.newRepeat
-    ) {
-      this.passwordIsNotEqual = true;
-    } else if (this.data.password === sha1(this.changePasswordData.new)) {
-      this.notUseSamePassword = true;
-    } else {
-      this.changePasswordData.id = this.data.id;
-      this.service.updatePassword(this.changePasswordData).subscribe((data) => {
-        if (data) {
-          this.toastr.success(
-            this.language.adminSuccessUpdateTitle,
-            this.language.adminSuccessUpdateText,
-            { timeOut: 7000, positionClass: "toast-bottom-right" }
-          );
-          this.educationWindow = false;
-          this.education = new EducationModel();
-        } else {
-          this.toastr.error(
-            this.language.adminErrorUpdateTitle,
-            this.language.adminErrorUpdateText,
-            { timeOut: 7000, positionClass: "toast-bottom-right" }
-          );
-        }
-        this.changePasswordWindow = false;
-      });
-    }
+  openChangePasswordModal(): void {
+    const modalRef = this.modalService.open(ChangePasswordDialogComponent, {
+      size: 'sm',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.changePasswordTitle,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
   }
+
+  private openDeleteDialog(): NgbModalRef {
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
+    modalRef.componentInstance.modal = modalRef;
+
+    return modalRef;
+  }
+
 }

@@ -1,14 +1,19 @@
-import { Component, OnInit, Input, ViewChild } from "@angular/core";
+import { VirtualEventInviteFriendDialogComponent } from './../../../../modals/virtual-event-invite-friend-dialog/virtual-event-invite-friend-dialog.component';
+import { Component, OnInit, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { LifeEventService } from "src/app/services/life-event.service";
 import { ProfileService } from "src/app/services/profile.service";
 import { ConnectionService } from "src/app/services/connection.service";
-import { ToastrService } from "ngx-toastr";
 import * as sha1 from "sha1";
 import { HelpService } from "src/app/services/help.service";
 import { EditEventService } from "src/app/services/edit-event.service";
-import { SetPackagesService } from "src/app/services/help-services/set-packages.service";
 import { PrepareMailService } from "src/app/services/help-services/prepare-mail.service";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
+import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
+import { InviteVirtualParticipantDialogComponent } from 'src/app/component/modals/invite-virtual-participant-dialog/invite-virtual-participant-dialog.component';
+import { ReminderFriendsDialogComponent } from 'src/app/component/modals/reminder-friends-dialog/reminder-friends-dialog.component';
+import { LifeEventMemberDetailsComponent } from 'src/app/component/modals/life-event-member-details/life-event-member-details.component';
 
 @Component({
   selector: "app-virtual-event-details",
@@ -21,7 +26,6 @@ export class VirtualEventDetailsComponent implements OnInit {
   public id: any;
   public language: any;
   public eventStatus: any;
-  public deleteEventWindow = false;
   public freeSpace = true;
   public numberOfFreeSpace: number;
   public organizator: any;
@@ -33,14 +37,11 @@ export class VirtualEventDetailsComponent implements OnInit {
   public reminderFriendsWindow = false;
   public selectedReminderFriends: any;
   public owner = false;
-  public inviteVirtualParticipantWindow = false;
-  public inviteVirtualParticipantWindowMessage: any;
   public typeOfVirtualParticipant = "speakers";
   public selectedSpeakers: any;
   public selectedListeners: any;
   public registerLikeSpeaker = 0;
   public registerLikeListener = 0;
-  public memberGoingWindow = false;
   public popupInd = false;
   public popupTitle: any;
   public popupText: any;
@@ -51,15 +52,13 @@ export class VirtualEventDetailsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: LifeEventService,
     private profileService: ProfileService,
-    private connectionService: ConnectionService,
-    private toastr: ToastrService,
     private helpService: HelpService,
     private editEventService: EditEventService,
-    private setPackages: SetPackagesService,
-    private prepareMail: PrepareMailService
-  ) {}
+    private prepareMail: PrepareMailService,
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
+  ) { }
 
   ngOnInit() {
     this.language = this.helpService.getLanguage();
@@ -107,19 +106,31 @@ export class VirtualEventDetailsComponent implements OnInit {
     ]);
   }
 
-  deleteEvent(answer) {
-    if (answer === "yes") {
-      this.editEventService.deleteEventData(this.data._id).subscribe((data) => {
-        if (data) {
-          this.helpService.deleteSuccessMessage();
-          this.router.navigate(["/home/main/event/all"]);
-        } else {
-          this.helpService.deleteErrorMessage();
-        }
-      });
-    }
+  openAreYouSureDialog(): void {
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
 
-    this.deleteEventWindow = false;
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then(() => {
+      this.deleteEvent();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  deleteEvent() {
+    this.editEventService.deleteEventData(this.data._id).subscribe((data) => {
+      if (data) {
+        this.helpService.deleteSuccessMessage();
+        this.router.navigate(["/home/main/event/all"]);
+      } else {
+        this.helpService.deleteErrorMessage();
+      }
+    });
   }
 
   getOrganizatorProfile(id) {
@@ -129,38 +140,30 @@ export class VirtualEventDetailsComponent implements OnInit {
     });
   }
 
-  openInviteFriendsWindow() {
-    this.inviteFriendWindow = true;
-    this.connectionService
-      .getAllMyConnections(localStorage.getItem("id"))
-      .subscribe((data) => {
-        this.allMyConnection = data;
-        this.currentLoadData = data;
-      });
-  }
+  openInviteFriendsWindow(): void {
+    const modalRef = this.modalService.open(VirtualEventInviteFriendDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
 
-  isItemSelected(itemText: string): boolean {
-    return this.selectedInviteFriends.some((item) => item.id === itemText);
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.virtualEventInviteFriend,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = this.id;
   }
 
   isItemSelectedReminder(itemText: string): boolean {
     return this.selectedReminderFriends.some((item) => item.id === itemText);
   }
 
-  handleFilter(value) {
-    this.allMyConnection = this.currentLoadData.filter(
-      (s) => s.fullname.toLowerCase().indexOf(value.toLowerCase()) !== -1
-    );
-  }
-
-  sendInviteForSelectedFriends() {
-    this.prepareMail.sendInviteForSelectedFriends(
-      this.language,
-      this.selectedInviteFriends,
-      this.id
-    );
-    this.inviteFriendWindow = false;
-  }
 
   sendReminderForSelectedFriends() {
     this.prepareMail.sendReminderForSelectedFriends(
@@ -169,14 +172,6 @@ export class VirtualEventDetailsComponent implements OnInit {
       this.id
     );
     this.reminderFriendsWindow = false;
-  }
-
-  selectAllMyFriends() {
-    if (this.selectedInviteFriends.length !== this.currentLoadData.length) {
-      this.selectedInviteFriends = this.currentLoadData;
-    } else {
-      this.selectedInviteFriends = [];
-    }
   }
 
   selectAllMyReminderFriends() {
@@ -196,31 +191,47 @@ export class VirtualEventDetailsComponent implements OnInit {
     window.open("/home/main/room/" + this.id, "_blank");
   }
 
-  setReminder() {
-    this.reminderFriendsWindow = true;
-    this.service.getSignInForLifeEvent(this.id).subscribe((data) => {
-      console.log(data);
-      if (data) {
-        this.allMyConnection = data;
-        this.currentLoadData = data;
-        this.selectedReminderFriends = data;
-      }
+  public openReminderFriendsDialog(): void {
+    const modalRef = this.modalService.open(ReminderFriendsDialogComponent, {
+      size: 'lg',
+      centered: true
     });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.reminderFriendsForEventSendReminder,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = this.id;
   }
 
-  openInviteVirtualParticipantWindow() {
-    this.inviteVirtualParticipantWindow = true;
-    if (this.typeOfVirtualParticipant === "speakers") {
-      this.inviteVirtualParticipantWindowMessage = this.language.inviteVirtualParticipantSpeakerForEventMessage;
-    } else {
-      this.inviteVirtualParticipantWindowMessage = this.language.inviteVirtualParticipantListenerForEventMessage;
-    }
-    this.connectionService
-      .getAllMyConnections(localStorage.getItem("id"))
-      .subscribe((data) => {
-        this.allMyConnection = data;
-        this.currentLoadData = data;
-      });
+  openInviteVirtualParticipantDialog(): void {
+    const modalRef = this.modalService.open(InviteVirtualParticipantDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.recommendedTitle,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.id = this.id;
+    modalRef.componentInstance.data = this.data;
   }
 
   sendInviteForSelectedVirtualParticipant(type) {
@@ -237,12 +248,33 @@ export class VirtualEventDetailsComponent implements OnInit {
 
   showSpeakersGoing() {
     this.memberGoingList = this.data.speakers;
-    this.memberGoingWindow = true;
+    this.openLifeEventMemberDetailsDialog();
   }
 
   showListenersGoing() {
     this.memberGoingList = this.data.listeners;
-    this.memberGoingWindow = true;
+    this.openLifeEventMemberDetailsDialog();
+  }
+
+  public openLifeEventMemberDetailsDialog(): void {
+    const modalRef = this.modalService.open(LifeEventMemberDetailsComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => this.language.lifeEventDetailsMemberGoing,
+        text: () => null,
+        imageUrl: () => null,
+        imageStyle: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+    modalRef.componentInstance.memberGoingList = this.memberGoingList;
   }
 
   signInVirtualParticipant(type) {

@@ -1,25 +1,25 @@
 <div class="loader4 loading" *ngIf="data === undefined"></div>
 
 <div class="py-4">
-  <div class="container">
-    <div class="row">
-      <aside class="col col-xl-3 order-xl-1 col-lg-12 order-lg-1 col-md-6 col-sm-6 col-12">
-        <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden">
-          <div class="p-3 border-bottom">
-            <h6 class="font-weight-bold text-dark">{{language.lifeEventCreateTitle}}</h6>
-            <p class="mb-0 text-muted">{{language.lifeEventCreateText}}</p>
-          </div>
-          <div class="p-3">
-            <button type="button" class="btn btn-primary pl-4 pr-4" (click)="createEventWindow = true">
+    <div class="container">
+        <div class="row">
+            <aside class="col col-xl-3 order-xl-1 col-lg-12 order-lg-1 col-md-6 col-sm-6 col-12">
+                <div class="box shadow-sm mb-3 rounded bg-white text-center overflow-hidden">
+                    <div class="p-3 border-bottom">
+                        <h6 class="font-weight-bold text-dark">{{language.lifeEventCreateTitle}}</h6>
+                        <p class="mb-0 text-muted">{{language.lifeEventCreateText}}</p>
+                    </div>
+                    <div class="p-3">
+                        <button type="button" class="btn btn-primary pl-4 pr-4" (click)="openCreateEventDialog()">
               {{language.lifeEventCreateButton}}
             </button>
-          </div>
-        </div>
-      </aside>
-      <!-- Main Content -->
-      <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
-        <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
-          <!-- <form class="job-search p-3 border-bottom">
+                    </div>
+                </div>
+            </aside>
+            <!-- Main Content -->
+            <main class="col col-xl-9 order-xl-2 col-lg-12 order-lg-2 col-md-12 col-sm-12 col-12">
+                <div class="box shadow-sm border rounded bg-white mb-3 osahan-share-post">
+                    <!-- <form class="job-search p-3 border-bottom">
             <div class="input-group">
               <input type="text" class="form-control" placeholder="Search jobs" aria-label="Search"
                 aria-describedby="basic-addon2">
@@ -30,44 +30,32 @@
               </div>
             </div>
           </form> -->
-          <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="myOrAllEvent === 'all' ? 'active' : ''"
-                (click)="selectMyOrAllEventShow('all')">{{language.lifeEventAllEvent}}</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" [ngClass]="myOrAllEvent === 'my' ? 'active' : ''"
-                (click)="selectMyOrAllEventShow('my')">{{language.lifeEventMyEvent}}</a>
-            </li>
-          </ul>
-          <div class="tab-content" id="myTabContent">
-            <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
-              <div class="p-3 job-tags">
-                <button type="button" class="btn btn-sm mr-1"
-                  [ngClass]="eventType === 'all' ? 'btn-outline-primary' : 'btn-outline-secondary'"
-                  (click)="selectEventTypeShow('all')">{{language.lifeEventAll}}</button>
-                <button type="button" class="btn btn-sm mr-1"
-                  [ngClass]="eventType === 'life' ? 'btn-outline-primary' : 'btn-outline-secondary'"
-                  (click)="selectEventTypeShow('life')">{{language.lifeEventLife}}</button>
-                <button type="button" class="btn btn-sm mr-1"
-                  [ngClass]="eventType === 'virtual' ? 'btn-outline-primary' : 'btn-outline-secondary'"
-                  (click)="selectEventTypeShow('virtual')">{{language.lifeEventVirtual}}</button>
-              </div>
-              <div class="p-3 border-top">
-                <div class="row" *ngIf="data && language">
-                  <div class="col-md-6 mt-3" *ngFor="let item of data">
-                    <app-life-event *ngIf="item.eventType === 1" [item]="item" [language]="language"
-                      [months]="months[getNumberOfMonth(item.date)].text" [eventShareShowHide]="eventShareShowHide"
-                      (eventShareEmitter)="shareEvent($event)" (copyLinkEmitter)="copyLinkToClipboard($event)">
-                    </app-life-event>
-                    <app-virtual-event *ngIf="item.eventType === 2" [item]="item" [language]="language"
-                      [months]="months[getNumberOfMonth(item.date)].text" [eventShareShowHide]="eventShareShowHide"
-                      (eventShareEmitter)="shareEvent($event)" (copyLinkEmitter)="copyLinkToClipboard($event)">
-                    </app-virtual-event>
+                    <ul class="nav border-bottom osahan-line-tab" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="myOrAllEvent === 'all' ? 'active' : ''" (click)="selectMyOrAllEventShow('all')">{{language.lifeEventAllEvent}}</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" [ngClass]="myOrAllEvent === 'my' ? 'active' : ''" (click)="selectMyOrAllEventShow('my')">{{language.lifeEventMyEvent}}</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content" id="myTabContent">
+                        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                            <div class="p-3 job-tags">
+                                <button type="button" class="btn btn-sm mr-1" [ngClass]="eventType === 'all' ? 'btn-outline-primary' : 'btn-outline-secondary'" (click)="selectEventTypeShow('all')">{{language.lifeEventAll}}</button>
+                                <button type="button" class="btn btn-sm mr-1" [ngClass]="eventType === 'life' ? 'btn-outline-primary' : 'btn-outline-secondary'" (click)="selectEventTypeShow('life')">{{language.lifeEventLife}}</button>
+                                <button type="button" class="btn btn-sm mr-1" [ngClass]="eventType === 'virtual' ? 'btn-outline-primary' : 'btn-outline-secondary'" (click)="selectEventTypeShow('virtual')">{{language.lifeEventVirtual}}</button>
+                            </div>
+                            <div class="p-3 border-top">
+                                <div class="row" *ngIf="data && language">
+                                    <div class="col-md-6 mt-3" *ngFor="let item of data">
+                                        <app-life-event *ngIf="item.eventType === 1" [item]="item" [language]="language" [months]="months[getNumberOfMonth(item.date)].text" [eventShareShowHide]="eventShareShowHide" (eventShareEmitter)="shareEvent($event)" (copyLinkEmitter)="copyLinkToClipboard($event)">
+                                        </app-life-event>
+                                        <app-virtual-event *ngIf="item.eventType === 2" [item]="item" [language]="language" [months]="months[getNumberOfMonth(item.date)].text" [eventShareShowHide]="eventShareShowHide" (eventShareEmitter)="shareEvent($event)" (copyLinkEmitter)="copyLinkToClipboard($event)">
+                                        </app-virtual-event>
 
-                    <!-- <div class="border job-item mb-3">
+                                        <!-- <div class="border job-item mb-3">
                       <div class="d-flex align-items-center job-item-header">
-                        <img src="../../../../assets/img/no-photo-cover_copy.png" class="no-photo-event">
+                        <img loading="lazy"  src="../../../../assets/img/no-photo-cover_copy.png" class="no-photo-event">
                       </div>
                       <div class="d-flex align-items-center p-3 job-item-header">
                         <div class="overflow-hidden mr-2 col-sm-9">
@@ -94,36 +82,13 @@
                         </button>
                       </div>
                     </div> -->
-                  </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
+            </main>
         </div>
-      </main>
     </div>
-  </div>
-  <kendo-window *ngIf="createEventWindow" [width]="windowWidth ? windowWidth : 800"
-    [height]="windowHeight ? windowHeight : 450" (close)="createEventWindow = false">
-    <div class="row" style="text-align: center;">
-      <div class="col-md-6 col-sm-12 event event-life">
-        <img src="/assets/img/life_event.png" style="width: 220px; display: inherit; margin: auto">
-        <div>
-          <h3>{{language.lifeEventCreateLifeEventTitle}}</h3>
-          <h6>{{language.lifeEventCreateLifeEventText}}</h6>
-        </div>
-        <button class="btn btn-danger"
-          routerLink="/home/main/event/edit-event/life/create">{{language.lifeEventCreateLifeEvent}}</button>
-      </div>
-      <div class="col-md-6 col-sm-12 event event-virtual">
-        <img src="/assets/img/live_streaming.png" style="width: 326px">
-        <div>
-          <h3>{{language.lifeEventCreateLiveStreamingTitle}}</h3>
-          <h6>{{language.lifeEventCreateLiveStreamingText}}</h6>
-        </div>
-        <button class="btn btn-danger"
-          routerLink="/home/main/event/edit-event/virtual/create">{{language.lifeEventCreateLiveStreaming}}</button>
-      </div>
-    </div>
-  </kendo-window>
 </div>

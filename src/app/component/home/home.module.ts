@@ -7,7 +7,6 @@ import { FeedComponent } from './feed/feed.component';
 import { MessageComponent } from './message/message.component';
 import { EditProfileComponent } from './profile/edit-profile/edit-profile.component';
 import { FormsModule } from '@angular/forms';
-import { DialogsModule } from '@progress/kendo-angular-dialog';
 import { ContentPlaceholderComponent } from './content-placeholder/content-placeholder.component';
 import { InputsModule } from '@progress/kendo-angular-inputs';
 import { MyProfileComponent } from './profile/my-profile/my-profile.component';
@@ -22,8 +21,7 @@ import { ButtonsModule } from '@progress/kendo-angular-buttons';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ConnectionFilterPipe } from './connection/connection.pipe';
 import { RecommendationButtonComponent } from './recommendation-button/recommendation-button.component';
-import { PromoVideoComponent } from './profile/promo-video/promo-video.component';
-import { MatVideoModule } from 'mat-video';
+import { PromoVideoComponent } from '../modals/promo-video/promo-video.component';
 import { AboutUsComponent } from './about-us/about-us.component';
 import { EventsComponent } from './events/events.component';
 import { LifeEventComponent } from './events/life-event/life-event.component';
@@ -39,6 +37,7 @@ import { WebcamModule } from 'ngx-webcam';
 import { TakeCameraComponent } from './take-camera/take-camera.component';
 import { RecordVideoComponent } from './record-video/record-video.component';
 import { PopupComponent } from '../sub-components/popup/popup.component';
+import { ProfileSettingsComponent } from './profile/profile-settings/profile-settings.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +54,6 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     ContactComponent,
     ConnectionFilterPipe,
     RecommendationButtonComponent,
-    PromoVideoComponent,
     AboutUsComponent,
     EventsComponent,
     LifeEventComponent,
@@ -69,21 +67,26 @@ import { PopupComponent } from '../sub-components/popup/popup.component';
     RoomComponent,
     TakeCameraComponent,
     RecordVideoComponent,
-    PopupComponent
+    PopupComponent,
+    ProfileSettingsComponent
+  ],
+  exports: [
+    TakeCameraComponent,
+    LifeEventDetailsComponent,
+    RecordVideoComponent
   ],
   imports: [
     CommonModule,
     HomeRouting,
     FormsModule,
-    DialogsModule,
     InputsModule,
     DateInputsModule,
     ImageCropperModule,
     DropDownsModule,
     ButtonsModule,
     FileUploadModule,
-    MatVideoModule,
     WebcamModule
   ]
+
 })
 export class HomeModule { }

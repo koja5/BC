@@ -1,8 +1,9 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { EventAllService } from "src/app/services/event-all.service";
-import { Router } from "@angular/router";
 import { ToastrService } from "ngx-toastr";
 import { HelpService } from 'src/app/services/help.service';
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { CreateEventComponent } from "../../modals/create-event/create-event.component";
 
 @Component({
   selector: "app-events",
@@ -23,10 +24,10 @@ export class EventsComponent implements OnInit {
 
   constructor(
     private service: EventAllService,
-    private router: Router,
     private toastr: ToastrService,
-    private helpService: HelpService
-  ) {}
+    private helpService: HelpService,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit() {
     this.language = this.helpService.getLanguage();
@@ -130,5 +131,24 @@ export class EventsComponent implements OnInit {
 
   getNumberOfMonth(data) {
     return new Date(data).getMonth();
+  }
+
+  openCreateEventDialog(): void {
+    const modalRef = this.modalService.open(CreateEventComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => null,
+        text: () => null,
+        imageUrl: () => null,
+        primaryButtonLabel: () => null,
+        secondaryButtonLabel: () => null
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
   }
 }

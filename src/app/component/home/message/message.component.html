@@ -1,52 +1,41 @@
 <div *ngIf="language&&!messageWindow">
-  <!-- Main Content -->
-  <main class="col col-xl-12 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12"
-    style="padding: 0px !important;">
-    <div class="box shadow-sm rounded bg-white osahan-chat">
-      <!-- <h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3">Messaging</h5> -->
-      <div class="row m-0">
-        <div class="border-right col-lg-5 col-xl-4 px-0">
-          <div class="osahan-chat-left">
-            <div class="position-relative icon-form-control p-3 border-bottom">
-              <i class="feather-search position-absolute"></i>
-              <!-- <input placeholder="Search messages" type="text" class="form-control"> -->
-              <kendo-combobox [data]="userList" [textField]="'fullname'" [valueField]="'id'"
-                (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeUser($event)"
-                [(ngModel)]="selectedUser" name="user" [filterable]="true" (filterChange)="searchUser($event)"
-                [loading]="userListLoading" placeholder="{{language.messageSearchMember}}">
-                <ng-template kendoComboBoxItemTemplate let-dataItem>
-                  <p style="margin-top: 12px;">
-                    <img style="width: 35px; margin-right: 10px;" class="rounded-circle"
-                      src="../../../../../assets/img/profile_image/{{dataItem.image}}">
-                    <span style="font-weight: bold">{{ dataItem.fullname }}</span>
-                  </p>
-                </ng-template>
-              </kendo-combobox>
-            </div>
-            <div class="osahan-chat-list" style.height="{{height}}">
-              <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden item-message"
-                *ngFor="let mess of allMessages; let i = index"
-                [ngClass]="selectedMessage === mess._id ? 'bg-light border-left border-primary' : ''"
-                (click)="showMessages(mess._id, mess.image, mess.name, mess.profession, i, mess.receiveId)">
-                <div class="dropdown-list-image mr-3"><img class="rounded-circle"
-                    src="/assets/img/profile_image/{{mess.image}}" alt=""></div>
-                <div class="font-weight-bold mr-1 overflow-hidden">
-                  <div class="text-truncate">{{mess.name}}</div>
-                  <div class="small text-truncate overflow-hidden text-black-50"
-                    [ngClass]="mess.not_seen === id ? 'message-bold' : ''"><i *ngIf="mess.not_seen === id"
-                      class="feather-check text-primary"></i>
-                    <!-- <i
+    <!-- Main Content -->
+    <main class="col col-xl-12 order-xl-2 col-lg-12 order-lg-1 col-md-12 col-sm-12 col-12" style="padding: 0px !important;">
+        <div class="box shadow-sm rounded bg-white osahan-chat">
+            <!-- <h5 class="pl-3 pt-3 pr-3 border-bottom mb-0 pb-3">Messaging</h5> -->
+            <div class="row m-0">
+                <div class="border-right col-lg-5 col-xl-4 px-0">
+                    <div class="osahan-chat-left">
+                        <div class="position-relative icon-form-control p-3 border-bottom">
+                            <i class="feather-search position-absolute"></i>
+                            <!-- <input placeholder="Search messages" type="text" class="form-control"> -->
+                            <kendo-combobox [data]="userList" [textField]="'fullname'" [valueField]="'id'" (valueChange)="onValueChange($event)" (selectionChange)="selectionChangeUser($event)" [(ngModel)]="selectedUser" name="user" [filterable]="true" (filterChange)="searchUser($event)"
+                                [loading]="userListLoading" placeholder="{{language.messageSearchMember}}">
+                                <ng-template kendoComboBoxItemTemplate let-dataItem>
+                                    <p style="margin-top: 12px;">
+                                        <img loading="lazy" style="width: 35px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                                        <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                                    </p>
+                                </ng-template>
+                            </kendo-combobox>
+                        </div>
+                        <div class="osahan-chat-list" style.height="{{height}}">
+                            <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden item-message" *ngFor="let mess of allMessages; let i = index" [ngClass]="selectedMessage === mess._id ? 'bg-light border-left border-primary' : ''" (click)="showMessages(mess._id, mess.image, mess.name, mess.profession, i, mess.receiveId)">
+                                <div class="dropdown-list-image mr-3"><img loading="lazy" class="rounded-circle" src="/assets/img/profile_image/{{mess.image}}" alt=""></div>
+                                <div class="font-weight-bold mr-1 overflow-hidden">
+                                    <div class="text-truncate">{{mess.name}}</div>
+                                    <div class="small text-truncate overflow-hidden text-black-50" [ngClass]="mess.not_seen === id ? 'message-bold' : ''"><i *ngIf="mess.not_seen === id" class="feather-check text-primary"></i>
+                                        <!-- <i
                        class="feather-check text-primary"></i> -->
-                    <img *ngIf="mess.not_seen !== id" src="../../../../assets/img/double-check.png"
-                      style="width: 12px;"> {{mess.message.message}}
-                  </div>
-                </div>
-                <span class="ml-auto mb-auto">
+                                        <img loading="lazy" *ngIf="mess.not_seen !== id" src="../../../../assets/img/double-check.png" style="width: 12px;"> {{mess.message.message}}
+                                    </div>
+                                </div>
+                                <span class="ml-auto mb-auto">
                   <!-- <div class="text-right text-muted pt-1 small">{{mess.message.date | date: hh:mm}}</div> -->
                 </span>
-              </div>
-              <!-- <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
-                <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="../../../../assets/img/p9.png"
+                            </div>
+                            <!-- <div class="p-3 d-flex align-items-center border-bottom osahan-post-header overflow-hidden">
+                <div class="dropdown-list-image mr-3"><img loading="lazy"  class="rounded-circle" src="../../../../assets/img/p9.png"
                     alt=""></div>
                 <div class="font-weight-bold mr-1 overflow-hidden">
                   <div class="text-truncate">Ashley Briggs</div>
@@ -60,7 +49,7 @@
               </div>
               <div
                 class="p-3 d-flex align-items-center bg-light border-left border-primary  border-bottom osahan-post-header overflow-hidden">
-                <div class="dropdown-list-image mr-3"><img class="rounded-circle" src="../../../../assets/img/p1.png"
+                <div class="dropdown-list-image mr-3"><img loading="lazy"  class="rounded-circle" src="../../../../assets/img/p1.png"
                     alt=""></div>
                 <div class="font-weight-bold mr-1 overflow-hidden">
                   <div class="text-truncate">Carl Jenkins
@@ -72,20 +61,18 @@
                   <div class="text-right text-muted pt-1 small">00:21PM</div>
                 </span>
               </div> -->
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-7 col-xl-8 px-0" *ngIf="selectUserForComunication&&!mobile">
-          <div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
-            <div class="font-weight-bold mr-1 overflow-hidden">
-              <div class="text-truncate"><img class="rounded-circle"
-                  src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""
-                  style="width: 40px; margin-right: 9px">{{selectUserForComunication.name}}
-              </div>
-              <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
-              </div>
-            </div>
-            <!-- <span class="ml-auto">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-7 col-xl-8 px-0" *ngIf="selectUserForComunication&&!mobile">
+                    <div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
+                        <div class="font-weight-bold mr-1 overflow-hidden">
+                            <div class="text-truncate"><img loading="lazy" class="rounded-circle" src="assets/img/profile_image/{{selectUserForComunication.image}}" alt="" style="width: 40px; margin-right: 9px">{{selectUserForComunication.name}}
+                            </div>
+                            <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
+                            </div>
+                        </div>
+                        <!-- <span class="ml-auto">
               <div class="btn-group">
                 <button type="button" class="btn btn-light btn-sm rounded" data-toggle="dropdown" aria-haspopup="true"
                   aria-expanded="false">
@@ -97,44 +84,38 @@
                 </div>
               </div>
             </span> -->
-          </div>
-          <div class="loader4 loading" *ngIf="loading"></div>
-          <div *ngIf="!loading" id="chat-container"
-            class="osahan-chat-box p-3 border-top border-bottom bg-light hidden-xs" style.height="{{heighMessage}}">
-            <div [ngClass]="mobile === true ? 'message-container' : ''">
+                    </div>
+                    <div class="loader4 loading" *ngIf="loading"></div>
+                    <div *ngIf="!loading" id="chat-container" class="osahan-chat-box p-3 border-top border-bottom bg-light hidden-xs" style.height="{{heighMessage}}">
+                        <div [ngClass]="mobile === true ? 'message-container' : ''">
 
-              <div *ngFor="let item of messageArray">
-                <div class="d-flex align-items-center osahan-post-header message-padding-top"
-                  *ngIf="item.sender_id !== id">
-                  <div class="dropdown-list-image"><img class="rounded-circle"
-                      src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
-                  <div class="mr-1">
-                    <p class="receive-message">{{item.message}}
-                    </p>
-                  </div>
-                  <span class="ml-auto mb-auto">
+                            <div *ngFor="let item of messageArray">
+                                <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id !== id">
+                                    <div class="dropdown-list-image"><img loading="lazy" class="rounded-circle" src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
+                                    <div class="mr-1">
+                                        <p class="receive-message">{{item.message}}
+                                        </p>
+                                    </div>
+                                    <span class="ml-auto mb-auto">
                     <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
                   </span>
-                </div>
+                                </div>
 
-                <div class="d-flex align-items-center osahan-post-header message-padding-top"
-                  *ngIf="item.sender_id === id">
-                  <span class="mr-auto mb-auto">
+                                <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id === id">
+                                    <span class="mr-auto mb-auto">
                     <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
                   </span>
-                  <div class="sender-message">
-                    <pre style="color: #fff !important; margin-bottom: 0px !important;">{{item.message}}</pre>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div *ngIf="!loading" class="w-100 border-top border-bottom">
-            <textarea placeholder="{{language.messageWriteMessage}}" [(ngModel)]="messageText" name="message"
-              class="form-control border-0 p-3 shadow-none" rows="4" (keyup.enter)="sendMessage()"
-              (focus)="clickOnTextArea()"></textarea>
-          </div>
-          <!-- <div class="p-3 d-flex align-items-center">
+                                    <div class="sender-message">
+                                        <pre style="color: #fff !important; margin-bottom: 0px !important;">{{item.message}}</pre>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="!loading" class="w-100 border-top border-bottom">
+                        <textarea placeholder="{{language.messageWriteMessage}}" [(ngModel)]="messageText" name="message" class="form-control border-0 p-3 shadow-none" rows="4" (keyup.enter)="sendMessage()" (focus)="clickOnTextArea()"></textarea>
+                    </div>
+                    <!-- <div class="p-3 d-flex align-items-center">
             <div class="overflow-hidden">
               <button type="button" class="btn btn-light btn-sm rounded">
                 <i class="feather-image"></i>
@@ -152,24 +133,22 @@
               </button>
             </span>
           </div> -->
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  </main>
+    </main>
 </div>
 <div *ngIf="messageWindow&&selectUserForComunication" style.height="{{windowHeight}}" style.width="{{windowWidth}}">
-  <div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
-    <div class="font-weight-bold mr-1 overflow-hidden userInfoMobile">
-      <div class="text-truncate"><img class="rounded-circle"
-          src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""
-          style="width: 40px; margin-right: 9px"> {{selectUserForComunication.name}}
-      </div>
-      <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
-      </div>
-    </div>
-    <a class="removeWindow" (click)="messageWindow = false">
-      <span class="fa fa-times"></span></a>
-    <!-- <span class="ml-auto">
+    <div class="p-3 d-flex align-items-center  border-bottom osahan-post-header">
+        <div class="font-weight-bold mr-1 overflow-hidden userInfoMobile">
+            <div class="text-truncate"><img loading="lazy" class="rounded-circle" src="assets/img/profile_image/{{selectUserForComunication.image}}" alt="" style="width: 40px; margin-right: 9px"> {{selectUserForComunication.name}}
+            </div>
+            <div class="small text-truncate overflow-hidden text-black-50">{{selectUserForComunication.profession}}
+            </div>
+        </div>
+        <a class="removeWindow" (click)="messageWindow = false">
+            <span class="fa fa-times"></span></a>
+        <!-- <span class="ml-auto">
       <div class="btn-group">
         <button type="button" class="btn btn-light btn-sm rounded" data-toggle="dropdown" aria-haspopup="true"
           aria-expanded="false">
@@ -181,34 +160,32 @@
         </div>
       </div>
     </span> -->
-  </div>
-  <div id="chat-container" [ngClass]="mobile === true ? 'message-container' : ''">
-    <div *ngFor="let item of messageArray">
-
-      <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id !== id">
-        <div class="dropdown-list-image"><img class="rounded-circle"
-            src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
-        <div class="mr-1">
-          <p class="receive-message">{{item.message}}
-          </p>
-        </div>
-        <span class="ml-auto mb-auto">
-          <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
-        </span>
-      </div>
-
-      <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id === id">
-        <span class="mr-auto mb-auto">
-          <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
-        </span>
-        <div class="sender-message">
-          <pre style="color: #fff !important; margin-bottom: 0px !important;">{{item.message}}</pre>
-        </div>
-      </div>
     </div>
-  </div>
-  <div class="w-100 border-top border-bottom mobile-textarea">
-    <textarea placeholder="{{language.messageWriteMessage}}" [(ngModel)]="messageText" name="message"
-      class="form-control border-0 p-3 shadow-none" rows="2" (keyup.enter)="sendMessage()"></textarea>
-  </div>
+    <div id="chat-container" [ngClass]="mobile === true ? 'message-container' : ''">
+        <div *ngFor="let item of messageArray">
+
+            <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id !== id">
+                <div class="dropdown-list-image"><img loading="lazy" class="rounded-circle" src="assets/img/profile_image/{{selectUserForComunication.image}}" alt=""></div>
+                <div class="mr-1">
+                    <p class="receive-message">{{item.message}}
+                    </p>
+                </div>
+                <span class="ml-auto mb-auto">
+          <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+        </span>
+            </div>
+
+            <div class="d-flex align-items-center osahan-post-header message-padding-top" *ngIf="item.sender_id === id">
+                <span class="mr-auto mb-auto">
+          <!-- <div class="text-right text-muted pt-1 small">{{item.date | date: HH:mm}}</div> -->
+        </span>
+                <div class="sender-message">
+                    <pre style="color: #fff !important; margin-bottom: 0px !important;">{{item.message}}</pre>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-100 border-top border-bottom mobile-textarea">
+        <textarea placeholder="{{language.messageWriteMessage}}" [(ngModel)]="messageText" name="message" class="form-control border-0 p-3 shadow-none" rows="2" (keyup.enter)="sendMessage()"></textarea>
+    </div>
 </div>

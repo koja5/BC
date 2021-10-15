@@ -1,0 +1,13 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body>
+        <div class="loader4 imageLoader" *ngIf="showCropper"></div>
+        <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="false" format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded()" (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()" [cropperMinWidth]="380"
+            [cropperMinHeight]="380" [onlyScaleDown]="false">
+        </image-cropper>
+    </div>
+    <div footer>
+        <button type="button" class="btn btn-success btn-s" (click)="save()" *ngIf="!showCropper">
+      {{language.profileUpdateProfileImage}}
+    </button>
+    </div>
+</app-dynamic-dialog>

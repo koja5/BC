@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs/Observable";
-import { Subject } from "rxjs/Subject";
+import { Subject } from "rxjs";
 
 @Injectable({
   providedIn: "root",
@@ -11,7 +10,7 @@ export class MessageService {
   public navigationItemFeed = new Subject<null>();
   public messageForThisUser = new Subject<any>();
 
-  constructor() {}
+  constructor() { }
 
   sendNewFullname() {
     this.newFullname.next();

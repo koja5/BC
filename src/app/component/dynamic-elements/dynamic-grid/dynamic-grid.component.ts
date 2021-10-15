@@ -1,19 +1,9 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
-import { FormGroup, Validators } from "@angular/forms";
-import {
-  DialogEditEventArgs,
-  EditSettingsModel,
-  SaveEventArgs,
-  ToolbarItems,
-} from "@syncfusion/ej2-angular-grids";
+import { FormGroup } from "@angular/forms";
 import { DynamicService } from "src/app/services/dynamic.service";
 import { DynamicFormsComponent } from "../dynamic-forms/dynamic-forms.component";
 import { FieldConfig } from "../dynamic-forms/models/field-config";
-import { GridComponent } from "@syncfusion/ej2-angular-grids";
-import { DialogComponent } from "@syncfusion/ej2-angular-popups";
 import { HelpService } from "src/app/services/help.service";
-import { QueryCellInfoEventArgs } from '@syncfusion/ej2-angular-grids';
-import { Tooltip } from '@syncfusion/ej2-popups';
 
 @Component({
   selector: "app-dynamic-grid",
@@ -23,15 +13,13 @@ import { Tooltip } from '@syncfusion/ej2-popups';
 export class DynamicGridComponent implements OnInit {
   @Input() path: string;
   @Input() name: string;
-  @ViewChild(DynamicFormsComponent) form: DynamicFormsComponent;
-  @ViewChild("orderForm") public orderForm: FormGroup;
-  @ViewChild("editSettingsTemplate") editSettingsTemplate: DialogComponent;
-  @ViewChild("grid") public grid: GridComponent;
-  @ViewChild("container") public container: ElementRef;
+  @ViewChild(DynamicFormsComponent, { static: false }) form: DynamicFormsComponent;
+  @ViewChild("orderForm", { static: false }) public orderForm: FormGroup;
+  @ViewChild("container", { static: false }) public container: ElementRef;
 
   public config: any;
-  public toolbar: ToolbarItems[];
-  public editSettings: EditSettingsModel;
+  // public toolbar: ToolbarItems[];
+  // public editSettings: EditSettingsModel;
   public data: any;
   public dataForm: any;
   public orderData: IOrderModel;
@@ -48,23 +36,23 @@ export class DynamicGridComponent implements OnInit {
   constructor(
     private service: DynamicService,
     private helpService: HelpService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.initialization();
-    this.editSettings = {
-      allowEditing: true,
-      allowAdding: true,
-      allowDeleting: true,
-      showDeleteConfirmDialog: true,
-      mode: "Dialog",
-    };
-    this.toolbar = ["Add", "Edit", "Delete"];
+    // this.editSettings = {
+    //   allowEditing: true,
+    //   allowAdding: true,
+    //   allowDeleting: true,
+    //   showDeleteConfirmDialog: true,
+    //   mode: "Dialog",
+    // };
+    // this.toolbar = ["Add", "Edit", "Delete"];
     console.log(this.container);
     this.container.nativeElement.style.height = this.helpService.getHeightForGrid();
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   initialization() {
     this.service.getConfiguration(this.path, this.name).subscribe((data) => {
@@ -82,7 +70,7 @@ export class DynamicGridComponent implements OnInit {
   }
 
   callApiPost(api, body) {
-    this.service.callApiPost(api, body).subscribe((data) => {});
+    this.service.callApiPost(api, body).subscribe((data) => { });
   }
 
   callApiGet(api, parameters) {
@@ -91,94 +79,94 @@ export class DynamicGridComponent implements OnInit {
     });
   }
 
-  actionBegin(args: SaveEventArgs): void {
-    console.log(args);
-    /*if (args.requestType === "beginEdit" || args.requestType === "add") {
-      this.orderData = Object.assign({}, args.rowData);
-    }
-    if (args.requestType === "save") {
-      console.log(this.dataForm);
-      if (this.orderForm.valid) {
-        args.data = this.orderData;
-      } else {
-        args.cancel = true;
-      }
-    }*/
-    /*if (args.requestType === "beginEdit" || args.requestType === "add") { 
-        // set buttons here.... 
-        args.dialog.buttons = [ ];
-      } */
-  }
+  // actionBegin(args: SaveEventArgs): void {
+  //   console.log(args);
+  //   /*if (args.requestType === "beginEdit" || args.requestType === "add") {
+  //     this.orderData = Object.assign({}, args.rowData);
+  //   }
+  //   if (args.requestType === "save") {
+  //     console.log(this.dataForm);
+  //     if (this.orderForm.valid) {
+  //       args.data = this.orderData;
+  //     } else {
+  //       args.cancel = true;
+  //     }
+  //   }*/
+  //   /*if (args.requestType === "beginEdit" || args.requestType === "add") { 
+  //       // set buttons here.... 
+  //       args.dialog.buttons = [ ];
+  //     } */
+  // }
 
-  actionComplete(args: DialogEditEventArgs): void {
-    console.log(args);
-    if (args.requestType === "beginEdit" || args.requestType === "add") {
-      args.dialog.buttons = [];
-      setTimeout(() => {
-        this.setValue(this.config.configField, args.rowData);
-      }, 50);
-    }
+  // actionComplete(args: DialogEditEventArgs): void {
+  //   console.log(args);
+  //   if (args.requestType === "beginEdit" || args.requestType === "add") {
+  //     args.dialog.buttons = [];
+  //     setTimeout(() => {
+  //       this.setValue(this.config.configField, args.rowData);
+  //     }, 50);
+  //   }
 
-    if (args.requestType === "delete") {
-      this.deleteData(args["data"][0]);
-    }
+  //   if (args.requestType === "delete") {
+  //     this.deleteData(args["data"][0]);
+  //   }
 
-    this.typeOfModification = args.requestType;
-    this.operations = args;
-    /*
-      setTimeout(() => {
-        let previousValid = this.form.valid;
-        this.form.changes.subscribe(() => {
-          if (this.form.valid !== previousValid) {
-            previousValid = this.form.valid;
-            this.form.setDisabled("submit", !previousValid);
-          }
-        });
+  //   this.typeOfModification = args.requestType;
+  //   this.operations = args;
+  //   /*
+  //     setTimeout(() => {
+  //       let previousValid = this.form.valid;
+  //       this.form.changes.subscribe(() => {
+  //         if (this.form.valid !== previousValid) {
+  //           previousValid = this.form.valid;
+  //           this.form.setDisabled("submit", !previousValid);
+  //         }
+  //       });
 
-        this.form.setDisabled("submit", true);
-        this.form.setValue("storename", "Todd Motto");
-      }, 100);*/
-    /*if (args.requestType === "beginEdit" || args.requestType === "add") { 
-        // set buttons here.... 
-        args.dialog.buttons = [ ];
-      } */
-  }
-  submitEmitter(event) {
-    if (this.typeOfModification === "add") {
-      this.service.callApiPost("/api/createToDo", event).subscribe((data) => {
-        console.log(data);
-      });
-    } else if (this.typeOfModification === "beginEdit") {
-      this.service.callApiPost("/api/updateToDo", event).subscribe((data) => {
-        console.log(data);
-      });
-    }
+  //       this.form.setDisabled("submit", true);
+  //       this.form.setValue("storename", "Todd Motto");
+  //     }, 100);*/
+  //   /*if (args.requestType === "beginEdit" || args.requestType === "add") { 
+  //       // set buttons here.... 
+  //       args.dialog.buttons = [ ];
+  //     } */
+  // }
+  // submitEmitter(event) {
+  //   if (this.typeOfModification === "add") {
+  //     this.service.callApiPost("/api/createToDo", event).subscribe((data) => {
+  //       console.log(data);
+  //     });
+  //   } else if (this.typeOfModification === "beginEdit") {
+  //     this.service.callApiPost("/api/updateToDo", event).subscribe((data) => {
+  //       console.log(data);
+  //     });
+  //   }
 
-    this.operations.dialog.close();
-    this.initialization();
-  }
+  //   this.operations.dialog.close();
+  //   this.initialization();
+  // }
 
-  deleteData(event) {
-    this.service.callApiGet("/api/deleteTodo", event.id).subscribe((data) => {
-      console.log(data);
-    });
-  }
+  // deleteData(event) {
+  //   this.service.callApiGet("/api/deleteTodo", event.id).subscribe((data) => {
+  //     console.log(data);
+  //   });
+  // }
 
-  setValue(fields, values) {
-    for (let i = 0; i < fields.length; i++) {
-      this.form.setValue(fields[i]["name"], values[fields[i]["name"]]);
-    }
-  }
+  // setValue(fields, values) {
+  //   for (let i = 0; i < fields.length; i++) {
+  //     this.form.setValue(fields[i]["name"], values[fields[i]["name"]]);
+  //   }
+  // }
 
-  /* tooltip */
-  tooltip(args: QueryCellInfoEventArgs) {
-    const tooltip: Tooltip = new Tooltip(
-      {
-        content: args.data[args.column.field].toString(),
-      },
-      args.cell as HTMLTableCellElement
-    );
-  }
+  // /* tooltip */
+  // tooltip(args: QueryCellInfoEventArgs) {
+  //   const tooltip: Tooltip = new Tooltip(
+  //     {
+  //       content: args.data[args.column.field].toString(),
+  //     },
+  //     args.cell as HTMLTableCellElement
+  //   );
+  // }
   /* tooltip END */
 }
 

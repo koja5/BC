@@ -1,0 +1,51 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body class="box-body px-3 pt-3 pb-0">
+        <div class="row">
+            <div class="col-sm-6 mb-4">
+                <label id="FROM" class="form-label">{{language.profileFrom}}</label>
+                <!-- Input -->
+                <div class="input-group">
+                    <kendo-datepicker [(ngModel)]="education.fromDate" name="from" style="display: contents;">
+                    </kendo-datepicker>
+                </div>
+                <!-- End Input -->
+            </div>
+            <div class="col-sm-6 mb-4">
+                <label id="TO" class="form-label">{{language.profileTo}}</label>
+                <!-- Input -->
+                <div class="input-group">
+                    <kendo-datepicker [(ngModel)]="education.toDate" name="to" style="display: contents;">
+                    </kendo-datepicker>
+                </div>
+                <!-- End Input -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 mb-4">
+                <label id="companyLabel" class="form-label">{{language.profileSchool}}</label>
+                <!-- Input -->
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="education.school" name="school">
+                </div>
+                <!-- End Input -->
+            </div>
+            <div class="col-sm-6 mb-4">
+                <label id="positionLabel" class="form-label">{{language.profileDirection}}</label>
+                <!-- Input -->
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="education.direction" name="direction">
+                </div>
+                <!-- End Input -->
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-mb-12">
+                <label id="positionLabel" class="form-label">{{language.profileEducationDescription}}</label>
+                <div class="input-group">
+                    <textarea class="form-control" rows="4" name="text" [(ngModel)]="education.description"></textarea>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</app-dynamic-dialog>

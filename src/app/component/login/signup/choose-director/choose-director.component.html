@@ -1,92 +1,92 @@
 <div id="wrapper" *ngIf="user !== undefined&&language!==undefined">
-  <div id="left-side">
-    <ul>
-      <li class="choose" [ngClass]="step === 'welcome' ? 'active' : 'disabled'">
-        <div class="icon">
-          <i class="fa fa-child" [ngClass]="step === 'welcome' ? 'active' : 'disabled'"></i>
-        </div>
-        {{language.chooseWelcome}}
-      </li>
-      <li class="pay" [ngClass]="step === 'choose' ? 'active' : 'disabled'">
-        <div class="icon">
-          <i class="fa fa-users" [ngClass]="step === 'choose' ? 'active' : 'disabled'"></i>
-        </div>
-        {{language.chooseChoose}}
-      </li>
-      <li class="wrap" [ngClass]="step === 'done' ? 'active' : 'disabled'">
-        <div class="icon">
-          <i class="fa fa-check-circle" [ngClass]="step === 'done' ? 'active' : 'disabled'"></i>
-        </div>
-        {{language.chooseDone}}
-      </li>
-    </ul>
-  </div>
-
-  <div id="border">
-    <div id="line" class="{{line}}"></div>
-  </div>
-
-  <div id="right-side">
-    <div id="first" *ngIf="step === 'welcome'">
-      <div class="icon big">
-        <i class="fa fa-child"></i>
-      </div>
-
-      <h1>{{language.chooseHi}}, {{user.lastname}} {{user.firstname}}!</h1>
-
-      <h3>{{language.chooseWelcomeTitle}}</h3>
-      <p>{{language.chooseWelcomeText1}}</p>
-      <p>{{language.chooseWelcomeText2}}</p>
-      <div class="next-previous-button">
-        <button class="fxt-btn-fill" (click)="next('choose', 'two')">{{language.chooseNextButton}} <i class="fa fa-arrow-right"></i></button>
-      </div>
+    <div id="left-side">
+        <ul>
+            <li class="choose" [ngClass]="step === 'welcome' ? 'active' : 'disabled'">
+                <div class="icon">
+                    <i class="fa fa-child" [ngClass]="step === 'welcome' ? 'active' : 'disabled'"></i>
+                </div>
+                {{language.chooseWelcome}}
+            </li>
+            <li class="pay" [ngClass]="step === 'choose' ? 'active' : 'disabled'">
+                <div class="icon">
+                    <i class="fa fa-users" [ngClass]="step === 'choose' ? 'active' : 'disabled'"></i>
+                </div>
+                {{language.chooseChoose}}
+            </li>
+            <li class="wrap" [ngClass]="step === 'done' ? 'active' : 'disabled'">
+                <div class="icon">
+                    <i class="fa fa-check-circle" [ngClass]="step === 'done' ? 'active' : 'disabled'"></i>
+                </div>
+                {{language.chooseDone}}
+            </li>
+        </ul>
     </div>
-    <div id="second" *ngIf="step === 'choose'">
-      <div class="icon big">
-        <i class="fa fa-users"></i>
-      </div>
 
-      <h1>{{language.chooseDirector}}</h1>
-
-      <div class="choose-options">
-        <kendo-combobox [data]="directorList" [textField]="'fullname'" [valueField]="'id'"
-          (valueChange)="onValueChange($event)" [(ngModel)]="selectedDirector" [filterable]="true"
-          (filterChange)="searchDirector($event)" [loading]="directorLoading" placeholder="{{language.chooseDirectorPlaceholder}}">
-          <ng-template kendoComboBoxItemTemplate let-dataItem>
-            <p style="height: 45px !important;">
-              <img style="width: 40px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">
-              <span style="font-weight: bold">{{ dataItem.fullname }}</span>
-            </p>
-          </ng-template>
-        </kendo-combobox>
-      </div>
-
-      <div class="next-previous-button">
-        <button class="do-not-have" (click)="doNotHave()">{{language.chooseNoDirector}}</button>
-        <button class="fxt-btn-fill" (click)="updateUserSID()" [disabled]="selectedDirector === null">{{language.chooseNextButton}} <i class="fa fa-arrow-right"></i></button>
-      </div>
+    <div id="border">
+        <div id="line" class="{{line}}"></div>
     </div>
-    <div id="third" *ngIf="step === 'done'">
-      <div class="done_animation">
-        <div class="spinner">
-        </div>
-        <div class="mask">
-        </div>
-        <div class="filler">
-        </div>
-        <div class="innerCircle">
-        </div>
-        <div class="check">
-        </div>
-      </div>
 
-      <h1>{{language.chooseYouDone}}</h1>
+    <div id="right-side">
+        <div id="first" *ngIf="step === 'welcome'">
+            <div class="icon big">
+                <i class="fa fa-child"></i>
+            </div>
 
-      <p>{{language.chooseDoneText1}}</p>
-      <p>{{language.chooseDoneText2}}</p>
-      <div class="next-previous-button">
-        <button class="fxt-btn-fill" (click)="doneSignUp()" routerLink="/login"> {{language.chooseLogin}} </button>
-      </div>
+            <h1>{{language.chooseHi}}, {{user.lastname}} {{user.firstname}}!</h1>
+
+            <h3>{{language.chooseWelcomeTitle}}</h3>
+            <p>{{language.chooseWelcomeText1}}</p>
+            <p>{{language.chooseWelcomeText2}}</p>
+            <div class="next-previous-button">
+                <button class="fxt-btn-fill" (click)="next('choose', 'two')">{{language.chooseNextButton}} <i
+            class="fa fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div id="second" *ngIf="step === 'choose'">
+            <div class="icon big">
+                <i class="fa fa-users"></i>
+            </div>
+
+            <h1>{{language.chooseDirector}}</h1>
+
+            <div class="choose-options">
+                <kendo-combobox [data]="directorList" [textField]="'fullname'" [valueField]="'id'" (valueChange)="onValueChange($event)" [(ngModel)]="selectedDirector" [filterable]="true" (filterChange)="searchDirector($event)" [loading]="directorLoading" placeholder="{{language.chooseDirectorPlaceholder}}">
+                    <ng-template kendoComboBoxItemTemplate let-dataItem>
+                        <p style="height: 45px !important;">
+                            <img loading="lazy" style="width: 40px; margin-right: 10px;" class="rounded-circle" src="../../../../../assets/img/profile_image/{{dataItem.image}}">
+                            <span style="font-weight: bold">{{ dataItem.fullname }}</span>
+                        </p>
+                    </ng-template>
+                </kendo-combobox>
+            </div>
+
+            <div class="next-previous-button">
+                <button class="do-not-have" (click)="doNotHave()">{{language.chooseNoDirector}}</button>
+                <button class="fxt-btn-fill" (click)="updateUserSID()" [disabled]="selectedDirector === null">{{language.chooseNextButton}} <i
+            class="fa fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div id="third" *ngIf="step === 'done'">
+            <div class="done_animation">
+                <div class="spinner">
+                </div>
+                <div class="mask">
+                </div>
+                <div class="filler">
+                </div>
+                <div class="innerCircle">
+                </div>
+                <div class="check">
+                </div>
+            </div>
+
+            <h1>{{language.chooseYouDone}}</h1>
+
+            <p>{{language.chooseDoneText1}}</p>
+            <p>{{language.chooseDoneText2}}</p>
+            <div class="next-previous-button">
+                <button class="fxt-btn-fill" (click)="doneSignUp()" routerLink="/login"> {{language.chooseLogin}} </button>
+            </div>
+        </div>
     </div>
-  </div>
 </div>

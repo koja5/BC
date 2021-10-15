@@ -7,15 +7,17 @@ import {
   QueryList,
   HostListener,
 } from "@angular/core";
-import { ActivatedRoute, Router } from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 import * as SimplePeer from "simple-peer";
-import * as wrtc from "wrtc";
 import { MitronPeer } from "src/app/models/room.model";
 import { SignalMessage, RoomService } from "src/app/services/room.service";
 import { EditEventService } from "src/app/services/edit-event.service";
 import { HelpService } from "src/app/services/help.service";
 declare var document: any;
 import * as io from "socket.io-client";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "../../dynamic-elements/dynamic-dialog/dynamic-dialog.component";
+import { ModalConfigurationService } from "src/app/services/modal-configuration.service";
 
 @Component({
   selector: "app-room",
@@ -26,11 +28,9 @@ export class RoomComponent implements OnInit {
   roomName: string;
   mitronPeers: Array<MitronPeer> = new Array();
 
-  @ViewChild("myVideo")
-  myVideo: ElementRef<HTMLVideoElement>;
+  @ViewChild("myVideo", { static: false }) myVideo: ElementRef<HTMLVideoElement>;
 
-  @ViewChildren("peerVideo")
-  peerVideos: QueryList<ElementRef<HTMLVideoElement>>;
+  @ViewChildren("peerVideo") peerVideos: QueryList<ElementRef<HTMLVideoElement>>;
   public currentFilter: any;
   public currentPeer: any;
   public localStream: any;
@@ -39,7 +39,6 @@ export class RoomComponent implements OnInit {
   public chatStatus = "";
   public otherStream = [];
   public id: any;
-  public windowLeaveMeeting = false;
   public language: any;
   public participantData: any;
   public chatMessage = "";
@@ -48,8 +47,7 @@ export class RoomComponent implements OnInit {
   private socket: SocketIOClient.Socket;
   public attendee: any;
   public showChat = true;
-  @ViewChild("localVideo")
-  localVideo: ElementRef<HTMLVideoElement>;
+  @ViewChild("localVideo", { static: false }) localVideo: ElementRef<HTMLVideoElement>;
   private link =
     window.location.protocol +
     "//" +
@@ -96,18 +94,18 @@ export class RoomComponent implements OnInit {
 
   public peers = {};
   // public videos = document.getElementById("videos");
-  @ViewChildren("videos")
-  videos: QueryList<ElementRef<HTMLVideoElement>>;
+  @ViewChildren("videos") videos: QueryList<ElementRef<HTMLVideoElement>>;
   @HostListener("window:resize", ["$event"])
   onResize(event) {
     this.checkRezolution();
   }
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private signalingService: RoomService,
     private editEventService: EditEventService,
-    private helpService: HelpService
+    private helpService: HelpService,
+    private modalService: NgbModal,
+    private modalConfigurationService: ModalConfigurationService
   ) {
     // this.socket = io();
     // this.socket = io.connect("http://localhost:3000");
@@ -324,7 +322,7 @@ export class RoomComponent implements OnInit {
         this.attendee.signal(data.signal);}, 250);*/
     });
 
-    this.attendee.on("connect", function (conn) {});
+    this.attendee.on("connect", function (conn) { });
 
     // Ask broadcaster to start his connection
     // for (let i = 0; i < this.participantData.speakers.length; i++) {
@@ -503,19 +501,33 @@ export class RoomComponent implements OnInit {
     }
   }
 
-  leaveMeetingAnswer(answer) {
-    if (answer === "yes") {
-      /*this.router.navigate([
-        "home/main/event/virtual-event-details/" + this.id,
-      ]);*/
-      window.open("", "_self").close();
-    }
+  openWindowLeaveDialog():void{
+    const modalRef=this.modalService.open(DynamicDialogComponent, {
+      size:'lg',
+      centered:true
+    });
+
+    this.modalConfigurationService.setSettingsForAreYouSureDialog(modalRef.componentInstance, this.language);
+    modalRef.componentInstance.modal=modalRef;
+    
+    modalRef.result.then(() => {
+      this.leaveMeeting();
+    }, () => {
+      console.log(`Dismissed`)
+    });
+  }
+
+  leaveMeeting() {
+    /*this.router.navigate([
+      "home/main/event/virtual-event-details/" + this.id,
+    ]);*/
+    window.open("", "_self").close();
+    
     if (this.myIndex !== null && this.myIndex !== undefined) {
       this.otherStream[this.myIndex].getTracks().forEach(function (track) {
         track.stop();
       });
     }
-    this.windowLeaveMeeting = false;
   }
 
   // send message on chat

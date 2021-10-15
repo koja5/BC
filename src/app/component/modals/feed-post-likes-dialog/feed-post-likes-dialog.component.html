@@ -1,0 +1,10 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <div body class="text-left">
+        <ul class="list-user-profile">
+            <li *ngFor="let item of allLikesForPost">
+                <img src="assets/img/profile_image/{{item.image}}"> <span (click)="openProfileWithoutSHA1(item.user_id)">
+                    {{item.name}} </span>
+            </li>
+        </ul>
+    </div>
+</app-dynamic-dialog>

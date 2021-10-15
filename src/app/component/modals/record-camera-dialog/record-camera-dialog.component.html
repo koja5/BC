@@ -1,0 +1,4 @@
+<app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
+    <app-record-video body [height]="height ? height : 420" [width]="width ? width : 500" (saveRecordVideoEmitter)="saveRecordVideoEmitter($event)">
+    </app-record-video>
+</app-dynamic-dialog>

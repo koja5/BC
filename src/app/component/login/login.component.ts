@@ -1,12 +1,13 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "src/app/services/login.service";
 import { UserModel } from "../../models/user-model";
-import { Router } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { CookieService } from "ng2-cookies";
 import { MessageService } from "src/app/services/message.service";
 import * as sha1 from "sha1";
 import { MailService } from "src/app/services/mail.service";
 import { HelpService } from 'src/app/services/help.service';
+import { TranslationService } from "src/app/services/translation.service";
 
 @Component({
   selector: "app-login",
@@ -33,50 +34,28 @@ export class LoginComponent implements OnInit {
     public cookie: CookieService,
     public message: MessageService,
     public mailService: MailService,
-    private helpService: HelpService
-  ) {}
+    private helpService: HelpService,
+    private translationService: TranslationService
+  ) { }
 
   ngOnInit() {
     this.initialization();
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe(
-      (data) => {
-        this.service.getTranslationByCountryCode(data["countryCode"]).subscribe(
-          (language) => {
-            if (language !== null) {
-              this.language = language["config"];
-              this.helpService.setLanguage(this.language);
-            } else {
-              this.service.getDefaultLanguage().subscribe(
-                (language) => {
-                  if (language !== null) {
-                    this.language = language["config"];
-                    this.helpService.setLanguage(this.language);
-                  } else {
-                    this.router.navigate(["/maintence"]);
-                  }
-                },
-                (error) => {
-                  this.router.navigate(["/maintence"]);
-                }
-              );
-            }
-          },
-          (error) => {
-            this.router.navigate(["/maintence"]);
-          }
-        );
-      },
-      (error) => {
-        console.log(error);
-        this.service.getDefaultLanguage().subscribe((language) => {
-          this.language = language["config"];
-          this.helpService.setLanguage(this.language);
-        });
-      }
-    );
+    let languageCode = this.helpService.getLanguageCode();
+    console.log(languageCode);
+
+    if (languageCode == undefined || languageCode == null) {
+      // language is undefined or null in local storage
+      languageCode = navigator.language.toLowerCase().split('-')[0];
+
+      console.log(languageCode);
+    }
+
+    this.translationService.getTranslation(languageCode).subscribe((data) => {
+      this.language = data;
+    });
   }
 
   changeForm(form) {

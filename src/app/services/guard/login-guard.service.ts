@@ -1,16 +1,15 @@
 import { CanActivate, Router } from "@angular/router";
 import { Injectable } from "@angular/core";
-import { Http } from "@angular/http";
-import "rxjs/add/operator/map";
+import { HttpClient } from '@angular/common/http';
 import { CookieService } from "ng2-cookies";
 
 @Injectable()
-export class LoginGuard implements CanActivate {
+export class LoginGuardService implements CanActivate {
   constructor(
     public router: Router,
-    public http: Http,
+    public http: HttpClient,
     public cookie: CookieService
-  ) {}
+  ) { }
 
   canActivate() {
     if (

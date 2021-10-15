@@ -1,6 +1,8 @@
 import { Component, OnInit } from "@angular/core";
 import { LoginService } from "src/app/services/login.service";
 import { Router, ActivatedRoute } from "@angular/router";
+import { HelpService } from "src/app/services/help.service";
+import { TranslationService } from "src/app/services/translation.service";
 
 @Component({
   selector: "app-change-password",
@@ -20,27 +22,21 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     private service: LoginService,
     private router: Router,
-    public route: ActivatedRoute
-  ) {}
+    public activatedRoute: ActivatedRoute,
+    private helpService: HelpService,
+    private translationService: TranslationService
+  ) { }
 
   ngOnInit() {
-    this.data.email = this.route.snapshot.params.id;
+    this.data.email = this.activatedRoute.snapshot.params.id;
     this.initialization();
   }
 
   initialization() {
-    this.service.checkCountryLocation().subscribe(data => {
-      this.service
-        .getTranslationByCountryCode(data["countryCode"])
-        .subscribe(language => {
-          if (language !== null) {
-            this.language = language["config"];
-          } else {
-            this.service.getDefaultLanguage().subscribe(language => {
-              this.language = language["config"];
-            });
-          }
-        });
+    let languageCode = this.activatedRoute.snapshot.paramMap.get('languageCode').toLowerCase();
+
+    this.translationService.getTranslation(languageCode).subscribe((data) => {
+      this.language = data;
     });
   }
 

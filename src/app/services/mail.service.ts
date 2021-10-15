@@ -1,10 +1,10 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import "rxjs/Rx";
+import { map } from "rxjs/operators";
 
 @Injectable()
 export class MailService {
-  constructor(public http: HttpClient) {}
+  constructor(public http: HttpClient) { }
 
   public sendMail(data, callback) {
     console.log(data);
@@ -13,7 +13,7 @@ export class MailService {
     headers.append("Content-Type", "application/json");
     return this.http
       .post("/api/send", data, { headers: headers })
-      .map((res) => res)
+      .pipe(map((res) => res))
       .subscribe((val) => callback(val));
   }
 
@@ -22,32 +22,32 @@ export class MailService {
     headers.append("Content-Type", "application/json");
     return this.http
       .post("/api/forgotmail", data, { headers: headers })
-      .map((res) => res);
+      .pipe(map((res) => res));
   }
 
   public sendQuestion(data) {
-    return this.http.post("/api/sendQuestion", data).map((res) => res);
+    return this.http.post("/api/sendQuestion", data).pipe(map((res) => res));
   }
 
   public sendNewMemberJoined(data) {
-    return this.http.post("/api/sendNewMemberJoined", data).map((res) => res);
+    return this.http.post("/api/sendNewMemberJoined", data).pipe(map((res) => res));
   }
 
   public sendRecommended(data) {
-    return this.http.post("/api/sendRecommended", data).map((res) => res);
+    return this.http.post("/api/sendRecommended", data).pipe(map((res) => res));
   }
 
   public sendInviteToVirtualParticipantForEvent(data) {
     return this.http
       .post("/api/sendInviteToVirtualParticipantForEvent", data)
-      .map((res) => res);
+      .pipe(map((res) => res));
   }
 
   public sendInviteForEvent(data) {
-    return this.http.post("/api/sendInviteForEvent", data).map((res) => res);
+    return this.http.post("/api/sendInviteForEvent", data).pipe(map((res) => res));
   }
 
   public sendReminderForEvent(data) {
-    return this.http.post("/api/sendReminderForEvent", data).map((res) => res);
+    return this.http.post("/api/sendReminderForEvent", data).pipe(map((res) => res));
   }
 }

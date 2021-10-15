@@ -1,8 +1,7 @@
 import { Component, OnInit, HostListener } from "@angular/core";
 import { LifeEventModel } from "src/app/models/life-event-model";
 import { EventService } from "src/app/services/parameters/event.service";
-import { Router, ActivatedRoute } from "@angular/router";
-import { ProfileService } from "src/app/services/profile.service";
+import { ActivatedRoute } from "@angular/router";
 import * as sha1 from "sha1";
 import { LifeEventService } from "src/app/services/life-event.service";
 import { VirtualEventModel } from "src/app/models/virtual-event-model";
@@ -32,7 +31,7 @@ export class EditEventComponent implements OnInit {
     private lifeEventService: LifeEventService,
     private editEventService: EditEventService,
     private helpService: HelpService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.windowWidth = window.innerWidth - 80;
