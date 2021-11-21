@@ -226,7 +226,7 @@ export class ProfileComponent implements OnInit {
 
   openPromoVideoDialog() {
     const modalRef = this.modalService.open(PromoVideoComponent, {
-      size: 'sm',
+      size: 'xl',
       centered: true
     });
 

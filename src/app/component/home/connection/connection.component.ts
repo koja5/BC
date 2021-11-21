@@ -138,7 +138,7 @@ export class ConnectionComponent implements OnInit {
     this.selectedMember = item;
 
     const modalRef = this.modalService.open(PromoVideoComponent, {
-      size: 'sm',
+      size: 'xl',
       centered: true
     });
 

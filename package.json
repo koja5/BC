@@ -59,6 +59,7 @@
         "@progress/kendo-theme-material": "^4.41.2",
         "@types/simple-peer": "^9.11.2",
         "@types/socket.io-client": "^1.4.36",
+        "@videogular/ngx-videogular": "^5.0.1",
         "ajv": "^8.8.2",
         "axios": "^0.21.1",
         "body-parser": "^1.18.2",
