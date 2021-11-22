@@ -1,4 +1,5 @@
 import { NgModule } from "@angular/core";
+import { MaterialDesignFrameworkModule } from '@ajsf/material';
 import { DashboardRouting } from "./dashboard-routing.module";
 import { CommonModule } from '@angular/common';
 import { TranslationComponent } from "./translation/translation.component";
@@ -60,7 +61,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     PerfectScrollbarModule,
     LayoutModule,
     SplitterModule,
-    DynamicElementsModule
+    DynamicElementsModule,
+    MaterialDesignFrameworkModule
   ],
   exports: [
     GridModule
