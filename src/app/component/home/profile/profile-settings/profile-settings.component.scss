@@ -2,3 +2,46 @@
     cursor: not-allowed;
     opacity: .65;
 }
+
+.cover-photo-update {
+    position: absolute;
+    right: 23px;
+    padding: 10px;
+    background: #0b6794;
+    color: #fff;
+    border: 1px solid;
+    margin: 7px;
+    cursor: pointer;
+}
+
+.cover-photo-update:hover {
+    color: #fff;
+}
+
+.blur {
+    filter: blur(2px);
+}
+
+.image-cover {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .image-cover {
+        height: 115px;
+    }
+}
+
+@media (min-width: 768px) {
+    .image-cover {
+        height: 300px;
+    }
+}
+
+.no-info-looking-offer {
+    color: #0b6794;
+}
+
+.no-info-looking-offer span {
+    font-size: 25px;
+}

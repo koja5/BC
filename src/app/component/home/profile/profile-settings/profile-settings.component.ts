@@ -1,14 +1,10 @@
 import { HttpClient } from '@angular/common/http';
-import * as sha1 from "sha1";
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { ActivatedRoute, Router } from '@angular/router';
-import { FileUploader } from 'ng2-file-upload';
-import { RecommendationModel } from 'src/app/models/recommendation-model';
+import { ActivatedRoute } from '@angular/router';
 import { EditProfileService } from 'src/app/services/edit-profile.service';
 import { HelpService } from 'src/app/services/help.service';
 import { LoginService } from 'src/app/services/login.service';
-import { ProfileService } from 'src/app/services/profile.service';
 import { TranslationService } from 'src/app/services/translation.service';
 
 @Component({
@@ -21,7 +17,7 @@ export class ProfileSettingsComponent implements OnInit {
   public data: any;
   public language: any;
   public languages;
-  public languageList;
+  public languageList = [];
   public languageListLoading = false;
   public selectedLanguage: any;
   public selectedTab: string = 'language';
@@ -56,8 +52,9 @@ export class ProfileSettingsComponent implements OnInit {
         code: x.languageCode
       }));
       this.languageList = this.languages;
-    }
-    );
+
+      this.selectedLanguage = this.languageList.find(x => x.code == this.helpService.getLanguageCode());
+    });
 
   }
 
