@@ -1,14 +1,7 @@
 <app-dynamic-dialog [modal]="modal" [modalSettings]="modalSettings">
-    <div body>
+    <div class="" body>
         <div class="loader4 loading promoVideoLoader" *ngIf="loadVideo"></div>
         <div *ngIf="video">
-            <div>
-                <label for="upload-promo" class="cover-photo-update">
-                    <i class="fa fa-camera-retro"></i> Change
-                </label>
-                <input id="upload-promo" type="file" (change)="fileChange($event)" ng2FileSelect [uploader]="uploaderPromo" />
-            </div>
-
             <div class="videogular-container">
                 <vg-player>
                     <video [vgMedia]="media" #media id="singleVideo" preload="true" autoplay="true" controls>
@@ -48,6 +41,15 @@
                         {{language.promoRecordPromoVideo}}</button>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="row w-100" footer *ngIf="video">
+        <div class="mx-auto">
+            <label for="upload-promo" class="cover-photo-update">
+                <i class="fa fa-camera-retro"></i> Change
+            </label>
+            <input id="upload-promo" type="file" (change)="fileChange($event)" ng2FileSelect [uploader]="uploaderPromo" />
         </div>
     </div>
 </app-dynamic-dialog>

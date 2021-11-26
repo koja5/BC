@@ -147,7 +147,7 @@ export class PromoVideoComponent implements OnInit {
 
   public openRecordCameraDialog(): void {
     const modalRef = this.modalService.open(RecordCameraDialogComponent, {
-      size: 'lg',
+      size: 'md',
       centered: true
     });
 

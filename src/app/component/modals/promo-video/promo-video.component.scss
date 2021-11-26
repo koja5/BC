@@ -1,11 +1,13 @@
+video {
+    max-width: 100%;
+    height: auto;
+}
+
 .cover-photo-update {
-    position: absolute;
-    right: 23px;
     padding: 10px;
     background: #0b6794;
     color: #fff;
     border: 1px solid;
-    margin: 7px;
     cursor: pointer;
 }
 
@@ -14,7 +16,6 @@
 }
 
 .no-have-promo {
-    margin-top: 13%;
     text-align: center;
 }
 
