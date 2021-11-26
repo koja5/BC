@@ -1,0 +1,8 @@
+button:disabled,
+button[disabled] {
+    color: #fff;
+    background: #6c757d;
+    border-color: #6c757d;
+    opacity: .65;
+    cursor: default;
+}

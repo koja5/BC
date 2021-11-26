@@ -5,6 +5,8 @@ import { ProfileService } from "src/app/services/profile.service";
 import * as sha1 from "sha1";
 import { HelpService } from "src/app/services/help.service";
 import { Router } from "@angular/router";
+import { NgbModal } from "@ng-bootstrap/ng-bootstrap";
+import { DynamicDialogComponent } from "src/app/component/dynamic-elements/dynamic-dialog/dynamic-dialog.component";
 
 @Component({
   selector: "app-virtual",
@@ -28,19 +30,17 @@ export class VirtualComponent implements OnInit {
   public currentLoadData: any;
   public showPreview = false;
   public organizer: any;
-  public popupInd = false;
   public popupTitle: any;
   public popupText: any;
-  public functionNameYes: string;
-  public functionNameNo: string;
 
   constructor(
     private connectionService: ConnectionService,
     private editEventService: EditEventService,
     private profile: ProfileService,
     public helpService: HelpService,
-    private router: Router
-  ) {}
+    private router: Router,
+    private modalService: NgbModal
+  ) { }
 
   ngOnInit() {
     this.initialization();
@@ -75,41 +75,6 @@ export class VirtualComponent implements OnInit {
       this.getAllMyConnection();
     }
   }
-
-  saveChanges() {
-    if (this.id !== "create") {
-      if (Number.isInteger(this.data.id_user)) {
-        this.data.id_user = sha1(this.data.id_user.toString());
-      }
-      this.editEventService.updateEventData(this.data).subscribe((data) => {
-        console.log(data);
-        if (data) {
-          this.helpService.updateSuccessMessage();
-          this.router.navigate([
-            "/home/main/event/virtual-event-details/" + this.data._id,
-          ]);
-        } else {
-          this.helpService.updateErrorMessage();
-        }
-      });
-    } else {
-      if (Number.isInteger(this.data.id_user)) {
-        this.data.id_user = sha1(this.data.id_user.toString());
-      }
-      this.data.eventType = 2;
-      this.data.signIn = [];
-      this.editEventService.createEventData(this.data).subscribe((data) => {
-        console.log(data);
-        if (data["create"]) {
-          this.helpService.createSuccessMessage();
-          this.router.navigate(["/home/main/event/all"]);
-        } else {
-          this.helpService.createErrorMessage();
-        }
-      });
-    }
-  }
-
   addOrganizatorToSpeakers(event) {
     this.data.speakers.push(event);
   }
@@ -246,28 +211,86 @@ export class VirtualComponent implements OnInit {
     }
   }
 
-  openDialog(title = false, text = false, functionNameYes, functionNameNo) {
-    this.popupTitle = title;
-    this.popupText = text;
-    this.popupInd = true;
-    this.functionNameYes = functionNameYes;
-    this.functionNameNo = functionNameNo;
+  openDialog(virtualEventEditSave = true) {
+    const modalRef = this.modalService.open(DynamicDialogComponent, {
+      size: 'lg',
+      centered: true
+    });
+
+    modalRef.componentInstance.modalSettings = {
+      windowClass: 'modal fade in',
+      resolve: {
+        title: () => '',
+        text: () => this.language.areYouSure,
+        imageUrl: () => '../../../../../assets/img/sent.png',
+        imageStyle: () => '',
+        primaryButtonLabel: () => this.language.yes,
+        secondaryButtonLabel: () => this.language.no
+      }
+    };
+    modalRef.componentInstance.modal = modalRef;
+
+    modalRef.result.then((result) => {
+      if (virtualEventEditSave) {
+        this.saveChanges();
+      } else {
+        this.cancelChanges();
+      }
+    }, (reason) => {
+      if (reason === 'cross click') {
+        this.dismiss();
+        return;
+      }
+      else {
+        if (virtualEventEditSave) {
+          this.cancelChanges();
+        } else {
+          this.dismiss();
+        }
+      }
+    });
   }
 
-  OpenDialogEvent(event) {
-    if (event.answer) {
-      if (event.functionNameYes) {
-        this[event.functionNameYes]();
+  saveChanges() {
+
+    console.log('saveChanges');
+
+    if (this.id !== "create") {
+      if (Number.isInteger(this.data.id_user)) {
+        this.data.id_user = sha1(this.data.id_user.toString());
       }
+      this.editEventService.updateEventData(this.data).subscribe((data) => {
+        console.log(data);
+        if (data) {
+          this.helpService.updateSuccessMessage();
+          this.router.navigate([
+            "/home/main/event/virtual-event-details/" + this.data._id,
+          ]);
+        } else {
+          this.helpService.updateErrorMessage();
+        }
+      });
     } else {
-      if (event.functionNameNo) {
-        this[event.functionNameNo]();
+      if (Number.isInteger(this.data.id_user)) {
+        this.data.id_user = sha1(this.data.id_user.toString());
       }
+      this.data.eventType = 2;
+      this.data.signIn = [];
+      this.editEventService.createEventData(this.data).subscribe((data) => {
+        console.log(data);
+        if (data["create"]) {
+          this.helpService.createSuccessMessage();
+          this.router.navigate(["/home/main/event/all"]);
+        } else {
+          this.helpService.createErrorMessage();
+        }
+      });
     }
-    this.popupInd = false;
   }
 
   cancelChanges() {
+
+    console.log('cancel')
     if (this.id !== "create") {
       this.router.navigate([
         "/home/main/event/virtual-event-details/" + this.data._id,
@@ -275,6 +298,11 @@ export class VirtualComponent implements OnInit {
     } else {
       this.router.navigate(["/home/main/event/all"]);
     }
+  }
+
+  dismiss() {
+    console.log('dismiss')
+    this.modalService.dismissAll();
   }
 
   throwOutFromArray(allData, throwData) {
